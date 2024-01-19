@@ -2,18 +2,18 @@ import axios from "axios";
 import mergeImages from "merge-images";
 import { Canvas, Image } from "canvas";
 
-const handler = async (request, response) => {
-  return endpointHandler(request, response, process.env.API_KEY);
+export const handler = async (request, response) => {
+  return endpointHandler(request, response, process.env.API_URL);
 };
 
-const devHandler = async (request, response) => {
-  return endpointHandler(request, response, process.env.API_KEY_DEV);
+export const devHandler = async (request, response) => {
+  return endpointHandler(request, response, process.env.API_URL_DEV);
 };
 
-const endpointHandler = async (request, response) => {
+const endpointHandler = async (request, response, apiURL) => {
   const tokenId = request.params.tokenId;
 
-  const url = `${process.env.API_URL}/masters/pfp/image-upload-url/${tokenId}`;
+  const url = `${apiURL}/masters/pfp/image-upload-url/${tokenId}`;
   try {
     const result = await axios.get(url, {
       headers: {
@@ -59,9 +59,4 @@ const uploadImage = async (base64Image, uploadUrl) => {
     },
   });
   console.log("Image uploaded successfully ");
-};
-
-export default {
-  handler,
-  devHandler,
 };
