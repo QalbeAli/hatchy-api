@@ -3,6 +3,14 @@ import mergeImages from "merge-images";
 import { Canvas, Image } from "canvas";
 
 const handler = async (request, response) => {
+  return endpointHandler(request, response, process.env.API_KEY);
+};
+
+const devHandler = async (request, response) => {
+  return endpointHandler(request, response, process.env.API_KEY_DEV);
+};
+
+const endpointHandler = async (request, response) => {
   const tokenId = request.params.tokenId;
 
   const url = `${process.env.API_URL}/masters/pfp/image-upload-url/${tokenId}`;
@@ -53,4 +61,7 @@ const uploadImage = async (base64Image, uploadUrl) => {
   console.log("Image uploaded successfully ");
 };
 
-export default handler;
+export default {
+  handler,
+  devHandler,
+};

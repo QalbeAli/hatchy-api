@@ -1,6 +1,6 @@
 import { config } from "dotenv";
 config();
-import MastersHandler from "./src/masters/updateMastersPFPImage.js";
+import { handler, devHandler } from "./src/masters/updateMastersPFPImage.js";
 import express, { json } from "express";
 
 const app = express();
@@ -11,4 +11,5 @@ app.listen(PORT, () => {
   console.log("Server Listening on PORT:", PORT);
 });
 
-app.post("/masters/pfp/image/:tokenId", MastersHandler);
+app.post("/masters/pfp/image/:tokenId", handler);
+app.post("/dev/masters/pfp/image/:tokenId", devHandler);
