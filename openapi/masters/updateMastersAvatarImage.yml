@@ -1,0 +1,31 @@
+operationId: updateMastersAvatarImage
+summary: update master avatar image
+tags:
+  - mastersImage
+
+parameters:
+  - name: tokenId
+    in: path
+    description: tokenId
+    required: true
+    schema:
+      type: number
+      example: 1
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yml#/components/schemas/MessageResponse"
+  500:
+    description: Internal Server Error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "Image upload failed"

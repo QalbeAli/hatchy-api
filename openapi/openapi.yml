@@ -1,0 +1,33 @@
+openapi: 3.0.0
+info:
+  title: Image Generator API
+  description: |
+    This API allows generate and update masters avatars images
+  version: 1.0.0
+servers:
+  - url: https://image-generator.hatchyverse.com
+    description: Production server
+  - url: https://image-generator.hatchyverse.com/dev
+    description: Development server
+
+tags:
+  - name: mastersImage
+    description: Masters Image operations
+
+paths:
+  /masters/pfp/image/{tokenId}:
+    post:
+      $ref: "./masters/updateMastersAvatarImage.yml"
+
+security:
+  - bearerAuth: []
+components:
+  schemas:
+    MessageResponse:
+      $ref: "./models/messageResponse.yml"
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

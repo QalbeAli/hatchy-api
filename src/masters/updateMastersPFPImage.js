@@ -20,9 +20,12 @@ const endpointHandler = async (request, response, apiURL) => {
         Authorization: `Bearer ${process.env.API_KEY}`,
       },
     });
-    const { uploadUrl, traits } = result.data;
+    const { uploadUrl, traits, items } = result.data;
     const b64 = await joinImages(
-      traits.map((trait) => trait.image).filter((image) => !!image)
+      traits
+        .map((trait) => trait.image)
+        .filter((image) => !!image)
+        .concat(items.map((item) => item.image).filter((image) => !!image))
     );
     await uploadImage(b64, uploadUrl);
 
