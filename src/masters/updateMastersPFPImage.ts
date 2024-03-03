@@ -1,7 +1,6 @@
-import mergeImages from "merge-images";
-import { Canvas, Image } from "canvas";
 import { Request, Response } from "express";
 import axios from "axios";
+import ImageService from "../services/ImageService";
 
 export const handler = async (request: Request, response: Response) => {
   return endpointHandler(request, response, process.env.API_URL);
@@ -27,7 +26,7 @@ const endpointHandler = async (request: Request, response: Response, apiURL?: st
       items: { image: string }[];
     } = result.data;
 
-    const b64 = await joinImages(
+    const b64 = await ImageService.mergeImages(
       traits
         .map((trait) => trait.image)
         .filter((image) => !!image)
@@ -46,21 +45,7 @@ const endpointHandler = async (request: Request, response: Response, apiURL?: st
   }
 };
 
-const joinImages = async (images: string[]) => {
-  console.log(images);
-  const b64 = await mergeImages(images, {
-    Canvas: Canvas,
-    Image: Image,
-  });
-  return b64;
-};
-
-const uploadImage = async (base64Image: string, uploadUrl: string) => {
-  const buffer = Buffer.from(
-    base64Image.replace(/^data:image\/\w+;base64,/, ""),
-    "base64"
-  );
-
+const uploadImage = async (buffer: Buffer, uploadUrl: string) => {
   await axios.put(uploadUrl, buffer, {
     headers: {
       "Content-Type": "image/png",
