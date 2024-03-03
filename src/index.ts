@@ -1,9 +1,8 @@
 import { config } from "dotenv";
 config();
-import { handler, devHandler } from "./src/masters/updateMastersPFPImage.js";
 import express, { json } from "express";
 import cors from "cors";
-
+import { devHandler, handler } from "./masters/updateMastersPFPImage";
 const app = express();
 app.use(json());
 app.use(cors());

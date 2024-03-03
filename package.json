@@ -2,11 +2,11 @@
   "name": "image-generator-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "type": "module",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js",
+    "dev": "nodemon",
+    "start": "node dist/index.js",
+    "build": "tsc",
     "generate-client": "openapi --input ./openapi/openapi.yml --output ./api-client-lib --exportSchemas true --exportModels true",
     "postgenerate-client": "cd .. && cp -r ./image-generator-api/api-client-lib/* ./hatchyverse-website/hatchy-api-client/image-generator"
   },
@@ -22,6 +22,12 @@
     "merge-images": "^2.0.0"
   },
   "devDependencies": {
-    "openapi-typescript-codegen": "^0.23.0"
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/merge-images": "^1.2.4",
+    "@types/node": "^20.11.24",
+    "openapi-typescript-codegen": "^0.23.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
   }
 }
