@@ -15,7 +15,7 @@ tags:
     description: Masters Image operations
 
 paths:
-  /masters/pfp/image/{tokenId}:
+  /masters/avatars/image/{tokenId}:
     post:
       $ref: "./masters/updateMastersAvatarImage.yml"
 

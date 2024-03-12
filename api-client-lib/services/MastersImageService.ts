@@ -20,7 +20,7 @@ tokenId: number,
 ): CancelablePromise<MessageResponse> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/masters/pfp/image/{tokenId}',
+            url: '/masters/avatars/image/{tokenId}',
             path: {
                 'tokenId': tokenId,
             },

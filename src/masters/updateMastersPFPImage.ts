@@ -13,7 +13,7 @@ export const devHandler = async (request: Request, response: Response) => {
 const endpointHandler = async (request: Request, response: Response, apiURL?: string) => {
   const tokenId = request.params.tokenId;
 
-  const url = `${apiURL}/masters/pfp/image-upload-url/${tokenId}`;
+  const url = `${apiURL}/masters/avatars/image-upload-url/${tokenId}`;
   try {
     const result = await axios.get(url, {
       headers: {

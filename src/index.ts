@@ -12,5 +12,5 @@ app.listen(PORT, () => {
   console.log("Server Listening on PORT:", PORT);
 });
 
-app.post("/masters/pfp/image/:tokenId", handler);
-app.post("/dev/masters/pfp/image/:tokenId", devHandler);
+app.post("/masters/avatars/image/:tokenId", handler);
+app.post("/dev/masters/avatars/image/:tokenId", devHandler);
