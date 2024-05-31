@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import axios from "axios";
 import ImageService from "../services/ImageService";
+import { MastersTrait } from "../interfaces/MastersTrait";
 
 export const handler = async (request: Request, response: Response) => {
   return endpointHandler(request, response, process.env.API_URL);
@@ -22,14 +23,23 @@ const endpointHandler = async (request: Request, response: Response, apiURL?: st
     });
     const { uploadUrl, traits, items }: {
       uploadUrl: string;
-      traits: { image: string }[];
+      traits: MastersTrait[];
       items: { image: string }[];
     } = result.data;
 
+    const hairTrait = traits.find((trait) => trait.type.id === 2);
+
+    let traitImages = [];
+    if (hairTrait?.backImage) {
+      traitImages.push(hairTrait.backImage);
+    }
+    traitImages = traitImages.concat(traits.map((trait) => trait.image));
+    if (hairTrait?.frontImage) {
+      traitImages.push(hairTrait.frontImage);
+    }
+
     const b64 = await ImageService.mergeImages(
-      traits
-        .map((trait) => trait.image)
-        .filter((image) => !!image)
+      traitImages
         .concat(items.filter((image) => !!image).map((item) => item.image))
     );
     await uploadImage(b64, uploadUrl);
