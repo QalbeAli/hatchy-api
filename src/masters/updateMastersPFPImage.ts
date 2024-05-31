@@ -37,8 +37,8 @@ const endpointHandler = async (request: Request, response: Response, apiURL?: st
     response.send({
       message: "Image uploaded successfully",
     });
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    console.log(error.data.message);
     response.send({
       message: "Image upload failed",
     });
