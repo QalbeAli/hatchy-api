@@ -37,6 +37,7 @@ const endpointHandler = async (request: Request, response: Response, apiURL?: st
     if (hairTrait?.frontImage) {
       traitImages.push(hairTrait.frontImage);
     }
+    console.log(traitImages);
 
     const b64 = await ImageService.mergeImages(
       traitImages
