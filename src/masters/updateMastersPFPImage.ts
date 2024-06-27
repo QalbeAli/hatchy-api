@@ -21,10 +21,11 @@ const endpointHandler = async (request: Request, response: Response, apiURL?: st
         Authorization: `Bearer ${process.env.API_KEY}`,
       },
     });
-    const { uploadUrl, traits, items }: {
+    const { uploadUrl, traits, items, layers }: {
       uploadUrl: string;
       traits: MastersTrait[];
       items: { image: string }[];
+      layers: string[]
     } = result.data;
 
     const hairTrait = traits.find((trait) => trait.type.id === 2);
@@ -39,10 +40,11 @@ const endpointHandler = async (request: Request, response: Response, apiURL?: st
     }
     console.log(traitImages);
 
-    const b64 = await ImageService.mergeImages(
-      traitImages
-        .concat(items.filter((image) => !!image).map((item) => item.image))
-    );
+    // const b64 = await ImageService.mergeImages(
+    //   traitImages
+    //     .concat(items.filter((image) => !!image).map((item) => item.image))
+    // );
+    const b64 = await ImageService.mergeImages(layers);
     await uploadImage(b64, uploadUrl);
 
     response.send({
