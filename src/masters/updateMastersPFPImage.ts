@@ -38,12 +38,12 @@ const endpointHandler = async (request: Request, response: Response, apiURL?: st
     if (hairTrait?.frontImage) {
       traitImages.push(hairTrait.frontImage);
     }
-    console.log(traitImages);
 
     // const b64 = await ImageService.mergeImages(
     //   traitImages
     //     .concat(items.filter((image) => !!image).map((item) => item.image))
     // );
+    console.log('layers', layers);
     const b64 = await ImageService.mergeImages(layers);
     await uploadImage(b64, uploadUrl);
 
