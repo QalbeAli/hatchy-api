@@ -23,12 +23,15 @@ const endpointHandler = async (request: Request, response: Response, apiURL?: st
     });
     const { uploadUrl, layers }: {
       uploadUrl: string;
-      traits: MastersTrait[];
-      items: { image: string }[];
-      layers: string[]
+      layers: {
+        image: string,
+        mask?: string
+      }[]
     } = result.data;
-    console.log('layers', layers);
-    const b64 = await ImageService.mergeImages(layers);
+    const images = layers.map((layer) => {
+      return layer.image;
+    });
+    const b64 = await ImageService.mergeImages(images);
     await uploadImage(b64, uploadUrl);
 
     response.send({
