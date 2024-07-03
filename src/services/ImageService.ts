@@ -1,7 +1,16 @@
 import axios from "axios";
 import sharp from "sharp";
 
-const mergeImages = async (imageUrls: string[]) => {
+const mergeImages = async (
+  layers: {
+    image: string,
+    mask?: string
+  }[]
+) => {
+  const imageUrls = layers.map((layer) => {
+    return layer.image;
+  });
+
   const images = await Promise.all(imageUrls.map(downloadImage))
   const buffer = await sharp(images[0])
     .composite(images.slice(1).map(input =>

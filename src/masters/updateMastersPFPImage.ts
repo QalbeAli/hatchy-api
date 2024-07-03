@@ -28,10 +28,7 @@ const endpointHandler = async (request: Request, response: Response, apiURL?: st
         mask?: string
       }[]
     } = result.data;
-    const images = layers.map((layer) => {
-      return layer.image;
-    });
-    const b64 = await ImageService.mergeImages(images);
+    const b64 = await ImageService.mergeImages(layers);
     await uploadImage(b64, uploadUrl);
 
     response.send({
