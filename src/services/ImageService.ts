@@ -30,15 +30,8 @@ const mergeImages = async (
   }));
 
   // Merge all processed images
-  const buffer = await sharp({
-    create: {
-      width: 2048, // Set to your desired dimensions
-      height: 2048,
-      channels: 4,
-      background: { r: 0, g: 0, b: 0, alpha: 0 }
-    }
-  })
-    .composite(processedImages.map(input => ({ input })))
+  const buffer = await sharp(processedImages[0])
+    .composite(processedImages.slice(1).map(input => ({ input })))
     .toBuffer();
 
 
