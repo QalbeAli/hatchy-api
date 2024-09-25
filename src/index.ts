@@ -2,15 +2,69 @@ import { config } from "dotenv";
 config();
 import express, { json } from "express";
 import cors from "cors";
-import { devHandler, handler } from "./masters/updateMastersPFPImage";
+import http from 'http';
+import indexRouter from "./routes";
+
+import { errorHandler } from "./middlewares/errorHandler";
+import { EntityManager, EntityRepository, MikroORM, RequestContext } from "@mikro-orm/postgresql";
+import { Score } from "./entities/Score";
+import { TraitGender } from "./entities/TraitGender";
+import { TraitType } from "./entities/TraitType";
+import { TraitColor } from "./entities/TraitColor";
+import { TraitLayer } from "./entities/TraitLayer";
+import { Trait } from "./entities/Trait";
+import { MastersLootbox } from "./entities/MastersLootbox";
+import { ItemLayer } from "./entities/ItemLayer";
+import { ItemCategory } from "./entities/ItemCategory";
+import { ItemType } from "./entities/ItemType";
+import { Item } from "./entities/Item";
+import { MastersAvatar } from "./entities/MastersAvatar";
+
+export const DI = {} as {
+  server: http.Server;
+  orm: MikroORM,
+  em: EntityManager,
+  scores: EntityRepository<Score>,
+  traitGenders: EntityRepository<TraitGender>,
+  traitColors: EntityRepository<TraitColor>,
+  traitTypes: EntityRepository<TraitType>,
+  traitLayers: EntityRepository<TraitLayer>,
+  traits: EntityRepository<Trait>,
+  items: EntityRepository<Item>,
+  itemTypes: EntityRepository<ItemType>,
+  itemCategories: EntityRepository<ItemCategory>,
+  itemLayers: EntityRepository<ItemLayer>,
+  mastersLootboxes: EntityRepository<MastersLootbox>,
+  mastersAvatars: EntityRepository<MastersAvatar>,
+};
+
 const app = express();
-app.use(json());
-app.use(cors());
-
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log("Server Listening on PORT:", PORT);
-});
 
-app.post("/masters/avatars/image/:tokenId", handler);
-app.post("/dev/masters/avatars/image/:tokenId", devHandler);
+export const init = (async () => {
+  DI.orm = await MikroORM.init();
+  DI.em = DI.orm.em;
+  DI.scores = DI.orm.em.getRepository(Score);
+  DI.traitGenders = DI.orm.em.getRepository(TraitGender);
+  DI.traitColors = DI.orm.em.getRepository(TraitColor);
+  DI.traitTypes = DI.orm.em.getRepository(TraitType);
+  DI.traits = DI.orm.em.getRepository(Trait);
+  DI.items = DI.orm.em.getRepository(Item);
+  DI.itemTypes = DI.orm.em.getRepository(ItemType);
+  DI.itemCategories = DI.orm.em.getRepository(ItemCategory);
+  DI.itemLayers = DI.orm.em.getRepository(ItemLayer);
+  DI.mastersLootboxes = DI.orm.em.getRepository(MastersLootbox);
+  DI.mastersAvatars = DI.orm.em.getRepository(MastersAvatar);
+
+  app.use(json());
+  app.use(cors());
+  app.use((req, res, next) => RequestContext.create(DI.orm.em, next));
+  app.use(indexRouter);
+  app.get("/", (req, res) => res.json({ message: "Welcome to Hatchy API" }));
+  app.use((req, res) => res.status(404).json({ message: 'No route found' }));
+  app.use(errorHandler);
+
+  DI.server = app.listen(PORT, () => {
+    console.log(`Server Listening on PORT: ${PORT} http://localhost:${PORT}`);
+  });
+})();
