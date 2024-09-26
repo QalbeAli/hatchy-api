@@ -1,12 +1,10 @@
 import { Router } from "express";
-import { updateImage } from "../../../controllers/masters/avatars/updateImage";
-import { getMastersAvatarBalance } from "../../../controllers/masters/avatars/getMastersAvatarBalance";
+import { getMastersTraitTypes } from "../../../controllers/masters/traits/getMastersTraitTypes";
+import { getTraits } from "../../../controllers/masters/traits/getTraits";
 
 const router = Router();
 
-router.get("/types", getMastersAvatarBalance);
-router.post("/image-upload-url", updateImage);
-router.get("", updateImage);
-router.post("", updateImage);
+router.get("/types", getMastersTraitTypes);
+router.get("", getTraits);
 
 export default router;

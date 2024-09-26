@@ -3,16 +3,19 @@ import avatarsRouter from "./avatars";
 import itemsRouter from "./items";
 import traitsRouter from "./traits";
 import lootboxRouter from "./lootbox";
-import { updateImage } from "../../controllers/masters/avatars/updateImage";
+import { getMastersColors } from "../../controllers/masters/getMastersColors";
+import { getMastersGenders } from "../../controllers/masters/getMastersGenders";
+import { getMastersEquipSignature } from "../../controllers/masters/getMastersEquipSignature";
+import { getMintTraits } from "../../controllers/masters/traits/getMintTraits";
 
 const router = Router();
 router.use('/avatars', avatarsRouter);
 router.use('/items', itemsRouter);
 router.use('/traits', traitsRouter);
 router.use('/lootbox', lootboxRouter);
-router.get('/colors', updateImage);
-router.get('/genders', updateImage);
-router.post('/equip/signature', updateImage);
-router.post('/mint/traits', updateImage);
+router.get('/colors', getMastersColors);
+router.get('/genders', getMastersGenders);
+router.post('/equip/signature', getMastersEquipSignature);
+router.post('/mint/traits', getMintTraits);
 
 export default router;
