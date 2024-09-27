@@ -35,7 +35,7 @@ export const getMastersPFPSignature = async (req: Request, res: Response, next: 
     const payWithTicket = true;
 
     const signatureData = await mastersService.getAvatarMintSignature(receiver, traits, currency, payWithTicket);
-    return signatureData;
+    return res.json(signatureData);
   } catch (error) {
     next(error);
   }

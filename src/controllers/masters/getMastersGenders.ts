@@ -6,7 +6,7 @@ export const getMastersGenders = async (req: Request, res: Response, next: NextF
   try {
     const mastersService = new MastersService();
     const genders = await mastersService.getGenders();
-    return genders;
+    return res.json(genders);
   } catch (error) {
     next(error);
   }

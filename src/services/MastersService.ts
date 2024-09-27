@@ -11,6 +11,7 @@ import { getAvatarPrice } from "../avatar-prices";
 import { DI } from "..";
 import { setAvatarLayer } from "../utils";
 import { HatchyTicketsContract, MastersPFPContract } from "../contracts/contracts";
+import config from "../config";
 
 const s3 = new S3();
 const dynamoDB = new DynamoDB.DocumentClient();
@@ -202,9 +203,9 @@ export class MastersService {
     payWithTicket: boolean
   ) {
     const provider = new ethers.providers.JsonRpcProvider(
-      process.env.JSON_RPC_URL
+      config.JSON_RPC_URL
     );
-    const signer = new Wallet(process.env.MASTERS_SIGNER_KEY, provider);
+    const signer = new Wallet(config.MASTERS_SIGNER_KEY, provider);
     const nonce = BigNumber.from(ethers.utils.randomBytes(32));
 
     if (payWithTicket) {
@@ -312,7 +313,7 @@ export class MastersService {
 
   async getAvatarImageUploadURL(tokenId: number, extension: string) {
     const timestamp = Date.now();
-    const image = `${process.env.STAGE == 'dev' ? 'dev/' : ''}masters/avatars/${tokenId}_${timestamp}.${extension}`;
+    const image = `${config.NODE_ENV == 'dev' ? 'dev/' : ''}masters/avatars/${tokenId}_${timestamp}.${extension}`;
 
     const s3Params = {
       Bucket: process.env.HATCHYPOCKET_BUCKET_NAME,
@@ -326,10 +327,10 @@ export class MastersService {
 
     const oldImage = await this.getAvatarImage(tokenId);
     if (oldImage) {
-      console.log(`${process.env.STAGE == 'dev' ? 'dev/' : ''}masters/avatars/${tokenId}_${oldImage.timestamp}.${extension}`);
+      console.log(`${config.NODE_ENV == 'dev' ? 'dev/' : ''}masters/avatars/${tokenId}_${oldImage.timestamp}.${extension}`);
       await s3.deleteObject({
         Bucket: process.env.HATCHYPOCKET_BUCKET_NAME,
-        Key: `${process.env.STAGE == 'dev' ? 'dev/' : ''}masters/avatars/${tokenId}_${oldImage.timestamp}.${extension}`,
+        Key: `${config.NODE_ENV == 'dev' ? 'dev/' : ''}masters/avatars/${tokenId}_${oldImage.timestamp}.${extension}`,
       }).promise();
     }
 
@@ -469,19 +470,28 @@ export class MastersService {
 
   async getAvatarsImages(address: string) {
     const balance: BigNumber = await MastersPFPContract.balanceOf(address);
-    const avatarImages = [];
+    const tokenIdsPromises = [];
+
     for (let i = 0; i < balance.toNumber(); i++) {
-      const _tokenId = await MastersPFPContract.tokenOfOwnerByIndex(address, i);
-      const tokenId = Number(_tokenId);
-      const avatar = await DI.mastersAvatars.findOne(tokenId, {
-        fields: ['image']
-      });
-      avatarImages.push(avatar.image);
+      tokenIdsPromises.push(MastersPFPContract.tokenOfOwnerByIndex(address, i));
     }
+
+    const tokenIds = await Promise.all(tokenIdsPromises);
+    const tokenIdsArray = tokenIds.map(_tokenId => Number(_tokenId));
+
+    // Fetch all avatars in a single database query
+    const avatars = await DI.mastersAvatars.findAll({
+      where: { id: { $in: tokenIdsArray } },
+      fields: ['image']
+    });
+
+    const avatarImages = avatars.map(avatar => avatar.image);
+
+
     return {
       type: 'ERC-721',
       name: 'Masters Avatars',
       profilePictures: avatarImages
-    }
+    };
   };
 }

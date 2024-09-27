@@ -13,7 +13,7 @@ export const getTraits = async (req: Request, res: Response, next: NextFunction)
       color ? Number(color) : undefined,
       type ? Number(type) : undefined
     );
-    return traits;
+    return res.json(traits);
   } catch (error) {
     next(error);
   }

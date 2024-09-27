@@ -8,7 +8,7 @@ export const getMastersItem = async (req: Request, res: Response, next: NextFunc
 
     const itemsService = new ItemsService();
     const item = await itemsService.getItemById(Number(tokenId));
-    return item;
+    return res.json(item);
   } catch (error) {
     next(error);
   }

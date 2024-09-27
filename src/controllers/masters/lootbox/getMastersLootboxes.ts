@@ -7,7 +7,7 @@ export const getMastersLootboxes = async (req: Request, res: Response, next: Nex
     const gameId = req.query.gameId as string;
     const lootboxesService = new LootboxesService();
     const lootboxes = await lootboxesService.getLootboxes(gameId);
-    return lootboxes;
+    return res.json(lootboxes);
   } catch (error) {
     next(error);
   }

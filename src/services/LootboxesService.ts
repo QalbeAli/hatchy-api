@@ -5,6 +5,7 @@ import { BigNumber, ethers } from "ethers";
 import { Loaded } from "@mikro-orm/core";
 import { DI } from "..";
 import { HatchyTicketsContract, MastersItemsContract } from "../contracts/contracts";
+import config from "../config";
 
 export class LootboxesService {
   async getLootboxes(gameId?: string) {
@@ -35,7 +36,7 @@ export class LootboxesService {
   ) {
     const itemsService = new ItemsService();
     const mintedItems = await MastersItemsContract.mintedItems(receiver);
-    const seed = `${receiver}-${mintedItems}-${process.env.RANDOM_SEED}`;
+    const seed = `${receiver}-${mintedItems}-${config.RANDOM_SEED}`;
     const rng = seedrandom(seed);
 
     const itemIdsSelection: number[] = [];

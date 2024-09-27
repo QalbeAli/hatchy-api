@@ -12,7 +12,7 @@ export const getMastersAvatar = async (req: Request, res: Response, next: NextFu
 
     const mastersService = new MastersService();
     const avatar = await mastersService.getAvatar(Number(tokenId));
-    return avatar;
+    return res.json(avatar);
   } catch (error) {
     next(error);
   }

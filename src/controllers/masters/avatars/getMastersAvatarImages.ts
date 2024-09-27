@@ -10,7 +10,7 @@ export const getMastersAvatarImage = async (req: Request, res: Response, next: N
     if (!isAddress(address)) return messageResponse(res, 400, "Invalid address");
     const mastersService = new MastersService();
     const avatarsBalance = await mastersService.getAvatarsImages(address);
-    return avatarsBalance;
+    return res.json(avatarsBalance);
   } catch (error) {
     next(error);
   }

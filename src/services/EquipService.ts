@@ -2,6 +2,7 @@ import { BigNumber, Wallet, ethers } from "ethers";
 import { MastersItemsContract, MastersPFPContract } from "../contracts/contracts";
 import { createArrayOf } from "../utils";
 import { DI } from "..";
+import config from "../config";
 
 
 const bodyTraitType = 1;
@@ -80,8 +81,8 @@ export class EquipService {
       itemIdsPositioned[item.category.type.id] = item.id;
     }
 
-    const provider = new ethers.providers.JsonRpcProvider(process.env.JSON_RPC_URL);
-    const signer = new Wallet(process.env.MASTERS_SIGNER_KEY, provider);
+    const provider = new ethers.providers.JsonRpcProvider(config.JSON_RPC_URL);
+    const signer = new Wallet(config.MASTERS_SIGNER_KEY, provider);
     const nonce = BigNumber.from(ethers.utils.randomBytes(32));
 
     const hash = ethers.utils.solidityKeccak256(

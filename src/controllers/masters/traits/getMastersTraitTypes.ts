@@ -6,7 +6,7 @@ export const getMastersTraitTypes = async (req: Request, res: Response, next: Ne
   try {
     const mastersService = new MastersService();
     const traitTypes = await mastersService.getTraitTypes();
-    return traitTypes;
+    return res.json(traitTypes);
   } catch (error) {
     next(error);
   }

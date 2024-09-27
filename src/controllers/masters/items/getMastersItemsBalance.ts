@@ -10,7 +10,7 @@ export const getMastersItemsBalance = async (req: Request, res: Response, next: 
     if (!isAddress(address)) return messageResponse(res, 400, 'Invalid address');
     const itemsService = new ItemsService();
     const itemsBalance = await itemsService.getItemsBalance(address);
-    return itemsBalance;
+    return res.json(itemsBalance);
   } catch (error) {
     next(error);
   }

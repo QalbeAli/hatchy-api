@@ -2,6 +2,7 @@ import { BigNumber, Wallet, ethers } from "ethers";
 import { DI } from ".."
 import { MastersItemsContract } from "../contracts/contracts";
 import { CreateItemParams } from "../models/CreateItemParams";
+import config from "../config";
 
 export class ItemsService {
   async addItem(item: CreateItemParams) {
@@ -89,8 +90,8 @@ export class ItemsService {
     payWithTicket: boolean,
     ticketId: number
   ) {
-    const provider = new ethers.providers.JsonRpcProvider(process.env.JSON_RPC_URL);
-    const signer = new Wallet(process.env.MASTERS_SIGNER_KEY, provider);
+    const provider = new ethers.providers.JsonRpcProvider(config.JSON_RPC_URL);
+    const signer = new Wallet(config.MASTERS_SIGNER_KEY, provider);
     const hash = ethers.utils.solidityKeccak256(
       ['address', 'uint256[]', 'uint256[]', 'uint256', 'uint256', 'address', 'uint256', 'bool', 'uint256'],
       [receiver, itemIds, amounts, nonce, 0, currencyAddress, price, payWithTicket, ticketId]);

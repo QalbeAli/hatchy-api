@@ -25,7 +25,7 @@ export const getMastersLootboxSignature = async (req: Request, res: Response, ne
     }
 
     const lootboxSignatureData = await lootboxesService.getLootboxSignatureData(lootbox, amount, receiver, currency, payWithTicket);
-    return lootboxSignatureData;
+    return res.json(lootboxSignatureData);
   } catch (error) {
     next(error);
   }

@@ -13,7 +13,7 @@ export const getMintTraits = async (req: Request, res: Response, next: NextFunct
       colorIds,
       genderId
     });
-    return traits;
+    return res.json(traits);
   } catch (error) {
     next(error);
   }

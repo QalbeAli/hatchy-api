@@ -7,7 +7,7 @@ import { messageResponse } from '../../utils';
 export const getMastersEquipSignature = async (req: Request, res: Response, next: NextFunction) => {
   const equipService = new EquipService();
   try {
-    const { itemIds, owner, tokenId } = JSON.parse(req.body);
+    const { itemIds, owner, tokenId } = req.body;
     if (!isAddress(owner)) {
       return messageResponse(res, 400, 'Invalid address');
     }
@@ -15,8 +15,7 @@ export const getMastersEquipSignature = async (req: Request, res: Response, next
       return messageResponse(res, 400, 'Invalid itemIds or tokenId');
     }
     const equipSignatureData = await equipService.getEquipItemsSignatureData(owner, itemIds, tokenId);
-    return equipSignatureData;
-
+    return res.json(equipSignatureData);
   } catch (error) {
     next(error);
   }

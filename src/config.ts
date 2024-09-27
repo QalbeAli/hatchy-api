@@ -1,7 +1,7 @@
 import path from 'path'
 import dotenv from 'dotenv'
 import dotenvExpand from 'dotenv-expand'
-const env = dotenv.config({ path: path.resolve(__dirname, '../.env') })
+const env = dotenv.config({ path: path.resolve(__dirname, `../.env.${process.env.NODE_ENV}`) })
 dotenvExpand.expand(env)
 
 const addressess = {
@@ -18,6 +18,7 @@ const addressess = {
     'hatchy-tickets-address': '0xcb4A162043D3834aD9706A32b6489599F9bC38E0'
   }
 }
+
 const rpc = {
   dev: 'https://api.avax-test.network/ext/bc/C/rpc',
   prod: 'https://api.avax.network/ext/bc/C/rpc'
@@ -36,6 +37,9 @@ interface ENV {
   MASTERS_ITEMS_ADDRESS: string | undefined
   MASTERS_PFP_ADDRESS: string | undefined
   JSON_RPC_URL: string | undefined
+  MASTERS_SIGNER_KEY: string | undefined
+  IMAGE_API_KEY: string | undefined
+  RANDOM_SEED: string | undefined
 }
 
 const getConfig = (): ENV => {
@@ -53,7 +57,10 @@ const getConfig = (): ENV => {
     HATCHY_TICKETS_ADDRESS: addressess[process.env.NODE_ENV || 'dev']['hatchy-tickets-address'],
     MASTERS_ITEMS_ADDRESS: addressess[process.env.NODE_ENV || 'dev']['masters-items-address'],
     MASTERS_PFP_ADDRESS: addressess[process.env.NODE_ENV || 'dev']['masters-pfp-address'],
-    JSON_RPC_URL: rpc[process.env.NODE_ENV || 'dev']
+    JSON_RPC_URL: rpc[process.env.NODE_ENV || 'dev'],
+    MASTERS_SIGNER_KEY: process.env.MASTERS_SIGNER_KEY,
+    IMAGE_API_KEY: process.env.IMAGE_API_KEY,
+    RANDOM_SEED: process.env.RANDOM_SEED
   }
 }
 

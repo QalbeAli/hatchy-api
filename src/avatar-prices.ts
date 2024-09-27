@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+import config from "./config";
 
 interface AvatarPrice {
   currency: string;
@@ -76,7 +77,7 @@ const devAvatarPrices: Map<string, AvatarPrice> = new Map([
   ],
 ]);
 
-export const AvatarPrices = process.env.STAGE == "dev" ? devAvatarPrices : prodAvatarPrices;
+export const AvatarPrices = config.NODE_ENV == "dev" ? devAvatarPrices : prodAvatarPrices;
 export const AvatarPricesArray = Array.from(AvatarPrices.values());
 
 export const getAvatarPrice = (

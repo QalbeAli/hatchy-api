@@ -7,7 +7,7 @@ export const getMastersColors = async (req: Request, res: Response, next: NextFu
     const typeId = req.query.typeId;
     const mastersService = new MastersService();
     const colors = await mastersService.getColors(Number(typeId));
-    return colors;
+    return res.json(colors);
   } catch (error) {
     next(error);
   }

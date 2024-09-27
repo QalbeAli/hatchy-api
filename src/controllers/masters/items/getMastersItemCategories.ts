@@ -6,7 +6,7 @@ export const getMastersItemCategories = async (req: Request, res: Response, next
   try {
     const itemsService = new ItemsService();
     const categories = await itemsService.getItemCategories();
-    return categories;
+    return res.json(categories);
   } catch (error) {
     next(error);
   }
