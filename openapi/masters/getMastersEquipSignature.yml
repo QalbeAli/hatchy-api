@@ -1,0 +1,39 @@
+operationId: getMastersEquipSignature
+summary: get equip signature
+tags:
+  - masters
+
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          tokenId:
+            type: number
+          owner:
+            type: string
+          itemIds:
+            type: array
+            items:
+              type: number
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yml#/components/schemas/MastersEquipSignature"
+
+  500:
+    description: Internal Server Error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "Internal Server Error"

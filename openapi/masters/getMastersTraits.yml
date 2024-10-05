@@ -1,0 +1,42 @@
+operationId: getMastersTraits
+summary: get all masters traits
+tags:
+  - masters
+
+parameters:
+  - name: colorId
+    in: query
+    required: false
+    schema:
+      type: integer
+  - name: genderId
+    in: query
+    required: false
+    schema:
+      type: integer
+  - name: typeId
+    in: query
+    required: false
+    schema:
+      type: integer
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../openapi.yml#/components/schemas/MastersTrait"
+
+  500:
+    description: Internal Server Error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "Error getting masters traits"

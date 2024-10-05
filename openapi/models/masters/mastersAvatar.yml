@@ -1,0 +1,42 @@
+type: object
+properties:
+  tokenId:
+    type: number
+  image:
+    type: string
+  name:
+    type: string
+  attributes:
+    type: array
+    items:
+      type: object
+      properties:
+        trait_type:
+          type: string
+        value:
+          type: string
+  equippedItems:
+    type: array
+    items:
+      oneOf:
+        - $ref: "../../openapi.yml#/components/schemas/MastersItem"
+        - type: "null"
+  traits:
+    type: array
+    items:
+      $ref: "../../openapi.yml#/components/schemas/MastersTrait"
+  layers:
+    type: array
+    items:
+      type: string
+
+required:
+  - id
+  - tokenId
+  - category
+  - name
+  - image
+  - contract
+  - contractType
+  - equippedItems
+  - traits

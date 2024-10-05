@@ -1,0 +1,45 @@
+type: object
+properties:
+  id:
+    type: number
+  name:
+    type: string
+  categories:
+    type: array
+    items:
+      type: object
+      required:
+        - id
+        - name
+        - type
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        type:
+          type: number
+  layers:
+    type: array
+    items:
+      type: object
+      required:
+        - id
+        - name
+        - order
+        - layer
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+        order:
+          type: number
+        layer:
+          type: string
+
+required:
+  - id
+  - name
+  - categories
+  - layers

@@ -1,0 +1,25 @@
+operationId: getMastersAvatarPrices
+summary: get masters avatar prices
+tags:
+  - masters
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../openapi.yml#/components/schemas/LootboxPrice"
+
+  500:
+    description: Internal Server Error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "Internal Server Error"

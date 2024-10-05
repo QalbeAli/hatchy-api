@@ -9,7 +9,7 @@
     "start:prod": "npm run build && NODE_ENV=prod PORT=3002 node dist/index.js",
     "build": "tsc -p .",
     "generate-client": "openapi --input ./openapi/openapi.yml --output ./api-client-lib --exportSchemas true --exportModels true",
-    "postgenerate-client": "cd .. && cp -r ./image-generator-api/api-client-lib/* ./hatchyverse-website/hatchy-api-client/image-generator"
+    "postgenerate-client": "cd .. && cp -r ./masters-api/api-client-lib/* ./hatchyverse-website/hatchy-api-client/masters-api"
   },
   "keywords": [],
   "author": "",

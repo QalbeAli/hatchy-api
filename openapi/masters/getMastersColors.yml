@@ -1,0 +1,21 @@
+operationId: getMastersColors
+summary: get all masters colors
+tags:
+  - masters
+
+parameters:
+  - name: typeId
+    in: query
+    schema:
+      type: number
+      example: 1
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../openapi.yml#/components/schemas/MastersColor"

@@ -1,0 +1,47 @@
+type: object
+properties:
+  id:
+    type: number
+  name:
+    type: string
+  description:
+    type: string
+  image:
+    type: string
+  frontImage:
+    type: string
+  backImage:
+    type: string
+  maskImage:
+    type: string
+  category:
+    type: object
+    properties:
+      id:
+        type: number
+      name:
+        type: string
+      type:
+        $ref: "../../openapi.yml#/components/schemas/MastersItemType"
+    required:
+      - id
+      - name
+      - type
+  gender:
+    type: object
+    properties:
+      id:
+        type: number
+      name:
+        type: string
+    required:
+      - id
+      - name
+
+required:
+  - id
+  - name
+  - gender
+  - description
+  - image
+  - category

@@ -1,0 +1,12 @@
+type: object
+properties:
+  id:
+    type: number
+  name:
+    type: string
+  type:
+    $ref: "../../openapi.yml#/components/schemas/MastersItemType"
+required:
+  - id
+  - name
+  - type

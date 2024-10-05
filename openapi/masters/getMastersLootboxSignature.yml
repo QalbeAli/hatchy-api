@@ -1,0 +1,46 @@
+operationId: getMastersLootboxSignature
+summary: get lootbox signature
+tags:
+  - masters
+
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - lootboxId
+          - receiver
+          - amount
+          - payWithTicket
+        properties:
+          lootboxId:
+            type: string
+          receiver:
+            type: string
+          amount:
+            type: number
+          currency:
+            type: string
+          payWithTicket:
+            type: boolean
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yml#/components/schemas/MastersLootboxSignature"
+
+  500:
+    description: Internal Server Error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "Error getting lootbox signature"

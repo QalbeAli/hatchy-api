@@ -1,0 +1,30 @@
+type: object
+properties:
+  id:
+    type: number
+  name:
+    type: string
+  image:
+    type: string
+  frontImage:
+    type: string
+  backImage:
+    type: string
+  type:
+    $ref: "../../openapi.yml#/components/schemas/MastersTraitType"
+  gender:
+    $ref: "../../openapi.yml#/components/schemas/MastersGender"
+  color:
+    type: number
+    $ref: "../../openapi.yml#/components/schemas/MastersColor"
+  hide:
+    type: boolean
+
+required:
+  - id
+  - name
+  - image
+  - type
+  - gender
+  - color
+  - hide

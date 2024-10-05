@@ -1,0 +1,29 @@
+operationId: getMastersTraitsUploadUrl
+summary: get traits upload url
+tags:
+  - masters
+
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          filename:
+            type: string
+          traitId:
+            type: number
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            uploadUrl:
+              type: string
+            fileUrl:
+              type: string

@@ -1,0 +1,20 @@
+type: object
+properties:
+  name:
+    type: string
+  typeId:
+    type: number
+  genderId:
+    type: number
+  colorId:
+    type: number
+  image:
+    type: string
+  frontImage:
+    type: string
+  backImage:
+    type: string
+
+required:
+  - typeId
+  - image

@@ -1,0 +1,19 @@
+operationId: addMastersItem
+summary: add a new item
+tags:
+  - masters
+
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: "../openapi.yml#/components/schemas/CreateItemParams"
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yml#/components/schemas/MessageResponse"

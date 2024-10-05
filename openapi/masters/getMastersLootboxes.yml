@@ -1,0 +1,25 @@
+operationId: getMastersLootboxes
+summary: get all masters lootboxes
+tags:
+  - masters
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../openapi.yml#/components/schemas/Lootbox"
+
+  500:
+    description: Internal Server Error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "Error getting lootboxes"

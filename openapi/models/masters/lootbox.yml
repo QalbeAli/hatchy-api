@@ -1,0 +1,36 @@
+type: object
+properties:
+  id:
+    type: string
+  category:
+    type: string
+  name:
+    type: string
+  min:
+    type: number
+  max:
+    type: number
+  image:
+    type: string
+  price:
+    type: number
+  ticketId:
+    type: number
+  genderId:
+    type: number
+  order:
+    type: number
+  prices:
+    type: array
+    items:
+      $ref: "../../openapi.yml#/components/schemas/LootboxPrice"
+
+required:
+  - id
+  - category
+  - name
+  - min
+  - max
+  - image
+  - prices
+  - ticketId

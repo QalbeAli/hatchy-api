@@ -1,0 +1,26 @@
+type: object
+properties:
+  categoryId:
+    type: number
+  genderId:
+    type: number
+  name:
+    type: string
+  description:
+    type: string
+  image:
+    type: string
+  frontImage:
+    type: string
+  backImage:
+    type: string
+  maskImage:
+    type: string
+  lootboxId:
+    type: number
+
+required:
+  - categoryId
+  - name
+  - image
+  - lootboxId

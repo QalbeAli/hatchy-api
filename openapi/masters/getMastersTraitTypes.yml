@@ -1,0 +1,14 @@
+operationId: getMastersTraitTypes
+summary: get all masters trait types
+tags:
+  - masters
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../openapi.yml#/components/schemas/MastersTraitType"

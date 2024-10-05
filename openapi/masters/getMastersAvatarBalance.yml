@@ -1,0 +1,34 @@
+operationId: getMastersAvatarBalance
+summary: get masters avatars balance by address
+tags:
+  - masters
+
+parameters:
+  - name: address
+    in: path
+    description: address
+    required: true
+    schema:
+      type: string
+      example: "1"
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../openapi.yml#/components/schemas/MastersAvatar"
+
+  500:
+    description: Internal Server Error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "Error getting avatars balance"

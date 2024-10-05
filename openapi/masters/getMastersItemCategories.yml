@@ -1,0 +1,14 @@
+operationId: getMastersItemCategories
+summary: get masters item categories
+tags:
+  - masters
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../openapi.yml#/components/schemas/MastersItemCategory"

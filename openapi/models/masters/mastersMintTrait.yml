@@ -1,0 +1,18 @@
+type: object
+properties:
+  colors:
+    type: array
+    items:
+      $ref: "../../openapi.yml#/components/schemas/MastersColor"
+  traits:
+    type: array
+    items:
+      $ref: "../../openapi.yml#/components/schemas/MastersTrait"
+  type:
+    type: object
+    $ref: "../../openapi.yml#/components/schemas/MastersTraitType"
+
+required:
+  - colors
+  - traits
+  - type

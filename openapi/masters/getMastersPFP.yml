@@ -1,0 +1,32 @@
+operationId: getMastersPFP
+summary: get masters pfp by id
+tags:
+  - masters
+
+parameters:
+  - name: tokenId
+    in: path
+    description: tokenId
+    required: true
+    schema:
+      type: string
+      example: "1"
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yml#/components/schemas/MastersAvatar"
+
+  500:
+    description: Internal Server Error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "Error getting pfp"

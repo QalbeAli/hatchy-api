@@ -1,0 +1,47 @@
+type: object
+properties:
+  receiver:
+    type: string
+  tokenIds:
+    type: array
+    items:
+      type: number
+  amounts:
+    type: array
+    items:
+      type: number
+  items:
+    type: array
+    items:
+      $ref: "../../openapi.yml#/components/schemas/MastersItem"
+  nonce:
+    type: object
+    properties:
+      hex:
+        type: string
+      type:
+        type: string
+  claimableUntil:
+    type: number
+  currency:
+    type: string
+  price:
+    type: string
+  decimals:
+    type: number
+  payWithTicket:
+    type: boolean
+  ticketId:
+    type: number
+  signature:
+    type: string
+
+required:
+  - receiver
+  - tokenIds
+  - amounts
+  - items
+  - voucherId
+  - claimableUntil
+  - price
+  - signature

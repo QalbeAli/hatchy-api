@@ -1,0 +1,26 @@
+type: object
+properties:
+  owner:
+    type: string
+  tokenId:
+    type: number
+  itemIds:
+    type: array
+    items:
+      type: number
+  nonce:
+    type: object
+    properties:
+      hex:
+        type: string
+      type:
+        type: string
+  signature:
+    type: string
+
+required:
+  - owner
+  - tokenId
+  - itemIds
+  - nonce
+  - signature

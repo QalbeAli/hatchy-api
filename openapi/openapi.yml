@@ -11,13 +11,65 @@ servers:
     description: Development server
 
 tags:
-  - name: mastersImage
-    description: Masters Image operations
+  - name: masters
+    description: Masters postgresql operations
 
 paths:
   /masters/avatars/image/{tokenId}:
     post:
       $ref: "./masters/updateMastersAvatarImage.yml"
+  /masters/genders:
+    get:
+      $ref: "./masters/getMastersGenders.yml"
+  /masters/colors:
+    get:
+      $ref: "./masters/getMastersColors.yml"
+  /masters/traits/types:
+    get:
+      $ref: "./masters/getMastersTraitTypes.yml"
+  /masters/mint/traits:
+    post:
+      $ref: "./masters/getMastersMintTraits.yml"
+  /masters/traits:
+    get:
+      $ref: "./masters/getMastersTraits.yml"
+    post:
+      $ref: "./masters/addMastersTrait.yml"
+  /masters/traits/image-upload-url:
+    post:
+      $ref: "./masters/getMastersTraitsUploadUrl.yml"
+  /masters/avatars/prices:
+    get:
+      $ref: "./masters/getMastersAvatarPrices.yml"
+  /masters/avatars/{tokenId}:
+    get:
+      $ref: "./masters/getMastersPFP.yml"
+  /masters/avatars:
+    post:
+      $ref: "./masters/getMastersPFPSignature.yml"
+  /masters/avatars/balance/{address}:
+    get:
+      $ref: "./masters/getMastersAvatarBalance.yml"
+  /masters/items/categories:
+    get:
+      $ref: "./masters/getMastersItemCategories.yml"
+  /masters/items:
+    post:
+      $ref: "./masters/addMastersItem.yml"
+  /masters/items/balance/{address}:
+    get:
+      $ref: "./masters/getMastersItemsBalance.yml"
+  /masters/lootbox:
+    post:
+      $ref: "./masters/getMastersLootboxSignature.yml"
+    get:
+      $ref: "./masters/getMastersLootboxes.yml"
+  /masters/items/{tokenId}:
+    get:
+      $ref: "./masters/getMastersItem.yml"
+  /masters/equip/signature:
+    post:
+      $ref: "./masters/getMastersEquipSignature.yml"
 
 security:
   - bearerAuth: []
@@ -25,6 +77,40 @@ components:
   schemas:
     MessageResponse:
       $ref: "./models/messageResponse.yml"
+    MastersLootboxSignature:
+      $ref: "./models/masters/mastersLootboxSignature.yml"
+    MastersPFPSignature:
+      $ref: "./models/masters/mastersPFPSignature.yml"
+    MastersEquipSignature:
+      $ref: "./models/masters/mastersEquipSignature.yml"
+    Lootbox:
+      $ref: "./models/masters/lootbox.yml"
+    LootboxPrice:
+      $ref: "./models/masters/lootboxPrice.yml"
+    MastersAvatar:
+      $ref: "./models/masters/mastersAvatar.yml"
+    MastersItem:
+      $ref: "./models/masters/mastersItem.yml"
+    MastersItemType:
+      $ref: "./models/masters/mastersItemType.yml"
+    MastersItemCategory:
+      $ref: "./models/masters/mastersItemCategory.yml"
+    MastersItemBalance:
+      $ref: "./models/masters/mastersItemBalance.yml"
+    MastersTrait:
+      $ref: "./models/masters/mastersTrait.yml"
+    MastersMintTrait:
+      $ref: "./models/masters/mastersMintTrait.yml"
+    MastersColor:
+      $ref: "./models/masters/mastersColor.yml"
+    MastersGender:
+      $ref: "./models/masters/mastersGender.yml"
+    MastersTraitType:
+      $ref: "./models/masters/mastersTraitType.yml"
+    CreateTraitParams:
+      $ref: "./models/masters/createTraitParams.yml"
+    CreateItemParams:
+      $ref: "./models/masters/createItemParams.yml"
 
   securitySchemes:
     bearerAuth:
