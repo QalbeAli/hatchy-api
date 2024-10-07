@@ -5,7 +5,7 @@ module.exports = {
       script: "dist/index.js",
       env: {
         PORT: 3001,
-        NODE_ENV: "development",
+        NODE_ENV: "dev",
       },
     },
     {
@@ -13,7 +13,7 @@ module.exports = {
       script: "dist/index.js",
       env: {
         PORT: 3002,
-        NODE_ENV: "production",
+        NODE_ENV: "prod",
       },
     },
   ],
