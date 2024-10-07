@@ -9,7 +9,10 @@
     "start:prod": "npm run build && NODE_ENV=prod PORT=3002 node dist/index.js",
     "build": "tsc -p .",
     "generate-client": "openapi --input ./openapi/openapi.yml --output ./api-client-lib --exportSchemas true --exportModels true",
-    "postgenerate-client": "cd .. && cp -r ./masters-api/api-client-lib/* ./hatchyverse-website/hatchy-api-client/masters-api"
+    "postgenerate-client": "cd .. && cp -r ./masters-api/api-client-lib/* ./hatchyverse-website/hatchy-api-client/masters-api",
+    "pm2:start:dev": "npm run build && pm2 startOrRestart ecosystem.config.js --only worker_dev",
+    "pm2:start:staging": "npm run build && pm2 startOrRestart ecosystem.config.js --only worker_staging",
+    "pm2:start:prod": "npm run build && pm2 startOrRestart ecosystem.config.js --only worker_prod"
   },
   "keywords": [],
   "author": "",
