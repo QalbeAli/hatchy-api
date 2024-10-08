@@ -122,7 +122,14 @@ export class ItemsService {
   }
 
   async getItemCategories() {
-    const categories = await DI.itemCategories.findAll();
-    return categories;
+    try {
+      const categories = await DI.itemCategories.findAll({
+        fields: ['id', 'name'],
+      });
+      return categories;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
   }
 }
