@@ -5,9 +5,9 @@ info:
     This API allows generate and update masters avatars images
   version: 1.0.0
 servers:
-  - url: https://image-generator.hatchyverse.com
+  - url: https://api.hatchyverse.com
     description: Production server
-  - url: https://image-generator.hatchyverse.com/dev
+  - url: https://api.hatchyverse.com/dev
     description: Development server
 
 tags:
