@@ -33,8 +33,6 @@ paths:
   /masters/traits:
     get:
       $ref: "./masters/getMastersTraits.yml"
-    post:
-      $ref: "./masters/addMastersTrait.yml"
   /masters/traits/image-upload-url:
     post:
       $ref: "./masters/getMastersTraitsUploadUrl.yml"
@@ -53,9 +51,6 @@ paths:
   /masters/items/categories:
     get:
       $ref: "./masters/getMastersItemCategories.yml"
-  /masters/items:
-    post:
-      $ref: "./masters/addMastersItem.yml"
   /masters/items/balance/{address}:
     get:
       $ref: "./masters/getMastersItemsBalance.yml"
