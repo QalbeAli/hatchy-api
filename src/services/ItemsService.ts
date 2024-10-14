@@ -1,10 +1,16 @@
 import { BigNumber, Wallet, ethers } from "ethers";
 import { DI } from ".."
-import { MastersItemsContract } from "../contracts/contracts";
 import { CreateItemParams } from "../models/CreateItemParams";
 import config from "../config";
+import { DefaultChainId, getContract } from "../contracts/networks";
 
 export class ItemsService {
+  chainId: number;
+
+  constructor(chainId?: number) {
+    this.chainId = chainId || DefaultChainId;
+  }
+
   async addItem(item: CreateItemParams) {
     const itemsWithSameCategory = await DI.items.find({ category: item.categoryId });
 
@@ -104,7 +110,8 @@ export class ItemsService {
     const items = await DI.items.findAll({
       populate: ['category', 'category.type', 'category.type.layers', 'gender']
     });
-    const balance: BigNumber[] = await MastersItemsContract.balanceOfBatch(
+    const itemsContract = getContract('mastersItems', this.chainId);
+    const balance: BigNumber[] = await itemsContract.balanceOfBatch(
       Array(items.length).fill(address),
       items.map((i) => i.id)
     );
@@ -131,5 +138,11 @@ export class ItemsService {
       console.log(error);
       return [];
     }
+  }
+
+  async mintRewardItem(receiver: string, ids: number[], amounts: number[]) {
+    const itemsContract = getContract('mastersItems', this.chainId, true);
+    const tx = await itemsContract.mintRewardItem(receiver, ids, amounts);
+    return tx;
   }
 }

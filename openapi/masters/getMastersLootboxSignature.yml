@@ -3,6 +3,10 @@ summary: get lootbox signature
 tags:
   - masters
 
+parameters:
+  - name: chainId
+    in: query
+
 requestBody:
   required: true
   content:

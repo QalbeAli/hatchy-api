@@ -3,9 +3,11 @@ import { Request, Response, NextFunction } from "express";
 import { isAddress } from 'ethers/lib/utils';
 import { EquipService } from '../../services/EquipService';
 import { messageResponse } from '../../utils';
+import { DefaultChainId } from "../../contracts/networks";
 
 export const getMastersEquipSignature = async (req: Request, res: Response, next: NextFunction) => {
-  const equipService = new EquipService();
+  const chainId = Number(req.query.chainId) || DefaultChainId;
+  const equipService = new EquipService(chainId);
   try {
     const { itemIds, owner, tokenId } = req.body;
     if (!isAddress(owner)) {

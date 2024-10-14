@@ -3,6 +3,10 @@ summary: get masters avatar prices
 tags:
   - masters
 
+parameters:
+  - name: chainId
+    in: query
+
 responses:
   200:
     description: OK

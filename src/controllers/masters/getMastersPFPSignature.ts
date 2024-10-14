@@ -5,9 +5,11 @@ import { ethers } from "ethers";
 import { messageResponse } from "../../utils";
 import { MastersService } from "../../services/MastersService";
 import { getAvatarPrice } from "../../avatar-prices";
+import { DefaultChainId } from "../../contracts/networks";
 
 export const getMastersPFPSignature = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    const chainId = Number(req.query.chainId) || DefaultChainId;
     const {
       receiver,
       traits,
@@ -17,7 +19,7 @@ export const getMastersPFPSignature = async (req: Request, res: Response, next: 
     if (!isAddress(receiver)) {
       return messageResponse(res, 400, "Invalid address");
     }
-    const mastersService = new MastersService();
+    const mastersService = new MastersService(chainId);
 
     const validTraits = await mastersService.isValidTraits(traits);
     if (!validTraits) {

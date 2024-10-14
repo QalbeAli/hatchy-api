@@ -19,6 +19,7 @@ import { ItemCategory } from "./entities/ItemCategory";
 import { ItemType } from "./entities/ItemType";
 import { Item } from "./entities/Item";
 import { MastersAvatar } from "./entities/MastersAvatar";
+import { ApiKey } from "./entities/ApiKey";
 
 export const DI = {} as {
   server: http.Server;
@@ -36,6 +37,7 @@ export const DI = {} as {
   itemLayers: EntityRepository<ItemLayer>,
   mastersLootboxes: EntityRepository<MastersLootbox>,
   mastersAvatars: EntityRepository<MastersAvatar>,
+  apiKeys: EntityRepository<ApiKey>,
 };
 
 const app = express();
@@ -55,6 +57,7 @@ export const init = (async () => {
   DI.itemLayers = DI.orm.em.getRepository(ItemLayer);
   DI.mastersLootboxes = DI.orm.em.getRepository(MastersLootbox);
   DI.mastersAvatars = DI.orm.em.getRepository(MastersAvatar);
+  DI.apiKeys = DI.orm.em.getRepository(ApiKey);
 
   app.use(json());
   app.use(cors());

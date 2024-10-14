@@ -3,7 +3,7 @@ import * as MastersPFP from "./MastersAvatars.json";
 import * as HatchyTickets from "./HatchyTickets.json";
 
 export default {
-  MastersItems: MastersItems.abi,
-  MastersPFP: MastersPFP.abi,
-  HatchyTickets: HatchyTickets.abi
+  mastersItems: MastersItems.abi,
+  mastersAvatars: MastersPFP.abi,
+  hatchyTickets: HatchyTickets.abi
 };

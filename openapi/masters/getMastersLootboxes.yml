@@ -3,6 +3,10 @@ summary: get all masters lootboxes
 tags:
   - masters
 
+parameters:
+  - name: chainId
+    in: query
+
 responses:
   200:
     description: OK

@@ -3,6 +3,10 @@ summary: get masters mint section traits
 tags:
   - masters
 
+parameters:
+  - name: chainId
+    in: query
+
 requestBody:
   required: false
   content:

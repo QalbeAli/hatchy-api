@@ -14,6 +14,7 @@ import { ItemLayer } from "./entities/ItemLayer";
 import { MastersLootbox } from "./entities/MastersLootbox";
 import { LootboxPrice } from "./entities/LootboxPrice";
 import { MastersAvatar } from "./entities/MastersAvatar";
+import { ApiKey } from "./entities/ApiKey";
 
 export default defineConfig({
   entities: [
@@ -30,9 +31,10 @@ export default defineConfig({
     ItemLayer,
     MastersLootbox,
     LootboxPrice,
-    MastersAvatar
+    MastersAvatar,
+    ApiKey
   ],
-  debug: true,
+  debug: false,
   dbName: config.DB_NAME,
   user: config.DB_USER,
   host: config.DB_HOST,

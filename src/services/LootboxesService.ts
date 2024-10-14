@@ -4,10 +4,16 @@ import seedrandom from 'seedrandom';
 import { BigNumber, ethers } from "ethers";
 import { Loaded } from "@mikro-orm/core";
 import { DI } from "..";
-import { HatchyTicketsContract, MastersItemsContract } from "../contracts/contracts";
 import config from "../config";
+import { DefaultChainId, getContract } from "../contracts/networks";
 
 export class LootboxesService {
+  chainId: number;
+
+  constructor(chainId?: number) {
+    this.chainId = chainId || DefaultChainId;
+  }
+
   async getLootboxes(gameId?: string) {
     const lootboxes = await DI.mastersLootboxes.findAll({
       where: {
@@ -34,8 +40,10 @@ export class LootboxesService {
     currency: string,
     payWithTicket: boolean
   ) {
-    const itemsService = new ItemsService();
-    const mintedItems = await MastersItemsContract.mintedItems(receiver);
+    const itemsService = new ItemsService(this.chainId);
+    const itemsContract = getContract('mastersItems', this.chainId);
+    const ticketsContract = getContract('hatchyTickets', this.chainId);
+    const mintedItems = await itemsContract.mintedItems(receiver);
     const seed = `${receiver}-${mintedItems}-${config.RANDOM_SEED}`;
     const rng = seedrandom(seed);
 
@@ -55,7 +63,7 @@ export class LootboxesService {
     const amounts = Array.from({ length: itemIdsSelection.length }, () => 1);
 
     if (payWithTicket) {
-      const ticketsBalance = await HatchyTicketsContract.balanceOf(receiver, lootbox.ticketId);
+      const ticketsBalance = await ticketsContract.balanceOf(receiver, lootbox.ticketId);
       if (ticketsBalance.eq(0)) {
         throw new Error("No tickets available to mint item");
       }

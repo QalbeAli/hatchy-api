@@ -1,12 +1,17 @@
 import { BigNumber, Wallet, ethers } from "ethers";
-import { MastersItemsContract, MastersPFPContract } from "../contracts/contracts";
 import { createArrayOf } from "../utils";
 import { DI } from "..";
-import config from "../config";
+import { DefaultChainId, getContract, getSigner } from "../contracts/networks";
 
 
 const bodyTraitType = 1;
 export class EquipService {
+  chainId: number;
+
+  constructor(chainId?: number) {
+    this.chainId = chainId || DefaultChainId;
+  }
+
   async getLootboxes() {
     const lootboxes = await DI.mastersLootboxes.findAll({
       where: {
@@ -22,13 +27,15 @@ export class EquipService {
   }
 
   async getEquipItemsSignatureData(owner: string, itemIds: number[], tokenId: number) {
+    const itemsContract = getContract('mastersItems', this.chainId);
+    const avatarsContract = getContract('mastersAvatars', this.chainId);
     const [_owner, balances, _equippedItems] = await Promise.all([
-      MastersPFPContract.ownerOf(tokenId),
-      MastersItemsContract.balanceOfBatch(
+      avatarsContract.ownerOf(tokenId),
+      itemsContract.balanceOfBatch(
         createArrayOf(itemIds.length, owner),
         itemIds
       ),
-      MastersPFPContract.getEquippedItems(tokenId)
+      avatarsContract.getEquippedItems(tokenId)
     ]);
 
     if (ethers.utils.getAddress(_owner) !== ethers.utils.getAddress(owner)) {
@@ -48,7 +55,7 @@ export class EquipService {
     }
 
     // get gender
-    const traits: number[] = await MastersPFPContract.getTraits(tokenId);
+    const traits: number[] = await avatarsContract.getTraits(tokenId);
     const nonNullTraits = traits.map(trait => Number(trait)).filter((trait) => trait !== 0);
     const bodyTrait = await DI.traits.find(
       {
@@ -81,8 +88,7 @@ export class EquipService {
       itemIdsPositioned[item.category.type.id] = item.id;
     }
 
-    const provider = new ethers.providers.JsonRpcProvider(config.JSON_RPC_URL);
-    const signer = new Wallet(config.MASTERS_SIGNER_KEY, provider);
+    const signer = getSigner();
     const nonce = BigNumber.from(ethers.utils.randomBytes(32));
 
     const hash = ethers.utils.solidityKeccak256(

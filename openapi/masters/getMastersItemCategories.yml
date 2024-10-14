@@ -3,6 +3,10 @@ summary: get masters item categories
 tags:
   - masters
 
+parameters:
+  - name: chainId
+    in: query
+
 responses:
   200:
     description: OK

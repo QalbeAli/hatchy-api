@@ -10,8 +10,8 @@ import { Item } from "../entities/Item";
 import { getAvatarPrice } from "../avatar-prices";
 import { DI } from "..";
 import { setAvatarLayer } from "../utils";
-import { HatchyTicketsContract, MastersPFPContract } from "../contracts/contracts";
 import config from "../config";
+import { DefaultChainId, getContract } from "../contracts/networks";
 
 const s3 = new S3();
 const dynamoDB = new DynamoDB.DocumentClient();
@@ -31,6 +31,11 @@ const requiredTraitTypes = [1, 3, 4, 5, 6, 7, 8]
 const avatarsTicketId = 0;
 
 export class MastersService {
+  chainId: number;
+
+  constructor(chainId?: number) {
+    this.chainId = chainId || DefaultChainId;
+  }
 
   async getItem(tokenId: string) {
     const category = MastersItemsCategory;
@@ -111,18 +116,18 @@ export class MastersService {
   }
 
   async getAllTraits(
-    genderId?: number,
-    colorId?: number,
+    // genderId?: number,
+    // colorId?: number,
     typeId?: number
   ) {
     const filters = {};
     filters['hide'] = false;
-    if (genderId) {
-      filters['gender'] = genderId;
-    }
-    if (colorId) {
-      filters['color'] = colorId;
-    }
+    // if (genderId) {
+    //   filters['gender'] = genderId;
+    // }
+    // if (colorId) {
+    //   filters['color'] = colorId;
+    // }
     if (typeId != null) {
       filters['type'] = typeId;
     }
@@ -136,7 +141,7 @@ export class MastersService {
     return traits;
   }
 
-  async getMintTraits(traitFilters: GetMintTraitsFilters) {
+  async getMintTraits() {
     // exclude non main head/body tattoo
     const traitTypes = await DI.traitTypes.findAll({
       where: {
@@ -148,7 +153,7 @@ export class MastersService {
       .map(async (type) => {
         const [colors, traits] = await Promise.all([
           this.getColors(type.id),
-          this.getAllTraits(traitFilters.genderId, traitFilters.colorIds[type.id], type.id)
+          this.getAllTraits(type.id)
         ]);
         return {
           colors,
@@ -172,14 +177,14 @@ export class MastersService {
     const traitTypes = allTraits.map(trait => trait.type.id);
     const missingTraitTypes = requiredTraitTypes.filter(type => !traitTypes.includes(type));
     if (missingTraitTypes.length > 0) {
-      console.log('missingTraitTypes', missingTraitTypes);
+      //console.log('missingTraitTypes', missingTraitTypes);
       return false;
     }
     // validate that all the traits are unique
     const uniqueTraits = new Set(nonNullTraits);
     if (uniqueTraits.size !== nonNullTraits.length) {
-      console.log('uniqueTraits', uniqueTraits);
-      console.log('traits', nonNullTraits);
+      // console.log('uniqueTraits', uniqueTraits);
+      // console.log('traits', nonNullTraits);
       return false;
     }
     // validate that all traits have the same gender or undefined
@@ -188,7 +193,7 @@ export class MastersService {
       .map(trait => trait.gender);
 
     const isSameGender = genders.every((gender, _, array) => gender === array[0]); // Step 2: Check if all genders are the same
-    console.log('isSameGender', isSameGender);
+    // console.log('isSameGender', isSameGender);
     if (!isSameGender && genders.length > 0) { // Step 3: If there are different genders, return false
       return false;
     }
@@ -207,9 +212,10 @@ export class MastersService {
     );
     const signer = new Wallet(config.MASTERS_SIGNER_KEY, provider);
     const nonce = BigNumber.from(ethers.utils.randomBytes(32));
+    const ticketsContract = getContract('hatchyTickets', this.chainId);
 
     if (payWithTicket) {
-      const ticketsBalance = await HatchyTicketsContract.balanceOf(receiver, avatarsTicketId);
+      const ticketsBalance = await ticketsContract.balanceOf(receiver, avatarsTicketId);
       if (ticketsBalance.eq(0)) {
         throw new Error("No tickets available to mint avatar");
       }
@@ -252,7 +258,8 @@ export class MastersService {
   };
 
   async getAvatarTraits(tokenId: number) {
-    const traits: BigNumber[] = await MastersPFPContract.getTraits(tokenId);
+    const avatarsContract = getContract('mastersAvatars', this.chainId);
+    const traits: BigNumber[] = await avatarsContract.getTraits(tokenId);
     const numberTraits = traits.map(trait => trait.toNumber());
     const nonNullTraits = numberTraits.filter((trait) => trait !== 0);
     const allTraitsResult = await DI.traits.find(
@@ -261,15 +268,16 @@ export class MastersService {
       },
       { populate: ["type", "type.layers", "gender"] }
     );
-    console.log('allTraitsResult', allTraitsResult);
+    //console.log('allTraitsResult', allTraitsResult);
     // Sort allTraits in the same order as nonNullTraits
     const allTraits = allTraitsResult.sort((a, b) => nonNullTraits.indexOf(a.id) - nonNullTraits.indexOf(b.id));
-    console.log('allTraits', allTraits);
+    // console.log('allTraits', allTraits);
     return allTraits;
   };
 
   async getAvatarItems(tokenId: number, positioned?: boolean) {
-    const itemIds: BigNumber[] = await MastersPFPContract.getEquippedItems(tokenId);
+    const avatarsContract = getContract('mastersAvatars', this.chainId);
+    const itemIds: BigNumber[] = await avatarsContract.getEquippedItems(tokenId);
     const items = await DI.items.findAll({
       populate: ['category', 'category.type', 'category.type.layers', 'gender'],
       where: {
@@ -344,7 +352,8 @@ export class MastersService {
   }
 
   async getAvatar(tokenId: number) {
-    const nextMintId = await MastersPFPContract.nextMintId();
+    const avatarsContract = getContract('mastersAvatars', this.chainId);
+    const nextMintId = await avatarsContract.nextMintId();
     if (tokenId >= Number(nextMintId)) {
       throw new Error("Avatar not found");
     }
@@ -376,10 +385,11 @@ export class MastersService {
   };
 
   async getAvatarsBalance(address: string) {
-    const balance: BigNumber = await MastersPFPContract.balanceOf(address);
+    const avatarsContract = getContract('mastersAvatars', this.chainId);
+    const balance: BigNumber = await avatarsContract.balanceOf(address);
     const avatarsPromises = [];
     for (let i = 0; i < balance.toNumber(); i++) {
-      const _tokenId = await MastersPFPContract.tokenOfOwnerByIndex(address, i);
+      const _tokenId = await avatarsContract.tokenOfOwnerByIndex(address, i);
       const tokenId = Number(_tokenId);
       avatarsPromises.push(this.getAvatar(tokenId));
     }
@@ -388,7 +398,7 @@ export class MastersService {
   };
 
   getAvatarLayers(traits: Trait[], items: Item[]) {
-    console.log('get Avatar layers', traits);
+    // console.log('get Avatar layers', traits);
     const orderedLayers = new Map();
     let headTattooCount = 0;
     let bodyTattooCount = 0;
@@ -469,11 +479,12 @@ export class MastersService {
   }
 
   async getAvatarsImages(address: string) {
-    const balance: BigNumber = await MastersPFPContract.balanceOf(address);
+    const avatarsContract = getContract('mastersAvatars', this.chainId);
+    const balance: BigNumber = await avatarsContract.balanceOf(address);
     const tokenIdsPromises = [];
 
     for (let i = 0; i < balance.toNumber(); i++) {
-      tokenIdsPromises.push(MastersPFPContract.tokenOfOwnerByIndex(address, i));
+      tokenIdsPromises.push(avatarsContract.tokenOfOwnerByIndex(address, i));
     }
 
     const tokenIds = await Promise.all(tokenIdsPromises);

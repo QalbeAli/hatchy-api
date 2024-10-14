@@ -2,7 +2,7 @@ operationId: getMastersItem
 summary: get masters item by id
 tags:
   - masters
-    
+
 parameters:
   - name: tokenId
     in: path
@@ -10,15 +10,17 @@ parameters:
     required: true
     schema:
       type: string
-      example: '1'
-    
-responses: 
+      example: "1"
+  - name: chainId
+    in: query
+
+responses:
   200:
     description: OK
     content:
       application/json:
         schema:
-          $ref: '../openapi.yml#/components/schemas/MastersItem'
+          $ref: "../openapi.yml#/components/schemas/MastersItem"
 
   500:
     description: Internal Server Error
@@ -29,4 +31,4 @@ responses:
           properties:
             message:
               type: string
-              example: 'Error getting item'
+              example: "Error getting item"

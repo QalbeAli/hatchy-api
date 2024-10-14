@@ -19,6 +19,8 @@ parameters:
     required: false
     schema:
       type: integer
+  - name: chainId
+    in: query
 
 responses:
   200:

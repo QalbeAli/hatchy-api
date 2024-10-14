@@ -9,6 +9,8 @@ parameters:
     schema:
       type: number
       example: 1
+  - name: chainId
+    in: query
 
 responses:
   200:
