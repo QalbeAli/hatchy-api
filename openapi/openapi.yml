@@ -15,6 +15,12 @@ tags:
     description: Masters postgresql operations
 
 paths:
+  /tickets:
+    get:
+      $ref: "./tickets/getTickets.yml"
+  /tickets/balance/{address}:
+    get:
+      $ref: "./tickets/getTicketsBalance.yml"
   /masters/avatars/image/{tokenId}:
     post:
       $ref: "./masters/updateMastersAvatarImage.yml"
@@ -106,6 +112,12 @@ components:
       $ref: "./models/masters/createTraitParams.yml"
     CreateItemParams:
       $ref: "./models/masters/createItemParams.yml"
+    Ticket:
+      $ref: "./models/tickets/ticket.yml"
+    TicketBalance:
+      $ref: "./models/tickets/ticketBalance.yml"
+    TicketPrice:
+      $ref: "./models/tickets/ticketPrice.yml"
 
   securitySchemes:
     bearerAuth:

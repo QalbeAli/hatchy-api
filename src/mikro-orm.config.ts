@@ -15,6 +15,8 @@ import { MastersLootbox } from "./entities/MastersLootbox";
 import { LootboxPrice } from "./entities/LootboxPrice";
 import { MastersAvatar } from "./entities/MastersAvatar";
 import { ApiKey } from "./entities/ApiKey";
+import { Ticket } from "./entities/Ticket";
+import { TicketPrice } from "./entities/TicketPrice";
 
 export default defineConfig({
   entities: [
@@ -32,7 +34,9 @@ export default defineConfig({
     MastersLootbox,
     LootboxPrice,
     MastersAvatar,
-    ApiKey
+    ApiKey,
+    Ticket,
+    TicketPrice
   ],
   debug: false,
   dbName: config.DB_NAME,

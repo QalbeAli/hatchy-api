@@ -1,0 +1,18 @@
+type: object
+required:
+  - currency
+  - price
+  - decimals
+  - address
+  - image
+properties:
+  currency:
+    type: string
+  price:
+    type: string
+  decimals:
+    type: number
+  address:
+    type: string
+  image:
+    type: string

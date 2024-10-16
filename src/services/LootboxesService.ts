@@ -18,7 +18,8 @@ export class LootboxesService {
     const lootboxes = await DI.mastersLootboxes.findAll({
       where: {
         active: true,
-        gameId: gameId
+        gameId: gameId,
+        chainId: this.chainId
       },
       populate: ['prices', 'genderId']
     });

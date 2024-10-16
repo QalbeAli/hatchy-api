@@ -17,6 +17,9 @@ export class MastersLootbox extends BaseEntity {
   @Property()
   order!: number;
 
+  @Property()
+  chainId!: number;
+
   @Property({ nullable: true })
   gameId: string;
 

@@ -1,0 +1,17 @@
+type: object
+properties:
+  id:
+    type: number
+  name:
+    type: string
+  image:
+    type: string
+  prices:
+    type: array
+    items:
+      $ref: "../../openapi.yml#/components/schemas/TicketPrice"
+
+required:
+  - id
+  - name
+  - image

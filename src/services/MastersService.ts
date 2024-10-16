@@ -4,7 +4,6 @@ import { MastersItem } from "../models/mastersItem";
 import { BigNumber, Wallet, ethers } from "ethers";
 import { lookup } from "mime-types";
 import { CreateTraitParams } from "../models/CreateTraitParams";
-import { GetMintTraitsFilters } from "../models/GetMintTraitsFilters";
 import { Trait } from "../entities/Trait";
 import { Item } from "../entities/Item";
 import { getAvatarPrice } from "../avatar-prices";

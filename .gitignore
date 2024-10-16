@@ -18,3 +18,5 @@ benchmarks/graphs
 *.pem
 dist
 api-client-lib
+
+node-backup

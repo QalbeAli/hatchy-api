@@ -24,6 +24,9 @@ export type { MastersPFPSignature } from './models/MastersPFPSignature';
 export type { MastersTrait } from './models/MastersTrait';
 export type { MastersTraitType } from './models/MastersTraitType';
 export type { MessageResponse } from './models/MessageResponse';
+export type { Ticket } from './models/Ticket';
+export type { TicketBalance } from './models/TicketBalance';
+export type { TicketPrice } from './models/TicketPrice';
 
 export { $CreateItemParams } from './schemas/$CreateItemParams';
 export { $CreateTraitParams } from './schemas/$CreateTraitParams';
@@ -43,6 +46,10 @@ export { $MastersPFPSignature } from './schemas/$MastersPFPSignature';
 export { $MastersTrait } from './schemas/$MastersTrait';
 export { $MastersTraitType } from './schemas/$MastersTraitType';
 export { $MessageResponse } from './schemas/$MessageResponse';
+export { $Ticket } from './schemas/$Ticket';
+export { $TicketBalance } from './schemas/$TicketBalance';
+export { $TicketPrice } from './schemas/$TicketPrice';
 
 export { MastersService } from './services/MastersService';
 export { MastersImageService } from './services/MastersImageService';
+export { TicketsService } from './services/TicketsService';

@@ -1,0 +1,18 @@
+operationId: getTickets
+summary: returns hatchy tickets
+tags:
+  - tickets
+
+parameters:
+  - name: chainId
+    in: query
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: "../openapi.yml#/components/schemas/Ticket"
