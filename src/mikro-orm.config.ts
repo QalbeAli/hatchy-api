@@ -17,6 +17,7 @@ import { MastersAvatar } from "./entities/MastersAvatar";
 import { ApiKey } from "./entities/ApiKey";
 import { Ticket } from "./entities/Ticket";
 import { TicketPrice } from "./entities/TicketPrice";
+import { MastersAvatarPrice } from "./entities/MastersAvatarPrice";
 
 export default defineConfig({
   entities: [
@@ -34,6 +35,7 @@ export default defineConfig({
     MastersLootbox,
     LootboxPrice,
     MastersAvatar,
+    MastersAvatarPrice,
     ApiKey,
     Ticket,
     TicketPrice

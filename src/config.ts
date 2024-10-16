@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import dotenvExpand from 'dotenv-expand'
 const env = dotenv.config({ path: path.resolve(__dirname, `../.env.${process.env.NODE_ENV}`) })
 dotenvExpand.expand(env)
+const node_env = process.env.NODE_ENV || 'dev'
 
 const addressess = {
   dev: {
@@ -18,6 +19,15 @@ const addressess = {
     'hatchy-tickets-address': '0xcb4A162043D3834aD9706A32b6489599F9bC38E0'
   }
 }
+
+// const variables = {
+//   dev: {
+//     'hatchypocket-bucket-name': 'hatchy-api-hatchypocket-assets-dev'
+//   },
+//   prod: {
+//     'hatchypocket-bucket-name': 'hatchy-api-hatchypocket-assets-prod'
+//   }
+// }
 
 const rpc = {
   dev: 'https://api.avax-test.network/ext/bc/C/rpc',
@@ -40,6 +50,7 @@ interface ENV {
   MASTERS_SIGNER_KEY: string | undefined
   IMAGE_API_KEY: string | undefined
   RANDOM_SEED: string | undefined
+  HATCHYPOCKET_BUCKET_NAME: string | undefined
 }
 
 const getConfig = (): ENV => {
@@ -60,7 +71,8 @@ const getConfig = (): ENV => {
     JSON_RPC_URL: rpc[process.env.NODE_ENV || 'dev'],
     MASTERS_SIGNER_KEY: process.env.MASTERS_SIGNER_KEY,
     IMAGE_API_KEY: process.env.IMAGE_API_KEY,
-    RANDOM_SEED: process.env.RANDOM_SEED
+    RANDOM_SEED: process.env.RANDOM_SEED,
+    HATCHYPOCKET_BUCKET_NAME: process.env.HATCHYPOCKET_BUCKET_NAME
   }
 }
 

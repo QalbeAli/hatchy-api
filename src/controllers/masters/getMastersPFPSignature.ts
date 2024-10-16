@@ -1,10 +1,8 @@
 "use strict";
 import { Request, Response, NextFunction } from "express";
 import { isAddress } from "ethers/lib/utils";
-import { ethers } from "ethers";
 import { messageResponse } from "../../utils";
 import { MastersService } from "../../services/MastersService";
-import { getAvatarPrice } from "../../avatar-prices";
 import { DefaultChainId } from "../../contracts/networks";
 
 export const getMastersPFPSignature = async (req: Request, res: Response, next: NextFunction) => {
@@ -13,8 +11,8 @@ export const getMastersPFPSignature = async (req: Request, res: Response, next: 
     const {
       receiver,
       traits,
-      // currency,
-      // payWithTicket
+      currency,
+      payWithTicket
     } = req.body;
     if (!isAddress(receiver)) {
       return messageResponse(res, 400, "Invalid address");
@@ -26,18 +24,18 @@ export const getMastersPFPSignature = async (req: Request, res: Response, next: 
       return messageResponse(res, 400, "Invalid traits");
     }
 
-    const currency = ethers.constants.AddressZero;
-    if (!getAvatarPrice(currency)) {
-      return messageResponse(res, 400, "Invalid currency");
+    if (payWithTicket === true) {
+      //return messageResponse(400, "Pay with ticket must be true or undefined");
+      const signatureData = await mastersService.getAvatarMintSignature(receiver, traits, currency, true);
+      return res.json(signatureData);
+    } else {
+      const price = await mastersService.getAvatarPrice(currency);
+      if (!price) {
+        return messageResponse(res, 400, "Invalid currency");
+      }
+      const signatureData = await mastersService.getAvatarMintSignature(receiver, traits, currency, false);
+      return res.json(signatureData);
     }
-
-    // if (payWithTicket === false) {
-    //   return messageResponse(400, "Pay with ticket must be true or undefined");
-    // }
-    const payWithTicket = true;
-
-    const signatureData = await mastersService.getAvatarMintSignature(receiver, traits, currency, payWithTicket);
-    return res.json(signatureData);
   } catch (error) {
     next(error);
   }

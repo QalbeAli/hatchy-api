@@ -21,6 +21,7 @@ import { Item } from "./entities/Item";
 import { MastersAvatar } from "./entities/MastersAvatar";
 import { ApiKey } from "./entities/ApiKey";
 import { Ticket } from "./entities/Ticket";
+import { MastersAvatarPrice } from "./entities/MastersAvatarPrice";
 
 export const DI = {} as {
   server: http.Server;
@@ -38,6 +39,7 @@ export const DI = {} as {
   itemLayers: EntityRepository<ItemLayer>,
   mastersLootboxes: EntityRepository<MastersLootbox>,
   mastersAvatars: EntityRepository<MastersAvatar>,
+  mastersAvatarsPrice: EntityRepository<MastersAvatarPrice>,
   apiKeys: EntityRepository<ApiKey>,
   tickets: EntityRepository<Ticket>,
 };
@@ -59,6 +61,7 @@ export const init = (async () => {
   DI.itemLayers = DI.orm.em.getRepository(ItemLayer);
   DI.mastersLootboxes = DI.orm.em.getRepository(MastersLootbox);
   DI.mastersAvatars = DI.orm.em.getRepository(MastersAvatar);
+  DI.mastersAvatarsPrice = DI.orm.em.getRepository(MastersAvatarPrice);
   DI.apiKeys = DI.orm.em.getRepository(ApiKey);
   DI.tickets = DI.orm.em.getRepository(Ticket);
 

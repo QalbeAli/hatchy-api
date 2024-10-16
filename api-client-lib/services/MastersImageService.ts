@@ -12,17 +12,22 @@ export class MastersImageService {
     /**
      * update master avatar image
      * @param tokenId tokenId
+     * @param chainId 
      * @returns MessageResponse OK
      * @throws ApiError
      */
     public static updateMastersAvatarImage(
 tokenId: number,
+chainId?: any,
 ): CancelablePromise<MessageResponse> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/masters/avatars/image/{tokenId}',
             path: {
                 'tokenId': tokenId,
+            },
+            query: {
+                'chainId': chainId,
             },
             errors: {
                 500: `Internal Server Error`,

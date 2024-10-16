@@ -6,7 +6,6 @@ import { lookup } from "mime-types";
 import { CreateTraitParams } from "../models/CreateTraitParams";
 import { Trait } from "../entities/Trait";
 import { Item } from "../entities/Item";
-import { getAvatarPrice } from "../avatar-prices";
 import { DI } from "..";
 import { setAvatarLayer } from "../utils";
 import config from "../config";
@@ -62,6 +61,21 @@ export class MastersService {
     return genders;
   }
 
+  async getAvatarsPrices() {
+    const prices = await DI.mastersAvatarsPrice.findAll({
+      where: { chainId: this.chainId }
+    });
+    return prices;
+  }
+
+  async getAvatarPrice(currency: string) {
+    const price = await DI.mastersAvatarsPrice.findOne({
+      chainId: this.chainId,
+      currency: currency
+    });
+    return price;
+  }
+
   async getColors(typeId: number) {
     const filter = { typeId: typeId };
     const colors = await DI.traitColors.findAll({ where: filter });
@@ -83,7 +97,7 @@ export class MastersService {
     const contentType = lookup(filename);
     const s3Key = `masters/traits/${trait.name}/${name}-${timestamp}.${extension}`;
     const s3Params = {
-      Bucket: process.env.HATCHYPOCKET_BUCKET_NAME,
+      Bucket: config.HATCHYPOCKET_BUCKET_NAME,
       Key: s3Key,
       Expires: 60 * 60 * 1, // URL will be valid for 5 hours
       ContentType: contentType,
@@ -92,7 +106,7 @@ export class MastersService {
 
     return {
       uploadUrl,
-      fileUrl: `https://${process.env.HATCHYPOCKET_BUCKET_NAME}.s3.amazonaws.com/${s3Key}`
+      fileUrl: `https://${config.HATCHYPOCKET_BUCKET_NAME}.s3.amazonaws.com/${s3Key}`
     };
   }
 
@@ -235,7 +249,7 @@ export class MastersService {
         signature
       };
     } else {
-      const avatarPrice = getAvatarPrice(currency);
+      const avatarPrice = await this.getAvatarPrice(currency);
 
       const price = ethers.utils.parseUnits(avatarPrice.price, avatarPrice.decimals);
       const hash = ethers.utils.solidityKeccak256(
@@ -323,7 +337,7 @@ export class MastersService {
     const image = `${config.NODE_ENV == 'dev' ? 'dev/' : ''}masters/avatars/${tokenId}_${timestamp}.${extension}`;
 
     const s3Params = {
-      Bucket: process.env.HATCHYPOCKET_BUCKET_NAME,
+      Bucket: config.HATCHYPOCKET_BUCKET_NAME,
       Key: image,
       Expires: 60 * 5, // URL will be valid for 5 minutes
       ContentType: `image/${extension}`,
@@ -336,7 +350,7 @@ export class MastersService {
     if (oldImage) {
       console.log(`${config.NODE_ENV == 'dev' ? 'dev/' : ''}masters/avatars/${tokenId}_${oldImage.timestamp}.${extension}`);
       await s3.deleteObject({
-        Bucket: process.env.HATCHYPOCKET_BUCKET_NAME,
+        Bucket: config.HATCHYPOCKET_BUCKET_NAME,
         Key: `${config.NODE_ENV == 'dev' ? 'dev/' : ''}masters/avatars/${tokenId}_${oldImage.timestamp}.${extension}`,
       }).promise();
     }
