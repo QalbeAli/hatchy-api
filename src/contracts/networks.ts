@@ -1,4 +1,4 @@
-import { ethers, Signer, Wallet } from "ethers";
+import { ethers, Wallet } from "ethers";
 import config from "../config";
 import { ContractName, NetworkData } from "../types";
 import ABI from "./ABI";
@@ -42,6 +42,27 @@ const prodNetworks: Map<number, NetworkData> = new Map([
         hatchyTickets: "0xcb4A162043D3834aD9706A32b6489599F9bC38E0",
         mastersItems: "0x958cBb691E5D9f6A99B586995Ee63A61cDc9690a",
         mastersAvatars: "0x47cFa0d9B074Ca01613b7ACC351eFeC41610c11C",
+      },
+    },
+  ],
+  [
+    33669900,
+    {
+      name: "hatchyverse-testnet",
+      rpc: 'https://fujirpc.hatchyverse.com/ext/bc/dSLTmUtpThxuh2MjfFAYaRM2w1zndvG9YCcf9CWehcaQ2qmHP/rpc',
+      label: "Hatchyverse Testnet",
+      layerzeroId: 10106,
+      coingeckoId: "avalanche-2",
+      chainId: 33669900,
+      icon: "/icons/networks/hatchy.svg",
+      availableBridges: {
+        token: [],
+      },
+      addresses: {
+        hatchy: "0x84CFc0d9e28a15cA458497ACFaAA075fBbc4F62B",
+        hatchyTickets: "0xbbB7f4021e46ECa367F2DC53d6d7FA57632332C8",
+        mastersItems: "0xdc3F8938D71531cAB5716685D7896B2549273644",
+        mastersAvatars: "0x4E896dA533D73D92a34c7645270Bc07d0c1713A3",
       },
     },
   ],
