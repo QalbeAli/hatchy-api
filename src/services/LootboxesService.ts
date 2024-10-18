@@ -28,7 +28,7 @@ export class LootboxesService {
 
   async getLootboxById(id: number) {
     const lootbox = await DI.mastersLootboxes.findOne(id, {
-      fields: ['id', 'active', 'ticketId', 'prices', 'itemWeights.item.id', 'itemWeights.weight'],
+      fields: ['id', 'active', 'ticketId', 'prices', 'itemWeights.item.id', 'itemWeights.weight', 'gameId'],
       populate: ['prices', 'itemWeights', 'itemWeights.item']
     });
     return lootbox;
@@ -122,5 +122,30 @@ export class LootboxesService {
         signature
       }
     }
+  }
+
+  async getRandomSelectedItems(
+    lootbox: Loaded<MastersLootbox, "itemWeights" | "prices" | "itemWeights.item", "active" | "prices" | "id" | "ticketId" | "itemWeights.weight" | "itemWeights.item.id", never>,
+    amount: number,
+    receiver: string,
+  ) {
+    const itemsContract = getContract('mastersItems', this.chainId);
+    const mintedItems = await itemsContract.mintedItems(receiver);
+    const seed = `${receiver}-${mintedItems}-${config.RANDOM_SEED}`;
+    const rng = seedrandom(seed);
+
+    const itemIdsSelection: number[] = [];
+    const totalWeight = lootbox.itemWeights.reduce((sum, itemWeight) => sum + itemWeight.weight, 0);
+    for (let i = 0; i < amount; i++) {
+      let random = rng() * totalWeight;
+      for (const itemWeight of lootbox.itemWeights) {
+        random -= itemWeight.weight;
+        if (random <= 0) {
+          itemIdsSelection.push(itemWeight.item.id);
+          break;
+        }
+      }
+    }
+    return itemIdsSelection;
   }
 }

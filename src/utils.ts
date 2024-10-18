@@ -3,6 +3,7 @@ import { Response } from "express";
 import * as crypto from 'crypto';
 import { ethers } from 'ethers';
 import { ApiKeysService } from './services/ApiKeysService';
+import config from './config';
 
 export const setAvatarLayer = (
   layers: Map<number, any>, order: number, image?: string, mask?: string
@@ -152,8 +153,8 @@ export const messageResponse = (res: Response, code = 400, message?: string) => 
 
 export const getUsername = async (event: any) => {
   const username =
-    event.requestContext.authorizer.jwt.claims['cognito:username'] ||
-    event.requestContext.authorizer.jwt.claims['username'];
+    event['cognito:username'] ||
+    event['username'];
   const mainAccount = await getMainAccount(username);
   return mainAccount ? mainAccount.username : username;
 }
@@ -162,7 +163,7 @@ export const getMainAccount = async (username: any) => {
   try {
     const cognito = new CognitoIdentityServiceProvider();
     const params = {
-      UserPoolId: process.env.USER_POOL_ID,
+      UserPoolId: config.USER_POOL_ID,
       Username: username
     };
     const response = await cognito.adminGetUser(params).promise();
@@ -174,7 +175,7 @@ export const getMainAccount = async (username: any) => {
     }
     // get email of main account
     const paramsMain = {
-      UserPoolId: process.env.USER_POOL_ID,
+      UserPoolId: config.USER_POOL_ID,
       Username: mainUsernameAttribute.Value
     };
     const responseMain = await cognito.adminGetUser(paramsMain).promise();
@@ -198,7 +199,7 @@ export const isAdmin = async (username: string) => {
   try {
     const cognito = new CognitoIdentityServiceProvider();
     const params = {
-      UserPoolId: process.env.USER_POOL_ID,
+      UserPoolId: config.USER_POOL_ID,
       Username: username
     };
     const response = await cognito.adminListGroupsForUser(params).promise();

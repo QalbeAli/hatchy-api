@@ -1,9 +1,12 @@
 import path from 'path'
 import dotenv from 'dotenv'
 import dotenvExpand from 'dotenv-expand'
+import AWS from 'aws-sdk'
 const env = dotenv.config({ path: path.resolve(__dirname, `../.env.${process.env.NODE_ENV}`) })
 dotenvExpand.expand(env)
 const node_env = process.env.NODE_ENV || 'dev'
+AWS.config.update({ region: 'us-east-1' });
+
 
 const addressess = {
   dev: {
@@ -20,14 +23,14 @@ const addressess = {
   }
 }
 
-// const variables = {
-//   dev: {
-//     'hatchypocket-bucket-name': 'hatchy-api-hatchypocket-assets-dev'
-//   },
-//   prod: {
-//     'hatchypocket-bucket-name': 'hatchy-api-hatchypocket-assets-prod'
-//   }
-// }
+const variables = {
+  dev: {
+    USER_POOL_ID: 'us-east-1_qhrZoCwXw'
+  },
+  prod: {
+    USER_POOL_ID: 'us-east-1_GtYY0sKtT'
+  }
+}
 
 const rpc = {
   dev: 'https://api.avax-test.network/ext/bc/C/rpc',
@@ -51,6 +54,9 @@ interface ENV {
   IMAGE_API_KEY: string | undefined
   RANDOM_SEED: string | undefined
   HATCHYPOCKET_BUCKET_NAME: string | undefined
+  USERS_TABLE: string | undefined
+  USER_POOL_ID: string | undefined
+  GAMES_SAVES_TABLE: string | undefined
 }
 
 const getConfig = (): ENV => {
@@ -72,7 +78,10 @@ const getConfig = (): ENV => {
     MASTERS_SIGNER_KEY: process.env.MASTERS_SIGNER_KEY,
     IMAGE_API_KEY: process.env.IMAGE_API_KEY,
     RANDOM_SEED: process.env.RANDOM_SEED,
-    HATCHYPOCKET_BUCKET_NAME: process.env.HATCHYPOCKET_BUCKET_NAME
+    HATCHYPOCKET_BUCKET_NAME: process.env.HATCHYPOCKET_BUCKET_NAME,
+    USERS_TABLE: process.env.USERS_TABLE,
+    USER_POOL_ID: variables[process.env.NODE_ENV || 'dev']['USER_POOL_ID'],
+    GAMES_SAVES_TABLE: process.env.GAMES_SAVES_TABLE
   }
 }
 
