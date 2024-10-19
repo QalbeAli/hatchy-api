@@ -1,4 +1,5 @@
 
+export const subnetChainId = 33669900;
 export const hatchypocketUrl = "https://hatchypocket.com";
 export const mastersItemsLength = 20;
 export const cloudfrontBaseUrl = 'https://d2pdcsofh1vza7.cloudfront.net/';
