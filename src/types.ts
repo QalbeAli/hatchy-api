@@ -31,6 +31,7 @@ export type ContractName =
   | "mastersItems"
   | "mastersAvatars"
   | "hatchyTickets"
+  | "joepegsTickets"
   | "hatchyLPStake"
   | "hatchyLPPair"
   | "hatchySalary";

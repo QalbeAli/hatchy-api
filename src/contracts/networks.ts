@@ -40,6 +40,7 @@ const prodNetworks: Map<number, NetworkData> = new Map([
         hatchyLPPair: "0x1273227c0d368a65eb7942fa02ef68dbda466a26",
         hatchySalary: "0x658eE3451118E52f484D2305Fe3fdcC9257f07ae",
         hatchyTickets: "0xcb4A162043D3834aD9706A32b6489599F9bC38E0",
+        joepegsTickets: "0xBd2cFf1420389B28C85341F521C5b0cf7B60ec0E",
         mastersItems: "0x958cBb691E5D9f6A99B586995Ee63A61cDc9690a",
         mastersAvatars: "0x47cFa0d9B074Ca01613b7ACC351eFeC41610c11C",
       },
@@ -125,7 +126,8 @@ const devNetworks: Map<number, NetworkData> = new Map([
         mastersItems: "0x2E840b673939a1C99390e246AE80257c17Fbb832",
         mastersAvatars: "0x2F0399017C3Be5D874309013A38A73cb661feA6F",
         hatchySalary: "0xAaCc9888424d805Ba6Cf80e318B9494eCd6BCF32",
-        hatchyTickets: "0x79C75903558ab6Be1aFA48103c33D0a24464c78E"
+        hatchyTickets: "0x79C75903558ab6Be1aFA48103c33D0a24464c78E",
+        joepegsTickets: "0xbe68d2e50326571ee2399e7d87804c7d47abefaf",
       },
     },
   ],

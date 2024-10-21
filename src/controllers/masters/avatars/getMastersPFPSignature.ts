@@ -1,9 +1,9 @@
 "use strict";
 import { Request, Response, NextFunction } from "express";
 import { isAddress } from "ethers/lib/utils";
-import { messageResponse } from "../../utils";
-import { MastersService } from "../../services/MastersService";
-import { DefaultChainId } from "../../contracts/networks";
+import { messageResponse } from "../../../utils";
+import { MastersService } from "../../../services/MastersService";
+import { DefaultChainId } from "../../../contracts/networks";
 
 export const getMastersPFPSignature = async (req: Request, res: Response, next: NextFunction) => {
   try {

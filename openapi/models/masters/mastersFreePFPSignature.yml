@@ -1,0 +1,23 @@
+type: object
+properties:
+  receiver:
+    type: string
+  traits:
+    type: array
+    items:
+      type: number
+  nonce:
+    type: object
+    properties:
+      hex:
+        type: string
+      type:
+        type: string
+  signature:
+    type: string
+
+required:
+  - receiver
+  - traits
+  - nonce
+  - signature

@@ -270,6 +270,34 @@ export class MastersService {
     }
   };
 
+  async getAvatarFreeMintSignature(
+    receiver: string,
+    traits: number[],
+  ) {
+    const provider = new ethers.providers.JsonRpcProvider(
+      config.JSON_RPC_URL
+    );
+    const signer = new Wallet(config.MASTERS_SIGNER_KEY, provider);
+    const nonce = BigNumber.from(ethers.utils.randomBytes(32));
+    const ticketsContract = getContract('joepegsTickets', this.chainId);
+    const ticketsBalance = await ticketsContract.balanceOf(receiver, 0);
+    if (ticketsBalance.eq(0)) {
+      throw new Error("No tickets available to mint avatar");
+    }
+
+    const hash = ethers.utils.solidityKeccak256(
+      ["address", "uint256[]", "uint256"],
+      [receiver, traits, nonce]
+    );
+    const signature = await signer.signMessage(ethers.utils.arrayify(hash));
+    return {
+      receiver,
+      traits,
+      nonce,
+      signature
+    };
+  };
+
   async getAvatarTraits(tokenId: number) {
     const avatarsContract = getContract('mastersAvatars', this.chainId);
     const traits: BigNumber[] = await avatarsContract.getTraits(tokenId);

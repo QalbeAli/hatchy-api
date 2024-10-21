@@ -5,5 +5,6 @@ import * as HatchyTickets from "./HatchyTickets.json";
 export default {
   mastersItems: MastersItems.abi,
   mastersAvatars: MastersPFP.abi,
-  hatchyTickets: HatchyTickets.abi
+  hatchyTickets: HatchyTickets.abi,
+  joepegsTickets: HatchyTickets.abi
 };
