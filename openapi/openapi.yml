@@ -57,6 +57,9 @@ paths:
   /masters/avatars/balance/{address}:
     get:
       $ref: "./masters/getMastersAvatarBalance.yml"
+  /masters/items:
+    get:
+      $ref: "./masters/getMastersItems.yml"
   /masters/items/categories:
     get:
       $ref: "./masters/getMastersItemCategories.yml"

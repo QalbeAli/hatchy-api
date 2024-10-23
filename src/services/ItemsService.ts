@@ -44,7 +44,7 @@ export class ItemsService {
   async getAllItems() {
     const items = await DI.items.findAll(
       {
-        populate: ['category', 'gender']
+        populate: ['category', 'category.type', 'category.type.layers', 'gender']
       }
     );
     return items;

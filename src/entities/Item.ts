@@ -30,7 +30,7 @@ export class Item extends BaseEntityDate {
   maskImage: string;
 
   @Property()
-  rarity!: string;
+  rarity?: string;
 
   @Property({ nullable: true })
   effects?: string;
