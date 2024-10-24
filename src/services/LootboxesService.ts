@@ -151,7 +151,7 @@ export class LootboxesService {
     const nonce = BigNumber.from(ethers.utils.randomBytes(32));
     const amounts = Array.from({ length: itemIdsSelection.length }, () => 1);
 
-    const ticketsBalance = await joepegsContract.balanceOf(receiver, lootbox.ticketId);
+    const ticketsBalance = await joepegsContract.balanceOf(receiver, 0);
     if (ticketsBalance.eq(0)) {
       throw new Error("No tickets available to mint item");
     }

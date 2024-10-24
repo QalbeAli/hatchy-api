@@ -1,0 +1,33 @@
+type: object
+properties:
+  receiver:
+    type: string
+  tokenIds:
+    type: array
+    items:
+      type: number
+  amounts:
+    type: array
+    items:
+      type: number
+  items:
+    type: array
+    items:
+      $ref: "../../openapi.yml#/components/schemas/MastersItem"
+  nonce:
+    type: object
+    properties:
+      hex:
+        type: string
+      type:
+        type: string
+  signature:
+    type: string
+
+required:
+  - receiver
+  - tokenIds
+  - amounts
+  - items
+  - nonce
+  - signature

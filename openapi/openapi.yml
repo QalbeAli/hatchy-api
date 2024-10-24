@@ -66,6 +66,9 @@ paths:
   /masters/items/balance/{address}:
     get:
       $ref: "./masters/getMastersItemsBalance.yml"
+  /masters/lootbox/joepegs:
+    post:
+      $ref: "./masters/getMastersLootboxJPSignature.yml"
   /masters/lootbox:
     post:
       $ref: "./masters/getMastersLootboxSignature.yml"
@@ -86,6 +89,8 @@ components:
       $ref: "./models/messageResponse.yml"
     MastersLootboxSignature:
       $ref: "./models/masters/mastersLootboxSignature.yml"
+    MastersLootboxJPSignature:
+      $ref: "./models/masters/mastersLootboxJPSignature.yml"
     MastersPFPSignature:
       $ref: "./models/masters/mastersPFPSignature.yml"
     MastersFreePFPSignature:

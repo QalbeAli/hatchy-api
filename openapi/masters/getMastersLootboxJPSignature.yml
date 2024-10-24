@@ -1,0 +1,45 @@
+operationId: getMastersLootboxJPSignature
+summary: get lootbox signature
+tags:
+  - masters
+
+parameters:
+  - name: chainId
+    in: query
+
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - lootboxId
+          - receiver
+          - amount
+        properties:
+          lootboxId:
+            type: string
+          receiver:
+            type: string
+          amount:
+            type: number
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yml#/components/schemas/MastersLootboxSignature"
+
+  500:
+    description: Internal Server Error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string
+              example: "Error getting lootbox signature"
