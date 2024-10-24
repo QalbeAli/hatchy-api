@@ -106,6 +106,22 @@ export class ItemsService {
     return signature;
   }
 
+  async getJPTicketSignature(
+    itemIds: number[],
+    amounts: number[],
+    receiver: string,
+    nonce: BigNumber,
+  ) {
+    const provider = new ethers.providers.JsonRpcProvider(config.JSON_RPC_URL);
+    const signer = new Wallet(config.MASTERS_SIGNER_KEY, provider);
+    const hash = ethers.utils.solidityKeccak256(
+      ['address', 'uint256[]', 'uint256[]', 'uint256'],
+      [receiver, itemIds, amounts, nonce]);
+
+    const signature = await signer.signMessage(ethers.utils.arrayify(hash));
+    return signature;
+  }
+
   async getItemsBalance(address: string) {
     const items = await DI.items.findAll({
       populate: ['category', 'category.type', 'category.type.layers', 'gender']

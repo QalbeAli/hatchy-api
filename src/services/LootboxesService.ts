@@ -124,6 +124,59 @@ export class LootboxesService {
     }
   }
 
+  async getLootboxJPSignatureData(
+    lootbox: Loaded<MastersLootbox, "itemWeights" | "prices" | "itemWeights.item", "active" | "prices" | "id" | "ticketId" | "itemWeights.weight" | "itemWeights.item.id", never>,
+    amount: number,
+    receiver: string
+  ) {
+    const itemsService = new ItemsService(this.chainId);
+    const itemsContract = getContract('mastersItems', this.chainId);
+    const joepegsContract = getContract('joepegsTickets', this.chainId);
+    const mintedItems = await itemsContract.mintedItems(receiver);
+    const seed = `${receiver}-${mintedItems}-${config.RANDOM_SEED}`;
+    const rng = seedrandom(seed);
+
+    const itemIdsSelection: number[] = [];
+    const totalWeight = lootbox.itemWeights.reduce((sum, itemWeight) => sum + itemWeight.weight, 0);
+    for (let i = 0; i < amount; i++) {
+      let random = rng() * totalWeight;
+      for (const itemWeight of lootbox.itemWeights) {
+        random -= itemWeight.weight;
+        if (random <= 0) {
+          itemIdsSelection.push(itemWeight.item.id);
+          break;
+        }
+      }
+    }
+    const nonce = BigNumber.from(ethers.utils.randomBytes(32));
+    const amounts = Array.from({ length: itemIdsSelection.length }, () => 1);
+
+    const ticketsBalance = await joepegsContract.balanceOf(receiver, lootbox.ticketId);
+    if (ticketsBalance.eq(0)) {
+      throw new Error("No tickets available to mint item");
+    }
+    const [signature, items] = await Promise.all([
+      itemsService.getJPTicketSignature(
+        itemIdsSelection,
+        amounts,
+        receiver,
+        nonce,
+      ),
+      itemsService.getItemsByIds(itemIdsSelection)
+    ]);
+
+    return {
+      receiver,
+      tokenIds: itemIdsSelection,
+      items,
+      amounts,
+      nonce,
+      signature
+    }
+  }
+
+
+
   async getRandomSelectedItems(
     lootbox: Loaded<MastersLootbox, "itemWeights" | "prices" | "itemWeights.item", "active" | "prices" | "id" | "ticketId" | "itemWeights.weight" | "itemWeights.item.id", never>,
     amount: number,
