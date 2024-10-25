@@ -6,12 +6,15 @@ import { Loaded } from "@mikro-orm/core";
 import { DI } from "..";
 import config from "../config";
 import { DefaultChainId, getContract } from "../contracts/networks";
+import { CoingeckoService } from "./CoingeckoService";
 
 export class LootboxesService {
   chainId: number;
+  coingeckoService: CoingeckoService;
 
   constructor(chainId?: number) {
     this.chainId = chainId || DefaultChainId;
+    this.coingeckoService = new CoingeckoService();
   }
 
   async getLootboxes(gameId?: string) {
@@ -23,6 +26,16 @@ export class LootboxesService {
       },
       populate: ['prices', 'genderId']
     });
+    const livePrice = await this.coingeckoService.getHatchyPrice();
+    lootboxes.forEach(lootbox => {
+      const usdtPrice = lootbox.prices.find(price => price.currency === 'usdt');
+      const hatchyPrice = lootbox.prices.find(price => price.currency === 'hatchy');
+      if (usdtPrice) {
+        const hatchyPriceUsd = parseFloat(usdtPrice.price) / livePrice;
+        const hatchyPriceDiscounted = hatchyPriceUsd * 0.8;
+        hatchyPrice.price = hatchyPriceDiscounted.toFixed(2);
+      }
+    });
     return lootboxes;
   }
 
@@ -31,6 +44,14 @@ export class LootboxesService {
       fields: ['id', 'active', 'ticketId', 'prices', 'itemWeights.item.id', 'itemWeights.weight', 'gameId'],
       populate: ['prices', 'itemWeights', 'itemWeights.item']
     });
+    const livePrice = await this.coingeckoService.getHatchyPrice();
+    const usdtPrice = lootbox.prices.find(price => price.currency === 'usdt');
+    const hatchyPrice = lootbox.prices.find(price => price.currency === 'hatchy');
+    if (usdtPrice) {
+      const hatchyPriceUsd = parseFloat(usdtPrice.price) / livePrice;
+      const hatchyPriceDiscounted = hatchyPriceUsd * 0.8;
+      hatchyPrice.price = hatchyPriceDiscounted.toFixed(2);
+    }
     return lootbox;
   }
 
