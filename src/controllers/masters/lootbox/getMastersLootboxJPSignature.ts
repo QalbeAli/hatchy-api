@@ -18,7 +18,7 @@ export const getMastersLootboxJPSignature = async (req: Request, res: Response, 
     }
 
     const lootbox = await lootboxesService.getLootboxById(Number(lootboxId));
-    if (!lootbox || !lootbox.active) {
+    if (!lootbox || !lootbox.active || lootboxId == 2 || lootboxId == 4) {
       return messageResponse(res, 404, 'Lootbox not found');
     }
 
