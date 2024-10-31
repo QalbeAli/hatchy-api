@@ -6,6 +6,7 @@ import { getMastersAvatarPrices } from "../../../controllers/masters/avatars/get
 import { getMastersAvatarImage } from "../../../controllers/masters/avatars/getMastersAvatarImages";
 import { getMastersPFPImageUploadURL } from "../../../controllers/masters/getMastersPFPImageUploadUrl";
 import { getMastersPFPSignature } from "../../../controllers/masters/avatars/getMastersPFPSignature";
+import { getMastersFreePFPSignature } from "../../../controllers/masters/avatars/getMastersFreePFPSignature";
 
 const router = Router();
 
@@ -14,7 +15,7 @@ router.get("/image-upload-url/:tokenId", getMastersPFPImageUploadURL);
 router.get("/images/:address", getMastersAvatarImage);
 router.get("/balance/:address", getMastersAvatarBalance);
 router.get("/prices", getMastersAvatarPrices);
-// router.post("/free", getMastersFreePFPSignature);
+router.post("/free", getMastersFreePFPSignature);
 router.get("/:tokenId", getMastersAvatar);
 router.post("", getMastersPFPSignature);
 
