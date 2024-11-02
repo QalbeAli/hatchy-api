@@ -5,10 +5,14 @@ import { DefaultChainId } from "../../../contracts/networks";
 
 export const getMastersItem = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const tokenId = req.params.tokenId;
+    const tokenIdStr = req.params.tokenId;
+    const tokenId = Number(tokenIdStr.length >= 64 ?
+      `0x${tokenIdStr}` :
+      tokenIdStr
+    );
     const chainId = Number(req.query.chainId) || DefaultChainId;
     const itemsService = new ItemsService(chainId);
-    const item = await itemsService.getItemById(Number(tokenId));
+    const item = await itemsService.getItemById(tokenId);
     return res.json({
       ...item,
       attributes: [
