@@ -56,7 +56,7 @@ export { $Ticket } from './schemas/$Ticket';
 export { $TicketBalance } from './schemas/$TicketBalance';
 export { $TicketPrice } from './schemas/$TicketPrice';
 
-export { DefaultService } from './services/DefaultService';
+export { Gen2Service } from './services/Gen2Service';
 export { MastersService } from './services/MastersService';
 export { MastersImageService } from './services/MastersImageService';
 export { TicketsService } from './services/TicketsService';

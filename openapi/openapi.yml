@@ -13,6 +13,8 @@ servers:
 tags:
   - name: masters
     description: Masters postgresql operations
+  - name: gen2
+    description: gen2 service
 
 paths:
   /tickets:
@@ -81,11 +83,11 @@ paths:
     post:
       $ref: "./masters/getMastersEquipSignature.yml"
   /gen2/sale-signature:
-    get:
-      $ref: "./masters/getMastersEquipSignature.yml"
+    post:
+      $ref: "./gen2/getGen2SaleSignature.yml"
   /gen2/price:
     get:
-      $ref: "./masters/getMastersEquipSignature.yml"
+      $ref: "./gen2/getGen2SalePrice.yml"
 
 security:
   - bearerAuth: []

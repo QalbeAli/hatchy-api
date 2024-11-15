@@ -10,6 +10,8 @@ responses:
       application/json:
         schema:
           type: object
+          required:
+            - price
           properties:
             price:
               type: number
