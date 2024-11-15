@@ -1,0 +1,43 @@
+operationId: getGen2SaleSignature
+summary: get gen2 sale buy signature
+tags:
+  - gen2
+
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - eggType
+          - amount
+          - receiver
+          - referral
+        properties:
+          eggType:
+            type: number
+          amount:
+            type: number
+          receiver:
+            type: string
+          referral:
+            type: string
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yml#/components/schemas/Gen2SaleSignature"
+
+  500:
+    description: Internal Server Error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string

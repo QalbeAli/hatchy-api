@@ -1,0 +1,25 @@
+operationId: getGen2SalePrice
+summary: get gen2 egg price
+tags:
+  - gen2
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            price:
+              type: number
+
+  500:
+    description: Internal Server Error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string

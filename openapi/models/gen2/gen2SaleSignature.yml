@@ -1,0 +1,25 @@
+type: object
+properties:
+  receiver:
+    type: string
+  eggType:
+    type: number
+  amount:
+    type: number
+  referral:
+    type: string
+  price:
+    type: string
+  nonce:
+    type: string
+  signature:
+    type: string
+
+required:
+  - receiver
+  - eggType
+  - amount
+  - referral
+  - price
+  - nonce
+  - signature

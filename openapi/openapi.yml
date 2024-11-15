@@ -80,6 +80,12 @@ paths:
   /masters/equip/signature:
     post:
       $ref: "./masters/getMastersEquipSignature.yml"
+  /gen2/sale-signature:
+    get:
+      $ref: "./masters/getMastersEquipSignature.yml"
+  /gen2/price:
+    get:
+      $ref: "./masters/getMastersEquipSignature.yml"
 
 security:
   - bearerAuth: []
@@ -131,6 +137,8 @@ components:
       $ref: "./models/tickets/ticketBalance.yml"
     TicketPrice:
       $ref: "./models/tickets/ticketPrice.yml"
+    Gen2SaleSignature:
+      $ref: "./models/gen2/gen2SaleSignature.yml"
 
   securitySchemes:
     bearerAuth:

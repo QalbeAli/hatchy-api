@@ -8,6 +8,7 @@ export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { CreateItemParams } from './models/CreateItemParams';
 export type { CreateTraitParams } from './models/CreateTraitParams';
+export type { Gen2SaleSignature } from './models/Gen2SaleSignature';
 export type { Lootbox } from './models/Lootbox';
 export type { LootboxPrice } from './models/LootboxPrice';
 export type { MastersAvatar } from './models/MastersAvatar';
@@ -32,6 +33,7 @@ export type { TicketPrice } from './models/TicketPrice';
 
 export { $CreateItemParams } from './schemas/$CreateItemParams';
 export { $CreateTraitParams } from './schemas/$CreateTraitParams';
+export { $Gen2SaleSignature } from './schemas/$Gen2SaleSignature';
 export { $Lootbox } from './schemas/$Lootbox';
 export { $LootboxPrice } from './schemas/$LootboxPrice';
 export { $MastersAvatar } from './schemas/$MastersAvatar';
@@ -54,6 +56,7 @@ export { $Ticket } from './schemas/$Ticket';
 export { $TicketBalance } from './schemas/$TicketBalance';
 export { $TicketPrice } from './schemas/$TicketPrice';
 
+export { DefaultService } from './services/DefaultService';
 export { MastersService } from './services/MastersService';
 export { MastersImageService } from './services/MastersImageService';
 export { TicketsService } from './services/TicketsService';

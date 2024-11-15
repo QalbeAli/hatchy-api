@@ -33,4 +33,5 @@ required:
   - max
   - image
   - prices
+  - order
   - ticketId
