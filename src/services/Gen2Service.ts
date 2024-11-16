@@ -1,4 +1,4 @@
-import { BigNumber, ethers, Wallet } from "ethers";
+import { BigNumber, ethers, logger, Wallet } from "ethers";
 import config from "../config";
 import { DefaultChainId } from "../contracts/networks";
 import { CoingeckoService } from "./CoingeckoService";
@@ -34,7 +34,7 @@ export class Gen2Service {
     const provider = new ethers.providers.JsonRpcProvider(config.JSON_RPC_URL);
     const signer = new Wallet(config.MASTERS_SIGNER_KEY, provider);
     const hash = ethers.utils.solidityKeccak256(
-      ['address', 'uint256', 'uint256', 'address', 'uint256', 'uint256'],
+      ['address', 'uint8', 'uint256', 'address', 'uint256', 'uint'],
       [receiver, eggType, amount, referral, parsedPrice, nonce]);
 
     const signature = await signer.signMessage(ethers.utils.arrayify(hash));
@@ -44,7 +44,7 @@ export class Gen2Service {
       amount,
       referral,
       price: parsedPrice.toString(),
-      nonce: nonce.toString(),
+      nonce,
       signature
     }
   }
