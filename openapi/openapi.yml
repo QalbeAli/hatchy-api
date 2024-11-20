@@ -15,6 +15,8 @@ tags:
     description: Masters postgresql operations
   - name: gen2
     description: gen2 service
+  - name: auth
+    description: auth service
 
 paths:
   /tickets:
@@ -88,6 +90,9 @@ paths:
   /gen2/price:
     get:
       $ref: "./gen2/getGen2SalePrice.yml"
+  /auth/users:
+    post:
+      $ref: "./auth/createUser.yml"
 
 security:
   - bearerAuth: []
@@ -141,6 +146,8 @@ components:
       $ref: "./models/tickets/ticketPrice.yml"
     Gen2SaleSignature:
       $ref: "./models/gen2/gen2SaleSignature.yml"
+    User:
+      $ref: "./models/auth/user.yml"
 
   securitySchemes:
     bearerAuth:

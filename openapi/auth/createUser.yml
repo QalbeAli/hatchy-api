@@ -1,0 +1,22 @@
+operationId: createUser
+summary: create user
+tags:
+  - auth
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          $ref: "../openapi.yml#/components/schemas/User"
+
+  500:
+    description: Internal Server Error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string

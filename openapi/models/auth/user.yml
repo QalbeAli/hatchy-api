@@ -1,0 +1,19 @@
+type: object
+properties:
+  uid:
+    type: string
+  email:
+    type: string
+  displayName:
+    type: string
+  photoURL:
+    type: string
+  disabled:
+    type: boolean
+
+required:
+  - uid
+  - email
+  - displayName
+  - photoURL
+  - disabled

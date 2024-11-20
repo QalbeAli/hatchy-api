@@ -30,6 +30,7 @@ export type { MessageResponse } from './models/MessageResponse';
 export type { Ticket } from './models/Ticket';
 export type { TicketBalance } from './models/TicketBalance';
 export type { TicketPrice } from './models/TicketPrice';
+export type { User } from './models/User';
 
 export { $CreateItemParams } from './schemas/$CreateItemParams';
 export { $CreateTraitParams } from './schemas/$CreateTraitParams';
@@ -55,7 +56,9 @@ export { $MessageResponse } from './schemas/$MessageResponse';
 export { $Ticket } from './schemas/$Ticket';
 export { $TicketBalance } from './schemas/$TicketBalance';
 export { $TicketPrice } from './schemas/$TicketPrice';
+export { $User } from './schemas/$User';
 
+export { AuthService } from './services/AuthService';
 export { Gen2Service } from './services/Gen2Service';
 export { MastersService } from './services/MastersService';
 export { MastersImageService } from './services/MastersImageService';
