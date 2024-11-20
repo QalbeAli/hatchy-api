@@ -1,3 +1,4 @@
+import { Request } from 'express';
 export type Network =
   | "bsc-testnet"
   | "fuji"
@@ -49,3 +50,10 @@ export type NetworkData = {
   };
   addresses: Partial<Record<ContractName, string>>;
 };
+
+export interface AuthorizedRequest extends Request {
+  user?: {
+    uid: string;
+    [key: string]: any;
+  }
+}

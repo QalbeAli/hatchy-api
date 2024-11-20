@@ -13,7 +13,6 @@
   },
   "include": [
     "./src",
-    "./types",
     "updateMastersPFPImage.js"
   ],
   "exclude": [
