@@ -10,6 +10,30 @@ properties:
     type: string
   disabled:
     type: boolean
+  bio:
+    type: string
+  xpPoints:
+    type: number
+  rewardReceiverAddress:
+    type: string
+  wallets:
+    type: array
+    items:
+      type: object
+      required:
+        - address
+        - nonce
+        - linked
+        - createdAt
+      properties:
+        address:
+          type: string
+        nonce:
+          type: string
+        linked:
+          type: boolean
+        createdAt:
+          type: string
 
 required:
   - uid

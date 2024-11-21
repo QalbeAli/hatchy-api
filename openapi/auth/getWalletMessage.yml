@@ -1,0 +1,38 @@
+operationId: getWalletMessage
+summary: get wallet linking message
+tags:
+  - auth
+
+parameters:
+  - name: address
+    in: query
+    required: true
+    schema:
+      type: string
+    description: wallet address
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - message
+            - nonce
+          properties:
+            message:
+              type: string
+            nonce:
+              type: string
+
+  500:
+    description: Internal Server Error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string

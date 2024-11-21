@@ -1,0 +1,42 @@
+operationId: postWalletSignature
+summary: post wallet signature to complete linking
+tags:
+  - auth
+
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - address
+          - signature
+        properties:
+          address:
+            type: string
+          signature:
+            type: string
+
+responses:
+  200:
+    description: OK
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - message
+          properties:
+            message:
+              type: string
+
+  500:
+    description: Internal Server Error
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            message:
+              type: string

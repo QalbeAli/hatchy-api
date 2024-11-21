@@ -63,3 +63,4 @@ export { Gen2Service } from './services/Gen2Service';
 export { MastersService } from './services/MastersService';
 export { MastersImageService } from './services/MastersImageService';
 export { TicketsService } from './services/TicketsService';
+export { UsersService } from './services/UsersService';

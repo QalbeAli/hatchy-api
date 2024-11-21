@@ -93,6 +93,14 @@ paths:
   /auth/users:
     post:
       $ref: "./auth/createUser.yml"
+  /auth/wallet:
+    get:
+      $ref: "./auth/getWalletMessage.yml"
+    post:
+      $ref: "./auth/postWalletSignature.yml"
+  /users:
+    get:
+      $ref: "./users/getUser.yml"
 
 security:
   - bearerAuth: []
