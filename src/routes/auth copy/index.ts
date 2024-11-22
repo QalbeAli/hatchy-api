@@ -5,8 +5,8 @@ import { createUser } from "../../controllers/auth/createUser";
 import { postWalletAuthSignature } from "../../controllers/auth/postWalletAuthSignature";
 
 const router = Router();
-router.get('/wallet', getWalletAuthSignMessage);
-router.post('/wallet', postWalletAuthSignature);
+router.get('/wallet', authMiddleware, getWalletAuthSignMessage);
+router.post('/wallet', authMiddleware, postWalletAuthSignature);
 router.post('/users', authMiddleware, createUser);
 
 export default router;

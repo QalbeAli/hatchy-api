@@ -2,6 +2,8 @@ import path from 'path'
 import dotenv from 'dotenv'
 import dotenvExpand from 'dotenv-expand'
 import AWS from 'aws-sdk'
+import serviceAccountDev from "./firebase/hatchyverse-dev-firebase-adminsdk-wqe5t-94dbebf7ed.json";
+import serviceAccountProd from "./firebase/hatchyverse-firebase-adminsdk-ufsda-5f941e6194.json";
 const env = dotenv.config({ path: path.resolve(__dirname, `../.env.${process.env.NODE_ENV}`) })
 dotenvExpand.expand(env)
 const node_env = process.env.NODE_ENV || 'dev'
@@ -45,6 +47,7 @@ interface ENV {
   DB_USER: string | undefined
   DB_PASSWORD: string | undefined
   DB_NAME: string | undefined
+  FIREBASE_API_KEY: object
   HATCHY_ADDRESS: string | undefined
   HATCHY_TICKETS_ADDRESS: string | undefined
   MASTERS_ITEMS_ADDRESS: string | undefined
@@ -65,6 +68,8 @@ const getConfig = (): ENV => {
     HATCHY_API: (process.env.NODE_ENV === 'dev') ?
       'https://r69sr7aill.execute-api.us-east-1.amazonaws.com' :
       'https://8dfvuybry3.execute-api.us-east-1.amazonaws.com',
+    FIREBASE_API_KEY: (process.env.NODE_ENV === 'dev') ?
+      serviceAccountDev : serviceAccountProd,
     API_KEY: process.env.API_KEY,
     DB_HOST: process.env.DB_HOST,
     DB_USER: process.env.DB_USER,

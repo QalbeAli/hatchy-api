@@ -1,15 +1,22 @@
-operationId: getWalletMessage
-summary: get wallet linking message
+operationId: postWalletSignature
+summary: post wallet signature to complete linking
 tags:
-  - auth
+  - link
 
-parameters:
-  - name: address
-    in: query
-    required: true
-    schema:
-      type: string
-    description: wallet address
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - address
+          - signature
+        properties:
+          address:
+            type: string
+          signature:
+            type: string
 
 responses:
   200:
@@ -20,11 +27,11 @@ responses:
           type: object
           required:
             - message
-            - nonce
+            - token
           properties:
             message:
               type: string
-            nonce:
+            token:
               type: string
 
   500:

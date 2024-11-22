@@ -60,6 +60,7 @@ export { $User } from './schemas/$User';
 
 export { AuthService } from './services/AuthService';
 export { Gen2Service } from './services/Gen2Service';
+export { LinkService } from './services/LinkService';
 export { MastersService } from './services/MastersService';
 export { MastersImageService } from './services/MastersImageService';
 export { TicketsService } from './services/TicketsService';

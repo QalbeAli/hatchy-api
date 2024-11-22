@@ -17,6 +17,8 @@ tags:
     description: gen2 service
   - name: auth
     description: auth service
+  - name: link
+    description: link service
 
 paths:
   /tickets:
@@ -95,9 +97,14 @@ paths:
       $ref: "./auth/createUser.yml"
   /auth/wallet:
     get:
-      $ref: "./auth/getWalletMessage.yml"
+      $ref: "./auth/getWalletAuthMessage.yml"
     post:
-      $ref: "./auth/postWalletSignature.yml"
+      $ref: "./auth/postWalletAuthSignature.yml"
+  /link/wallet:
+    get:
+      $ref: "./link/getWalletMessage.yml"
+    post:
+      $ref: "./link/postWalletSignature.yml"
   /users:
     get:
       $ref: "./users/getUser.yml"

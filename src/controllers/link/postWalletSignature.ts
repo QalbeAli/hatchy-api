@@ -36,8 +36,14 @@ export const postWalletSignature = async (req: AuthorizedRequest, res: Response,
           await userDocRef.update({
             wallets: user.wallets
           });
+          await admin.firestore().collection('wallet-users').doc(address).set({
+            uid: userId
+          });
+          // Create a custom token for the specified address
+          const firebaseToken = await admin.auth().createCustomToken(userId);
           return res.status(200).json({
-            message: "Wallet linked successfully"
+            message: "Wallet linked successfully",
+            token: firebaseToken
           });
         } else {
           return res.status(400).json({ error: "Invalid signature" });
@@ -45,7 +51,7 @@ export const postWalletSignature = async (req: AuthorizedRequest, res: Response,
       }
 
     } else {
-      return res.status(404);
+      return res.status(404).send();
     }
   } catch (error: any) {
     next(error);

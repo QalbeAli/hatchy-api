@@ -1,5 +1,5 @@
-operationId: postWalletSignature
-summary: post wallet signature to complete linking
+operationId: postWalletAuthSignature
+summary: post wallet signature to complete auth
 tags:
   - auth
 
@@ -27,8 +27,11 @@ responses:
           type: object
           required:
             - message
+            - token
           properties:
             message:
+              type: string
+            token:
               type: string
 
   500:
