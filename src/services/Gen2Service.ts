@@ -4,6 +4,7 @@ import { DefaultChainId } from "../contracts/networks";
 import { CoingeckoService } from "./CoingeckoService";
 
 const usdtPrice = '3';
+const discountMultiplier = 1;
 export class Gen2Service {
   chainId: number;
   coingeckoService: CoingeckoService;
@@ -24,7 +25,7 @@ export class Gen2Service {
     let hatchyPrice = '0';
     if (usdtPrice) {
       const hatchyPriceUsdt = parseFloat(usdtPrice) / livePrice;
-      const hatchyPriceDiscounted = hatchyPriceUsdt * 0.8;
+      const hatchyPriceDiscounted = hatchyPriceUsdt * discountMultiplier;
       hatchyPrice = hatchyPriceDiscounted.toFixed(0);
     }
 

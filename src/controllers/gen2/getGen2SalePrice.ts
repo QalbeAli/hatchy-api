@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import { CoingeckoService } from "../../services/CoingeckoService";
 
 const usdtPrice = '3';
-const discountMultiplier = 0.8;
+const discountMultiplier = 1;
 export const getGen2SalePrice = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const coingeckoService = new CoingeckoService();
