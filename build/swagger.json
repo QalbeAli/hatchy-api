@@ -1,0 +1,664 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"User": {
+				"properties": {
+					"uid": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"displayName": {
+						"type": "string"
+					},
+					"picture": {
+						"type": "string"
+					},
+					"disabled": {
+						"type": "boolean"
+					},
+					"bio": {
+						"type": "string"
+					},
+					"xpPoints": {
+						"type": "number",
+						"format": "double"
+					},
+					"rewardReceiverAddress": {
+						"type": "string"
+					},
+					"wallets": {
+						"items": {
+							"properties": {
+								"createdAt": {
+									"type": "number",
+									"format": "double"
+								},
+								"linked": {
+									"type": "boolean"
+								},
+								"nonce": {
+									"type": "string"
+								},
+								"address": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"createdAt",
+								"linked",
+								"nonce",
+								"address"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"uid",
+					"email",
+					"displayName",
+					"picture",
+					"disabled",
+					"bio",
+					"xpPoints",
+					"rewardReceiverAddress"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"WalletSignatureMessage": {
+				"properties": {
+					"message": {
+						"type": "string"
+					},
+					"nonce": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message",
+					"nonce"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"AuthCustomToken": {
+				"properties": {
+					"message": {
+						"type": "string"
+					},
+					"token": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message",
+					"token"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"MastersLootbox": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"active": {
+						"type": "boolean"
+					},
+					"image": {
+						"type": "string"
+					},
+					"order": {
+						"type": "number",
+						"format": "double"
+					},
+					"chainId": {
+						"type": "number",
+						"format": "double"
+					},
+					"gameId": {
+						"type": "string"
+					},
+					"genderId": {
+						"type": "number",
+						"format": "double"
+					},
+					"ticketId": {
+						"type": "number",
+						"format": "double"
+					},
+					"itemWeights": {
+						"items": {
+							"$ref": "#/components/schemas/MastersLootboxItem"
+						},
+						"type": "array"
+					},
+					"prices": {
+						"items": {
+							"$ref": "#/components/schemas/LootboxPrice"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"active",
+					"image",
+					"order",
+					"chainId",
+					"genderId",
+					"ticketId",
+					"itemWeights",
+					"prices"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ItemType": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"layers": {
+						"items": {
+							"$ref": "#/components/schemas/ItemLayer"
+						},
+						"type": "array"
+					},
+					"categories": {
+						"items": {
+							"$ref": "#/components/schemas/ItemCategory"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"layers",
+					"categories"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ItemLayer": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"order": {
+						"type": "number",
+						"format": "double"
+					},
+					"layer": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/ItemType"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"order",
+					"layer",
+					"type"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ItemCategory": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"type": {
+						"$ref": "#/components/schemas/ItemType"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"type"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TraitGender": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Item": {
+				"properties": {
+					"createdAt": {
+						"type": "string",
+						"format": "date-time",
+						"default": "2024-11-23T05:09:12.698Z"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time",
+						"default": "2024-11-23T05:09:12.698Z"
+					},
+					"name": {
+						"type": "string"
+					},
+					"category": {
+						"$ref": "#/components/schemas/ItemCategory"
+					},
+					"gender": {
+						"$ref": "#/components/schemas/TraitGender"
+					},
+					"description": {
+						"type": "string"
+					},
+					"image": {
+						"type": "string"
+					},
+					"frontImage": {
+						"type": "string"
+					},
+					"backImage": {
+						"type": "string"
+					},
+					"maskImage": {
+						"type": "string"
+					},
+					"rarity": {
+						"type": "string"
+					},
+					"effects": {
+						"type": "string"
+					},
+					"storyNotes": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"image"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"MastersLootboxItem": {
+				"properties": {
+					"weight": {
+						"type": "number",
+						"format": "double"
+					},
+					"lootbox": {
+						"$ref": "#/components/schemas/MastersLootbox"
+					},
+					"item": {
+						"$ref": "#/components/schemas/Item"
+					}
+				},
+				"required": [
+					"weight",
+					"lootbox",
+					"item"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LootboxPrice": {
+				"properties": {
+					"lootbox": {
+						"$ref": "#/components/schemas/MastersLootbox"
+					},
+					"currency": {
+						"type": "string"
+					},
+					"price": {
+						"type": "string"
+					},
+					"decimals": {
+						"type": "number",
+						"format": "double"
+					},
+					"address": {
+						"type": "string"
+					},
+					"image": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"lootbox",
+					"currency",
+					"price",
+					"decimals",
+					"address",
+					"image"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"api_key": {
+				"type": "apiKey",
+				"name": "access_token",
+				"in": "query"
+			},
+			"tsoa_auth": {
+				"type": "oauth2",
+				"flows": {
+					"implicit": {
+						"authorizationUrl": "http://swagger.io/api/oauth/dialog",
+						"scopes": {
+							"write:pets": "modify things",
+							"read:pets": "read things"
+						}
+					}
+				}
+			}
+		}
+	},
+	"info": {
+		"title": "masters-api",
+		"version": "1.0.0",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"paths": {
+		"/users": {
+			"get": {
+				"operationId": "GetUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/auth/wallet": {
+			"get": {
+				"operationId": "GetWalletAuthMessage",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/WalletSignatureMessage"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "address",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "PostWalletAuthSignature",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AuthCustomToken"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"signature": {
+										"type": "string"
+									},
+									"address": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"signature",
+									"address"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/users": {
+			"post": {
+				"operationId": "CreateUser",
+				"responses": {
+					"201": {
+						"description": "Created"
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/link/wallet": {
+			"get": {
+				"operationId": "GetWalletLinkMessage",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/WalletSignatureMessage"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Link"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "address",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "PostWalletLinkSignature",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AuthCustomToken"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Link"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"signature": {
+										"type": "string"
+									},
+									"address": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"signature",
+									"address"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/masters/lootbox": {
+			"get": {
+				"operationId": "GetMastersLootboxes",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/MastersLootbox"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Masters"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "chainId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "gameId",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}

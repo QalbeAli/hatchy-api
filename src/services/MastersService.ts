@@ -190,14 +190,11 @@ export class MastersService {
     const traitTypes = allTraits.map(trait => trait.type.id);
     const missingTraitTypes = requiredTraitTypes.filter(type => !traitTypes.includes(type));
     if (missingTraitTypes.length > 0) {
-      //console.log('missingTraitTypes', missingTraitTypes);
       return false;
     }
     // validate that all the traits are unique
     const uniqueTraits = new Set(nonNullTraits);
     if (uniqueTraits.size !== nonNullTraits.length) {
-      // console.log('uniqueTraits', uniqueTraits);
-      // console.log('traits', nonNullTraits);
       return false;
     }
     // validate that all traits have the same gender or undefined
@@ -206,7 +203,6 @@ export class MastersService {
       .map(trait => trait.gender);
 
     const isSameGender = genders.every((gender, _, array) => gender === array[0]); // Step 2: Check if all genders are the same
-    // console.log('isSameGender', isSameGender);
     if (!isSameGender && genders.length > 0) { // Step 3: If there are different genders, return false
       return false;
     }
@@ -309,10 +305,8 @@ export class MastersService {
       },
       { populate: ["type", "type.layers", "gender"] }
     );
-    //console.log('allTraitsResult', allTraitsResult);
     // Sort allTraits in the same order as nonNullTraits
     const allTraits = allTraitsResult.sort((a, b) => nonNullTraits.indexOf(a.id) - nonNullTraits.indexOf(b.id));
-    // console.log('allTraits', allTraits);
     return allTraits;
   };
 
@@ -439,7 +433,6 @@ export class MastersService {
   };
 
   getAvatarLayers(traits: Trait[], items: Item[]) {
-    // console.log('get Avatar layers', traits);
     const orderedLayers = new Map();
     let headTattooCount = 0;
     let bodyTattooCount = 0;
