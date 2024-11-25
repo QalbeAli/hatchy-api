@@ -7,6 +7,53 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"Voucher": {
+				"properties": {
+					"receiver": {
+						"type": "string"
+					},
+					"holder": {
+						"type": "string"
+					},
+					"contract": {
+						"type": "string"
+					},
+					"contractType": {
+						"type": "string"
+					},
+					"type": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					},
+					"image": {
+						"type": "string"
+					},
+					"id": {
+						"type": "string"
+					},
+					"tokenId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"holder",
+					"contract",
+					"contractType",
+					"type",
+					"name",
+					"amount",
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"User": {
 				"properties": {
 					"uid": {
@@ -185,12 +232,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-11-25T04:14:15.060Z"
+						"default": "2024-11-25T05:16:34.543Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-11-25T04:14:15.060Z"
+						"default": "2024-11-25T05:16:34.543Z"
 					},
 					"name": {
 						"type": "string"
@@ -347,12 +394,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-11-25T04:14:15.073Z"
+						"default": "2024-11-25T05:16:34.554Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-11-25T04:14:15.073Z"
+						"default": "2024-11-25T05:16:34.554Z"
 					},
 					"name": {
 						"type": "string"
@@ -658,12 +705,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-11-25T04:14:15.085Z"
+						"default": "2024-11-25T05:16:34.563Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-11-25T04:14:15.085Z"
+						"default": "2024-11-25T05:16:34.563Z"
 					},
 					"name": {
 						"type": "string"
@@ -928,6 +975,35 @@
 		"contact": {}
 	},
 	"paths": {
+		"/vouchers": {
+			"get": {
+				"operationId": "GetVouchers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Voucher"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vouchers"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
 		"/users": {
 			"get": {
 				"operationId": "GetUser",

@@ -29,6 +29,7 @@ export type { TicketPrice } from './models/TicketPrice';
 export type { TraitGender } from './models/TraitGender';
 export type { TraitLayer } from './models/TraitLayer';
 export type { User } from './models/User';
+export type { Voucher } from './models/Voucher';
 export type { WalletSignatureMessage } from './models/WalletSignatureMessage';
 
 export { $AuthCustomToken } from './schemas/$AuthCustomToken';
@@ -54,6 +55,7 @@ export { $TicketPrice } from './schemas/$TicketPrice';
 export { $TraitGender } from './schemas/$TraitGender';
 export { $TraitLayer } from './schemas/$TraitLayer';
 export { $User } from './schemas/$User';
+export { $Voucher } from './schemas/$Voucher';
 export { $WalletSignatureMessage } from './schemas/$WalletSignatureMessage';
 
 export { AuthService } from './services/AuthService';
@@ -62,3 +64,4 @@ export { LinkService } from './services/LinkService';
 export { MastersService } from './services/MastersService';
 export { TicketsService } from './services/TicketsService';
 export { UsersService } from './services/UsersService';
+export { VouchersService } from './services/VouchersService';
