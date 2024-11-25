@@ -150,7 +150,7 @@ export class AvatarsController extends Controller {
     return signatureData;
   }
 
-  @Post("avatars/{tokenId}")
+  @Get("avatars/{tokenId}")
   public async getMastersAvatar(
     @Path() tokenId: string,
     @Query() chainId?: number,

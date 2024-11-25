@@ -7,7 +7,7 @@
     "dev": "NODE_ENV=dev PORT=3001 nodemon",
     "start:dev": "npm run build && NODE_ENV=dev PORT=3001 node dist/index.js",
     "start:prod": "npm run build && NODE_ENV=prod PORT=3002 node dist/index.js",
-    "build": "tsc -p .",
+    "build": "yarn run tsoa spec-and-routes && tsc -p .",
     "pregenerate-client": "rm -rf ./api-client-lib && yarn tsoa spec",
     "generate-client": "openapi --input ./build/swagger.json --output ./api-client-lib --exportSchemas true --exportModels true",
     "postgenerate-client": "cd .. && cp -r ./masters-api/api-client-lib/* ./hatchyverse-website/hatchy-api-client/masters-api",

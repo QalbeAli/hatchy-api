@@ -4,5 +4,5 @@ export interface Ticket {
   id: number;
   name: string;
   image: string;
-  price?: TicketPrice[];
+  prices?: TicketPrice[];
 }

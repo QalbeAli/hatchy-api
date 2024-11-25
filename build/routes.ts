@@ -113,8 +113,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-11-25T01:39:06.163Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-11-25T01:39:06.163Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-11-25T02:08:23.866Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-11-25T02:08:23.867Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -174,7 +174,7 @@ const models: TsoaRoute.Models = {
     "LootboxPrice": {
         "dataType": "refObject",
         "properties": {
-            "lootbox": {"ref":"MastersLootbox","required":true},
+            "lootbox": {"ref":"MastersLootbox"},
             "currency": {"dataType":"string","required":true},
             "price": {"dataType":"string","required":true},
             "decimals": {"dataType":"double","required":true},
@@ -207,8 +207,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-11-25T01:39:06.180Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-11-25T01:39:06.180Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-11-25T02:08:23.879Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-11-25T02:08:23.879Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -268,8 +268,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-11-25T01:39:06.185Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-11-25T01:39:06.186Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-11-25T02:08:23.885Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-11-25T02:08:23.885Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -309,8 +309,9 @@ const models: TsoaRoute.Models = {
     "TicketPrice": {
         "dataType": "refObject",
         "properties": {
-            "ticket": {"ref":"Ticket","required":true},
+            "ticket": {"ref":"Ticket"},
             "currency": {"dataType":"string","required":true},
+            "price": {"dataType":"string","required":true},
             "decimals": {"dataType":"double","required":true},
             "address": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
@@ -324,7 +325,7 @@ const models: TsoaRoute.Models = {
             "id": {"dataType":"double","required":true},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
-            "price": {"dataType":"array","array":{"dataType":"refObject","ref":"TicketPrice"}},
+            "prices": {"dataType":"array","array":{"dataType":"refObject","ref":"TicketPrice"}},
         },
         "additionalProperties": false,
     },
