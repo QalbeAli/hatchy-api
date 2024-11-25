@@ -22,9 +22,10 @@ import { MastersAvatar } from "./entities/MastersAvatar";
 import { ApiKey } from "./entities/ApiKey";
 import { Ticket } from "./entities/Ticket";
 import { MastersAvatarPrice } from "./entities/MastersAvatarPrice";
-import { RegisterRoutes } from "../build/routes";
-import swaggerDocument from "../build/swagger.json";
+import { RegisterRoutes } from "./tsoa/routes";
+import swaggerDocument from "./tsoa/swagger.json";
 import swaggerUI from "swagger-ui-express";
+
 
 export const DI = {} as {
   server: http.Server;
