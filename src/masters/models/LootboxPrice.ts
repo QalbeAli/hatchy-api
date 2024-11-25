@@ -1,7 +1,7 @@
 import { MastersLootbox } from './MastersLootbox';
 
 export class LootboxPrice {
-  lootbox!: MastersLootbox;
+  lootbox?: MastersLootbox;
   currency!: string;
   price!: string;
   decimals!: number;

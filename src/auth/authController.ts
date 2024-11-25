@@ -54,8 +54,6 @@ export class AuthController extends Controller {
   public async createUser(
     @Request() request: any,
   ): Promise<void> {
-    console.log(request.user);
-
     this.setStatus(201); // set return status 201
     new AuthService().createUser({
       uid: request.user.uid,

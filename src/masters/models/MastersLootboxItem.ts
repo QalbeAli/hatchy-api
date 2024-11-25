@@ -1,8 +1,8 @@
 import { MastersLootbox } from './MastersLootbox';
-import { Item } from './Item';
+import { MastersItem } from './MastersItem';
 
 export class MastersLootboxItem {
   weight!: number;
   lootbox!: MastersLootbox;
-  item!: Item;
+  item!: MastersItem;
 }

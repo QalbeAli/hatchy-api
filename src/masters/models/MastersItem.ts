@@ -1,11 +1,12 @@
 import { ItemCategory } from './ItemCategory';
 import { TraitGender } from './TraitGender';
 
-export class Item {
+export class MastersItem {
+  id!: number;
   createdAt = new Date();
   updatedAt = new Date();
   name!: string;
-  category?: ItemCategory
+  category: ItemCategory
   gender?: TraitGender
   description?: string;
   image!: string;
