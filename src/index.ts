@@ -23,6 +23,8 @@ import { ApiKey } from "./entities/ApiKey";
 import { Ticket } from "./entities/Ticket";
 import { MastersAvatarPrice } from "./entities/MastersAvatarPrice";
 import { RegisterRoutes } from "../build/routes";
+import swaggerDocument from "../build/swagger.json";
+import swaggerUI from "swagger-ui-express";
 
 export const DI = {} as {
   server: http.Server;
@@ -76,6 +78,7 @@ export const init = (async () => {
   app.use(errorHandler);
   */
   RegisterRoutes(app);
+  app.use('', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
   DI.server = app.listen(PORT, () => {
     console.log(`Server Listening on PORT: ${PORT} http://localhost:${PORT}`);
