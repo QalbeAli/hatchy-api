@@ -15,7 +15,7 @@ import { Gen2Service } from "../services/Gen2Service";
 import { BigNumber, ethers } from "ethers";
 
 const usdtPrice = '3';
-const discountMultiplier = 0.8;
+const discountMultiplier = 1;
 
 @Route("gen2")
 @Tags("Gen2")

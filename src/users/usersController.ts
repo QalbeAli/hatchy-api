@@ -17,6 +17,8 @@ export class UsersController extends Controller {
   public async getUser(
     @Request() request: any,
   ): Promise<User> {
-    return new UsersService().get(request.user.uid);
+    const usersService = new UsersService();
+    const user = await usersService.get(request.user.uid);
+    return user;
   }
 }

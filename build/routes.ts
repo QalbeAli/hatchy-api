@@ -113,8 +113,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-11-25T02:08:23.866Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-11-25T02:08:23.867Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-11-25T03:10:22.197Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-11-25T03:10:22.197Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -207,8 +207,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-11-25T02:08:23.879Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-11-25T02:08:23.879Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-11-25T03:10:22.209Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-11-25T03:10:22.210Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -268,8 +268,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-11-25T02:08:23.885Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-11-25T02:08:23.885Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-11-25T03:10:22.216Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-11-25T03:10:22.216Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -1013,7 +1013,7 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/masters/avatars/:tokenId',
+        app.get('/masters/avatars/:tokenId',
             ...(fetchMiddlewares<RequestHandler>(AvatarsController)),
             ...(fetchMiddlewares<RequestHandler>(AvatarsController.prototype.getMastersAvatar)),
 

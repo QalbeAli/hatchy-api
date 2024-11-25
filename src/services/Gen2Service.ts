@@ -24,7 +24,7 @@ export class Gen2Service {
     let hatchyPrice = '0';
     if (usdtPrice) {
       const hatchyPriceUsdt = parseFloat(usdtPrice) / livePrice;
-      const hatchyPriceDiscounted = hatchyPriceUsdt * 0.8;
+      const hatchyPriceDiscounted = hatchyPriceUsdt * 1;
       hatchyPrice = hatchyPriceDiscounted.toFixed(0);
     }
 

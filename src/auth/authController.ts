@@ -28,7 +28,7 @@ export class AuthController extends Controller {
       this.setStatus(400); // set return status 400
       return;
     }
-    return new AuthService().getWalletAuthMessage(address);
+    return await new AuthService().getWalletAuthMessage(address);
   }
 
   @SuccessResponse("201", "Created") // Custom success response
@@ -45,7 +45,7 @@ export class AuthController extends Controller {
       return;
     }
     this.setStatus(201); // set return status 201
-    return new AuthService().postWalletAuthSignature(request.address, request.signature);
+    return await new AuthService().postWalletAuthSignature(request.address, request.signature);
   }
 
   @SuccessResponse("201", "Created") // Custom success response
@@ -54,14 +54,14 @@ export class AuthController extends Controller {
   public async createUser(
     @Request() request: any,
   ): Promise<void> {
-    this.setStatus(201); // set return status 201
-    new AuthService().createUser({
+    await new AuthService().createUser({
       uid: request.user.uid,
       email: request.user.email,
       displayName: request.user.name,
       picture: request.user.picture,
       disabled: false,
     });
+    this.setStatus(201); // set return status 201
     return;
   }
 }
