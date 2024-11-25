@@ -1,5 +1,5 @@
 {
-  "exec": "ts-node src/index.ts",
+  "exec": "yarn run tsoa spec-and-routes && ts-node src/index.ts",
   "watch": [
     "src"
   ],

@@ -7,8 +7,9 @@
     "dev": "NODE_ENV=dev PORT=3001 nodemon",
     "start:dev": "npm run build && NODE_ENV=dev PORT=3001 node dist/index.js",
     "start:prod": "npm run build && NODE_ENV=prod PORT=3002 node dist/index.js",
-    "build": "tsc -p .",
-    "generate-client": "openapi --input ./openapi/openapi.yml --output ./api-client-lib --exportSchemas true --exportModels true",
+    "build": "yarn run tsoa spec-and-routes && tsc -p .",
+    "pregenerate-client": "rm -rf ./api-client-lib && yarn tsoa spec",
+    "generate-client": "openapi --input ./build/swagger.json --output ./api-client-lib --exportSchemas true --exportModels true",
     "postgenerate-client": "cd .. && cp -r ./masters-api/api-client-lib/* ./hatchyverse-website/hatchy-api-client/masters-api",
     "pm2:start:dev": "npm run build && pm2 startOrRestart ecosystem.config.js --only worker_dev",
     "pm2:start:prod": "npm run build && pm2 startOrRestart ecosystem.config.js --only worker_prod"
@@ -29,7 +30,8 @@
     "express": "^4.18.2",
     "firebase-admin": "^13.0.0",
     "merge-images": "^2.0.0",
-    "sharp": "^0.33.2"
+    "sharp": "^0.33.2",
+    "tsoa": "^6.5.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",

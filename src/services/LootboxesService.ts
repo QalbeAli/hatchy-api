@@ -32,7 +32,7 @@ export class LootboxesService {
       const hatchyPrice = lootbox.prices.find(price => price.currency === 'hatchy');
       if (usdtPrice) {
         const hatchyPriceUsd = parseFloat(usdtPrice.price) / livePrice;
-        const hatchyPriceDiscounted = hatchyPriceUsd * 0.8;
+        const hatchyPriceDiscounted = hatchyPriceUsd * 1;
         hatchyPrice.price = hatchyPriceDiscounted.toFixed(2);
       }
     });
@@ -49,7 +49,7 @@ export class LootboxesService {
     const hatchyPrice = lootbox.prices.find(price => price.currency === 'hatchy');
     if (usdtPrice) {
       const hatchyPriceUsd = parseFloat(usdtPrice.price) / livePrice;
-      const hatchyPriceDiscounted = hatchyPriceUsd * 0.8;
+      const hatchyPriceDiscounted = hatchyPriceUsd * 1;
       hatchyPrice.price = hatchyPriceDiscounted.toFixed(2);
     }
     return lootbox;

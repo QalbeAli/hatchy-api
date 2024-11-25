@@ -23,3 +23,5 @@ node-backup
 backup
 
 /src/firebase/*.json
+
+build

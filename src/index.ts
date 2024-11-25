@@ -22,6 +22,7 @@ import { MastersAvatar } from "./entities/MastersAvatar";
 import { ApiKey } from "./entities/ApiKey";
 import { Ticket } from "./entities/Ticket";
 import { MastersAvatarPrice } from "./entities/MastersAvatarPrice";
+import { RegisterRoutes } from "../build/routes";
 
 export const DI = {} as {
   server: http.Server;
@@ -68,10 +69,13 @@ export const init = (async () => {
   app.use(json());
   app.use(cors());
   app.use((req, res, next) => RequestContext.create(DI.orm.em, next));
+  /*
   app.use(indexRouter);
   app.get("/", (req, res) => res.json({ message: `Welcome to Hatchy API ${process.env.NODE_ENV}` }));
   app.use((req, res) => res.status(404).json({ message: 'No route found' }));
   app.use(errorHandler);
+  */
+  RegisterRoutes(app);
 
   DI.server = app.listen(PORT, () => {
     console.log(`Server Listening on PORT: ${PORT} http://localhost:${PORT}`);
