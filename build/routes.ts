@@ -113,8 +113,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-11-25T03:10:22.197Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-11-25T03:10:22.197Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-11-25T03:14:10.010Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-11-25T03:14:10.010Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -207,8 +207,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-11-25T03:10:22.209Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-11-25T03:10:22.210Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-11-25T03:14:10.023Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-11-25T03:14:10.024Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -268,8 +268,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-11-25T03:10:22.216Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-11-25T03:10:22.216Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-11-25T03:14:10.029Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-11-25T03:14:10.029Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
