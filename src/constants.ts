@@ -47,3 +47,9 @@ export const traitTypesData = [
     order: 8,
   },
 ];
+
+
+// gen2 sale
+export const gen2UsdtPrice = '3';
+export const gen2DiscountMultiplier = 1;
+export const gen2MaxPrice = 2000;

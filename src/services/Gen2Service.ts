@@ -2,9 +2,8 @@ import { BigNumber, ethers, logger, Wallet } from "ethers";
 import config from "../config";
 import { DefaultChainId } from "../contracts/networks";
 import { CoingeckoService } from "./CoingeckoService";
+import { gen2DiscountMultiplier, gen2MaxPrice, gen2UsdtPrice } from "../constants";
 
-const usdtPrice = '3';
-const discountMultiplier = 1;
 export class Gen2Service {
   chainId: number;
   coingeckoService: CoingeckoService;
@@ -23,11 +22,10 @@ export class Gen2Service {
     const livePrice = await this.coingeckoService.getHatchyPrice();
 
     let hatchyPrice = '0';
-    if (usdtPrice) {
-      const hatchyPriceUsdt = parseFloat(usdtPrice) / livePrice;
-      const hatchyPriceDiscounted = hatchyPriceUsdt * discountMultiplier;
-      hatchyPrice = hatchyPriceDiscounted.toFixed(0);
-    }
+    const hatchyPriceUsdt = parseFloat(gen2UsdtPrice) / livePrice;
+    const hatchyPriceDiscounted = hatchyPriceUsdt * gen2DiscountMultiplier;
+    const cappedPrice = Math.min(hatchyPriceDiscounted, gen2MaxPrice);
+    hatchyPrice = cappedPrice.toFixed(0);
 
     const parsedPrice = ethers.utils.parseUnits(hatchyPrice, 18);
 

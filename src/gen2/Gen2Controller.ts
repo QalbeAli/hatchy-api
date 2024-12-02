@@ -13,9 +13,7 @@ import { DefaultChainId } from "../contracts/networks";
 import { CoingeckoService } from "../services/CoingeckoService";
 import { Gen2Service } from "../services/Gen2Service";
 import { BigNumber, ethers } from "ethers";
-
-const usdtPrice = '3';
-const discountMultiplier = 1;
+import { gen2DiscountMultiplier, gen2MaxPrice, gen2UsdtPrice } from "../constants";
 
 @Route("gen2")
 @Tags("Gen2")
@@ -64,9 +62,10 @@ export class Gen2Controller extends Controller {
   }> {
     const coingeckoService = new CoingeckoService();
     const livePrice = await coingeckoService.getHatchyPrice();
-    const hatchyPriceUsdt = parseFloat(usdtPrice) / livePrice;
-    const hatchyPriceDiscounted = hatchyPriceUsdt * discountMultiplier;
-    const hatchyPrice = hatchyPriceDiscounted.toFixed(0);
+    const hatchyPriceUsdt = parseFloat(gen2UsdtPrice) / livePrice;
+    const hatchyPriceDiscounted = hatchyPriceUsdt * gen2DiscountMultiplier;
+    const cappedPrice = Math.min(hatchyPriceDiscounted, gen2MaxPrice);
+    const hatchyPrice = cappedPrice.toFixed(0);
     return {
       price: Number(hatchyPrice)
     };
