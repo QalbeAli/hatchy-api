@@ -2,7 +2,8 @@
   "entryFile": "src/index.ts",
   "noImplicitAdditionalProperties": "throw-on-extras",
   "controllerPathGlobs": [
-    "src/**/*Controller.ts"
+    "src/**/*Controller.ts",
+    "src/**/*controller.ts"
   ],
   "spec": {
     "outputDirectory": "src/tsoa",

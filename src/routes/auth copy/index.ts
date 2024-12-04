@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getWalletAuthSignMessage } from "../../controllers/auth/getWalletAuthSignMessage";
-import { authMiddleware } from "../../middlewares/authMiddleware";
+import { authMiddleware } from "../../middlewares/auth-middleware";
 import { createUser } from "../../controllers/auth/createUser";
 import { postWalletAuthSignature } from "../../controllers/auth/postWalletAuthSignature";
 

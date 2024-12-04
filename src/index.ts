@@ -5,7 +5,7 @@ import cors from "cors";
 import http from 'http';
 import indexRouter from "./routes";
 
-import { errorHandler } from "./middlewares/errorHandler";
+import { errorHandler } from "./middlewares/error-handler";
 import { EntityManager, EntityRepository, MikroORM, RequestContext } from "@mikro-orm/postgresql";
 import { Score } from "./entities/Score";
 import { TraitGender } from "./entities/TraitGender";
@@ -25,6 +25,7 @@ import { MastersAvatarPrice } from "./entities/MastersAvatarPrice";
 import { RegisterRoutes } from "./tsoa/routes";
 import swaggerDocument from "./tsoa/swagger.json";
 import swaggerUI from "swagger-ui-express";
+import { notFoundHandler } from "./middlewares/not-found-route-handler";
 
 
 export const DI = {} as {
@@ -76,10 +77,11 @@ export const init = (async () => {
   app.use(indexRouter);
   app.get("/", (req, res) => res.json({ message: `Welcome to Hatchy API ${process.env.NODE_ENV}` }));
   app.use((req, res) => res.status(404).json({ message: 'No route found' }));
-  app.use(errorHandler);
   */
   RegisterRoutes(app);
-  app.use('', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+  app.use(notFoundHandler);
+  app.use(errorHandler);
+  app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
   DI.server = app.listen(PORT, () => {
     console.log(`Server Listening on PORT: ${PORT} http://localhost:${PORT}`);

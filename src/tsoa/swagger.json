@@ -9,32 +9,50 @@
 		"schemas": {
 			"Voucher": {
 				"properties": {
-					"receiver": {
+					"blockchainId": {
 						"type": "string"
 					},
-					"holder": {
-						"type": "string"
-					},
-					"contract": {
-						"type": "string"
-					},
-					"contractType": {
-						"type": "string"
-					},
-					"type": {
-						"type": "string"
-					},
-					"name": {
+					"uid": {
 						"type": "string"
 					},
 					"amount": {
 						"type": "number",
 						"format": "double"
 					},
+					"category": {
+						"type": "string"
+					},
+					"contract": {
+						"type": "string"
+					},
+					"contractType": {
+						"type": "string",
+						"enum": [
+							"ERC20",
+							"ERC721",
+							"ERC1155"
+						]
+					},
+					"holder": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"blockchain",
+							"game"
+						]
+					},
+					"userId": {
+						"type": "string"
+					},
 					"image": {
 						"type": "string"
 					},
-					"id": {
+					"receiver": {
 						"type": "string"
 					},
 					"tokenId": {
@@ -43,13 +61,87 @@
 					}
 				},
 				"required": [
-					"holder",
+					"blockchainId",
+					"uid",
+					"amount",
+					"category",
 					"contract",
 					"contractType",
-					"type",
+					"holder",
 					"name",
+					"type",
+					"userId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"BigNumber": {},
+			"VoucherClaimSignature": {
+				"properties": {
+					"rewardContractType": {
+						"type": "number",
+						"format": "double"
+					},
+					"rewardHolderAddress": {
+						"type": "string"
+					},
+					"rewardContract": {
+						"type": "string"
+					},
+					"receiver": {
+						"type": "string"
+					},
+					"amount": {
+						"anyOf": [
+							{
+								"$ref": "#/components/schemas/BigNumber"
+							},
+							{
+								"type": "number",
+								"format": "double"
+							}
+						]
+					},
+					"claimableUntil": {
+						"type": "number",
+						"format": "double"
+					},
+					"voucherId": {
+						"type": "string"
+					},
+					"signature": {
+						"type": "string"
+					},
+					"tokenId": {
+						"type": "number",
+						"format": "double"
+					},
+					"eggType": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"rewardContractType",
+					"rewardHolderAddress",
+					"rewardContract",
+					"receiver",
 					"amount",
-					"id"
+					"claimableUntil",
+					"voucherId",
+					"signature"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"MessageResponse": {
+				"properties": {
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -232,12 +324,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-02T23:31:12.067Z"
+						"default": "2024-12-04T04:14:56.735Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-02T23:31:12.068Z"
+						"default": "2024-12-04T04:14:56.735Z"
 					},
 					"name": {
 						"type": "string"
@@ -276,7 +368,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"BigNumber": {},
 			"MastersMintTrait": {
 				"properties": {
 					"colors": {
@@ -394,12 +485,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-02T23:31:12.079Z"
+						"default": "2024-12-04T04:14:56.745Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-02T23:31:12.079Z"
+						"default": "2024-12-04T04:14:56.745Z"
 					},
 					"name": {
 						"type": "string"
@@ -705,12 +796,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-02T23:31:12.089Z"
+						"default": "2024-12-04T04:14:56.754Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-02T23:31:12.089Z"
+						"default": "2024-12-04T04:14:56.754Z"
 					},
 					"name": {
 						"type": "string"
@@ -1002,6 +1093,111 @@
 					}
 				],
 				"parameters": []
+			}
+		},
+		"/vouchers/random": {
+			"get": {
+				"operationId": "GetRandomBigNumber",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vouchers"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/vouchers/claim": {
+			"post": {
+				"operationId": "GetVoucherClaimSignature",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/VoucherClaimSignature"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vouchers"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"address": {
+										"type": "string"
+									},
+									"voucherId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"address",
+									"voucherId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/vouchers/{voucherId}": {
+			"delete": {
+				"operationId": "DeleteVoucher",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vouchers"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "voucherId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/users": {

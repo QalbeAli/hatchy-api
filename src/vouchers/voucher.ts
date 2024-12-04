@@ -1,12 +1,15 @@
 export interface Voucher {
-  receiver?: string;
-  holder: string;
-  contract: string;
-  contractType: string;
-  type: string;
-  name: string;
+  blockchainId: string;
+  uid: string;
   amount: number;
+  category: string;
+  contract: string;
+  contractType: 'ERC20' | 'ERC721' | 'ERC1155';
+  holder: string;
+  name: string;
+  type: 'blockchain' | 'game';
+  userId: string;
   image?: string;
-  id: string;
+  receiver?: string;
   tokenId?: number;
 }
