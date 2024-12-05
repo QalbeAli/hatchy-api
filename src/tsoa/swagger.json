@@ -324,12 +324,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-04T04:14:56.735Z"
+						"default": "2024-12-05T23:20:31.501Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-04T04:14:56.735Z"
+						"default": "2024-12-05T23:20:31.501Z"
 					},
 					"name": {
 						"type": "string"
@@ -485,12 +485,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-04T04:14:56.745Z"
+						"default": "2024-12-05T23:20:31.513Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-04T04:14:56.745Z"
+						"default": "2024-12-05T23:20:31.513Z"
 					},
 					"name": {
 						"type": "string"
@@ -796,12 +796,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-04T04:14:56.754Z"
+						"default": "2024-12-05T23:20:31.522Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-04T04:14:56.754Z"
+						"default": "2024-12-05T23:20:31.523Z"
 					},
 					"name": {
 						"type": "string"
@@ -940,6 +940,128 @@
 				"required": [
 					"message",
 					"token"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"FirebaseFirestore.Timestamp": {
+				"description": "A Timestamp represents a point in time independent of any time zone or\ncalendar, represented as seconds and fractions of seconds at nanosecond\nresolution in UTC Epoch time. It is encoded using the Proleptic Gregorian\nCalendar which extends the Gregorian calendar backwards to year one. It is\nencoded assuming all minutes are 60 seconds long, i.e. leap seconds are\n\"smeared\" so that no leap second table is needed for interpretation. Range\nis from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z.",
+				"properties": {
+					"seconds": {
+						"type": "number",
+						"format": "double",
+						"description": "The number of seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z."
+					},
+					"nanoseconds": {
+						"type": "number",
+						"format": "double",
+						"description": "The non-negative fractions of a second at nanosecond resolution."
+					}
+				},
+				"required": [
+					"seconds",
+					"nanoseconds"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"GameSave": {
+				"properties": {
+					"uid": {
+						"type": "string"
+					},
+					"data": {
+						"properties": {},
+						"additionalProperties": {},
+						"type": "object"
+					},
+					"gameId": {
+						"type": "string"
+					},
+					"saveName": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"createdAt": {
+						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+					},
+					"updatedAt": {
+						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+					}
+				},
+				"required": [
+					"uid",
+					"data",
+					"gameId",
+					"saveName",
+					"userId",
+					"createdAt",
+					"updatedAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Game": {
+				"properties": {
+					"uid": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string"
+					},
+					"requirement": {
+						"type": "string"
+					},
+					"views": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"slug": {
+						"type": "string"
+					},
+					"deeplink": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"previewImage": {
+						"type": "string"
+					},
+					"images": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"downloadLink": {
+						"type": "string"
+					},
+					"androidLink": {
+						"type": "string"
+					},
+					"iosLink": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"uid",
+					"status",
+					"requirement",
+					"views",
+					"name",
+					"slug",
+					"description",
+					"createdAt"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -2716,6 +2838,229 @@
 					}
 				],
 				"parameters": []
+			}
+		},
+		"/games/saves/{saveId}": {
+			"delete": {
+				"operationId": "DeleteGameSave",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "saveId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateGameSave",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GameSave"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "saveId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"data": {
+										"additionalProperties": false,
+										"type": "object"
+									}
+								},
+								"required": [
+									"data"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "GetGameSave",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GameSave"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "saveId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/games/saves": {
+			"post": {
+				"operationId": "CreateGameSave",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GameSave"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"saveName": {
+										"type": "string"
+									},
+									"data": {
+										"additionalProperties": false,
+										"type": "object"
+									},
+									"gameId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"data",
+									"gameId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "GetAllGameSaves",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/GameSave"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/games": {
+			"get": {
+				"operationId": "GetGame",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Game"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/tickets/metadata": {
