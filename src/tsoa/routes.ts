@@ -28,6 +28,8 @@ import { GameSavesController } from './../games/game-saves-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { GameController } from './../games/game-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { LeaderboardController } from './../leaderboard/leaderboard-controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { TicketsController } from './../tickets/TicketsController';
 import { expressAuthentication } from './../authentication';
 // @ts-ignore - no great way to install types from subpackage
@@ -152,8 +154,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-05T23:20:31.501Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-05T23:20:31.501Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-06T04:09:16.005Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-06T04:09:16.010Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -213,8 +215,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-05T23:20:31.513Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-05T23:20:31.513Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-06T04:09:16.019Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-06T04:09:16.020Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -307,8 +309,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-05T23:20:31.522Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-05T23:20:31.523Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-06T04:09:16.029Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-06T04:09:16.029Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -397,6 +399,32 @@ const models: TsoaRoute.Models = {
             "androidLink": {"dataType":"string"},
             "iosLink": {"dataType":"string"},
             "createdAt": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Score": {
+        "dataType": "refObject",
+        "properties": {
+            "gameId": {"dataType":"string","required":true},
+            "score": {"dataType":"double","required":true},
+            "userId": {"dataType":"string","required":true},
+            "username": {"dataType":"string","required":true},
+            "createdAt": {"ref":"FirebaseFirestore.Timestamp","required":true},
+            "updatedAt": {"ref":"FirebaseFirestore.Timestamp","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Rank": {
+        "dataType": "refObject",
+        "properties": {
+            "gameId": {"dataType":"string","required":true},
+            "userId": {"dataType":"string","required":true},
+            "rank": {"dataType":"double","required":true},
+            "username": {"dataType":"string","required":true},
+            "createdAt": {"ref":"FirebaseFirestore.Timestamp","required":true},
+            "updatedAt": {"ref":"FirebaseFirestore.Timestamp","required":true},
         },
         "additionalProperties": false,
     },
@@ -1576,7 +1604,7 @@ export function RegisterRoutes(app: Router) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
                     saveId: {"in":"path","name":"saveId","required":true,"dataType":"string"},
-                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"data":{"dataType":"object","required":true}}},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"data":{"dataType":"nestedObjectLiteral","nestedProperties":{},"additionalProperties":{"dataType":"any"},"required":true}}},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -1640,7 +1668,7 @@ export function RegisterRoutes(app: Router) {
             async function GameSavesController_createGameSave(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
-                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"saveName":{"dataType":"string"},"data":{"dataType":"object","required":true},"gameId":{"dataType":"string","required":true}}},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"saveName":{"dataType":"string"},"data":{"dataType":"nestedObjectLiteral","nestedProperties":{},"additionalProperties":{"dataType":"any"},"required":true},"gameId":{"dataType":"string","required":true}}},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -1714,6 +1742,196 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'getGame',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/leaderboard/scores',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(LeaderboardController)),
+            ...(fetchMiddlewares<RequestHandler>(LeaderboardController.prototype.addScore)),
+
+            async function LeaderboardController_addScore(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"clientId":{"dataType":"string"},"apiKey":{"dataType":"string"},"score":{"dataType":"double","required":true},"gameId":{"dataType":"string","required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new LeaderboardController();
+
+              await templateService.apiHandler({
+                methodName: 'addScore',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/leaderboard/scores/:gameId',
+            ...(fetchMiddlewares<RequestHandler>(LeaderboardController)),
+            ...(fetchMiddlewares<RequestHandler>(LeaderboardController.prototype.getScoreLeaderboard)),
+
+            async function LeaderboardController_getScoreLeaderboard(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    gameId: {"in":"path","name":"gameId","required":true,"dataType":"string"},
+                    limit: {"in":"query","name":"limit","dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new LeaderboardController();
+
+              await templateService.apiHandler({
+                methodName: 'getScoreLeaderboard',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/leaderboard/scores/:gameId/me',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(LeaderboardController)),
+            ...(fetchMiddlewares<RequestHandler>(LeaderboardController.prototype.getUserScore)),
+
+            async function LeaderboardController_getUserScore(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    gameId: {"in":"path","name":"gameId","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new LeaderboardController();
+
+              await templateService.apiHandler({
+                methodName: 'getUserScore',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/leaderboard/rank',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(LeaderboardController)),
+            ...(fetchMiddlewares<RequestHandler>(LeaderboardController.prototype.updateRank)),
+
+            async function LeaderboardController_updateRank(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"clientId":{"dataType":"string"},"apiKey":{"dataType":"string"},"rank":{"dataType":"double","required":true},"gameId":{"dataType":"string","required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new LeaderboardController();
+
+              await templateService.apiHandler({
+                methodName: 'updateRank',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/leaderboard/rank/:gameId',
+            ...(fetchMiddlewares<RequestHandler>(LeaderboardController)),
+            ...(fetchMiddlewares<RequestHandler>(LeaderboardController.prototype.getRankLeaderboard)),
+
+            async function LeaderboardController_getRankLeaderboard(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    gameId: {"in":"path","name":"gameId","required":true,"dataType":"string"},
+                    limit: {"in":"query","name":"limit","dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new LeaderboardController();
+
+              await templateService.apiHandler({
+                methodName: 'getRankLeaderboard',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/leaderboard/rank/:gameId/me',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(LeaderboardController)),
+            ...(fetchMiddlewares<RequestHandler>(LeaderboardController.prototype.getUserRank)),
+
+            async function LeaderboardController_getUserRank(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    gameId: {"in":"path","name":"gameId","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new LeaderboardController();
+
+              await templateService.apiHandler({
+                methodName: 'getUserRank',
                 controller,
                 response,
                 next,

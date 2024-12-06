@@ -39,7 +39,9 @@ export class GameSavesController extends Controller {
     @Request() request: any,
     @Path() saveId: string,
     @Body() body: {
-      data: object,
+      data: {
+        [key: string]: any
+      },
     },
   ): Promise<GameSave> {
     const gameSavesService = new GamesSavesService();
@@ -76,7 +78,9 @@ export class GameSavesController extends Controller {
     @Request() request: any,
     @Body() body: {
       gameId: string,
-      data: object,
+      data: {
+        [key: string]: any
+      },
       saveName?: string,
     },
   ): Promise<GameSave> {

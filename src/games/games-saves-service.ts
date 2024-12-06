@@ -5,7 +5,9 @@ import { GameSave } from "./game-save";
 
 export class GamesSavesService {
 
-  public async createGameSave(gameId: string, userId: string, data: object, saveName: string): Promise<GameSave> {
+  public async createGameSave(gameId: string, userId: string, data: {
+    [key: string]: any
+  }, saveName: string): Promise<GameSave> {
     const docRef = admin.firestore().collection('game-saves').doc();
     const uid = docRef.id;
     const gameSave: GameSave = {
@@ -23,7 +25,9 @@ export class GamesSavesService {
       uid: docRef.id,
     };
   }
-  public async updateGameSave(saveId: string, data: object): Promise<GameSave> {
+  public async updateGameSave(saveId: string, data: {
+    [key: string]: any
+  },): Promise<GameSave> {
     const docRef = admin.firestore().collection('game-saves').doc(saveId);
     const gameSave = await this.getGameSaveById(saveId);
     const updatedGameSave = {

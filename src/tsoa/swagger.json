@@ -324,12 +324,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-05T23:20:31.501Z"
+						"default": "2024-12-06T04:09:16.005Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-05T23:20:31.501Z"
+						"default": "2024-12-06T04:09:16.010Z"
 					},
 					"name": {
 						"type": "string"
@@ -485,12 +485,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-05T23:20:31.513Z"
+						"default": "2024-12-06T04:09:16.019Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-05T23:20:31.513Z"
+						"default": "2024-12-06T04:09:16.020Z"
 					},
 					"name": {
 						"type": "string"
@@ -796,12 +796,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-05T23:20:31.522Z"
+						"default": "2024-12-06T04:09:16.029Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-05T23:20:31.523Z"
+						"default": "2024-12-06T04:09:16.029Z"
 					},
 					"name": {
 						"type": "string"
@@ -1062,6 +1062,72 @@
 					"slug",
 					"description",
 					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Score": {
+				"properties": {
+					"gameId": {
+						"type": "string"
+					},
+					"score": {
+						"type": "number",
+						"format": "double"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"username": {
+						"type": "string"
+					},
+					"createdAt": {
+						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+					},
+					"updatedAt": {
+						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+					}
+				},
+				"required": [
+					"gameId",
+					"score",
+					"userId",
+					"username",
+					"createdAt",
+					"updatedAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Rank": {
+				"properties": {
+					"gameId": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"rank": {
+						"type": "number",
+						"format": "double"
+					},
+					"username": {
+						"type": "string"
+					},
+					"createdAt": {
+						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+					},
+					"updatedAt": {
+						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+					}
+				},
+				"required": [
+					"gameId",
+					"userId",
+					"rank",
+					"username",
+					"createdAt",
+					"updatedAt"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -2906,7 +2972,8 @@
 							"schema": {
 								"properties": {
 									"data": {
-										"additionalProperties": false,
+										"properties": {},
+										"additionalProperties": {},
 										"type": "object"
 									}
 								},
@@ -2987,7 +3054,8 @@
 										"type": "string"
 									},
 									"data": {
-										"additionalProperties": false,
+										"properties": {},
+										"additionalProperties": {},
 										"type": "object"
 									},
 									"gameId": {
@@ -3055,6 +3123,285 @@
 					{
 						"in": "query",
 						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/leaderboard/scores": {
+			"post": {
+				"operationId": "AddScore",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Score"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leaderboard"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"clientId": {
+										"type": "string"
+									},
+									"apiKey": {
+										"type": "string"
+									},
+									"score": {
+										"type": "number",
+										"format": "double"
+									},
+									"gameId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"score",
+									"gameId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/leaderboard/scores/{gameId}": {
+			"get": {
+				"operationId": "GetScoreLeaderboard",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Score"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leaderboard"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "gameId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/leaderboard/scores/{gameId}/me": {
+			"get": {
+				"operationId": "GetUserScore",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Score"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leaderboard"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "gameId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/leaderboard/rank": {
+			"post": {
+				"operationId": "UpdateRank",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Rank"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leaderboard"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"clientId": {
+										"type": "string"
+									},
+									"apiKey": {
+										"type": "string"
+									},
+									"rank": {
+										"type": "number",
+										"format": "double"
+									},
+									"gameId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"rank",
+									"gameId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/leaderboard/rank/{gameId}": {
+			"get": {
+				"operationId": "GetRankLeaderboard",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"properties": {
+											"rank": {
+												"type": "number",
+												"format": "double"
+											},
+											"userId": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"rank",
+											"userId"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leaderboard"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "gameId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/leaderboard/rank/{gameId}/me": {
+			"get": {
+				"operationId": "GetUserRank",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Rank"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leaderboard"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "gameId",
 						"required": true,
 						"schema": {
 							"type": "string"
