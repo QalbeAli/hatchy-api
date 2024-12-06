@@ -8,7 +8,7 @@ import {
   Route,
   Tags,
 } from "tsoa";
-import { DefaultChainId } from "../contracts/networks";
+import { DefaultChainId } from "../modules/contracts/networks";
 import { MastersService } from "../services/MastersService";
 import { MastersTrait } from "./models/MastersTrait";
 import { ItemsService } from "../services/ItemsService";

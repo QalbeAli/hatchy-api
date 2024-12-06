@@ -9,7 +9,7 @@ import { Item } from "../entities/Item";
 import { DI } from "..";
 import { setAvatarLayer } from "../utils";
 import config from "../config";
-import { DefaultChainId, getContract } from "../contracts/networks";
+import { DefaultChainId, getContract } from "../modules/contracts/networks";
 
 const s3 = new S3();
 const dynamoDB = new DynamoDB.DocumentClient();

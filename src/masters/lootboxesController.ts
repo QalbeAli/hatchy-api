@@ -10,7 +10,7 @@ import {
   Tags,
 } from "tsoa";
 import { LootboxesService } from "../services/LootboxesService";
-import { DefaultChainId } from "../contracts/networks";
+import { DefaultChainId } from "../modules/contracts/networks";
 import { MastersLootbox } from "./models/MastersLootbox";
 import { ItemsService } from "../services/ItemsService";
 import { GameSavesService } from "../services/GameSavesService";

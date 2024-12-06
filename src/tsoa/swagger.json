@@ -324,12 +324,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-06T04:09:16.005Z"
+						"default": "2024-12-06T04:30:34.926Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-06T04:09:16.010Z"
+						"default": "2024-12-06T04:30:34.926Z"
 					},
 					"name": {
 						"type": "string"
@@ -485,12 +485,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-06T04:09:16.019Z"
+						"default": "2024-12-06T04:30:34.937Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-06T04:09:16.020Z"
+						"default": "2024-12-06T04:30:34.937Z"
 					},
 					"name": {
 						"type": "string"
@@ -796,12 +796,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-06T04:09:16.029Z"
+						"default": "2024-12-06T04:30:34.946Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-06T04:09:16.029Z"
+						"default": "2024-12-06T04:30:34.947Z"
 					},
 					"name": {
 						"type": "string"
@@ -2687,225 +2687,6 @@
 				}
 			}
 		},
-		"/gen2/sale-signature": {
-			"post": {
-				"operationId": "GetGen2SaleSignature",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"signature": {
-											"type": "string"
-										},
-										"nonce": {
-											"$ref": "#/components/schemas/BigNumber"
-										},
-										"price": {
-											"type": "string"
-										},
-										"referral": {
-											"type": "string"
-										},
-										"amount": {
-											"type": "number",
-											"format": "double"
-										},
-										"eggType": {
-											"type": "number",
-											"format": "double"
-										},
-										"receiver": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"signature",
-										"nonce",
-										"price",
-										"referral",
-										"amount",
-										"eggType",
-										"receiver"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Gen2"
-				],
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"referral": {
-										"type": "string"
-									},
-									"amount": {
-										"type": "number",
-										"format": "double"
-									},
-									"eggType": {
-										"type": "number",
-										"format": "double"
-									},
-									"receiver": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"referral",
-									"amount",
-									"eggType",
-									"receiver"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/gen2/price": {
-			"get": {
-				"operationId": "GetGen2SalePrice",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"price": {
-											"type": "number",
-											"format": "double"
-										}
-									},
-									"required": [
-										"price"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Gen2"
-				],
-				"security": [],
-				"parameters": []
-			}
-		},
-		"/auth/wallet": {
-			"get": {
-				"operationId": "GetWalletAuthMessage",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/WalletSignatureMessage"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Auth"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "address",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			},
-			"post": {
-				"operationId": "PostWalletAuthSignature",
-				"responses": {
-					"201": {
-						"description": "Created",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/AuthCustomToken"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Auth"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"signature": {
-										"type": "string"
-									},
-									"address": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"signature",
-									"address"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/auth/users": {
-			"post": {
-				"operationId": "CreateUser",
-				"responses": {
-					"201": {
-						"description": "Created"
-					}
-				},
-				"tags": [
-					"Auth"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			}
-		},
 		"/games/saves/{saveId}": {
 			"delete": {
 				"operationId": "DeleteGameSave",
@@ -3408,6 +3189,225 @@
 						}
 					}
 				]
+			}
+		},
+		"/auth/wallet": {
+			"get": {
+				"operationId": "GetWalletAuthMessage",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/WalletSignatureMessage"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "address",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "PostWalletAuthSignature",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AuthCustomToken"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"signature": {
+										"type": "string"
+									},
+									"address": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"signature",
+									"address"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/users": {
+			"post": {
+				"operationId": "CreateUser",
+				"responses": {
+					"201": {
+						"description": "Created"
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/gen2/sale-signature": {
+			"post": {
+				"operationId": "GetGen2SaleSignature",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"signature": {
+											"type": "string"
+										},
+										"nonce": {
+											"$ref": "#/components/schemas/BigNumber"
+										},
+										"price": {
+											"type": "string"
+										},
+										"referral": {
+											"type": "string"
+										},
+										"amount": {
+											"type": "number",
+											"format": "double"
+										},
+										"eggType": {
+											"type": "number",
+											"format": "double"
+										},
+										"receiver": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"signature",
+										"nonce",
+										"price",
+										"referral",
+										"amount",
+										"eggType",
+										"receiver"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Gen2"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"referral": {
+										"type": "string"
+									},
+									"amount": {
+										"type": "number",
+										"format": "double"
+									},
+									"eggType": {
+										"type": "number",
+										"format": "double"
+									},
+									"receiver": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"referral",
+									"amount",
+									"eggType",
+									"receiver"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/gen2/price": {
+			"get": {
+				"operationId": "GetGen2SalePrice",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"price": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"price"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Gen2"
+				],
+				"security": [],
+				"parameters": []
 			}
 		},
 		"/tickets/metadata": {

@@ -1,6 +1,6 @@
 import { BigNumber, ethers, logger, Wallet } from "ethers";
 import config from "../config";
-import { DefaultChainId } from "../contracts/networks";
+import { DefaultChainId } from "../modules/contracts/networks";
 import { CoingeckoService } from "./CoingeckoService";
 import { gen2DiscountMultiplier, gen2MaxPrice, gen2UsdtPrice } from "../constants";
 

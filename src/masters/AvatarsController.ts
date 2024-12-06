@@ -9,7 +9,7 @@ import {
   Route,
   Tags,
 } from "tsoa";
-import { DefaultChainId } from "../contracts/networks";
+import { DefaultChainId } from "../modules/contracts/networks";
 import { MastersService } from "../services/MastersService";
 import { isAddress } from "ethers/lib/utils";
 import axios from "axios";

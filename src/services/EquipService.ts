@@ -1,7 +1,7 @@
 import { BigNumber, Wallet, ethers } from "ethers";
 import { createArrayOf } from "../utils";
 import { DI } from "..";
-import { DefaultChainId, getContract, getSigner } from "../contracts/networks";
+import { DefaultChainId, getContract, getSigner } from "../modules/contracts/networks";
 
 
 const bodyTraitType = 1;

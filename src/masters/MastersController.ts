@@ -7,7 +7,7 @@ import {
   Route,
   Tags,
 } from "tsoa";
-import { DefaultChainId } from "../contracts/networks";
+import { DefaultChainId } from "../modules/contracts/networks";
 import { MastersService } from "../services/MastersService";
 import { MastersColor } from "./models/MastersColor";
 import { TraitGender } from "./models/TraitGender";

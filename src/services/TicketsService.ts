@@ -1,5 +1,5 @@
 import { BigNumber, ethers } from "ethers";
-import { DefaultChainId, getContract } from "../contracts/networks";
+import { DefaultChainId, getContract } from "../modules/contracts/networks";
 import { DI } from "..";
 
 export class TicketsService {

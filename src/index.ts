@@ -3,7 +3,6 @@ config();
 import express, { json } from "express";
 import cors from "cors";
 import http from 'http';
-import indexRouter from "./routes";
 
 import { errorHandler } from "./middlewares/error-handler";
 import { EntityManager, EntityRepository, MikroORM, RequestContext } from "@mikro-orm/postgresql";
@@ -73,11 +72,6 @@ export const init = (async () => {
   app.use(json());
   app.use(cors());
   app.use((req, res, next) => RequestContext.create(DI.orm.em, next));
-  /*
-  app.use(indexRouter);
-  app.get("/", (req, res) => res.json({ message: `Welcome to Hatchy API ${process.env.NODE_ENV}` }));
-  app.use((req, res) => res.status(404).json({ message: 'No route found' }));
-  */
   RegisterRoutes(app);
   app.use(notFoundHandler);
   app.use(errorHandler);

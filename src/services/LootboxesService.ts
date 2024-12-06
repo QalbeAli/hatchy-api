@@ -5,7 +5,7 @@ import { BigNumber, ethers } from "ethers";
 import { Loaded } from "@mikro-orm/core";
 import { DI } from "..";
 import config from "../config";
-import { DefaultChainId, getContract } from "../contracts/networks";
+import { DefaultChainId, getContract } from "../modules/contracts/networks";
 import { CoingeckoService } from "./CoingeckoService";
 
 export class LootboxesService {
