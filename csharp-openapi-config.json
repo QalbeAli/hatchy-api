@@ -1,0 +1,8 @@
+{
+  "packageName": "HatchyverseAPI",
+  "optionalAssemblyInfo": false,
+  "optionalProjectFile": false,
+  "targetFramework": "netstandard2.0",
+  "library": "restsharp",
+  "validatable": false
+}

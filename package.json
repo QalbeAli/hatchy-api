@@ -11,6 +11,7 @@
     "pregenerate-client": "rm -rf ./api-client-lib && yarn tsoa spec",
     "generate-client": "openapi --input ./src/tsoa/swagger.json --output ./api-client-lib --exportSchemas true --exportModels true",
     "postgenerate-client": "cd .. && cp -r ./masters-api/api-client-lib/* ./hatchyverse-website/hatchy-api-client/masters-api",
+    "generate-csharp-client": "openapi-generator-cli generate -i ./src/tsoa/swagger.json -g csharp -c ./csharp-openapi-config.json -o ./api-client-csharp",
     "pm2:start:dev": "npm run build && pm2 startOrRestart ecosystem.config.js --only worker_dev",
     "pm2:start:prod": "npm run build && pm2 startOrRestart ecosystem.config.js --only worker_prod"
   },

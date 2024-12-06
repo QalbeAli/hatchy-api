@@ -324,12 +324,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-06T04:30:34.926Z"
+						"default": "2024-12-06T04:49:11.365Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-06T04:30:34.926Z"
+						"default": "2024-12-06T04:49:11.366Z"
 					},
 					"name": {
 						"type": "string"
@@ -485,12 +485,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-06T04:30:34.937Z"
+						"default": "2024-12-06T04:49:11.376Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-06T04:30:34.937Z"
+						"default": "2024-12-06T04:49:11.377Z"
 					},
 					"name": {
 						"type": "string"
@@ -796,12 +796,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-06T04:30:34.946Z"
+						"default": "2024-12-06T04:49:11.386Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-06T04:30:34.947Z"
+						"default": "2024-12-06T04:49:11.386Z"
 					},
 					"name": {
 						"type": "string"

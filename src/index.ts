@@ -73,9 +73,9 @@ export const init = (async () => {
   app.use(cors());
   app.use((req, res, next) => RequestContext.create(DI.orm.em, next));
   RegisterRoutes(app);
+  app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
   app.use(notFoundHandler);
   app.use(errorHandler);
-  app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
   DI.server = app.listen(PORT, () => {
     console.log(`Server Listening on PORT: ${PORT} http://localhost:${PORT}`);

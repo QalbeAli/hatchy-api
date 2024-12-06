@@ -18,6 +18,8 @@ benchmarks/graphs
 *.pem
 dist
 api-client-lib
+api-client-csharp
+openapitools.json
 
 node-backup
 backup
