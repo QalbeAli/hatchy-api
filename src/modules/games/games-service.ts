@@ -12,4 +12,9 @@ export class GamesService {
     }
     return data as Game;
   }
+
+  public async getGames(): Promise<Game[]> {
+    const snapshot = await admin.firestore().collection('games').get();
+    return snapshot.docs.map(doc => doc.data() as Game);
+  }
 }

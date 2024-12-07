@@ -1,15 +1,10 @@
 import {
-  Body,
   Controller,
   Get,
-  Post,
   Query,
-  Request,
   Route,
-  Security,
   Tags,
 } from "tsoa";
-import { MessageResponse } from "../../responses/message-response";
 import { GamesService } from "./games-service";
 import { Game } from "./game";
 
@@ -22,5 +17,12 @@ export class GameController extends Controller {
   ): Promise<Game> {
     const game = await new GamesService().getGameById(id);
     return game;
+  }
+
+  @Get("list")
+  public async getGames(
+  ): Promise<Game[]> {
+    const games = await new GamesService().getGames();
+    return games;
   }
 }

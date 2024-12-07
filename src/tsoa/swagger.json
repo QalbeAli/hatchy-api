@@ -214,6 +214,226 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"WalletSignatureMessage": {
+				"properties": {
+					"message": {
+						"type": "string"
+					},
+					"nonce": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message",
+					"nonce"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"AuthCustomToken": {
+				"properties": {
+					"message": {
+						"type": "string"
+					},
+					"token": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message",
+					"token"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"FirebaseFirestore.Timestamp": {
+				"description": "A Timestamp represents a point in time independent of any time zone or\ncalendar, represented as seconds and fractions of seconds at nanosecond\nresolution in UTC Epoch time. It is encoded using the Proleptic Gregorian\nCalendar which extends the Gregorian calendar backwards to year one. It is\nencoded assuming all minutes are 60 seconds long, i.e. leap seconds are\n\"smeared\" so that no leap second table is needed for interpretation. Range\nis from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z.",
+				"properties": {
+					"seconds": {
+						"type": "number",
+						"format": "double",
+						"description": "The number of seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z."
+					},
+					"nanoseconds": {
+						"type": "number",
+						"format": "double",
+						"description": "The non-negative fractions of a second at nanosecond resolution."
+					}
+				},
+				"required": [
+					"seconds",
+					"nanoseconds"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"GameSave": {
+				"properties": {
+					"uid": {
+						"type": "string"
+					},
+					"data": {
+						"properties": {},
+						"additionalProperties": {},
+						"type": "object"
+					},
+					"gameId": {
+						"type": "string"
+					},
+					"saveName": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"createdAt": {
+						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+					},
+					"updatedAt": {
+						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+					}
+				},
+				"required": [
+					"uid",
+					"data",
+					"gameId",
+					"saveName",
+					"userId",
+					"createdAt",
+					"updatedAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Game": {
+				"properties": {
+					"uid": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string"
+					},
+					"requirement": {
+						"type": "string"
+					},
+					"views": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"slug": {
+						"type": "string"
+					},
+					"deeplink": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"previewImage": {
+						"type": "string"
+					},
+					"images": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"downloadLink": {
+						"type": "string"
+					},
+					"androidLink": {
+						"type": "string"
+					},
+					"iosLink": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"uid",
+					"status",
+					"requirement",
+					"views",
+					"name",
+					"slug",
+					"description",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Score": {
+				"properties": {
+					"gameId": {
+						"type": "string"
+					},
+					"score": {
+						"type": "number",
+						"format": "double"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"username": {
+						"type": "string"
+					},
+					"createdAt": {
+						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+					},
+					"updatedAt": {
+						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+					}
+				},
+				"required": [
+					"gameId",
+					"score",
+					"userId",
+					"username",
+					"createdAt",
+					"updatedAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Rank": {
+				"properties": {
+					"gameId": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"rank": {
+						"type": "number",
+						"format": "double"
+					},
+					"username": {
+						"type": "string"
+					},
+					"createdAt": {
+						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+					},
+					"updatedAt": {
+						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+					}
+				},
+				"required": [
+					"gameId",
+					"userId",
+					"rank",
+					"username",
+					"createdAt",
+					"updatedAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"MastersTraitType": {
 				"properties": {
 					"id": {
@@ -324,12 +544,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-07T00:58:32.802Z"
+						"default": "2024-12-07T03:19:30.530Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-07T00:58:32.803Z"
+						"default": "2024-12-07T03:19:30.531Z"
 					},
 					"name": {
 						"type": "string"
@@ -485,12 +705,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-07T00:58:32.812Z"
+						"default": "2024-12-07T03:19:30.569Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-07T00:58:32.812Z"
+						"default": "2024-12-07T03:19:30.569Z"
 					},
 					"name": {
 						"type": "string"
@@ -796,12 +1016,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-07T00:58:32.821Z"
+						"default": "2024-12-07T03:19:30.587Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-07T00:58:32.821Z"
+						"default": "2024-12-07T03:19:30.588Z"
 					},
 					"name": {
 						"type": "string"
@@ -908,226 +1128,6 @@
 					"equippedItems",
 					"traits",
 					"layers"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"WalletSignatureMessage": {
-				"properties": {
-					"message": {
-						"type": "string"
-					},
-					"nonce": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"message",
-					"nonce"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"AuthCustomToken": {
-				"properties": {
-					"message": {
-						"type": "string"
-					},
-					"token": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"message",
-					"token"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"FirebaseFirestore.Timestamp": {
-				"description": "A Timestamp represents a point in time independent of any time zone or\ncalendar, represented as seconds and fractions of seconds at nanosecond\nresolution in UTC Epoch time. It is encoded using the Proleptic Gregorian\nCalendar which extends the Gregorian calendar backwards to year one. It is\nencoded assuming all minutes are 60 seconds long, i.e. leap seconds are\n\"smeared\" so that no leap second table is needed for interpretation. Range\nis from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z.",
-				"properties": {
-					"seconds": {
-						"type": "number",
-						"format": "double",
-						"description": "The number of seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z."
-					},
-					"nanoseconds": {
-						"type": "number",
-						"format": "double",
-						"description": "The non-negative fractions of a second at nanosecond resolution."
-					}
-				},
-				"required": [
-					"seconds",
-					"nanoseconds"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"GameSave": {
-				"properties": {
-					"uid": {
-						"type": "string"
-					},
-					"data": {
-						"properties": {},
-						"additionalProperties": {},
-						"type": "object"
-					},
-					"gameId": {
-						"type": "string"
-					},
-					"saveName": {
-						"type": "string"
-					},
-					"userId": {
-						"type": "string"
-					},
-					"createdAt": {
-						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
-					},
-					"updatedAt": {
-						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
-					}
-				},
-				"required": [
-					"uid",
-					"data",
-					"gameId",
-					"saveName",
-					"userId",
-					"createdAt",
-					"updatedAt"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Game": {
-				"properties": {
-					"uid": {
-						"type": "string"
-					},
-					"status": {
-						"type": "string"
-					},
-					"requirement": {
-						"type": "string"
-					},
-					"views": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"slug": {
-						"type": "string"
-					},
-					"deeplink": {
-						"type": "string"
-					},
-					"description": {
-						"type": "string"
-					},
-					"previewImage": {
-						"type": "string"
-					},
-					"images": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					},
-					"downloadLink": {
-						"type": "string"
-					},
-					"androidLink": {
-						"type": "string"
-					},
-					"iosLink": {
-						"type": "string"
-					},
-					"createdAt": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"uid",
-					"status",
-					"requirement",
-					"views",
-					"name",
-					"slug",
-					"description",
-					"createdAt"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Score": {
-				"properties": {
-					"gameId": {
-						"type": "string"
-					},
-					"score": {
-						"type": "number",
-						"format": "double"
-					},
-					"userId": {
-						"type": "string"
-					},
-					"username": {
-						"type": "string"
-					},
-					"createdAt": {
-						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
-					},
-					"updatedAt": {
-						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
-					}
-				},
-				"required": [
-					"gameId",
-					"score",
-					"userId",
-					"username",
-					"createdAt",
-					"updatedAt"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Rank": {
-				"properties": {
-					"gameId": {
-						"type": "string"
-					},
-					"userId": {
-						"type": "string"
-					},
-					"rank": {
-						"type": "number",
-						"format": "double"
-					},
-					"username": {
-						"type": "string"
-					},
-					"createdAt": {
-						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
-					},
-					"updatedAt": {
-						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
-					}
-				},
-				"required": [
-					"gameId",
-					"userId",
-					"rank",
-					"username",
-					"createdAt",
-					"updatedAt"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -1411,6 +1411,835 @@
 						"jwt": []
 					}
 				],
+				"parameters": []
+			}
+		},
+		"/link/wallet": {
+			"get": {
+				"operationId": "GetWalletLinkMessage",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/WalletSignatureMessage"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Link"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "address",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "PostWalletLinkSignature",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AuthCustomToken"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Link"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"signature": {
+										"type": "string"
+									},
+									"address": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"signature",
+									"address"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/games/saves/{saveId}": {
+			"delete": {
+				"operationId": "DeleteGameSave",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "saveId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateGameSave",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GameSave"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "saveId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"data": {
+										"properties": {},
+										"additionalProperties": {},
+										"type": "object"
+									}
+								},
+								"required": [
+									"data"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "GetGameSave",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GameSave"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "saveId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/games/saves": {
+			"post": {
+				"operationId": "CreateGameSave",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GameSave"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"saveName": {
+										"type": "string"
+									},
+									"data": {
+										"properties": {},
+										"additionalProperties": {},
+										"type": "object"
+									},
+									"gameId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"data",
+									"gameId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "GetAllGameSaves",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/GameSave"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/games": {
+			"get": {
+				"operationId": "GetGame",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Game"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/games/list": {
+			"get": {
+				"operationId": "GetGames",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Game"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/leaderboard/scores": {
+			"post": {
+				"operationId": "AddScore",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Score"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leaderboard"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"clientId": {
+										"type": "string"
+									},
+									"apiKey": {
+										"type": "string"
+									},
+									"score": {
+										"type": "number",
+										"format": "double"
+									},
+									"gameId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"score",
+									"gameId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/leaderboard/scores/{gameId}": {
+			"get": {
+				"operationId": "GetScoreLeaderboard",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Score"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leaderboard"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "gameId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/leaderboard/scores/{gameId}/me": {
+			"get": {
+				"operationId": "GetUserScore",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Score"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leaderboard"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "gameId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/leaderboard/rank": {
+			"post": {
+				"operationId": "UpdateRank",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Rank"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leaderboard"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"clientId": {
+										"type": "string"
+									},
+									"apiKey": {
+										"type": "string"
+									},
+									"rank": {
+										"type": "number",
+										"format": "double"
+									},
+									"gameId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"rank",
+									"gameId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/leaderboard/rank/{gameId}": {
+			"get": {
+				"operationId": "GetRankLeaderboard",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"properties": {
+											"rank": {
+												"type": "number",
+												"format": "double"
+											},
+											"userId": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"rank",
+											"userId"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leaderboard"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "gameId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/leaderboard/rank/{gameId}/me": {
+			"get": {
+				"operationId": "GetUserRank",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Rank"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leaderboard"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "gameId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/auth/wallet": {
+			"get": {
+				"operationId": "GetWalletAuthMessage",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/WalletSignatureMessage"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "address",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "PostWalletAuthSignature",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AuthCustomToken"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"signature": {
+										"type": "string"
+									},
+									"address": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"signature",
+									"address"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/users": {
+			"post": {
+				"operationId": "CreateUser",
+				"responses": {
+					"201": {
+						"description": "Created"
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/gen2/sale-signature": {
+			"post": {
+				"operationId": "GetGen2SaleSignature",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"signature": {
+											"type": "string"
+										},
+										"nonce": {
+											"$ref": "#/components/schemas/BigNumber"
+										},
+										"price": {
+											"type": "string"
+										},
+										"referral": {
+											"type": "string"
+										},
+										"amount": {
+											"type": "number",
+											"format": "double"
+										},
+										"eggType": {
+											"type": "number",
+											"format": "double"
+										},
+										"receiver": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"signature",
+										"nonce",
+										"price",
+										"referral",
+										"amount",
+										"eggType",
+										"receiver"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Gen2"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"referral": {
+										"type": "string"
+									},
+									"amount": {
+										"type": "number",
+										"format": "double"
+									},
+									"eggType": {
+										"type": "number",
+										"format": "double"
+									},
+									"receiver": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"referral",
+									"amount",
+									"eggType",
+									"receiver"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/gen2/price": {
+			"get": {
+				"operationId": "GetGen2SalePrice",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"price": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"price"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Gen2"
+				],
+				"security": [],
 				"parameters": []
 			}
 		},
@@ -2688,810 +3517,6 @@
 						}
 					}
 				}
-			}
-		},
-		"/link/wallet": {
-			"get": {
-				"operationId": "GetWalletLinkMessage",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/WalletSignatureMessage"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Link"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "address",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			},
-			"post": {
-				"operationId": "PostWalletLinkSignature",
-				"responses": {
-					"201": {
-						"description": "Created",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/AuthCustomToken"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Link"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"signature": {
-										"type": "string"
-									},
-									"address": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"signature",
-									"address"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/games/saves/{saveId}": {
-			"delete": {
-				"operationId": "DeleteGameSave",
-				"responses": {
-					"204": {
-						"description": "No content"
-					}
-				},
-				"tags": [
-					"Game"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "saveId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			},
-			"put": {
-				"operationId": "UpdateGameSave",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/GameSave"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Game"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "saveId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"data": {
-										"properties": {},
-										"additionalProperties": {},
-										"type": "object"
-									}
-								},
-								"required": [
-									"data"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			},
-			"get": {
-				"operationId": "GetGameSave",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/GameSave"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Game"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "saveId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/games/saves": {
-			"post": {
-				"operationId": "CreateGameSave",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/GameSave"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Game"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"saveName": {
-										"type": "string"
-									},
-									"data": {
-										"properties": {},
-										"additionalProperties": {},
-										"type": "object"
-									},
-									"gameId": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"data",
-									"gameId"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			},
-			"get": {
-				"operationId": "GetAllGameSaves",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/GameSave"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Game"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/games": {
-			"get": {
-				"operationId": "GetGame",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Game"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Game"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/leaderboard/scores": {
-			"post": {
-				"operationId": "AddScore",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Score"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Leaderboard"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"clientId": {
-										"type": "string"
-									},
-									"apiKey": {
-										"type": "string"
-									},
-									"score": {
-										"type": "number",
-										"format": "double"
-									},
-									"gameId": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"score",
-									"gameId"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/leaderboard/scores/{gameId}": {
-			"get": {
-				"operationId": "GetScoreLeaderboard",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Score"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Leaderboard"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "gameId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "limit",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/leaderboard/scores/{gameId}/me": {
-			"get": {
-				"operationId": "GetUserScore",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Score"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Leaderboard"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "gameId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/leaderboard/rank": {
-			"post": {
-				"operationId": "UpdateRank",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Rank"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Leaderboard"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"clientId": {
-										"type": "string"
-									},
-									"apiKey": {
-										"type": "string"
-									},
-									"rank": {
-										"type": "number",
-										"format": "double"
-									},
-									"gameId": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"rank",
-									"gameId"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/leaderboard/rank/{gameId}": {
-			"get": {
-				"operationId": "GetRankLeaderboard",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"properties": {
-											"rank": {
-												"type": "number",
-												"format": "double"
-											},
-											"userId": {
-												"type": "string"
-											}
-										},
-										"required": [
-											"rank",
-											"userId"
-										],
-										"type": "object"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Leaderboard"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "gameId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "limit",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/leaderboard/rank/{gameId}/me": {
-			"get": {
-				"operationId": "GetUserRank",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Rank"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Leaderboard"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "gameId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/auth/wallet": {
-			"get": {
-				"operationId": "GetWalletAuthMessage",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/WalletSignatureMessage"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Auth"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "address",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			},
-			"post": {
-				"operationId": "PostWalletAuthSignature",
-				"responses": {
-					"201": {
-						"description": "Created",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/AuthCustomToken"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Auth"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"signature": {
-										"type": "string"
-									},
-									"address": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"signature",
-									"address"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/auth/users": {
-			"post": {
-				"operationId": "CreateUser",
-				"responses": {
-					"201": {
-						"description": "Created"
-					}
-				},
-				"tags": [
-					"Auth"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/gen2/sale-signature": {
-			"post": {
-				"operationId": "GetGen2SaleSignature",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"signature": {
-											"type": "string"
-										},
-										"nonce": {
-											"$ref": "#/components/schemas/BigNumber"
-										},
-										"price": {
-											"type": "string"
-										},
-										"referral": {
-											"type": "string"
-										},
-										"amount": {
-											"type": "number",
-											"format": "double"
-										},
-										"eggType": {
-											"type": "number",
-											"format": "double"
-										},
-										"receiver": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"signature",
-										"nonce",
-										"price",
-										"referral",
-										"amount",
-										"eggType",
-										"receiver"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Gen2"
-				],
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"referral": {
-										"type": "string"
-									},
-									"amount": {
-										"type": "number",
-										"format": "double"
-									},
-									"eggType": {
-										"type": "number",
-										"format": "double"
-									},
-									"receiver": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"referral",
-									"amount",
-									"eggType",
-									"receiver"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/gen2/price": {
-			"get": {
-				"operationId": "GetGen2SalePrice",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"price": {
-											"type": "number",
-											"format": "double"
-										}
-									},
-									"required": [
-										"price"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Gen2"
-				],
-				"security": [],
-				"parameters": []
 			}
 		},
 		"/tickets/metadata": {
