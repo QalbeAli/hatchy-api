@@ -5,29 +5,28 @@ import {
   Path,
   Post,
   Query,
+  Request,
   Route,
+  Security,
   Tags,
 } from "tsoa";
-import { DefaultChainId } from "../modules/contracts/networks";
-import { MastersService } from "../services/MastersService";
-import { MastersTrait } from "./models/MastersTrait";
-import { ItemsService } from "../services/ItemsService";
+import { DefaultChainId } from "../contracts/networks";
+import { ItemsService } from "../../services/ItemsService";
 import { ItemCategory } from "./models/ItemCategory";
 import { MastersItem } from "./models/MastersItem";
 import { isAddress } from "ethers/lib/utils";
-import { subnetChainId } from "../constants";
-import { isValidAPIKey } from "../utils";
-import { ApiKeysService } from "../services/ApiKeysService";
+import { subnetChainId } from "../../constants";
+import { isValidAPIKey } from "../../utils";
+import { ApiKeysService } from "../../services/ApiKeysService";
 import { MastersItemBalance } from "./models/MastersItemBalance";
+import { UsersService } from "../users/usersService";
+import { NotFoundError } from "../../errors/not-found-error";
+import { BadRequestError } from "../../errors/bad-request-error";
 
-function mergeArrays(arr1: any[], arr2: any[]) {
+function mergeItems(arr: any[]) {
   const mergedMap = new Map();
-  // Add all items from the first array to the map
-  arr1.forEach(item => {
-    mergedMap.set(item.id, { ...item });
-  });
-  // Iterate over the second array
-  arr2.forEach(item => {
+  // Add all items from the flattened array to the map
+  arr.forEach(item => {
     if (mergedMap.has(item.id)) {
       // If the item exists in both arrays, increase the balance
       mergedMap.get(item.id).balance += item.balance;
@@ -37,7 +36,8 @@ function mergeArrays(arr1: any[], arr2: any[]) {
     }
   });
   // Convert the map back to an array
-  return Array.from(mergedMap.values());
+  const finalArray = Array.from(mergedMap.values());
+  return finalArray;
 }
 
 @Route("masters")
@@ -111,8 +111,7 @@ export class ItemsController extends Controller {
     @Query() includeSubnet?: boolean,
   ): Promise<MastersItemBalance[]> {
     if (!isAddress(address)) {
-      this.setStatus(400);
-      return; // messageResponse(res, 400, 'Invalid address');     
+      throw new BadRequestError("Invalid address");
     }
     const itemsService = new ItemsService(chainId || DefaultChainId);
     const itemsBalance = await itemsService.getItemsBalance(address);
@@ -120,8 +119,33 @@ export class ItemsController extends Controller {
 
     const itemsServiceSubnet = new ItemsService(subnetChainId);
     const itemsBalanceSubnet = await itemsServiceSubnet.getItemsBalance(address);
-    const mergedItemsBalance = mergeArrays(itemsBalance, itemsBalanceSubnet);
+
+    const mergedItemsBalance = mergeItems(
+      itemsBalance.concat(itemsBalanceSubnet)
+    );
     return mergedItemsBalance;
+  }
+
+  @Security("jwt")
+  @Get("items/balance")
+  public async getAccountMastersItemsBalance(
+    @Request() request: any,
+    @Query() chainId?: number,
+    @Query() includeSubnet?: boolean,
+  ): Promise<MastersItemBalance[]> {
+    const user = await new UsersService().get(request.user.uid);
+    if (!user.wallets || user.wallets.length === 0) {
+      throw new NotFoundError("No linked wallet found for the user");
+    }
+    const itemsService = new ItemsService(chainId || DefaultChainId);
+    const balancePromises = user.wallets.map(w => itemsService.getItemsBalance(w.address));
+    const itemsBalanceArray = await Promise.all(balancePromises);
+    if (!includeSubnet) return mergeItems(itemsBalanceArray.flat());
+
+    const itemsServiceSubnet = new ItemsService(subnetChainId);
+    const balancePromisesSubnet = user.wallets.map(w => itemsServiceSubnet.getItemsBalance(w.address));
+    const itemsBalanceArraySubnet = await Promise.all(balancePromisesSubnet);
+    return mergeItems(itemsBalanceArray.flat().concat(itemsBalanceArraySubnet.flat()));
   }
 
   @Get("items/{tokenId}")

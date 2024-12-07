@@ -8,15 +8,15 @@ import { VouchersController } from './../modules/vouchers/vouchers-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { UsersController } from './../modules/users/usersController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { TraitsController } from './../masters/TraitsController';
+import { TraitsController } from './../modules/masters/TraitsController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { MastersController } from './../masters/MastersController';
+import { MastersController } from './../modules/masters/MastersController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { LootboxesController } from './../masters/LootboxesController';
+import { LootboxesController } from './../modules/masters/LootboxesController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { ItemsController } from './../masters/ItemsController';
+import { ItemsController } from './../modules/masters/ItemsController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { AvatarsController } from './../masters/AvatarsController';
+import { AvatarsController } from './../modules/masters/AvatarsController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { LinkController } from './../modules/link/linkController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -154,8 +154,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-06T04:49:11.365Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-06T04:49:11.366Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-07T00:58:32.802Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-07T00:58:32.803Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -215,8 +215,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-06T04:49:11.376Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-06T04:49:11.377Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-07T00:58:32.812Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-07T00:58:32.812Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -309,8 +309,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-06T04:49:11.386Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-06T04:49:11.386Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-07T00:58:32.821Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-07T00:58:32.821Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -1036,6 +1036,39 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/masters/items/balance',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ItemsController)),
+            ...(fetchMiddlewares<RequestHandler>(ItemsController.prototype.getAccountMastersItemsBalance)),
+
+            async function ItemsController_getAccountMastersItemsBalance(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    chainId: {"in":"query","name":"chainId","dataType":"double"},
+                    includeSubnet: {"in":"query","name":"includeSubnet","dataType":"boolean"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new ItemsController();
+
+              await templateService.apiHandler({
+                methodName: 'getAccountMastersItemsBalance',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/masters/items/:tokenId',
             ...(fetchMiddlewares<RequestHandler>(ItemsController)),
             ...(fetchMiddlewares<RequestHandler>(ItemsController.prototype.getMastersItem)),
@@ -1213,6 +1246,38 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'getMastersAvatarBalance',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/masters/avatars/balance',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(AvatarsController)),
+            ...(fetchMiddlewares<RequestHandler>(AvatarsController.prototype.getAccountMastersAvatarBalance)),
+
+            async function AvatarsController_getAccountMastersAvatarBalance(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    chainId: {"in":"query","name":"chainId","dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new AvatarsController();
+
+              await templateService.apiHandler({
+                methodName: 'getAccountMastersAvatarBalance',
                 controller,
                 response,
                 next,

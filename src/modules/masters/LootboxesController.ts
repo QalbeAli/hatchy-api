@@ -9,11 +9,11 @@ import {
   Security,
   Tags,
 } from "tsoa";
-import { LootboxesService } from "../services/LootboxesService";
-import { DefaultChainId } from "../modules/contracts/networks";
+import { LootboxesService } from "../../services/LootboxesService";
+import { DefaultChainId } from "../contracts/networks";
 import { MastersLootbox } from "./models/MastersLootbox";
-import { ItemsService } from "../services/ItemsService";
-import { GameSavesService } from "../services/GameSavesService";
+import { ItemsService } from "../../services/ItemsService";
+import { GameSavesService } from "../../services/GameSavesService";
 import { isAddress } from "ethers/lib/utils";
 import { MastersLootboxSignature } from "./models/MastersLootboxSignature";
 import { MastersLootboxJoepegsSignature } from "./models/MastersLootboxJoepegsSignature";

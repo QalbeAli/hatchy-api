@@ -324,12 +324,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-06T04:49:11.365Z"
+						"default": "2024-12-07T00:58:32.802Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-06T04:49:11.366Z"
+						"default": "2024-12-07T00:58:32.803Z"
 					},
 					"name": {
 						"type": "string"
@@ -485,12 +485,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-06T04:49:11.376Z"
+						"default": "2024-12-07T00:58:32.812Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-06T04:49:11.377Z"
+						"default": "2024-12-07T00:58:32.812Z"
 					},
 					"name": {
 						"type": "string"
@@ -796,12 +796,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-06T04:49:11.386Z"
+						"default": "2024-12-07T00:58:32.821Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-06T04:49:11.386Z"
+						"default": "2024-12-07T00:58:32.821Z"
 					},
 					"name": {
 						"type": "string"
@@ -2081,6 +2081,53 @@
 				]
 			}
 		},
+		"/masters/items/balance": {
+			"get": {
+				"operationId": "GetAccountMastersItemsBalance",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/MastersItemBalance"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Masters"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "chainId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "includeSubnet",
+						"required": false,
+						"schema": {
+							"type": "boolean"
+						}
+					}
+				]
+			}
+		},
 		"/masters/items/{tokenId}": {
 			"get": {
 				"operationId": "GetMastersItem",
@@ -2377,6 +2424,43 @@
 							"type": "string"
 						}
 					},
+					{
+						"in": "query",
+						"name": "chainId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/masters/avatars/balance": {
+			"get": {
+				"operationId": "GetAccountMastersAvatarBalance",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Masters"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
 					{
 						"in": "query",
 						"name": "chainId",

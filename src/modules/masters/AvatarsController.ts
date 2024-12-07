@@ -6,17 +6,21 @@ import {
   Path,
   Post,
   Query,
+  Request,
   Route,
+  Security,
   Tags,
 } from "tsoa";
-import { DefaultChainId } from "../modules/contracts/networks";
-import { MastersService } from "../services/MastersService";
+import { DefaultChainId } from "../contracts/networks";
+import { MastersService } from "../../services/MastersService";
 import { isAddress } from "ethers/lib/utils";
 import axios from "axios";
-import ImageService from "../services/ImageService";
-import config from "../config";
+import ImageService from "../../services/ImageService";
+import config from "../../config";
 import { BigNumber } from "ethers";
 import { MastersAvatar } from "./models/MastersAvatar";
+import { UsersService } from "../users/usersService";
+import { NotFoundError } from "../../errors/not-found-error";
 
 const uploadImage = async (buffer: Buffer, uploadUrl: string) => {
   await axios.put(uploadUrl, buffer, {
@@ -101,12 +105,27 @@ export class AvatarsController extends Controller {
     @Query() chainId?: number,
   ): Promise<any[]> {
     if (!isAddress(address)) {
-      this.setStatus(404);
-      return // messageResponse(res, 404, 'Invalid address');
+      throw new NotFoundError("Invalid address");
     }
     const mastersService = new MastersService(chainId || DefaultChainId);
     const avatarsBalance = await mastersService.getAvatarsBalance(address);
     return avatarsBalance;
+  }
+
+  @Security("jwt")
+  @Get("avatars/balance")
+  public async getAccountMastersAvatarBalance(
+    @Request() request: any,
+    @Query() chainId?: number,
+  ): Promise<any[]> {
+    const user = await new UsersService().get(request.user.uid);
+    if (!user.wallets || user.wallets.length === 0) {
+      throw new NotFoundError("No linked wallet found for the user");
+    }
+    const mastersService = new MastersService(chainId || DefaultChainId);
+    const avatarsBalancePromises = user.wallets.map(w => mastersService.getAvatarsBalance(w.address));
+    const avatarsBalanceArray = await Promise.all(avatarsBalancePromises);
+    return avatarsBalanceArray.flat();
   }
 
   @Get("avatars/prices")

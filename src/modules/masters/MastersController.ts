@@ -7,11 +7,11 @@ import {
   Route,
   Tags,
 } from "tsoa";
-import { DefaultChainId } from "../modules/contracts/networks";
-import { MastersService } from "../services/MastersService";
+import { DefaultChainId } from "../contracts/networks";
+import { MastersService } from "../../services/MastersService";
 import { MastersColor } from "./models/MastersColor";
 import { TraitGender } from "./models/TraitGender";
-import { EquipService } from "../services/EquipService";
+import { EquipService } from "../../services/EquipService";
 import { isAddress } from "ethers/lib/utils";
 import { BigNumber } from "ethers";
 import { MastersTrait } from "./models/MastersTrait";
