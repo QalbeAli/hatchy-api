@@ -544,12 +544,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-07T03:19:30.530Z"
+						"default": "2024-12-07T04:51:48.495Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-07T03:19:30.531Z"
+						"default": "2024-12-07T04:51:48.495Z"
 					},
 					"name": {
 						"type": "string"
@@ -705,12 +705,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-07T03:19:30.569Z"
+						"default": "2024-12-07T04:51:48.508Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-07T03:19:30.569Z"
+						"default": "2024-12-07T04:51:48.508Z"
 					},
 					"name": {
 						"type": "string"
@@ -1016,12 +1016,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-07T03:19:30.587Z"
+						"default": "2024-12-07T04:51:48.529Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-07T03:19:30.588Z"
+						"default": "2024-12-07T04:51:48.564Z"
 					},
 					"name": {
 						"type": "string"
@@ -2110,7 +2110,14 @@
 				"operationId": "CreateUser",
 				"responses": {
 					"201": {
-						"description": "Created"
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
 					}
 				},
 				"tags": [

@@ -14,6 +14,7 @@ import { AuthService } from "./authService";
 import { isAddress } from "ethers/lib/utils";
 import { AuthCustomToken } from "./authCustomToken";
 import { WalletSignatureMessage } from "./walletSignatureMessage";
+import { User } from "../users/user";
 
 @Route("auth")
 @Tags("Auth")
@@ -53,8 +54,8 @@ export class AuthController extends Controller {
   @Post("users")
   public async createUser(
     @Request() request: any,
-  ): Promise<void> {
-    await new AuthService().createUser({
+  ): Promise<User> {
+    const user = await new AuthService().createUser({
       uid: request.user.uid,
       email: request.user.email,
       displayName: request.user.name,
@@ -62,6 +63,6 @@ export class AuthController extends Controller {
       disabled: false,
     });
     this.setStatus(201); // set return status 201
-    return;
+    return user;
   }
 }
