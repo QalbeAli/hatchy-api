@@ -203,13 +203,7 @@
 				},
 				"required": [
 					"uid",
-					"email",
-					"displayName",
-					"picture",
-					"disabled",
-					"bio",
-					"xpPoints",
-					"rewardReceiverAddress"
+					"email"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -310,6 +304,18 @@
 					"uid": {
 						"type": "string"
 					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"itchioEmbedLink": {
+						"type": "string"
+					},
+					"itchioLink": {
+						"type": "string"
+					},
 					"status": {
 						"type": "string"
 					},
@@ -320,16 +326,10 @@
 						"type": "number",
 						"format": "double"
 					},
-					"name": {
-						"type": "string"
-					},
 					"slug": {
 						"type": "string"
 					},
 					"deeplink": {
-						"type": "string"
-					},
-					"description": {
 						"type": "string"
 					},
 					"previewImage": {
@@ -349,21 +349,12 @@
 					},
 					"iosLink": {
 						"type": "string"
-					},
-					"createdAt": {
-						"type": "number",
-						"format": "double"
 					}
 				},
 				"required": [
 					"uid",
-					"status",
-					"requirement",
-					"views",
 					"name",
-					"slug",
-					"description",
-					"createdAt"
+					"description"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -544,12 +535,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-07T04:51:48.495Z"
+						"default": "2024-12-12T00:24:34.694Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-07T04:51:48.495Z"
+						"default": "2024-12-12T00:24:34.695Z"
 					},
 					"name": {
 						"type": "string"
@@ -705,12 +696,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-07T04:51:48.508Z"
+						"default": "2024-12-12T00:24:34.702Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-07T04:51:48.508Z"
+						"default": "2024-12-12T00:24:34.702Z"
 					},
 					"name": {
 						"type": "string"
@@ -1016,12 +1007,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-07T04:51:48.529Z"
+						"default": "2024-12-12T00:24:34.711Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-07T04:51:48.564Z"
+						"default": "2024-12-12T00:24:34.711Z"
 					},
 					"name": {
 						"type": "string"

@@ -1,16 +1,19 @@
+import { Timestamp } from "firebase-admin/firestore";
 export interface Game {
   uid: string;
-  status: string;
-  requirement: string;
-  views: number;
   name: string;
-  slug: string;
-  deeplink?: string;
   description: string;
+  // createdAt: Timestamp;
+  itchioEmbedLink?: string;
+  itchioLink?: string;
+  status?: string;
+  requirement?: string;
+  views?: number;
+  slug?: string;
+  deeplink?: string;
   previewImage?: string;
   images?: Array<string>;
   downloadLink?: string;
   androidLink?: string;
   iosLink?: string;
-  createdAt: number;
 }
