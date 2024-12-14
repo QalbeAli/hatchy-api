@@ -25,6 +25,13 @@ export class UsersController extends Controller {
   }
 
   @Security("jwt")
+  @Get("roles")
+  public async getRoles(
+  ): Promise<string[]> {
+    return ['user'];
+  }
+
+  @Security("jwt")
   @Post("reward-receiver-address")
   public async setRewardReceiverAddress(
     @Request() request: any,

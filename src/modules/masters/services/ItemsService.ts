@@ -157,6 +157,7 @@ export class ItemsService {
   }
 
   async mintRewardItem(receiver: string, ids: number[], amounts: number[]) {
+    console.log(receiver, ids, amounts, this.chainId);
     const itemsContract = getContract('mastersItems', this.chainId, true);
     const tx = await itemsContract.mintRewardItem(receiver, ids, amounts);
     return tx;

@@ -24,7 +24,12 @@ export class LootboxesService {
         gameId: gameId,
         chainId: gameId ? null : this.chainId
       },
-      populate: ['prices', 'genderId']
+      populate: [
+        'prices', 'genderId', 'itemWeights', 'itemWeights.item',
+        'itemWeights.item.category',
+        'itemWeights.item.category.type',
+        'itemWeights.item.category.type.layers',
+      ]
     });
     const livePrice = await this.coingeckoService.getHatchyPrice();
     lootboxes.forEach(lootbox => {

@@ -19,7 +19,6 @@ import { User } from "../users/user";
 @Route("auth")
 @Tags("Auth")
 export class AuthController extends Controller {
-  @Security("jwt")
   @Get("wallet")
   public async getWalletAuthMessage(
     @Query() address: string,
@@ -33,7 +32,6 @@ export class AuthController extends Controller {
   }
 
   @SuccessResponse("201", "Created") // Custom success response
-  @Security("jwt")
   @Post("wallet")
   public async postWalletAuthSignature(
     @Body() request: {

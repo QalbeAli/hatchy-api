@@ -87,12 +87,6 @@ export class LootboxesController extends Controller {
     });
 
     return ((itemsWithAmount as unknown) as MastersItem[]);
-    /*
-    const token = req.headers.authorization;
-    const decoded = parseJwt(token);
-    const username = await getUsername(decoded);
-    const user = await UsersService.getUserById(username);
-    */
   }
 
   @Post("lootbox/joepegs")

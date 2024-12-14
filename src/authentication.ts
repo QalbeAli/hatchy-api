@@ -23,6 +23,7 @@ export function expressAuthentication(
     }
   }
 
+
   if (securityName === "jwt") {
     const authHeader = request.headers.authorization;
     if (!authHeader) {

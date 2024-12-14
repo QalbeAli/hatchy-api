@@ -89,7 +89,6 @@ export class ItemsController extends Controller {
       return // messageResponse(res, 400, 'Invalid item id');
     }
     const tx = await itemsService.mintRewardItem(receiver, [itemId], [amount])
-    console.log(`tx Hash: ${tx.hash}`);
     return {
       message: `Minted item #${itemId}`
     }

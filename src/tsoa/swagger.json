@@ -535,12 +535,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-14T00:10:13.896Z"
+						"default": "2024-12-14T04:26:48.635Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-14T00:10:13.896Z"
+						"default": "2024-12-14T04:26:48.635Z"
 					},
 					"name": {
 						"type": "string"
@@ -696,12 +696,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-14T00:10:13.905Z"
+						"default": "2024-12-14T04:26:48.642Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-14T00:10:13.905Z"
+						"default": "2024-12-14T04:26:48.642Z"
 					},
 					"name": {
 						"type": "string"
@@ -1007,12 +1007,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-14T00:10:13.922Z"
+						"default": "2024-12-14T04:26:48.655Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-14T00:10:13.923Z"
+						"default": "2024-12-14T04:26:48.655Z"
 					},
 					"name": {
 						"type": "string"
@@ -1389,6 +1389,35 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/users/roles": {
+			"get": {
+				"operationId": "GetRoles",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"type": "string"
+									},
+									"type": "array"
 								}
 							}
 						}
@@ -2077,11 +2106,7 @@
 				"tags": [
 					"Auth"
 				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
+				"security": [],
 				"parameters": [
 					{
 						"in": "query",
@@ -2110,11 +2135,7 @@
 				"tags": [
 					"Auth"
 				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
+				"security": [],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
