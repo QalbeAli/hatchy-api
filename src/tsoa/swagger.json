@@ -535,12 +535,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-12T00:24:34.694Z"
+						"default": "2024-12-14T00:10:13.896Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-12T00:24:34.695Z"
+						"default": "2024-12-14T00:10:13.896Z"
 					},
 					"name": {
 						"type": "string"
@@ -696,12 +696,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-12T00:24:34.702Z"
+						"default": "2024-12-14T00:10:13.905Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-12T00:24:34.702Z"
+						"default": "2024-12-14T00:10:13.905Z"
 					},
 					"name": {
 						"type": "string"
@@ -1007,12 +1007,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-12T00:24:34.711Z"
+						"default": "2024-12-14T00:10:13.922Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-12T00:24:34.711Z"
+						"default": "2024-12-14T00:10:13.923Z"
 					},
 					"name": {
 						"type": "string"
@@ -1237,7 +1237,7 @@
 		}
 	},
 	"info": {
-		"title": "masters-api",
+		"title": "hatchyverse-api",
 		"version": "1.0.0",
 		"license": {
 			"name": "ISC"
@@ -1403,6 +1403,50 @@
 					}
 				],
 				"parameters": []
+			}
+		},
+		"/users/reward-receiver-address": {
+			"post": {
+				"operationId": "SetRewardReceiverAddress",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"rewardReceiverAddress": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"rewardReceiverAddress"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/link/wallet": {

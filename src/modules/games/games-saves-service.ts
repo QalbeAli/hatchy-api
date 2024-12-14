@@ -5,6 +5,7 @@ import { GameSave } from "./game-save";
 
 export class GamesSavesService {
 
+  collection = admin.firestore().collection('game-saves');
   public async createGameSave(gameId: string, userId: string, data: {
     [key: string]: any
   }, saveName: string): Promise<GameSave> {
@@ -61,5 +62,23 @@ export class GamesSavesService {
         uid: doc.id,
       } as GameSave;
     });
+  }
+
+  public async consumeCurrency(
+    saveId: string,
+    currency: string,
+    amount: number
+  ) {
+    const docRef = this.collection.doc(saveId);
+    const gameSave = await this.getGameSaveById(saveId);
+    const updatedGameSave = {
+      ...gameSave,
+      data: {
+        ...gameSave.data,
+        [currency]: gameSave.data[currency] - amount
+      },
+      updatedAt: Timestamp.now(),
+    };
+    await docRef.update(updatedGameSave);
   }
 }

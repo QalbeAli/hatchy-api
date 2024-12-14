@@ -9,15 +9,18 @@ import {
   Security,
   Tags,
 } from "tsoa";
-import { LootboxesService } from "../../services/LootboxesService";
+import { LootboxesService } from "./services/LootboxesService";
 import { DefaultChainId } from "../contracts/networks";
 import { MastersLootbox } from "./models/MastersLootbox";
-import { ItemsService } from "../../services/ItemsService";
-import { GameSavesService } from "../../services/GameSavesService";
+import { ItemsService } from "./services/ItemsService";
 import { isAddress } from "ethers/lib/utils";
 import { MastersLootboxSignature } from "./models/MastersLootboxSignature";
 import { MastersLootboxJoepegsSignature } from "./models/MastersLootboxJoepegsSignature";
 import { MastersItem } from "./models/MastersItem";
+import { UsersService } from "../users/usersService";
+import { BadRequestError } from "../../errors/bad-request-error";
+import { NotFoundError } from "../../errors/not-found-error";
+import { GamesSavesService } from "../games/games-saves-service";
 
 @Route("masters")
 @Tags("Masters")
@@ -25,7 +28,8 @@ export class LootboxesController extends Controller {
   @Security("jwt")
   @Post("lootbox/buy")
   public async buyLootbox(
-    @Body() request: {
+    @Request() request,
+    @Body() body: {
       lootboxId: number,
       amount: number,
       currency: string,
@@ -35,45 +39,38 @@ export class LootboxesController extends Controller {
     const chainId = 33669900;
     const lootboxesService = new LootboxesService(chainId);
     const itemsService = new ItemsService(chainId);
-    const gameSaves = new GameSavesService();
-    const { lootboxId, amount, currency, saveId } = request;
+    const gameSaves = new GamesSavesService();
+    const { lootboxId, amount, currency, saveId } = body;
 
-    /*
-    const token = req.headers.authorization;
-    const decoded = parseJwt(token);
-    const username = await getUsername(decoded);
-    const user = await UsersService.getUserById(username);
+    const usersService = new UsersService();
+    const user = await usersService.get(request.user.uid);
 
     if (!Number.isInteger(amount) || amount <= 0) {
-      this.setStatus(400);
-      return // messageResponse(res, 400, 'Invalid Amount');
+      throw new BadRequestError('Invalid amount');
     }
 
     if (!user.rewardReceiverAddress || !isAddress(user.rewardReceiverAddress)) {
-      this.setStatus(400);
-      return // messageResponse(res, 400, 'Invalid receiver address');
+      throw new BadRequestError('Invalid receiver address');
     }
 
     const lootbox = await lootboxesService.getLootboxById(Number(lootboxId));
     if (!lootbox || !lootbox.active || !lootbox.gameId) {
-      this.setStatus(404);
-      return // messageResponse(res, 404, 'Lootbox not found');
+      throw new NotFoundError('Lootbox not found');
     }
 
     const lootboxPrice = lootbox.prices.find(price => price.currency === currency);
     if (!lootboxPrice) {
-      this.setStatus(400);
-      return // messageResponse(res, 400, 'Invalid currency');
+      throw new BadRequestError('Invalid currency');
     }
 
     const receiverAddress = user.rewardReceiverAddress;
 
     const selectedItemIds = await lootboxesService.getRandomSelectedItems(lootbox, amount, receiverAddress);
-    const gameSaveExists = await gameSaves.gameSaveExists(saveId, username);
-    if (!gameSaveExists) {
-      this.setStatus(401);
-      return // messageResponse(res, 401, 'Game Save not found');
+    const gameSave = await gameSaves.getGameSaveById(saveId);
+    if (!gameSave || gameSave.userId !== user.uid) {
+      throw new NotFoundError('Game Save not found');
     }
+
     const totalPrice = Number(lootboxPrice.price) * amount;
     await gameSaves.consumeCurrency(saveId, currency, totalPrice);
     const tx = await itemsService.mintRewardItem(receiverAddress, selectedItemIds, Array.from({ length: selectedItemIds.length }, () => 1));
@@ -89,9 +86,13 @@ export class LootboxesController extends Controller {
       }
     });
 
-    return itemsWithAmount as Item[];
+    return ((itemsWithAmount as unknown) as MastersItem[]);
+    /*
+    const token = req.headers.authorization;
+    const decoded = parseJwt(token);
+    const username = await getUsername(decoded);
+    const user = await UsersService.getUserById(username);
     */
-    return [];
   }
 
   @Post("lootbox/joepegs")

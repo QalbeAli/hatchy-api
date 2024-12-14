@@ -11,7 +11,7 @@ import {
   Tags,
 } from "tsoa";
 import { DefaultChainId } from "../contracts/networks";
-import { ItemsService } from "../../services/ItemsService";
+import { ItemsService } from "./services/ItemsService";
 import { ItemCategory } from "./models/ItemCategory";
 import { MastersItem } from "./models/MastersItem";
 import { isAddress } from "ethers/lib/utils";

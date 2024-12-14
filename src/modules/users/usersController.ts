@@ -1,6 +1,8 @@
 import {
+  Body,
   Controller,
   Get,
+  Post,
   Request,
   Route,
   Security,
@@ -19,6 +21,19 @@ export class UsersController extends Controller {
   ): Promise<User> {
     const usersService = new UsersService();
     const user = await usersService.get(request.user.uid);
+    return user;
+  }
+
+  @Security("jwt")
+  @Post("reward-receiver-address")
+  public async setRewardReceiverAddress(
+    @Request() request: any,
+    @Body() body: {
+      rewardReceiverAddress: string
+    },
+  ): Promise<User> {
+    const usersService = new UsersService();
+    const user = await usersService.setRewardReceiverAddress(request.user.uid, body.rewardReceiverAddress);
     return user;
   }
 }

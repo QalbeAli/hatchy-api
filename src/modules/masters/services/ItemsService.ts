@@ -1,8 +1,8 @@
 import { BigNumber, Wallet, ethers } from "ethers";
-import { DI } from ".."
-import { CreateItemParams } from "../models/CreateItemParams";
-import config from "../config";
-import { DefaultChainId, getContract } from "../modules/contracts/networks";
+import { DI } from "../../.."
+import { CreateItemParams } from "../../../models/CreateItemParams";
+import config from "../../../config";
+import { DefaultChainId, getContract } from "../../contracts/networks";
 
 export class ItemsService {
   chainId: number;

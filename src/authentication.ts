@@ -25,6 +25,9 @@ export function expressAuthentication(
 
   if (securityName === "jwt") {
     const authHeader = request.headers.authorization;
+    if (!authHeader) {
+      return Promise.reject(new Error("No authorization header."));
+    }
     const token = authHeader.split('Bearer ')[1];
 
     return new Promise((resolve, reject) => {

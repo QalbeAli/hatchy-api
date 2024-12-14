@@ -96,12 +96,12 @@ const models: TsoaRoute.Models = {
         "properties": {
             "uid": {"dataType":"string","required":true},
             "email": {"dataType":"string","required":true},
-            "displayName": {"dataType":"string","required":true},
-            "picture": {"dataType":"string","required":true},
-            "disabled": {"dataType":"boolean","required":true},
-            "bio": {"dataType":"string","required":true},
-            "xpPoints": {"dataType":"double","required":true},
-            "rewardReceiverAddress": {"dataType":"string","required":true},
+            "displayName": {"dataType":"string"},
+            "picture": {"dataType":"string"},
+            "disabled": {"dataType":"boolean"},
+            "bio": {"dataType":"string"},
+            "xpPoints": {"dataType":"double"},
+            "rewardReceiverAddress": {"dataType":"string"},
             "wallets": {"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"createdAt":{"dataType":"double","required":true},"linked":{"dataType":"boolean","required":true},"nonce":{"dataType":"string","required":true},"address":{"dataType":"string","required":true}}}},
         },
         "additionalProperties": false,
@@ -153,18 +153,19 @@ const models: TsoaRoute.Models = {
         "properties": {
             "uid": {"dataType":"string","required":true},
             "name": {"dataType":"string","required":true},
+            "description": {"dataType":"string","required":true},
+            "itchioEmbedLink": {"dataType":"string"},
+            "itchioLink": {"dataType":"string"},
             "status": {"dataType":"string"},
             "requirement": {"dataType":"string"},
             "views": {"dataType":"double"},
             "slug": {"dataType":"string"},
             "deeplink": {"dataType":"string"},
-            "description": {"dataType":"string","required":true},
             "previewImage": {"dataType":"string"},
             "images": {"dataType":"array","array":{"dataType":"string"}},
             "downloadLink": {"dataType":"string"},
             "androidLink": {"dataType":"string"},
             "iosLink": {"dataType":"string"},
-            "createdAt": {"dataType":"double","required":true},
         },
         "additionalProperties": false,
     },
@@ -242,8 +243,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-07T20:34:59.783Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-07T20:34:59.783Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-14T00:10:13.896Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-14T00:10:13.896Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -303,8 +304,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-07T20:34:59.790Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-07T20:34:59.790Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-14T00:10:13.905Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-14T00:10:13.905Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -397,8 +398,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-07T20:34:59.798Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-07T20:34:59.798Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-14T00:10:13.922Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-14T00:10:13.923Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -626,6 +627,38 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'getUser',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/users/reward-receiver-address',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(UsersController)),
+            ...(fetchMiddlewares<RequestHandler>(UsersController.prototype.setRewardReceiverAddress)),
+
+            async function UsersController_setRewardReceiverAddress(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"rewardReceiverAddress":{"dataType":"string","required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new UsersController();
+
+              await templateService.apiHandler({
+                methodName: 'setRewardReceiverAddress',
                 controller,
                 response,
                 next,
@@ -1451,7 +1484,8 @@ export function RegisterRoutes(app: Router) {
 
             async function LootboxesController_buyLootbox(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
-                    request: {"in":"body","name":"request","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"saveId":{"dataType":"string","required":true},"currency":{"dataType":"string","required":true},"amount":{"dataType":"double","required":true},"lootboxId":{"dataType":"double","required":true}}},
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"saveId":{"dataType":"string","required":true},"currency":{"dataType":"string","required":true},"amount":{"dataType":"double","required":true},"lootboxId":{"dataType":"double","required":true}}},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

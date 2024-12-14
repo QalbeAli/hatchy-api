@@ -1,12 +1,12 @@
 import { ItemsService } from "./ItemsService";
-import { MastersLootbox } from "../entities/MastersLootbox";
+import { MastersLootbox } from "../../../entities/MastersLootbox";
 import seedrandom from 'seedrandom';
 import { BigNumber, ethers } from "ethers";
 import { Loaded } from "@mikro-orm/core";
-import { DI } from "..";
-import config from "../config";
-import { DefaultChainId, getContract } from "../modules/contracts/networks";
-import { CoingeckoService } from "./CoingeckoService";
+import { DI } from "../../..";
+import config from "../../../config";
+import { DefaultChainId, getContract } from "../../contracts/networks";
+import { CoingeckoService } from "../../../services/CoingeckoService";
 
 export class LootboxesService {
   chainId: number;
@@ -22,7 +22,7 @@ export class LootboxesService {
       where: {
         active: true,
         gameId: gameId,
-        chainId: this.chainId
+        chainId: gameId ? null : this.chainId
       },
       populate: ['prices', 'genderId']
     });
