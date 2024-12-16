@@ -12,6 +12,8 @@ import { CoingeckoService } from "../../services/CoingeckoService";
 import { Gen2Service } from "../../services/Gen2Service";
 import { BigNumber, ethers } from "ethers";
 import { gen2DiscountMultiplier, gen2MaxPrice, gen2UsdtPrice } from "../../constants";
+import { NotFoundError } from "../../errors/not-found-error";
+import { BadRequestError } from "../../errors/bad-request-error";
 
 @Route("gen2")
 @Tags("Gen2")
@@ -38,16 +40,13 @@ export class Gen2Controller extends Controller {
 
     const { eggType, amount, referral, receiver } = body;
     if (!isAddress(receiver) || (referral && !isAddress(referral))) {
-      this.setStatus(400);
-      return // messageResponse(res, 400, 'Invalid address');
+      throw new BadRequestError("Invalid address");
     }
     if (!Number.isInteger(amount) || amount <= 0) {
-      this.setStatus(400);
-      return //messageResponse(res, 400, 'Invalid amount');
+      throw new BadRequestError("Invalid amount");
     }
     if (!Number.isInteger(eggType) || ![0, 1].includes(eggType)) {
-      this.setStatus(400);
-      return //messageResponse(res, 400, 'Invalid egg type');
+      throw new BadRequestError("Invalid egg type");
     }
     const signatureData = await gen2Service.getGen2SaleSignature(eggType, amount, referral || ethers.constants.AddressZero, receiver);
     return signatureData;
