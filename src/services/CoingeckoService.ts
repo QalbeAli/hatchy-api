@@ -3,7 +3,6 @@ export class CoingeckoService {
     try {
       const usdFetch = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=hatchypocket&vs_currencies=usd`);
       const usdPrice = await usdFetch.json();
-      console.log('USD PRICE', usdPrice);
       return usdPrice['hatchypocket'].usd as number
     } catch (error) {
       console.log(error);
