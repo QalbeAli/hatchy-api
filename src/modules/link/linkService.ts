@@ -4,6 +4,8 @@ import { admin } from "../../firebase/firebase";
 import * as crypto from 'crypto';
 import { AuthCustomToken } from "../auth/authCustomToken";
 import { User } from "../users/user";
+import { NotFoundError } from "../../errors/not-found-error";
+import { BadRequestError } from "../../errors/bad-request-error";
 
 function generateRandomNonce(): string {
   const nonce = Math.floor(Math.random() * 1000000).toString();
@@ -96,4 +98,32 @@ export class LinkService {
     }
   }
 
+  public async unlinkWallet(uid: string, address: string): Promise<void> {
+    const userId = uid;
+    const walletDocRef = admin.firestore().collection('wallet-users').doc(address);
+    const walletDoc = (await walletDocRef.get());
+
+    if (walletDoc.exists) {
+      const walletData = walletDoc.data();
+      if (walletData.uid === userId) {
+        await walletDocRef.delete();
+        const userDocRef = admin.firestore().collection('users').doc(userId);
+        const userDoc = (await userDocRef.get());
+        if (userDoc.exists) {
+          const user = userDoc.data() as User;
+          const walletIndex = user.wallets?.findIndex(wallet => wallet.address === address) ?? -1;
+          if (walletIndex !== -1) {
+            user.wallets.splice(walletIndex, 1);
+            await userDocRef.update({
+              wallets: user.wallets
+            });
+          }
+        }
+      } else {
+        throw new NotFoundError("Address not found");
+      }
+    } else {
+      throw new NotFoundError("Wallet not found");
+    }
+  }
 }

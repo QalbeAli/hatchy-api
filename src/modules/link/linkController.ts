@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Post,
   Query,
@@ -14,6 +15,7 @@ import { WalletSignatureMessage } from "../auth/walletSignatureMessage";
 import { isAddress } from "ethers/lib/utils";
 import { LinkService } from "./linkService";
 import { AuthCustomToken } from "../auth/authCustomToken";
+import { MessageResponse } from "../../responses/message-response";
 
 @Route("link")
 @Tags("Link")
@@ -31,7 +33,6 @@ export class LinkController extends Controller {
     return new LinkService().getWalletLinkMessage(request.user.uid, address);
   }
 
-  @SuccessResponse("201", "Created") // Custom success response
   @Security("jwt")
   @Post("wallet")
   public async postWalletLinkSignature(
@@ -47,5 +48,19 @@ export class LinkController extends Controller {
     }
     this.setStatus(201); // set return status 201
     return new LinkService().postWalletLinkSignature(req.user.uid, request.address, request.signature);
+  }
+
+  @Security("jwt")
+  @Delete("wallet")
+  public async unlinkWallet(
+    @Request() req,
+    @Body() body: {
+      address: string;
+    },
+  ): Promise<MessageResponse> {
+    await new LinkService().unlinkWallet(req.user.uid, body.address);
+    return {
+      message: "Wallet unlinked",
+    }
   }
 }

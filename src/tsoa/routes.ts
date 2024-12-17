@@ -243,8 +243,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-14T04:26:19.393Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-14T04:26:19.393Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-17T05:45:17.428Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-17T05:45:17.428Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -304,8 +304,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-14T04:26:19.400Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-14T04:26:19.400Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-17T05:45:17.435Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-17T05:45:17.435Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -398,8 +398,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-14T04:26:19.408Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-14T04:26:19.408Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-17T05:45:17.443Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-17T05:45:17.443Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -757,7 +757,39 @@ export function RegisterRoutes(app: Router) {
                 response,
                 next,
                 validatedArgs,
-                successStatus: 201,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/link/wallet',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(LinkController)),
+            ...(fetchMiddlewares<RequestHandler>(LinkController.prototype.unlinkWallet)),
+
+            async function LinkController_unlinkWallet(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"address":{"dataType":"string","required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new LinkController();
+
+              await templateService.apiHandler({
+                methodName: 'unlinkWallet',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
               });
             } catch (err) {
                 return next(err);
