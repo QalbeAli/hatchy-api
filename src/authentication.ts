@@ -1,5 +1,4 @@
 import * as express from "express";
-import * as jwt from "jsonwebtoken";
 import { admin } from "./firebase/firebase";
 
 export function expressAuthentication(

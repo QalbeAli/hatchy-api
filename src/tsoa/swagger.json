@@ -154,6 +154,16 @@
 					"email": {
 						"type": "string"
 					},
+					"referralCode": {
+						"type": "string"
+					},
+					"referralCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"referrerId": {
+						"type": "string"
+					},
 					"displayName": {
 						"type": "string"
 					},
@@ -203,7 +213,9 @@
 				},
 				"required": [
 					"uid",
-					"email"
+					"email",
+					"referralCode",
+					"referralCount"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -535,12 +547,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-17T05:45:17.428Z"
+						"default": "2024-12-23T20:17:48.881Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-17T05:45:17.428Z"
+						"default": "2024-12-23T20:17:48.881Z"
 					},
 					"name": {
 						"type": "string"
@@ -696,12 +708,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-17T05:45:17.435Z"
+						"default": "2024-12-23T20:17:48.889Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-17T05:45:17.435Z"
+						"default": "2024-12-23T20:17:48.889Z"
 					},
 					"name": {
 						"type": "string"
@@ -1007,12 +1019,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-17T05:45:17.443Z"
+						"default": "2024-12-23T20:17:48.897Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-17T05:45:17.443Z"
+						"default": "2024-12-23T20:17:48.897Z"
 					},
 					"name": {
 						"type": "string"
@@ -2226,7 +2238,22 @@
 						"jwt": []
 					}
 				],
-				"parameters": []
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"referralCode": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/gen2/sale-signature": {
@@ -3616,6 +3643,50 @@
 									"payWithTicket",
 									"currency",
 									"traits"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/referrals": {
+			"post": {
+				"operationId": "SetAccountReferrer",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Referrals"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"referralCode": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"referralCode"
 								],
 								"type": "object"
 							}

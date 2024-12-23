@@ -1,6 +1,9 @@
 export interface User {
   uid: string;
   email: string;
+  referralCode: string;
+  referralCount: number;
+  referrerId?: string;  // ID of the user who referred this user
   displayName?: string;
   picture?: string;
   disabled?: boolean;

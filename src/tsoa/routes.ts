@@ -30,6 +30,8 @@ import { ItemsController } from './../modules/masters/items-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { AvatarsController } from './../modules/masters/avatars-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { ReferralsController } from './../modules/referrals/referrals-controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { TicketsController } from './../modules/tickets/TicketsController';
 import { expressAuthentication } from './../authentication';
 // @ts-ignore - no great way to install types from subpackage
@@ -96,6 +98,9 @@ const models: TsoaRoute.Models = {
         "properties": {
             "uid": {"dataType":"string","required":true},
             "email": {"dataType":"string","required":true},
+            "referralCode": {"dataType":"string","required":true},
+            "referralCount": {"dataType":"double","required":true},
+            "referrerId": {"dataType":"string"},
             "displayName": {"dataType":"string"},
             "picture": {"dataType":"string"},
             "disabled": {"dataType":"boolean"},
@@ -243,8 +248,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-17T05:45:17.428Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-17T05:45:17.428Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-23T20:17:48.881Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-23T20:17:48.881Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -304,8 +309,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-17T05:45:17.435Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-17T05:45:17.435Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-23T20:17:48.889Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-23T20:17:48.889Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -398,8 +403,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-17T05:45:17.443Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-17T05:45:17.443Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-23T20:17:48.897Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-23T20:17:48.897Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -1273,6 +1278,7 @@ export function RegisterRoutes(app: Router) {
             async function AuthController_createUser(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"referralCode":{"dataType":"string"}}},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -2120,6 +2126,38 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'getMastersPFPSignature',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/referrals',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ReferralsController)),
+            ...(fetchMiddlewares<RequestHandler>(ReferralsController.prototype.setAccountReferrer)),
+
+            async function ReferralsController_setAccountReferrer(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"referralCode":{"dataType":"string","required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new ReferralsController();
+
+              await templateService.apiHandler({
+                methodName: 'setAccountReferrer',
                 controller,
                 response,
                 next,

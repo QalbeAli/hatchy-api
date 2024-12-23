@@ -78,6 +78,7 @@ export { Gen2Service } from './services/Gen2Service';
 export { LeaderboardService } from './services/LeaderboardService';
 export { LinkService } from './services/LinkService';
 export { MastersService } from './services/MastersService';
+export { ReferralsService } from './services/ReferralsService';
 export { TicketsService } from './services/TicketsService';
 export { UsersService } from './services/UsersService';
 export { VouchersService } from './services/VouchersService';

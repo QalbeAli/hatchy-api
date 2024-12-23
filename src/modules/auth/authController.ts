@@ -15,6 +15,7 @@ import { isAddress } from "ethers/lib/utils";
 import { AuthCustomToken } from "./authCustomToken";
 import { WalletSignatureMessage } from "./walletSignatureMessage";
 import { User } from "../users/user";
+import { BadRequestError } from "../../errors/bad-request-error";
 
 @Route("auth")
 @Tags("Auth")
@@ -25,8 +26,7 @@ export class AuthController extends Controller {
   ): Promise<WalletSignatureMessage> {
     // const address = req.query.address as string;
     if (!address || !isAddress(address)) {
-      this.setStatus(400); // set return status 400
-      return;
+      throw new BadRequestError("Invalid address");
     }
     return await new AuthService().getWalletAuthMessage(address);
   }
@@ -40,8 +40,7 @@ export class AuthController extends Controller {
     },
   ): Promise<AuthCustomToken> {
     if (!request.address || !isAddress(request.address) || !request.signature) {
-      this.setStatus(400); // set return status 400
-      return;
+      throw new BadRequestError("Invalid address or signature");
     }
     this.setStatus(201); // set return status 201
     return await new AuthService().postWalletAuthSignature(request.address, request.signature);
@@ -52,14 +51,11 @@ export class AuthController extends Controller {
   @Post("users")
   public async createUser(
     @Request() request: any,
+    @Body() body: {
+      referralCode?: string;
+    }
   ): Promise<User> {
-    const user = await new AuthService().createUser({
-      uid: request.user.uid,
-      email: request.user.email,
-      displayName: request.user.name,
-      picture: request.user.picture,
-      disabled: false,
-    });
+    const user = await new AuthService().createUser(request, body.referralCode);
     this.setStatus(201); // set return status 201
     return user;
   }
