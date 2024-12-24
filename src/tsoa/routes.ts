@@ -248,8 +248,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-23T20:17:48.881Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-23T20:17:48.881Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-24T01:48:08.244Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-24T01:48:08.245Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -309,8 +309,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-23T20:17:48.889Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-23T20:17:48.889Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-24T01:48:08.254Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-24T01:48:08.254Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -403,8 +403,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-23T20:17:48.897Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-23T20:17:48.897Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-24T01:48:08.262Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-24T01:48:08.263Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -2137,15 +2137,14 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/referrals',
+        app.get('/referrals/referrer',
             authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(ReferralsController)),
-            ...(fetchMiddlewares<RequestHandler>(ReferralsController.prototype.setAccountReferrer)),
+            ...(fetchMiddlewares<RequestHandler>(ReferralsController.prototype.getReferrer)),
 
-            async function ReferralsController_setAccountReferrer(request: ExRequest, response: ExResponse, next: any) {
+            async function ReferralsController_getReferrer(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
-                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"referralCode":{"dataType":"string","required":true}}},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -2157,7 +2156,38 @@ export function RegisterRoutes(app: Router) {
                 const controller = new ReferralsController();
 
               await templateService.apiHandler({
-                methodName: 'setAccountReferrer',
+                methodName: 'getReferrer',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/referrals/referred-users',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(ReferralsController)),
+            ...(fetchMiddlewares<RequestHandler>(ReferralsController.prototype.getReferredUsers)),
+
+            async function ReferralsController_getReferredUsers(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new ReferralsController();
+
+              await templateService.apiHandler({
+                methodName: 'getReferredUsers',
                 controller,
                 response,
                 next,

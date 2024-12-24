@@ -547,12 +547,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-23T20:17:48.881Z"
+						"default": "2024-12-24T01:50:18.552Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-23T20:17:48.881Z"
+						"default": "2024-12-24T01:50:18.552Z"
 					},
 					"name": {
 						"type": "string"
@@ -708,12 +708,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-23T20:17:48.889Z"
+						"default": "2024-12-24T01:50:18.561Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-23T20:17:48.889Z"
+						"default": "2024-12-24T01:50:18.561Z"
 					},
 					"name": {
 						"type": "string"
@@ -1019,12 +1019,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-23T20:17:48.897Z"
+						"default": "2024-12-24T01:50:18.570Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-23T20:17:48.897Z"
+						"default": "2024-12-24T01:50:18.570Z"
 					},
 					"name": {
 						"type": "string"
@@ -3651,21 +3651,27 @@
 				}
 			}
 		},
-		"/referrals": {
-			"post": {
-				"operationId": "SetAccountReferrer",
+		"/referrals/referrer": {
+			"get": {
+				"operationId": "GetReferrer",
 				"responses": {
 					"200": {
 						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/MessageResponse"
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/User"
+										}
+									],
+									"nullable": true
 								}
 							}
 						}
 					}
 				},
+				"description": "Get the referrer of the authenticated user",
 				"tags": [
 					"Referrals"
 				],
@@ -3674,25 +3680,37 @@
 						"jwt": []
 					}
 				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"referralCode": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"referralCode"
-								],
-								"type": "object"
+				"parameters": []
+			}
+		},
+		"/referrals/referred-users": {
+			"get": {
+				"operationId": "GetReferredUsers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/User"
+									},
+									"type": "array"
+								}
 							}
 						}
 					}
-				}
+				},
+				"description": "Get all users referred by the authenticated user",
+				"tags": [
+					"Referrals"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
 			}
 		},
 		"/tickets/metadata": {

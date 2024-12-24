@@ -1,9 +1,8 @@
 import { admin } from "../../firebase/firebase";
 import { User } from "../users/user";
-import * as crypto from 'crypto';
-import { ethers } from "ethers";
-import { Timestamp } from "firebase-admin/firestore";
 import { MessageResponse } from "../../responses/message-response";
+import { BadRequestError } from "../../errors/bad-request-error";
+import { removeUserPrivateData } from "../../utils";
 
 export type UserCreationParams = Pick<
   User,
@@ -25,59 +24,47 @@ export interface ReferralRelationship {
 }
 
 export class ReferralsService {
-  private referralCodesCollection = admin.firestore().collection('referral-codes');
   private referralRelationsCollection = admin.firestore().collection('referral-relationships');
   private usersCollection = admin.firestore().collection('users');
 
+  /*
   public async setAccountReferrer(uid: string, referralCode: string): Promise<MessageResponse> {
-    const userDocRef = this.usersCollection.doc(uid);
-    const userDoc = (await userDocRef.get());
-    if (userDoc.exists) {
-      const user = userDoc.data() as User;
-      if (user.referralCode !== uid) {
-        throw new Error("ReferralCodeAlreadySet");
-      }
-      const referrerDocRef = admin.firestore().collection('users').doc(referralCode);
-      const referrerDoc = (await referrerDocRef.get());
-      if (referrerDoc.exists) {
-        const referrer = referrerDoc.data() as User;
-        await userDocRef.update({
+    const referrerId = await this.validateReferralCode(referralCode);
+
+    const userRef = this.usersCollection.doc(uid);
+    // Use transaction to ensure atomicity
+    await admin.firestore().runTransaction(async (transaction) => {
+      const userDoc = await transaction.get(userRef);
+
+      // If there's a valid referrer, update their stats
+      if (userDoc.exists && referrerId) {
+        const referrerRef = this.usersCollection.doc(referrerId);
+        transaction.update(referrerRef, {
+          referralCount: admin.firestore.FieldValue.increment(1),
+          xpPoints: admin.firestore.FieldValue.increment(100)
+        });
+
+        // Create referral relationship document
+        const referralRelationshipRef = this.referralRelationsCollection
+          .doc();
+
+        transaction.set(referralRelationshipRef, {
+          referrerId: referrerId,
+          referredId: uid,
           referralCode: referralCode,
-          referralTimestamp: Timestamp.now()
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
+          status: 'completed'
         });
-        await referrerDocRef.update({
-          referralCount: referrer.referralCount + 1
-        });
-        return {
-          message: "Referrer set successfully"
-        };
       } else {
-        throw new Error("ReferrerNotFound");
+        throw new BadRequestError("Invalid referral code");
       }
-    } else {
-      throw new Error("UserNotFound");
-    }
-  }
-
-  public async createReferralRelationship(referrerId: string, newUser: User): Promise<void> {
-    const batch = admin.firestore().batch();
-
-    // Update the referred user (new user)
-    const referredUserRef = this.usersCollection.doc(newUser.uid);
-    batch.update(referredUserRef, {
-      referrerId: referrerId
     });
 
-    // Update referrer's count
-    const referrerRef = this.usersCollection.doc(referrerId);
-    batch.update(referrerRef, {
-      referralCount: admin.firestore.FieldValue.increment(1),
-      // Optional: Add XP points for successful referral
-      xpPoints: admin.firestore.FieldValue.increment(100)
-    });
-
-    await batch.commit();
+    return {
+      message: "Referrer set successfully"
+    };
   }
+  */
 
   /**
    * Gets all users referred by a specific user
@@ -87,7 +74,7 @@ export class ReferralsService {
       .where('referrerId', '==', userId)
       .get();
 
-    return referralsSnapshot.docs.map(doc => doc.data() as User);
+    return referralsSnapshot.docs.map(doc => removeUserPrivateData(doc.data() as User));
   }
 
   /**
@@ -100,7 +87,7 @@ export class ReferralsService {
     if (!userData?.referrerId) return null;
 
     const referrerDoc = await this.usersCollection.doc(userData.referrerId).get();
-    return referrerDoc.data() as User;
+    return removeUserPrivateData(referrerDoc.data() as User);
   }
 
   /**

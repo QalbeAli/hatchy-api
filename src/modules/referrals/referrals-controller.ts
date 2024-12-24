@@ -1,6 +1,8 @@
 import {
   Body,
   Controller,
+  Get,
+  Path,
   Post,
   Request,
   Route,
@@ -10,47 +12,48 @@ import {
 import { BadRequestError } from "../../errors/bad-request-error";
 import { MessageResponse } from "../../responses/message-response";
 import { ReferralsService } from "./referrals-service";
+import { User } from "../users/user";
+import * as express from "express";
+
+interface ReferralStats {
+  referralCount: number;
+  xpPoints: number;
+  referrer: User | null;
+  recentReferrals: User[];
+}
 
 @Route("referrals")
 @Tags("Referrals")
 export class ReferralsController extends Controller {
-  /*
-  @Get("wallet")
-  public async getWalletAuthMessage(
-    @Query() address: string,
-  ): Promise<WalletSignatureMessage> {
-    // const address = req.query.address as string;
-    if (!address || !isAddress(address)) {
-      throw new BadRequestError("Invalid address");
-    }
-    return await new AuthService().getWalletAuthMessage(address);
-  }
-  */
+  private referralsService: ReferralsService;
 
-  @Security("jwt")
-  @Post("")
-  public async setAccountReferrer(
-    @Request() request: any,
-    @Body() body: {
-      referralCode: string;
-    },
-  ): Promise<MessageResponse> {
-    if (!request.referralCode) {
-      throw new BadRequestError("Invalid code");
-    }
-    return await new ReferralsService().setAccountReferrer(request.user.uid, body.referralCode);
+  constructor() {
+    super();
+    this.referralsService = new ReferralsService();
   }
 
-  /*
-  @SuccessResponse("201", "Created") // Custom success response
+  /**
+   * Get the referrer of the authenticated user
+   */
   @Security("jwt")
-  @Post("users")
-  public async createUser(
-    @Request() request: any,
-  ): Promise<User> {
-    const user = await new AuthService().createUser(request);
-    this.setStatus(201); // set return status 201
-    return user;
+  @Get("referrer")
+  public async getReferrer(
+    @Request() request: express.Request
+  ): Promise<User | null> {
+    const userId = (request as any).user.uid;
+    return this.referralsService.getReferrer(userId);
   }
-  */
+
+  /**
+   * Get all users referred by the authenticated user
+   */
+  @Security("jwt")
+  @Get("referred-users")
+  public async getReferredUsers(
+    @Request() request: express.Request
+  ): Promise<User[]> {
+    const userId = (request as any).user.uid;
+    return this.referralsService.getReferredUsers(userId);
+  }
+
 }

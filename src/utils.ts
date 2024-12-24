@@ -4,6 +4,7 @@ import * as crypto from 'crypto';
 import { ethers } from 'ethers';
 import { ApiKeysService } from './services/ApiKeysService';
 import config from './config';
+import { User } from './modules/users/user';
 
 export const setAvatarLayer = (
   layers: Map<number, any>, order: number, image?: string, mask?: string
@@ -241,6 +242,19 @@ export const mapGameSave = (gameSave: any) => {
     data
   }
 }
+
+export const removeUserPrivateData = (user: User): User => {
+  const data = JSON.parse(JSON.stringify(user));
+  return {
+    uid: data.uid,
+    displayName: data.displayName,
+    picture: data.picture,
+    bio: data.bio,
+    xpPoints: data.xpPoints,
+    rewardReceiverAddress: data.rewardReceiverAddress,
+  } as User;
+}
+
 
 export const isEmail = (email: string) => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
