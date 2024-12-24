@@ -547,12 +547,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-24T02:53:08.079Z"
+						"default": "2024-12-24T03:22:25.422Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-24T02:53:08.079Z"
+						"default": "2024-12-24T03:22:25.423Z"
 					},
 					"name": {
 						"type": "string"
@@ -708,12 +708,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-24T02:53:08.086Z"
+						"default": "2024-12-24T03:22:25.431Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-24T02:53:08.086Z"
+						"default": "2024-12-24T03:22:25.431Z"
 					},
 					"name": {
 						"type": "string"
@@ -1019,12 +1019,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-24T02:53:08.094Z"
+						"default": "2024-12-24T03:22:25.440Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-24T02:53:08.094Z"
+						"default": "2024-12-24T03:22:25.440Z"
 					},
 					"name": {
 						"type": "string"
@@ -1445,6 +1445,9 @@
 						"application/json": {
 							"schema": {
 								"properties": {
+									"referralCode": {
+										"type": "string"
+									},
 									"bio": {
 										"type": "string"
 									},

@@ -40,6 +40,7 @@ export class UsersController extends Controller {
     @Body() body: {
       displayName?: string;
       bio?: string;
+      referralCode?: string;
     },
   ): Promise<User> {
     const user = await this.usersService.update(request.user.uid, body);

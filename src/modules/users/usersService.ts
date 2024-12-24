@@ -25,6 +25,7 @@ export class UsersService {
     body: {
       displayName?: string;
       bio?: string;
+      referralCode?: string;
     }
   ): Promise<User> {
     await this.collection.doc(uid).update({
