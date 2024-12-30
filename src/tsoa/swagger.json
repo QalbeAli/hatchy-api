@@ -547,12 +547,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-24T04:21:34.243Z"
+						"default": "2024-12-30T23:35:15.197Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-24T04:21:34.243Z"
+						"default": "2024-12-30T23:35:15.197Z"
 					},
 					"name": {
 						"type": "string"
@@ -708,12 +708,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-24T04:21:34.253Z"
+						"default": "2024-12-30T23:35:15.205Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-24T04:21:34.253Z"
+						"default": "2024-12-30T23:35:15.205Z"
 					},
 					"name": {
 						"type": "string"
@@ -1019,12 +1019,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-24T04:21:34.264Z"
+						"default": "2024-12-30T23:35:15.213Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-24T04:21:34.264Z"
+						"default": "2024-12-30T23:35:15.213Z"
 					},
 					"name": {
 						"type": "string"
@@ -3846,7 +3846,7 @@
 					{
 						"in": "query",
 						"name": "chainId",
-						"required": true,
+						"required": false,
 						"schema": {
 							"format": "double",
 							"type": "number"
@@ -3881,7 +3881,7 @@
 					{
 						"in": "query",
 						"name": "chainId",
-						"required": true,
+						"required": false,
 						"schema": {
 							"format": "double",
 							"type": "number"
@@ -3922,7 +3922,7 @@
 					{
 						"in": "query",
 						"name": "chainId",
-						"required": true,
+						"required": false,
 						"schema": {
 							"format": "double",
 							"type": "number"

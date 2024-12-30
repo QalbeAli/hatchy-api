@@ -28,7 +28,7 @@ export class TicketsController extends Controller {
   @Get("balance/{address}")
   public async getTicketsBalance(
     @Path() address: string,
-    @Query() chainId: number,
+    @Query() chainId?: number,
   ): Promise<TicketBalance[]> {
     if (!isAddress(address)) {
       this.setStatus(400);
@@ -42,7 +42,7 @@ export class TicketsController extends Controller {
 
   @Get("")
   public async getTickets(
-    @Query() chainId: number,
+    @Query() chainId?: number,
   ): Promise<Ticket[]> {
     const ticketsService = new TicketsService(chainId || DefaultChainId);
     const tickets = await ticketsService.getTickets();
@@ -52,7 +52,7 @@ export class TicketsController extends Controller {
   @Get("{id}")
   public async getTicket(
     @Path() id: number,
-    @Query() chainId: number,
+    @Query() chainId?: number,
   ): Promise<Ticket> {
     if (isNaN(id)) {
       this.setStatus(400);

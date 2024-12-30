@@ -248,8 +248,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-24T04:21:34.243Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-24T04:21:34.243Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-30T23:33:46.758Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-30T23:33:46.758Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -309,8 +309,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-24T04:21:34.253Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-24T04:21:34.253Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-30T23:33:46.765Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-30T23:33:46.765Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -403,8 +403,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-24T04:21:34.264Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-24T04:21:34.264Z"},
+            "createdAt": {"dataType":"datetime","default":"2024-12-30T23:33:46.773Z"},
+            "updatedAt": {"dataType":"datetime","default":"2024-12-30T23:33:46.774Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -2298,7 +2298,7 @@ export function RegisterRoutes(app: Router) {
             async function TicketsController_getTicketsBalance(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     address: {"in":"path","name":"address","required":true,"dataType":"string"},
-                    chainId: {"in":"query","name":"chainId","required":true,"dataType":"double"},
+                    chainId: {"in":"query","name":"chainId","dataType":"double"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -2328,7 +2328,7 @@ export function RegisterRoutes(app: Router) {
 
             async function TicketsController_getTickets(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
-                    chainId: {"in":"query","name":"chainId","required":true,"dataType":"double"},
+                    chainId: {"in":"query","name":"chainId","dataType":"double"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -2359,7 +2359,7 @@ export function RegisterRoutes(app: Router) {
             async function TicketsController_getTicket(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     id: {"in":"path","name":"id","required":true,"dataType":"double"},
-                    chainId: {"in":"query","name":"chainId","required":true,"dataType":"double"},
+                    chainId: {"in":"query","name":"chainId","dataType":"double"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
