@@ -47,14 +47,14 @@ const prodNetworks: Map<number, NetworkData> = new Map([
     },
   ],
   [
-    33669900,
+    88888888,
     {
       name: "hatchyverse-testnet",
-      rpc: 'https://fujirpc.hatchyverse.com/ext/bc/dSLTmUtpThxuh2MjfFAYaRM2w1zndvG9YCcf9CWehcaQ2qmHP/rpc',
+      rpc: 'https://fujirpc.hatchyverse.com/ext/bc/2wbPkbwH9xqoEnX5Lep6SLqLGdiZ1UTQpi7V7fgYNFC1jeWrNg/rpc',
       label: "Hatchyverse Testnet",
       layerzeroId: 10106,
       coingeckoId: "avalanche-2",
-      chainId: 33669900,
+      chainId: 88888888,
       icon: "/icons/networks/hatchy.svg",
       availableBridges: {
         token: [],
@@ -71,14 +71,14 @@ const prodNetworks: Map<number, NetworkData> = new Map([
 
 const devNetworks: Map<number, NetworkData> = new Map([
   [
-    33669900,
+    88888888,
     {
       name: "hatchyverse-testnet",
-      rpc: 'https://fujirpc.hatchyverse.com/ext/bc/dSLTmUtpThxuh2MjfFAYaRM2w1zndvG9YCcf9CWehcaQ2qmHP/rpc',
+      rpc: 'https://fujirpc.hatchyverse.com/ext/bc/2wbPkbwH9xqoEnX5Lep6SLqLGdiZ1UTQpi7V7fgYNFC1jeWrNg/rpc',
       label: "Hatchyverse Testnet",
       layerzeroId: 10106,
       coingeckoId: "avalanche-2",
-      chainId: 33669900,
+      chainId: 88888888,
       icon: "/icons/networks/hatchy.svg",
       availableBridges: {
         token: [],

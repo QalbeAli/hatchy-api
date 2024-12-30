@@ -74,3 +74,9 @@ export interface User {
     createdAt: number;
   }[];
 }
+
+export type UserRole = 'user' | 'admin' | 'content_creator' | 'game_developer';
+export interface UserClaims {
+  roles: UserRole[];
+  [key: string]: any;
+}
