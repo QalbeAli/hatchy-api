@@ -43,6 +43,7 @@ interface ENV {
   NODE_ENV: string | undefined
   HATCHY_API: string | undefined
   API_KEY: string | undefined
+  ADMIN_KEY: string | undefined
   DB_HOST: string | undefined
   DB_USER: string | undefined
   DB_PASSWORD: string | undefined
@@ -65,6 +66,7 @@ interface ENV {
 const getConfig = (): ENV => {
   return {
     NODE_ENV: process.env.NODE_ENV,
+    ADMIN_KEY: process.env.ADMIN_KEY,
     HATCHY_API: (process.env.NODE_ENV === 'dev') ?
       'https://r69sr7aill.execute-api.us-east-1.amazonaws.com' :
       'https://8dfvuybry3.execute-api.us-east-1.amazonaws.com',

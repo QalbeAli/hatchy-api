@@ -6,6 +6,7 @@ import { AuthCustomToken } from "./authCustomToken";
 import { ethers } from "ethers";
 import { Timestamp } from "firebase-admin/firestore";
 import { ReferralsService } from "../referrals/referrals-service";
+import config from "../../config";
 
 export type UserCreationParams = Pick<
   User,
@@ -99,6 +100,17 @@ export class AuthService {
     // Use transaction to ensure atomicity
     await admin.firestore().runTransaction(async (transaction) => {
       const userDoc = await transaction.get(userRef);
+      const oldUserResponse = await fetch(`${config.HATCHY_API}/users/migration?email=${request.user.email}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          apiKey: config.ADMIN_KEY,
+        })
+      });
+      const oldUserData = await oldUserResponse.json();
+      console.log(oldUserData);
 
       if (!userDoc.exists) {
         // Create new user document
