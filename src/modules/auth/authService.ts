@@ -140,7 +140,6 @@ export class AuthService {
           }
           // console.log(oldUserData.referrals);
           // console.log(oldUserData.referrer);
-          // console.log(wallets);
 
           // migrate vouchers
           for (const voucher of oldUserData.vouchers) {

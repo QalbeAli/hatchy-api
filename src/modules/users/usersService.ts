@@ -151,19 +151,28 @@ export class UsersService {
     return wallets.docs.map((doc) => doc.data() as Wallet);
   }
 
-  public async setRewardReceiverAddress(
+  public async setMainWallet(
     uid: string,
-    rewardReceiverAddress: string,
+    mainWallet: string,
   ): Promise<User> {
-    const user = await this.get(uid);
-    const hasAddress = user.wallets.some(
-      (wallet) => wallet.address === rewardReceiverAddress,
+    const linkedWallets = await this.getLinkedWallets(uid);
+    const currentMainWallet = linkedWallets.find((wallet) => wallet.mainWallet);
+    const hasAddress = linkedWallets.some(
+      (wallet) => wallet.address === mainWallet,
     );
     if (!hasAddress) {
       throw new NotFoundError("Address not found in user wallets");
     }
     await this.collection.doc(uid).update({
-      rewardReceiverAddress,
+      mainWallet,
+    });
+
+    await this.walletUsersCollection.doc(currentMainWallet?.address).update({
+      mainWallet: false,
+    });
+
+    await this.walletUsersCollection.doc(mainWallet).update({
+      mainWallet: true,
     });
     return await this.get(uid);
   }

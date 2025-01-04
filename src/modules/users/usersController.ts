@@ -74,15 +74,15 @@ export class UsersController extends Controller {
   }
 
   @Security("jwt")
-  @Post("reward-receiver-address")
-  public async setRewardReceiverAddress(
+  @Post("main-wallet")
+  public async setMainWallet(
     @Request() request: any,
     @Body() body: {
-      rewardReceiverAddress: string
+      mainWallet: string
     },
   ): Promise<User> {
     const usersService = new UsersService();
-    const user = await usersService.setRewardReceiverAddress(request.user.uid, body.rewardReceiverAddress);
+    const user = await usersService.setMainWallet(request.user.uid, body.mainWallet);
     return user;
   }
 }

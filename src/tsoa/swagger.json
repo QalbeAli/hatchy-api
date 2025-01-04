@@ -600,12 +600,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-04T03:18:49.909Z"
+						"default": "2025-01-04T03:40:58.636Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-04T03:18:49.909Z"
+						"default": "2025-01-04T03:40:58.637Z"
 					},
 					"name": {
 						"type": "string"
@@ -761,12 +761,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-04T03:18:49.916Z"
+						"default": "2025-01-04T03:40:58.661Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-04T03:18:49.917Z"
+						"default": "2025-01-04T03:40:58.661Z"
 					},
 					"name": {
 						"type": "string"
@@ -1072,12 +1072,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-04T03:18:49.925Z"
+						"default": "2025-01-04T03:40:58.676Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-04T03:18:49.925Z"
+						"default": "2025-01-04T03:40:58.676Z"
 					},
 					"name": {
 						"type": "string"
@@ -1597,9 +1597,9 @@
 				"parameters": []
 			}
 		},
-		"/users/reward-receiver-address": {
+		"/users/main-wallet": {
 			"post": {
-				"operationId": "SetRewardReceiverAddress",
+				"operationId": "SetMainWallet",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -1627,12 +1627,12 @@
 						"application/json": {
 							"schema": {
 								"properties": {
-									"rewardReceiverAddress": {
+									"mainWallet": {
 										"type": "string"
 									}
 								},
 								"required": [
-									"rewardReceiverAddress"
+									"mainWallet"
 								],
 								"type": "object"
 							}
