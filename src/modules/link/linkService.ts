@@ -6,6 +6,7 @@ import { AuthCustomToken } from "../auth/authCustomToken";
 import { User } from "../users/user";
 import { NotFoundError } from "../../errors/not-found-error";
 import { BadRequestError } from "../../errors/bad-request-error";
+import { FieldValue } from "firebase-admin/firestore";
 
 function generateRandomNonce(): string {
   const nonce = Math.floor(Math.random() * 1000000).toString();
@@ -78,10 +79,11 @@ export class LinkService {
         if (address === recoveredAddress) {
           user.wallets[walletIndex].linked = true;
           await userDocRef.update({
-            wallets: user.wallets
+            wallets: FieldValue.delete()
           });
           await admin.firestore().collection('wallet-users').doc(address).set({
-            uid: userId
+            userId,
+            address
           });
           // Create a custom token for the specified address
           const firebaseToken = await admin.auth().createCustomToken(userId);
@@ -105,20 +107,8 @@ export class LinkService {
 
     if (walletDoc.exists) {
       const walletData = walletDoc.data();
-      if (walletData.uid === userId) {
+      if (walletData.userId === userId) {
         await walletDocRef.delete();
-        const userDocRef = admin.firestore().collection('users').doc(userId);
-        const userDoc = (await userDocRef.get());
-        if (userDoc.exists) {
-          const user = userDoc.data() as User;
-          const walletIndex = user.wallets?.findIndex(wallet => wallet.address === address) ?? -1;
-          if (walletIndex !== -1) {
-            user.wallets.splice(walletIndex, 1);
-            await userDocRef.update({
-              wallets: user.wallets
-            });
-          }
-        }
       } else {
         throw new NotFoundError("Address not found");
       }

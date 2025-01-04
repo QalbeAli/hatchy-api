@@ -9,7 +9,7 @@ export interface User {
   disabled?: boolean;
   bio?: string;
   xpPoints?: number;
-  rewardReceiverAddress?: string;
+  mainWallet?: string;
   wallets?: {
     address: string;
     nonce: string;

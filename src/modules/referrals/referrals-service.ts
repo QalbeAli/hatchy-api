@@ -87,7 +87,10 @@ export class ReferralsService {
     if (!userData?.referrerId) return null;
 
     const referrerDoc = await this.usersCollection.doc(userData.referrerId).get();
-    return removeUserPrivateData(referrerDoc.data() as User);
+    if (referrerDoc.exists) {
+      return removeUserPrivateData(referrerDoc.data() as User);
+    }
+    return null;
   }
 
   /**

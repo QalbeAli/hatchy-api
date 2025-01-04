@@ -13,6 +13,7 @@ import {
 import { User } from "./user";
 import { UsersService } from "./usersService";
 import { MessageResponse } from "../../responses/message-response";
+import { Wallet } from "./wallet";
 
 @Route("users")
 @Tags("Users")
@@ -54,6 +55,15 @@ export class UsersController extends Controller {
   ): Promise<MessageResponse> {
     await this.usersService.deleteAccount(request.user.uid);
     return { message: "Account deleted" };
+  }
+
+  @Security("jwt")
+  @Get("wallets")
+  public async getLinkedWallets(
+    @Request() request: any,
+  ): Promise<Wallet[]> {
+    const linkedWallets = await this.usersService.getLinkedWallets(request.user.uid);
+    return linkedWallets;
   }
 
   @Security("jwt")

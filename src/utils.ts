@@ -251,7 +251,7 @@ export const removeUserPrivateData = (user: User): User => {
     picture: data.picture,
     bio: data.bio,
     xpPoints: data.xpPoints,
-    rewardReceiverAddress: data.rewardReceiverAddress,
+    mainWallet: data.mainWallet,
   } as User;
 }
 

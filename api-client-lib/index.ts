@@ -38,6 +38,7 @@ export type { TraitLayer } from './models/TraitLayer';
 export type { User } from './models/User';
 export { Voucher } from './models/Voucher';
 export type { VoucherClaimSignature } from './models/VoucherClaimSignature';
+export type { Wallet } from './models/Wallet';
 export type { WalletSignatureMessage } from './models/WalletSignatureMessage';
 
 export { $AuthCustomToken } from './schemas/$AuthCustomToken';
@@ -72,6 +73,7 @@ export { $TraitLayer } from './schemas/$TraitLayer';
 export { $User } from './schemas/$User';
 export { $Voucher } from './schemas/$Voucher';
 export { $VoucherClaimSignature } from './schemas/$VoucherClaimSignature';
+export { $Wallet } from './schemas/$Wallet';
 export { $WalletSignatureMessage } from './schemas/$WalletSignatureMessage';
 
 export { AuthService } from './services/AuthService';

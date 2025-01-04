@@ -124,8 +124,18 @@ const models: TsoaRoute.Models = {
             "disabled": {"dataType":"boolean"},
             "bio": {"dataType":"string"},
             "xpPoints": {"dataType":"double"},
-            "rewardReceiverAddress": {"dataType":"string"},
+            "mainWallet": {"dataType":"string"},
             "wallets": {"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"createdAt":{"dataType":"double","required":true},"linked":{"dataType":"boolean","required":true},"nonce":{"dataType":"string","required":true},"address":{"dataType":"string","required":true}}}},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Wallet": {
+        "dataType": "refObject",
+        "properties": {
+            "userId": {"dataType":"string","required":true},
+            "address": {"dataType":"string","required":true},
+            "mainWallet": {"dataType":"boolean"},
         },
         "additionalProperties": false,
     },
@@ -256,8 +266,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-04T01:54:44.864Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-04T01:54:44.865Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-04T03:18:20.473Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-04T03:18:20.474Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -317,8 +327,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-04T01:54:44.872Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-04T01:54:44.872Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-04T03:18:20.483Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-04T03:18:20.483Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -411,8 +421,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-04T01:54:44.881Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-04T01:54:44.881Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-04T03:18:20.491Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-04T03:18:20.492Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -703,6 +713,37 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'deleteAccount',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/users/wallets',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(UsersController)),
+            ...(fetchMiddlewares<RequestHandler>(UsersController.prototype.getLinkedWallets)),
+
+            async function UsersController_getLinkedWallets(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new UsersController();
+
+              await templateService.apiHandler({
+                methodName: 'getLinkedWallets',
                 controller,
                 response,
                 next,

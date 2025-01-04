@@ -49,7 +49,7 @@ export class LootboxesController extends Controller {
       throw new BadRequestError('Invalid amount');
     }
 
-    if (!user.rewardReceiverAddress || !isAddress(user.rewardReceiverAddress)) {
+    if (!user.mainWallet || !isAddress(user.mainWallet)) {
       throw new BadRequestError('Invalid receiver address');
     }
 
@@ -63,7 +63,7 @@ export class LootboxesController extends Controller {
       throw new BadRequestError('Invalid currency');
     }
 
-    const receiverAddress = user.rewardReceiverAddress;
+    const receiverAddress = user.mainWallet;
 
     const selectedItemIds = await lootboxesService.getRandomSelectedItems(lootbox, amount, receiverAddress);
     const gameSave = await gameSaves.getGameSaveById(saveId);

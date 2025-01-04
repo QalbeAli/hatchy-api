@@ -227,7 +227,7 @@
 						"type": "number",
 						"format": "double"
 					},
-					"rewardReceiverAddress": {
+					"mainWallet": {
 						"type": "string"
 					},
 					"wallets": {
@@ -263,6 +263,25 @@
 					"email",
 					"referralCode",
 					"referralCount"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Wallet": {
+				"properties": {
+					"userId": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"mainWallet": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"userId",
+					"address"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -581,12 +600,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-04T01:54:44.864Z"
+						"default": "2025-01-04T03:18:49.909Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-04T01:54:44.865Z"
+						"default": "2025-01-04T03:18:49.909Z"
 					},
 					"name": {
 						"type": "string"
@@ -742,12 +761,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-04T01:54:44.872Z"
+						"default": "2025-01-04T03:18:49.916Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-04T01:54:44.872Z"
+						"default": "2025-01-04T03:18:49.917Z"
 					},
 					"name": {
 						"type": "string"
@@ -1053,12 +1072,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-04T01:54:44.881Z"
+						"default": "2025-01-04T03:18:49.925Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-04T01:54:44.881Z"
+						"default": "2025-01-04T03:18:49.925Z"
 					},
 					"name": {
 						"type": "string"
@@ -1504,6 +1523,35 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/MessageResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/users/wallets": {
+			"get": {
+				"operationId": "GetLinkedWallets",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Wallet"
+									},
+									"type": "array"
 								}
 							}
 						}

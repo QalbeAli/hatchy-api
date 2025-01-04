@@ -2,6 +2,7 @@ import { BadRequestError } from "../../errors/bad-request-error";
 import { NotFoundError } from "../../errors/not-found-error";
 import { admin } from "../../firebase/firebase";
 import { User } from "./user";
+import { Wallet } from "./wallet";
 
 export type UserCreationParams = Pick<
   User,
@@ -10,6 +11,7 @@ export type UserCreationParams = Pick<
 
 export class UsersService {
   collection = admin.firestore().collection('users');
+  walletUsersCollection = admin.firestore().collection('wallet-users');
   private usersCollection = admin.firestore().collection('users');
   private referralRelationsCollection = admin.firestore().collection('referral-relationships');
   private gameSavesCollection = admin.firestore().collection('game-saves');
@@ -112,6 +114,15 @@ export class UsersService {
         batch.delete(doc.ref);
       });
 
+      // 6. Delete linked wallets
+      const walletUsersDocs = await this.walletUsersCollection
+        .where('userId', '==', userId)
+        .get();
+
+      walletUsersDocs.docs.forEach(doc => {
+        batch.delete(doc.ref);
+      });
+
       // 6. Delete user document
       batch.delete(this.usersCollection.doc(userId));
 
@@ -133,6 +144,11 @@ export class UsersService {
 
       throw error;
     }
+  }
+
+  public async getLinkedWallets(uid: string): Promise<Wallet[]> {
+    const wallets = await this.walletUsersCollection.where('userId', '==', uid).get();
+    return wallets.docs.map((doc) => doc.data() as Wallet);
   }
 
   public async setRewardReceiverAddress(
