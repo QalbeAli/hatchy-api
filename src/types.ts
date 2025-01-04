@@ -80,3 +80,57 @@ export interface UserClaims {
   roles: UserRole[];
   [key: string]: any;
 }
+
+export interface UserMigrationData {
+  user: {
+    linkedWallets?: {
+      linked: boolean,
+      username: string,
+    }[],
+    discordConfirmed?: boolean,
+    discordId?: string,
+    verificationCode?: string,
+    discordUsername?: string,
+    username?: string,
+    address: string,
+    lastBadgesUpdate?: number,
+    type?: string,
+    xpPoints?: number,
+    airdropPoints?: number,
+    bio?: string,
+    profilePicture?: string,
+    linkedGoogle?: [],
+    rewardReceiverAddress?: string,
+  },
+  vouchers: {
+    contractType: "ERC20" | "ERC721" | "ERC1155",
+    holder?: string,
+    image: string,
+    category: string,
+    amount: number,
+    username: string,
+    contract: string,
+    receiver?: string,
+    id: number,
+    name: string,
+    type: "blockchain" | "game",
+    tokenId?: string
+  }[],
+  gameSaves: {
+    saveName: string,
+    date: string,
+    saveId: string,
+    username: string,
+    gameId: string,
+    blockchainRewards: any
+  }[],
+  referrer: {
+    referral: string,
+    referrer: string
+  },
+  referrals: {
+    referral: string,
+    referrer: string
+  }[],
+
+}

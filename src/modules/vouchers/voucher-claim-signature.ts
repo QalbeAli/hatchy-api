@@ -9,6 +9,6 @@ export interface VoucherClaimSignature {
   claimableUntil: number,
   voucherId: string,
   signature: string,
-  tokenId?: number,
+  tokenId?: string,
   eggType?: number
 }

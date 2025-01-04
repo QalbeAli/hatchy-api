@@ -7,6 +7,33 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"FirebaseFirestore.FieldValue": {
+				"description": "Sentinel values that can be used when writing document fields with set(),\ncreate() or update().",
+				"properties": {},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"FirebaseFirestore.Timestamp": {
+				"description": "A Timestamp represents a point in time independent of any time zone or\ncalendar, represented as seconds and fractions of seconds at nanosecond\nresolution in UTC Epoch time. It is encoded using the Proleptic Gregorian\nCalendar which extends the Gregorian calendar backwards to year one. It is\nencoded assuming all minutes are 60 seconds long, i.e. leap seconds are\n\"smeared\" so that no leap second table is needed for interpretation. Range\nis from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z.",
+				"properties": {
+					"seconds": {
+						"type": "number",
+						"format": "double",
+						"description": "The number of seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z."
+					},
+					"nanoseconds": {
+						"type": "number",
+						"format": "double",
+						"description": "The non-negative fractions of a second at nanosecond resolution."
+					}
+				},
+				"required": [
+					"seconds",
+					"nanoseconds"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"Voucher": {
 				"properties": {
 					"blockchainId": {
@@ -56,8 +83,27 @@
 						"type": "string"
 					},
 					"tokenId": {
-						"type": "number",
-						"format": "double"
+						"type": "string"
+					},
+					"createdAt": {
+						"anyOf": [
+							{
+								"$ref": "#/components/schemas/FirebaseFirestore.FieldValue"
+							},
+							{
+								"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+							}
+						]
+					},
+					"updatedAt": {
+						"anyOf": [
+							{
+								"$ref": "#/components/schemas/FirebaseFirestore.FieldValue"
+							},
+							{
+								"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+							}
+						]
 					}
 				},
 				"required": [
@@ -70,7 +116,9 @@
 					"holder",
 					"name",
 					"type",
-					"userId"
+					"userId",
+					"createdAt",
+					"updatedAt"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -113,8 +161,7 @@
 						"type": "string"
 					},
 					"tokenId": {
-						"type": "number",
-						"format": "double"
+						"type": "string"
 					},
 					"eggType": {
 						"type": "number",
@@ -252,36 +299,10 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"FirebaseFirestore.Timestamp": {
-				"description": "A Timestamp represents a point in time independent of any time zone or\ncalendar, represented as seconds and fractions of seconds at nanosecond\nresolution in UTC Epoch time. It is encoded using the Proleptic Gregorian\nCalendar which extends the Gregorian calendar backwards to year one. It is\nencoded assuming all minutes are 60 seconds long, i.e. leap seconds are\n\"smeared\" so that no leap second table is needed for interpretation. Range\nis from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z.",
-				"properties": {
-					"seconds": {
-						"type": "number",
-						"format": "double",
-						"description": "The number of seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z."
-					},
-					"nanoseconds": {
-						"type": "number",
-						"format": "double",
-						"description": "The non-negative fractions of a second at nanosecond resolution."
-					}
-				},
-				"required": [
-					"seconds",
-					"nanoseconds"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"GameSave": {
 				"properties": {
 					"uid": {
 						"type": "string"
-					},
-					"data": {
-						"properties": {},
-						"additionalProperties": {},
-						"type": "object"
 					},
 					"gameId": {
 						"type": "string"
@@ -293,15 +314,28 @@
 						"type": "string"
 					},
 					"createdAt": {
-						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+						"anyOf": [
+							{
+								"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+							},
+							{
+								"$ref": "#/components/schemas/FirebaseFirestore.FieldValue"
+							}
+						]
 					},
 					"updatedAt": {
-						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+						"anyOf": [
+							{
+								"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+							},
+							{
+								"$ref": "#/components/schemas/FirebaseFirestore.FieldValue"
+							}
+						]
 					}
 				},
 				"required": [
 					"uid",
-					"data",
 					"gameId",
 					"saveName",
 					"userId",
@@ -309,7 +343,7 @@
 					"updatedAt"
 				],
 				"type": "object",
-				"additionalProperties": false
+				"additionalProperties": {}
 			},
 			"Game": {
 				"properties": {
@@ -547,12 +581,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-30T23:35:15.197Z"
+						"default": "2025-01-04T01:54:44.864Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-30T23:35:15.197Z"
+						"default": "2025-01-04T01:54:44.865Z"
 					},
 					"name": {
 						"type": "string"
@@ -708,12 +742,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-30T23:35:15.205Z"
+						"default": "2025-01-04T01:54:44.872Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-30T23:35:15.205Z"
+						"default": "2025-01-04T01:54:44.872Z"
 					},
 					"name": {
 						"type": "string"
@@ -1019,12 +1053,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-30T23:35:15.213Z"
+						"default": "2025-01-04T01:54:44.881Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2024-12-30T23:35:15.213Z"
+						"default": "2025-01-04T01:54:44.881Z"
 					},
 					"name": {
 						"type": "string"

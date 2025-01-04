@@ -33,6 +33,8 @@ export class VouchersService {
         category: data.category,
         eggType: data.eggType,
         receiver: data.receiver,
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt,
       };
     });
   }
@@ -57,6 +59,8 @@ export class VouchersService {
       blockchainId: data.blockchainId,
       category: data.category,
       receiver: data.receiver,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
     };
   }
 
@@ -74,7 +78,7 @@ export class VouchersService {
         rewardHolderAddress: voucher.holder,
         rewardContract: voucher.contract,
         receiver: address,
-        eggType: voucher.tokenId,
+        eggType: Number(voucher.tokenId),
         amount: voucher.amount,
         claimableUntil: 0,
         voucherId: voucher.blockchainId,
@@ -95,7 +99,7 @@ export class VouchersService {
         rewardHolderAddress: voucher.holder,
         rewardContract: voucher.contract,
         receiver: address,
-        tokenId: voucher.tokenId || 0,
+        tokenId: voucher.tokenId || "0",
         amount,
         claimableUntil: 0,
         voucherId: voucher.blockchainId,

@@ -43,6 +43,22 @@ const expressAuthenticationRecasted = expressAuthentication as (req: ExRequest, 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+    "FirebaseFirestore.FieldValue": {
+        "dataType": "refObject",
+        "properties": {
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "FirebaseFirestore.Timestamp": {
+        "dataType": "refObject",
+        "properties": {
+            "seconds": {"dataType":"double","required":true},
+            "nanoseconds": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Voucher": {
         "dataType": "refObject",
         "properties": {
@@ -58,7 +74,9 @@ const models: TsoaRoute.Models = {
             "userId": {"dataType":"string","required":true},
             "image": {"dataType":"string"},
             "receiver": {"dataType":"string"},
-            "tokenId": {"dataType":"double"},
+            "tokenId": {"dataType":"string"},
+            "createdAt": {"dataType":"union","subSchemas":[{"ref":"FirebaseFirestore.FieldValue"},{"ref":"FirebaseFirestore.Timestamp"}],"required":true},
+            "updatedAt": {"dataType":"union","subSchemas":[{"ref":"FirebaseFirestore.FieldValue"},{"ref":"FirebaseFirestore.Timestamp"}],"required":true},
         },
         "additionalProperties": false,
     },
@@ -79,7 +97,7 @@ const models: TsoaRoute.Models = {
             "claimableUntil": {"dataType":"double","required":true},
             "voucherId": {"dataType":"string","required":true},
             "signature": {"dataType":"string","required":true},
-            "tokenId": {"dataType":"double"},
+            "tokenId": {"dataType":"string"},
             "eggType": {"dataType":"double"},
         },
         "additionalProperties": false,
@@ -130,27 +148,17 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "FirebaseFirestore.Timestamp": {
-        "dataType": "refObject",
-        "properties": {
-            "seconds": {"dataType":"double","required":true},
-            "nanoseconds": {"dataType":"double","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "GameSave": {
         "dataType": "refObject",
         "properties": {
             "uid": {"dataType":"string","required":true},
-            "data": {"dataType":"nestedObjectLiteral","nestedProperties":{},"additionalProperties":{"dataType":"any"},"required":true},
             "gameId": {"dataType":"string","required":true},
             "saveName": {"dataType":"string","required":true},
             "userId": {"dataType":"string","required":true},
-            "createdAt": {"ref":"FirebaseFirestore.Timestamp","required":true},
-            "updatedAt": {"ref":"FirebaseFirestore.Timestamp","required":true},
+            "createdAt": {"dataType":"union","subSchemas":[{"ref":"FirebaseFirestore.Timestamp"},{"ref":"FirebaseFirestore.FieldValue"}],"required":true},
+            "updatedAt": {"dataType":"union","subSchemas":[{"ref":"FirebaseFirestore.Timestamp"},{"ref":"FirebaseFirestore.FieldValue"}],"required":true},
         },
-        "additionalProperties": false,
+        "additionalProperties": {"dataType":"any"},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Game": {
@@ -248,8 +256,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-30T23:33:46.758Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-30T23:33:46.758Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-04T01:54:44.864Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-04T01:54:44.865Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -309,8 +317,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-30T23:33:46.765Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-30T23:33:46.765Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-04T01:54:44.872Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-04T01:54:44.872Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -403,8 +411,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2024-12-30T23:33:46.773Z"},
-            "updatedAt": {"dataType":"datetime","default":"2024-12-30T23:33:46.774Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-04T01:54:44.881Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-04T01:54:44.881Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},

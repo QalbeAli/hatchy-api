@@ -8,6 +8,7 @@ export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { AuthCustomToken } from './models/AuthCustomToken';
 export type { BigNumber } from './models/BigNumber';
+export type { FirebaseFirestore_FieldValue } from './models/FirebaseFirestore_FieldValue';
 export type { FirebaseFirestore_Timestamp } from './models/FirebaseFirestore_Timestamp';
 export type { Game } from './models/Game';
 export type { GameSave } from './models/GameSave';
@@ -41,6 +42,7 @@ export type { WalletSignatureMessage } from './models/WalletSignatureMessage';
 
 export { $AuthCustomToken } from './schemas/$AuthCustomToken';
 export { $BigNumber } from './schemas/$BigNumber';
+export { $FirebaseFirestore_FieldValue } from './schemas/$FirebaseFirestore_FieldValue';
 export { $FirebaseFirestore_Timestamp } from './schemas/$FirebaseFirestore_Timestamp';
 export { $Game } from './schemas/$Game';
 export { $GameSave } from './schemas/$GameSave';
