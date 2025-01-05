@@ -138,7 +138,10 @@ export class AuthService {
             wallets.push(oldUser.address);
             userCreationParams.mainWallet = oldUser.address;
           }
+          console.log(oldUserData);
+
           // console.log(oldUserData.referrals);
+          // console.log(oldUserData.referrer);
           // console.log(oldUserData.referrer);
 
           // migrate vouchers
