@@ -126,11 +126,13 @@ export interface UserMigrationData {
   }[],
   referrer: {
     referral: string,
-    referrer: string
+    referrer: string,
+    email: string
   },
   referrals: {
     referral: string,
-    referrer: string
+    referrer: string,
+    email: string
   }[],
 
 }

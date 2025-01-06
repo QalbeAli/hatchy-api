@@ -61,11 +61,13 @@ export class UsersService {
       // 2. If user was referred, decrease referrer's count
       if (userData.referrerId) {
         const referrerRef = this.usersCollection.doc(userData.referrerId);
-        batch.update(referrerRef, {
-          referralCount: admin.firestore.FieldValue.increment(-1),
-          // If you're using XP points, decrease them as well
-          xpPoints: admin.firestore.FieldValue.increment(-100) // Adjust the amount as needed
-        });
+        if ((await referrerRef.get()).exists) {
+          batch.update(referrerRef, {
+            referralCount: admin.firestore.FieldValue.increment(-1),
+            // If you're using XP points, decrease them as well
+            xpPoints: admin.firestore.FieldValue.increment(-100) // Adjust the amount as needed
+          });
+        }
       }
 
       // 3. Get all referral relationships where user is either referrer or referred

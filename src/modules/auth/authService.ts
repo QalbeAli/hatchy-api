@@ -30,8 +30,11 @@ const getMessage = (address: string, nonce: string) => {
   return `Welcome to Hatchy Pocket!\n\nThis request will not trigger a blockchain transaction or cost any gas fees.\n\nWallet address: ${address}\n\nNonce: ${nonce}`;
 }
 
+const newReferralPoints = 100;
+
 export class AuthService {
   usersCollection = admin.firestore().collection('users');
+  referralsCollection = admin.firestore().collection('referral-relationships');
   private referralsService: ReferralsService;
   constructor() {
     this.referralsService = new ReferralsService();
@@ -138,11 +141,6 @@ export class AuthService {
             wallets.push(oldUser.address);
             userCreationParams.mainWallet = oldUser.address;
           }
-          console.log(oldUserData);
-
-          // console.log(oldUserData.referrals);
-          // console.log(oldUserData.referrer);
-          // console.log(oldUserData.referrer);
 
           // migrate vouchers
           for (const voucher of oldUserData.vouchers) {
@@ -205,7 +203,7 @@ export class AuthService {
           const referrerRef = this.usersCollection.doc(referrerId);
           transaction.update(referrerRef, {
             referralCount: admin.firestore.FieldValue.increment(1),
-            xpPoints: admin.firestore.FieldValue.increment(100)
+            xpPoints: admin.firestore.FieldValue.increment(newReferralPoints)
           });
 
           // Create referral relationship document
@@ -220,6 +218,65 @@ export class AuthService {
             createdAt: admin.firestore.FieldValue.serverTimestamp(),
             status: 'completed'
           });
+        } else {
+          // migrate referrer
+          if (oldUserData.referrer?.email) {
+            const referralRef = this.usersCollection.doc(userCreationParams.uid);
+            const referrerEmail = oldUserData.referrer.email;
+            const referrerUser = await this.usersCollection.where('email', '==', referrerEmail).get();
+            if (referrerUser.docs.length > 0) {
+              if (!referrerUser.empty) {
+                const referralRelationshipRef = this.referralsCollection.doc();
+
+                const referrer = referrerUser.docs[0].data();
+                const referrerRef = this.usersCollection.doc(referrer.uid);
+                transaction.update(referrerRef, {
+                  referralCount: admin.firestore.FieldValue.increment(1),
+                  xpPoints: admin.firestore.FieldValue.increment(newReferralPoints)
+                });
+
+                transaction.update(referralRef, {
+                  referrerId: referrer.uid
+                });
+
+                // Create referral relationship document
+                transaction.set(referralRelationshipRef, {
+                  referrerId: referrerRef.id,
+                  referredId: referralRef.id,
+                  createdAt: admin.firestore.FieldValue.serverTimestamp(),
+                  status: 'completed'
+                });
+              }
+            }
+          }
+        }
+
+        // migrate referrals
+        if (oldUserData.referrals) {
+          const referrerRef = this.usersCollection.doc(userCreationParams.uid);
+          for (const referral of oldUserData.referrals) {
+            const referralQuery = await this.usersCollection.where('email', '==', referral.email).get();
+            if (referralQuery.docs.length === 0) {
+              continue
+            }
+            const referralDoc = referralQuery.docs[0];
+
+            transaction.update(referralDoc.ref, {
+              referrerId: userCreationParams.uid
+            });
+
+            transaction.update(referrerRef, {
+              referralCount: admin.firestore.FieldValue.increment(1),
+              xpPoints: admin.firestore.FieldValue.increment(newReferralPoints)
+            });
+            const referralRelRef = admin.firestore().collection('referral-relationships').doc();
+            transaction.set(referralRelRef, {
+              referrerId: referrerRef.id,
+              referredId: referralDoc.data().uid,
+              createdAt: admin.firestore.FieldValue.serverTimestamp(),
+              status: 'completed'
+            });
+          }
         }
       }
     });
