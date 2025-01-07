@@ -72,10 +72,10 @@ export class LinkController extends Controller {
       discordUsername: string,
       email: string,
     }
-  ): Promise<{ code: string }> {
-    const code = await new LinkService().getDiscordCode(body);
+  ): Promise<{ url: string }> {
+    const url = await new LinkService().getDiscordCode(body);
     return {
-      code
+      url
     }
   }
 
