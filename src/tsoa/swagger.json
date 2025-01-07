@@ -230,6 +230,15 @@
 					"mainWallet": {
 						"type": "string"
 					},
+					"discordConfirmed": {
+						"type": "boolean"
+					},
+					"discordId": {
+						"type": "string"
+					},
+					"discordUsername": {
+						"type": "string"
+					},
 					"wallets": {
 						"items": {
 							"properties": {
@@ -600,12 +609,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-07T04:22:30.307Z"
+						"default": "2025-01-07T20:34:49.691Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-07T04:22:30.308Z"
+						"default": "2025-01-07T20:34:49.691Z"
 					},
 					"name": {
 						"type": "string"
@@ -761,12 +770,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-07T04:22:30.314Z"
+						"default": "2025-01-07T20:34:49.697Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-07T04:22:30.314Z"
+						"default": "2025-01-07T20:34:49.698Z"
 					},
 					"name": {
 						"type": "string"
@@ -1072,12 +1081,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-07T04:22:30.328Z"
+						"default": "2025-01-07T20:34:49.705Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-07T04:22:30.328Z"
+						"default": "2025-01-07T20:34:49.705Z"
 					},
 					"name": {
 						"type": "string"
@@ -1756,6 +1765,130 @@
 								},
 								"required": [
 									"address"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/link/discord": {
+			"post": {
+				"operationId": "GetDiscordLink",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"code": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"code"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Link"
+				],
+				"security": [
+					{
+						"api_key": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"email": {
+										"type": "string"
+									},
+									"discordUsername": {
+										"type": "string"
+									},
+									"discordId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"email",
+									"discordUsername",
+									"discordId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "UnlinkDiscord",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Link"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/link/discord/verify": {
+			"post": {
+				"operationId": "VerifyDiscordConnect",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Link"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"code": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"code"
 								],
 								"type": "object"
 							}

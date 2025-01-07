@@ -1,5 +1,6 @@
 import * as express from "express";
 import { admin } from "./firebase/firebase";
+import config from "./config";
 
 export function expressAuthentication(
   request: express.Request,
@@ -7,18 +8,15 @@ export function expressAuthentication(
   scopes?: string[]
 ): Promise<any> {
   if (securityName === "api_key") {
-    let token;
-    if (request.query && request.query.access_token) {
-      token = request.query.access_token;
+    const authHeader = request.headers.authorization;
+    if (!authHeader) {
+      return Promise.reject(new Error("No authorization header."));
     }
-
-    if (token === "abc123456") {
-      return Promise.resolve({
-        id: 1,
-        name: "Ironman",
-      });
+    const token = authHeader.split('Bearer ')[1];
+    if (token === config.API_KEY) {
+      return Promise.resolve({});
     } else {
-      return Promise.reject({});
+      return Promise.reject(new Error("Invalid API key."));
     }
   }
 

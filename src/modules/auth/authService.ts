@@ -287,6 +287,8 @@ export class AuthService {
         }
       } catch (error) {
         console.log(error);
+        // Create new user document
+        transaction.set(userRef, userCreationParams);
       }
     });
     return userCreationParams;

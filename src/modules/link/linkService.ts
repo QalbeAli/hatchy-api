@@ -7,6 +7,7 @@ import { User } from "../users/user";
 import { NotFoundError } from "../../errors/not-found-error";
 import { BadRequestError } from "../../errors/bad-request-error";
 import { FieldValue } from "firebase-admin/firestore";
+import config from "../../config";
 
 function generateRandomNonce(): string {
   const nonce = Math.floor(Math.random() * 1000000).toString();
@@ -17,6 +18,11 @@ function generateRandomNonce(): string {
   return hashed;
 }
 
+function getRandom8DigitCode(): string {
+  return Math.floor(10000000 + Math.random() * 90000000).toString();
+}
+
+
 const getMessage = (address: string, nonce: string) => {
   return `Welcome to Hatchy Pocket!\n\nThis request will not trigger a blockchain transaction or cost any gas fees.\n\nWallet address: ${address}\n\nNonce: ${nonce}`;
 }
@@ -26,6 +32,42 @@ export class LinkService {
     const user = (await admin.firestore().collection('users').doc(uid).get()).data();
     return user as User;
   }
+
+  // set a random code for the user to use to link their discord account
+  public async getDiscordCode(
+    body: {
+      discordId: string,
+      discordUsername: string,
+      email: string,
+    }
+  ): Promise<string> {
+    const user = (await admin.firestore().collection('users').where('email', '==', body.email).get()).docs[0].data();
+    const code = getRandom8DigitCode();
+    await admin.firestore().collection('users').doc(user.uid).update({
+      discordCode: code,
+      discordId: body.discordId,
+      discordUsername: body.discordUsername
+    });
+    return `${config.WEBSITE}/discord-link?code=${code}`;
+  }
+
+  public async verifyDiscordCode(code: string): Promise<void> {
+    const user = (await admin.firestore().collection('users').where('discordCode', '==', code).get()).docs[0].data();
+    if (user) {
+      await admin.firestore().collection('users').doc(user.uid).update({
+        discordConfirmed: true
+      });
+    } else {
+      throw new BadRequestError("Invalid code");
+    }
+  }
+
+  public async unlinkDiscord(uid: string): Promise<void> {
+    await admin.firestore().collection('users').doc(uid).update({
+      discordConfirmed: false
+    });
+  }
+
 
   public async getWalletLinkMessage(uid: string, address: string): Promise<WalletSignatureMessage> {
     const userId = uid;

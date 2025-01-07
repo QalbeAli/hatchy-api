@@ -125,6 +125,9 @@ const models: TsoaRoute.Models = {
             "bio": {"dataType":"string"},
             "xpPoints": {"dataType":"double"},
             "mainWallet": {"dataType":"string"},
+            "discordConfirmed": {"dataType":"boolean"},
+            "discordId": {"dataType":"string"},
+            "discordUsername": {"dataType":"string"},
             "wallets": {"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"createdAt":{"dataType":"double","required":true},"linked":{"dataType":"boolean","required":true},"nonce":{"dataType":"string","required":true},"address":{"dataType":"string","required":true}}}},
         },
         "additionalProperties": false,
@@ -266,8 +269,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-07T04:22:30.307Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-07T04:22:30.308Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-07T20:34:49.691Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-07T20:34:49.691Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -327,8 +330,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-07T04:22:30.314Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-07T04:22:30.314Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-07T20:34:49.697Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-07T20:34:49.698Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -421,8 +424,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-07T04:22:30.328Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-07T04:22:30.328Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-07T20:34:49.705Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-07T20:34:49.705Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -902,6 +905,98 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'unlinkWallet',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/link/discord',
+            authenticateMiddleware([{"api_key":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(LinkController)),
+            ...(fetchMiddlewares<RequestHandler>(LinkController.prototype.getDiscordLink)),
+
+            async function LinkController_getDiscordLink(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"email":{"dataType":"string","required":true},"discordUsername":{"dataType":"string","required":true},"discordId":{"dataType":"string","required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new LinkController();
+
+              await templateService.apiHandler({
+                methodName: 'getDiscordLink',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/link/discord/verify',
+            ...(fetchMiddlewares<RequestHandler>(LinkController)),
+            ...(fetchMiddlewares<RequestHandler>(LinkController.prototype.verifyDiscordConnect)),
+
+            async function LinkController_verifyDiscordConnect(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"code":{"dataType":"string","required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new LinkController();
+
+              await templateService.apiHandler({
+                methodName: 'verifyDiscordConnect',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/link/discord',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(LinkController)),
+            ...(fetchMiddlewares<RequestHandler>(LinkController.prototype.unlinkDiscord)),
+
+            async function LinkController_unlinkDiscord(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new LinkController();
+
+              await templateService.apiHandler({
+                methodName: 'unlinkDiscord',
                 controller,
                 response,
                 next,

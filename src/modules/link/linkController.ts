@@ -63,4 +63,42 @@ export class LinkController extends Controller {
       message: "Wallet unlinked",
     }
   }
+
+  @Security("api_key")
+  @Post("discord")
+  public async getDiscordLink(
+    @Body() body: {
+      discordId: string,
+      discordUsername: string,
+      email: string,
+    }
+  ): Promise<{ code: string }> {
+    const code = await new LinkService().getDiscordCode(body);
+    return {
+      code
+    }
+  }
+
+  @Post("discord/verify")
+  public async verifyDiscordConnect(
+    @Body() body: {
+      code: string;
+    },
+  ): Promise<MessageResponse> {
+    await new LinkService().verifyDiscordCode(body.code);
+    return {
+      message: "Discord account linked"
+    }
+  }
+
+  @Security("jwt")
+  @Delete("discord")
+  public async unlinkDiscord(
+    @Request() req,
+  ): Promise<MessageResponse> {
+    await new LinkService().unlinkDiscord(req.user.uid);
+    return {
+      message: "Discord account unlinked"
+    }
+  }
 }
