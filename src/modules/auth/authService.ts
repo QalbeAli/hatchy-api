@@ -134,6 +134,11 @@ export class AuthService {
             if (oldUser.profilePicture) {
               userCreationParams.picture = oldUser.profilePicture;
             }
+            if (oldUser.discordConfirmed) {
+              userCreationParams.discordConfirmed = oldUser.discordConfirmed;
+              userCreationParams.discordId = oldUser.discordId;
+              userCreationParams.discordUsername = oldUser.discordUsername;
+            }
 
             const wallets = oldUserData.user.linkedWallets?.filter((wallet) => wallet.linked).map((wallet) => {
               return wallet.username;

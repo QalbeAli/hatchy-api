@@ -10,6 +10,9 @@ export interface User {
   bio?: string;
   xpPoints?: number;
   mainWallet?: string;
+  discordConfirmed?: boolean;
+  discordId?: string;
+  discordUsername?: string;
   wallets?: {
     address: string;
     nonce: string;
