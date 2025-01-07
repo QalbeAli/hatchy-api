@@ -107,177 +107,181 @@ export class AuthService {
     // Use transaction to ensure atomicity
     await admin.firestore().runTransaction(async (transaction) => {
       const userDoc = await transaction.get(userRef);
-      const oldUserResponse = await fetch(`${config.HATCHY_API}/users/migration?email=${request.user.email}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          apiKey: config.ADMIN_KEY,
-        })
-      });
-      const oldUserData = await oldUserResponse.json() as UserMigrationData;
+      try {
+        const oldUserResponse = await fetch(`${config.HATCHY_API}/users/migration?email=${request.user.email}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            apiKey: config.ADMIN_KEY,
+          })
+        });
+        const oldUserData = await oldUserResponse.json() as UserMigrationData;
 
-      if (!userDoc.exists) {
-        if (oldUserData.user) {
-          const oldUser = oldUserData.user;
-          if (oldUser.username) {
-            userCreationParams.displayName = oldUser.username;
-          }
-          if (oldUser.bio) {
-            userCreationParams.bio = oldUser.bio;
-          }
-          if (oldUser.xpPoints) {
-            userCreationParams.xpPoints = oldUser.xpPoints;
-          }
-          if (oldUser.profilePicture) {
-            userCreationParams.picture = oldUser.profilePicture;
-          }
-
-          const wallets = oldUserData.user.linkedWallets.filter((wallet) => wallet.linked).map((wallet) => {
-            return wallet.username;
-          });
-          if (isAddress(oldUser.address)) {
-            wallets.push(oldUser.address);
-            userCreationParams.mainWallet = oldUser.address;
-          }
-
-          // migrate vouchers
-          for (const voucher of oldUserData.vouchers) {
-            const voucherRef = admin.firestore().collection('vouchers').doc();
-            const voucherData: Voucher = {
-              blockchainId: ethers.BigNumber.from(ethers.utils.randomBytes(32)).toString(),
-              uid: voucherRef.id,
-              amount: voucher.amount,
-              category: voucher.category,
-              contract: voucher.contract,
-              contractType: voucher.contractType,
-              holder: voucher.holder,
-              name: voucher.name,
-              type: voucher.type,
-              userId: userRef.id,
-              image: voucher.image,
-              receiver: voucher.receiver,
-              tokenId: voucher.tokenId,
-              createdAt: admin.firestore.FieldValue.serverTimestamp(),
-              updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+        if (!userDoc.exists) {
+          if (oldUserData.user) {
+            const oldUser = oldUserData.user;
+            if (oldUser.username) {
+              userCreationParams.displayName = oldUser.username;
             }
-            transaction.set(voucherRef, voucherData);
-          }
-
-          // migrate game saves
-          for (const gameSave of oldUserData.gameSaves) {
-            const gameSaveRef = admin.firestore().collection('game-saves').doc();
-            const gameSaveData: GameSave = {
-              ...gameSave,
-              gameId: gameSave.gameId,
-              userId: userRef.id,
-              saveName: gameSave.saveName,
-              createdAt: admin.firestore.FieldValue.serverTimestamp(),
-              updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-              uid: gameSaveRef.id,
+            if (oldUser.bio) {
+              userCreationParams.bio = oldUser.bio;
             }
-            delete gameSaveData.username;
-            delete gameSaveData.saveId;
-            delete gameSaveData.blockchainRewards;
+            if (oldUser.xpPoints) {
+              userCreationParams.xpPoints = oldUser.xpPoints;
+            }
+            if (oldUser.profilePicture) {
+              userCreationParams.picture = oldUser.profilePicture;
+            }
 
-            transaction.set(gameSaveRef, gameSaveData);
-          }
+            const wallets = oldUserData.user.linkedWallets?.filter((wallet) => wallet.linked).map((wallet) => {
+              return wallet.username;
+            }) || [];
+            if (isAddress(oldUser.address)) {
+              wallets.push(oldUser.address);
+              userCreationParams.mainWallet = oldUser.address;
+            }
 
-          // migrate linked wallets
-          for (const address of wallets) {
-            const walletUserRef = admin.firestore().collection('wallet-users').doc(address);
-            transaction.set(walletUserRef, {
-              userId: userRef.id,
-              address: address,
-              mainWallet: oldUserData.user.address === address,
-            });
-          }
-        }
-
-        // Create new user document
-        transaction.set(userRef, userCreationParams);
-
-        // If there's a valid referrer, update their stats
-        if (referrerId) {
-          const referrerRef = this.usersCollection.doc(referrerId);
-          transaction.update(referrerRef, {
-            referralCount: admin.firestore.FieldValue.increment(1),
-            xpPoints: admin.firestore.FieldValue.increment(newReferralPoints)
-          });
-
-          // Create referral relationship document
-          const referralRelationshipRef = admin.firestore()
-            .collection('referral-relationships')
-            .doc();
-
-          transaction.set(referralRelationshipRef, {
-            referrerId: referrerId,
-            referredId: userCreationParams.uid,
-            referralCode: referralCode,
-            createdAt: admin.firestore.FieldValue.serverTimestamp(),
-            status: 'completed'
-          });
-        } else {
-          // migrate referrer
-          if (oldUserData.referrer?.email) {
-            const referralRef = this.usersCollection.doc(userCreationParams.uid);
-            const referrerEmail = oldUserData.referrer.email;
-            const referrerUser = await this.usersCollection.where('email', '==', referrerEmail).get();
-            if (referrerUser.docs.length > 0) {
-              if (!referrerUser.empty) {
-                const referralRelationshipRef = this.referralsCollection.doc();
-
-                const referrer = referrerUser.docs[0].data();
-                const referrerRef = this.usersCollection.doc(referrer.uid);
-                transaction.update(referrerRef, {
-                  referralCount: admin.firestore.FieldValue.increment(1),
-                  xpPoints: admin.firestore.FieldValue.increment(newReferralPoints)
-                });
-
-                transaction.update(referralRef, {
-                  referrerId: referrer.uid
-                });
-
-                // Create referral relationship document
-                transaction.set(referralRelationshipRef, {
-                  referrerId: referrerRef.id,
-                  referredId: referralRef.id,
-                  createdAt: admin.firestore.FieldValue.serverTimestamp(),
-                  status: 'completed'
-                });
+            // migrate vouchers
+            for (const voucher of oldUserData.vouchers) {
+              const voucherRef = admin.firestore().collection('vouchers').doc();
+              const voucherData: Voucher = {
+                blockchainId: ethers.BigNumber.from(ethers.utils.randomBytes(32)).toString(),
+                uid: voucherRef.id,
+                amount: voucher.amount,
+                category: voucher.category,
+                contract: voucher.contract,
+                contractType: voucher.contractType,
+                holder: voucher.holder,
+                name: voucher.name,
+                type: voucher.type,
+                userId: userRef.id,
+                image: voucher.image,
+                receiver: voucher.receiver,
+                tokenId: voucher.tokenId,
+                createdAt: admin.firestore.FieldValue.serverTimestamp(),
+                updatedAt: admin.firestore.FieldValue.serverTimestamp(),
               }
+              transaction.set(voucherRef, voucherData);
+            }
+
+            // migrate game saves
+            for (const gameSave of oldUserData.gameSaves) {
+              const gameSaveRef = admin.firestore().collection('game-saves').doc();
+              const gameSaveData: GameSave = {
+                ...gameSave,
+                gameId: gameSave.gameId,
+                userId: userRef.id,
+                saveName: gameSave.saveName,
+                createdAt: admin.firestore.FieldValue.serverTimestamp(),
+                updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+                uid: gameSaveRef.id,
+              }
+              delete gameSaveData.username;
+              delete gameSaveData.saveId;
+              delete gameSaveData.blockchainRewards;
+
+              transaction.set(gameSaveRef, gameSaveData);
+            }
+
+            // migrate linked wallets
+            for (const address of wallets) {
+              const walletUserRef = admin.firestore().collection('wallet-users').doc(address);
+              transaction.set(walletUserRef, {
+                userId: userRef.id,
+                address: address,
+                mainWallet: oldUserData.user.address === address,
+              });
             }
           }
-        }
 
-        // migrate referrals
-        if (oldUserData.referrals) {
-          const referrerRef = this.usersCollection.doc(userCreationParams.uid);
-          for (const referral of oldUserData.referrals) {
-            const referralQuery = await this.usersCollection.where('email', '==', referral.email).get();
-            if (referralQuery.docs.length === 0) {
-              continue
-            }
-            const referralDoc = referralQuery.docs[0];
+          // Create new user document
+          transaction.set(userRef, userCreationParams);
 
-            transaction.update(referralDoc.ref, {
-              referrerId: userCreationParams.uid
-            });
-
+          // If there's a valid referrer, update their stats
+          if (referrerId) {
+            const referrerRef = this.usersCollection.doc(referrerId);
             transaction.update(referrerRef, {
               referralCount: admin.firestore.FieldValue.increment(1),
               xpPoints: admin.firestore.FieldValue.increment(newReferralPoints)
             });
-            const referralRelRef = admin.firestore().collection('referral-relationships').doc();
-            transaction.set(referralRelRef, {
-              referrerId: referrerRef.id,
-              referredId: referralDoc.data().uid,
+
+            // Create referral relationship document
+            const referralRelationshipRef = admin.firestore()
+              .collection('referral-relationships')
+              .doc();
+
+            transaction.set(referralRelationshipRef, {
+              referrerId: referrerId,
+              referredId: userCreationParams.uid,
+              referralCode: referralCode,
               createdAt: admin.firestore.FieldValue.serverTimestamp(),
               status: 'completed'
             });
+          } else {
+            // migrate referrer
+            if (oldUserData.referrer?.email) {
+              const referralRef = this.usersCollection.doc(userCreationParams.uid);
+              const referrerEmail = oldUserData.referrer.email;
+              const referrerUser = await this.usersCollection.where('email', '==', referrerEmail).get();
+              if (referrerUser.docs.length > 0) {
+                if (!referrerUser.empty) {
+                  const referralRelationshipRef = this.referralsCollection.doc();
+
+                  const referrer = referrerUser.docs[0].data();
+                  const referrerRef = this.usersCollection.doc(referrer.uid);
+                  transaction.update(referrerRef, {
+                    referralCount: admin.firestore.FieldValue.increment(1),
+                    xpPoints: admin.firestore.FieldValue.increment(newReferralPoints)
+                  });
+
+                  transaction.update(referralRef, {
+                    referrerId: referrer.uid
+                  });
+
+                  // Create referral relationship document
+                  transaction.set(referralRelationshipRef, {
+                    referrerId: referrerRef.id,
+                    referredId: referralRef.id,
+                    createdAt: admin.firestore.FieldValue.serverTimestamp(),
+                    status: 'completed'
+                  });
+                }
+              }
+            }
+          }
+
+          // migrate referrals
+          if (oldUserData.referrals) {
+            const referrerRef = this.usersCollection.doc(userCreationParams.uid);
+            for (const referral of oldUserData.referrals) {
+              const referralQuery = await this.usersCollection.where('email', '==', referral.email).get();
+              if (referralQuery.docs.length === 0) {
+                continue
+              }
+              const referralDoc = referralQuery.docs[0];
+
+              transaction.update(referralDoc.ref, {
+                referrerId: userCreationParams.uid
+              });
+
+              transaction.update(referrerRef, {
+                referralCount: admin.firestore.FieldValue.increment(1),
+                xpPoints: admin.firestore.FieldValue.increment(newReferralPoints)
+              });
+              const referralRelRef = admin.firestore().collection('referral-relationships').doc();
+              transaction.set(referralRelRef, {
+                referrerId: referrerRef.id,
+                referredId: referralDoc.data().uid,
+                createdAt: admin.firestore.FieldValue.serverTimestamp(),
+                status: 'completed'
+              });
+            }
           }
         }
+      } catch (error) {
+        console.log(error);
       }
     });
     return userCreationParams;
