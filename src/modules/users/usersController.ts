@@ -5,6 +5,7 @@ import {
   Get,
   Post,
   Put,
+  Query,
   Request,
   Route,
   Security,
@@ -67,13 +68,6 @@ export class UsersController extends Controller {
   }
 
   @Security("jwt")
-  @Get("roles")
-  public async getRoles(
-  ): Promise<string[]> {
-    return ['user'];
-  }
-
-  @Security("jwt")
   @Post("main-wallet")
   public async setMainWallet(
     @Request() request: any,
@@ -83,6 +77,15 @@ export class UsersController extends Controller {
   ): Promise<User> {
     const usersService = new UsersService();
     const user = await usersService.setMainWallet(request.user.uid, body.mainWallet);
+    return user;
+  }
+
+  @Security("jwt", ["admin"])
+  @Get("search")
+  public async searchUsers(
+    @Query() query: string,
+  ): Promise<User> {
+    const user = await this.usersService.searchUsers(query);
     return user;
   }
 }

@@ -31,7 +31,9 @@ export class UsersService {
     }
   ): Promise<User> {
     await this.collection.doc(uid).update({
-      ...body
+      displaName: body.displayName,
+      bio: body.bio,
+      referralCode: body.referralCode,
     });
     return await this.get(uid);
   }
@@ -177,6 +179,14 @@ export class UsersService {
       mainWallet: true,
     });
     return await this.get(uid);
+  }
+
+  public async searchUsers(query: string): Promise<User> {
+    // search all users whose display name or email contains the query
+    const users = await this.collection
+      .where('email', '==', query)
+      .get();
+    return users.docs.map((doc) => doc.data() as User)[0];
   }
 
 }

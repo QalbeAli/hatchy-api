@@ -122,6 +122,7 @@ const models: TsoaRoute.Models = {
             "displayName": {"dataType":"string"},
             "picture": {"dataType":"string"},
             "disabled": {"dataType":"boolean"},
+            "roles": {"dataType":"array","array":{"dataType":"string"}},
             "bio": {"dataType":"string"},
             "xpPoints": {"dataType":"double"},
             "mainWallet": {"dataType":"string"},
@@ -269,8 +270,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-07T20:37:40.137Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-07T20:37:40.138Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-08T01:26:45.701Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-08T01:26:45.701Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -330,8 +331,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-07T20:37:40.146Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-07T20:37:40.146Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-08T01:26:45.708Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-08T01:26:45.708Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -424,8 +425,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-07T20:37:40.154Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-07T20:37:40.154Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-08T01:26:45.716Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-08T01:26:45.717Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -758,36 +759,6 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/users/roles',
-            authenticateMiddleware([{"jwt":[]}]),
-            ...(fetchMiddlewares<RequestHandler>(UsersController)),
-            ...(fetchMiddlewares<RequestHandler>(UsersController.prototype.getRoles)),
-
-            async function UsersController_getRoles(request: ExRequest, response: ExResponse, next: any) {
-            const args: Record<string, TsoaRoute.ParameterSchema> = {
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = templateService.getValidatedArgs({ args, request, response });
-
-                const controller = new UsersController();
-
-              await templateService.apiHandler({
-                methodName: 'getRoles',
-                controller,
-                response,
-                next,
-                validatedArgs,
-                successStatus: undefined,
-              });
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/users/main-wallet',
             authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(UsersController)),
@@ -809,6 +780,37 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'setMainWallet',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/users/search',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(UsersController)),
+            ...(fetchMiddlewares<RequestHandler>(UsersController.prototype.searchUsers)),
+
+            async function UsersController_searchUsers(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    query: {"in":"query","name":"query","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new UsersController();
+
+              await templateService.apiHandler({
+                methodName: 'searchUsers',
                 controller,
                 response,
                 next,

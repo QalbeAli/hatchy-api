@@ -101,7 +101,8 @@ export class AuthService {
       disabled: false,
       referralCount: 0,
       referralCode: request.user.uid,
-      referrerId
+      referrerId,
+      roles: ['user'],
     }
     const userRef = this.usersCollection.doc(userCreationParams.uid);
     // Use transaction to ensure atomicity

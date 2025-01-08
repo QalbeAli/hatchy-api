@@ -220,6 +220,12 @@
 					"disabled": {
 						"type": "boolean"
 					},
+					"roles": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
 					"bio": {
 						"type": "string"
 					},
@@ -609,12 +615,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-07T20:37:40.137Z"
+						"default": "2025-01-08T01:26:45.701Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-07T20:37:40.138Z"
+						"default": "2025-01-08T01:26:45.701Z"
 					},
 					"name": {
 						"type": "string"
@@ -770,12 +776,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-07T20:37:40.146Z"
+						"default": "2025-01-08T01:26:45.708Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-07T20:37:40.146Z"
+						"default": "2025-01-08T01:26:45.708Z"
 					},
 					"name": {
 						"type": "string"
@@ -1081,12 +1087,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-07T20:37:40.154Z"
+						"default": "2025-01-08T01:26:45.716Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-07T20:37:40.154Z"
+						"default": "2025-01-08T01:26:45.717Z"
 					},
 					"name": {
 						"type": "string"
@@ -1577,35 +1583,6 @@
 				"parameters": []
 			}
 		},
-		"/users/roles": {
-			"get": {
-				"operationId": "GetRoles",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"type": "string"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Users"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			}
-		},
 		"/users/main-wallet": {
 			"post": {
 				"operationId": "SetMainWallet",
@@ -1648,6 +1625,43 @@
 						}
 					}
 				}
+			}
+		},
+		"/users/search": {
+			"get": {
+				"operationId": "SearchUsers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "query",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/link/wallet": {
@@ -1783,12 +1797,12 @@
 							"application/json": {
 								"schema": {
 									"properties": {
-										"code": {
+										"url": {
 											"type": "string"
 										}
 									},
 									"required": [
-										"code"
+										"url"
 									],
 									"type": "object"
 								}

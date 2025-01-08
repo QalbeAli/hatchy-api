@@ -7,6 +7,7 @@ export interface User {
   displayName?: string;
   picture?: string;
   disabled?: boolean;
+  roles?: string[];
   bio?: string;
   xpPoints?: number;
   mainWallet?: string;
