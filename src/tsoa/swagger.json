@@ -615,12 +615,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-08T01:26:45.701Z"
+						"default": "2025-01-09T02:56:01.406Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-08T01:26:45.701Z"
+						"default": "2025-01-09T02:56:01.406Z"
 					},
 					"name": {
 						"type": "string"
@@ -776,12 +776,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-08T01:26:45.708Z"
+						"default": "2025-01-09T02:56:01.413Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-08T01:26:45.708Z"
+						"default": "2025-01-09T02:56:01.414Z"
 					},
 					"name": {
 						"type": "string"
@@ -1087,12 +1087,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-08T01:26:45.716Z"
+						"default": "2025-01-09T02:56:01.421Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-08T01:26:45.717Z"
+						"default": "2025-01-09T02:56:01.422Z"
 					},
 					"name": {
 						"type": "string"
@@ -1202,6 +1202,113 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"Asset": {
+				"properties": {
+					"uid": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"category": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"contract": {
+						"type": "string"
+					},
+					"holder": {
+						"type": "string"
+					},
+					"contractType": {
+						"type": "string",
+						"enum": [
+							"ERC721",
+							"ERC1155",
+							"ERC20"
+						]
+					},
+					"tokenId": {
+						"type": "string"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"blockchain",
+							"game"
+						]
+					},
+					"image": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"uid",
+					"name",
+					"category",
+					"description",
+					"image"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_Asset.Exclude_keyofAsset.uid__": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"category": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"contract": {
+						"type": "string"
+					},
+					"holder": {
+						"type": "string"
+					},
+					"contractType": {
+						"type": "string",
+						"enum": [
+							"ERC721",
+							"ERC1155",
+							"ERC20"
+						]
+					},
+					"tokenId": {
+						"type": "string"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"blockchain",
+							"game"
+						]
+					},
+					"image": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"category",
+					"description",
+					"image"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_Asset.uid_": {
+				"$ref": "#/components/schemas/Pick_Asset.Exclude_keyofAsset.uid__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"CreateAssetParams": {
+				"$ref": "#/components/schemas/Omit_Asset.uid_"
 			},
 			"TicketPrice": {
 				"properties": {
@@ -4009,6 +4116,103 @@
 					}
 				],
 				"parameters": []
+			}
+		},
+		"/assets": {
+			"get": {
+				"operationId": "GetAssets",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Asset"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Assets"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateAsset",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Asset"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Assets"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateAssetParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/assets/{uid}": {
+			"delete": {
+				"operationId": "DeleteAsset",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Assets"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "uid",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/tickets/metadata": {

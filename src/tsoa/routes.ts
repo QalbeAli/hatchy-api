@@ -32,6 +32,8 @@ import { AvatarsController } from './../modules/masters/avatars-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { ReferralsController } from './../modules/referrals/referrals-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { AssetsController } from './../modules/assets/assets-controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { TicketsController } from './../modules/tickets/TicketsController';
 import { expressAuthentication } from './../authentication';
 // @ts-ignore - no great way to install types from subpackage
@@ -270,8 +272,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-08T01:26:45.701Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-08T01:26:45.701Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-09T02:42:54.327Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-09T02:42:54.328Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -331,8 +333,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-08T01:26:45.708Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-08T01:26:45.708Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-09T02:42:54.335Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-09T02:42:54.335Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -425,8 +427,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-08T01:26:45.716Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-08T01:26:45.717Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-09T02:42:54.343Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-09T02:42:54.344Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -455,6 +457,38 @@ const models: TsoaRoute.Models = {
             "layers": {"dataType":"array","array":{"dataType":"string"},"required":true},
         },
         "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Asset": {
+        "dataType": "refObject",
+        "properties": {
+            "uid": {"dataType":"string","required":true},
+            "name": {"dataType":"string","required":true},
+            "category": {"dataType":"string","required":true},
+            "description": {"dataType":"string","required":true},
+            "contract": {"dataType":"string"},
+            "holder": {"dataType":"string"},
+            "contractType": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["ERC721"]},{"dataType":"enum","enums":["ERC1155"]},{"dataType":"enum","enums":["ERC20"]}]},
+            "tokenId": {"dataType":"string"},
+            "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["blockchain"]},{"dataType":"enum","enums":["game"]}]},
+            "image": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_Asset.Exclude_keyofAsset.uid__": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"name":{"dataType":"string","required":true},"category":{"dataType":"string","required":true},"description":{"dataType":"string","required":true},"contract":{"dataType":"string"},"holder":{"dataType":"string"},"contractType":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":["ERC721"]},{"dataType":"enum","enums":["ERC1155"]},{"dataType":"enum","enums":["ERC20"]}]},"tokenId":{"dataType":"string"},"type":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":["blockchain"]},{"dataType":"enum","enums":["game"]}]},"image":{"dataType":"string","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Omit_Asset.uid_": {
+        "dataType": "refAlias",
+        "type": {"ref":"Pick_Asset.Exclude_keyofAsset.uid__","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "CreateAssetParams": {
+        "dataType": "refAlias",
+        "type": {"ref":"Omit_Asset.uid_","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "TicketPrice": {
@@ -2397,6 +2431,98 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'getReferredUsers',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/assets',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(AssetsController)),
+            ...(fetchMiddlewares<RequestHandler>(AssetsController.prototype.getAssets)),
+
+            async function AssetsController_getAssets(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new AssetsController();
+
+              await templateService.apiHandler({
+                methodName: 'getAssets',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/assets',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(AssetsController)),
+            ...(fetchMiddlewares<RequestHandler>(AssetsController.prototype.createAsset)),
+
+            async function AssetsController_createAsset(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    body: {"in":"body","name":"body","required":true,"ref":"CreateAssetParams"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new AssetsController();
+
+              await templateService.apiHandler({
+                methodName: 'createAsset',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/assets/:uid',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(AssetsController)),
+            ...(fetchMiddlewares<RequestHandler>(AssetsController.prototype.deleteAsset)),
+
+            async function AssetsController_deleteAsset(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    uid: {"in":"path","name":"uid","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new AssetsController();
+
+              await templateService.apiHandler({
+                methodName: 'deleteAsset',
                 controller,
                 response,
                 next,
