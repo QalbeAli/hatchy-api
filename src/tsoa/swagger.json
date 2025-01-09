@@ -7,192 +7,6 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"FirebaseFirestore.FieldValue": {
-				"description": "Sentinel values that can be used when writing document fields with set(),\ncreate() or update().",
-				"properties": {},
-				"type": "object",
-				"additionalProperties": false
-			},
-			"FirebaseFirestore.Timestamp": {
-				"description": "A Timestamp represents a point in time independent of any time zone or\ncalendar, represented as seconds and fractions of seconds at nanosecond\nresolution in UTC Epoch time. It is encoded using the Proleptic Gregorian\nCalendar which extends the Gregorian calendar backwards to year one. It is\nencoded assuming all minutes are 60 seconds long, i.e. leap seconds are\n\"smeared\" so that no leap second table is needed for interpretation. Range\nis from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z.",
-				"properties": {
-					"seconds": {
-						"type": "number",
-						"format": "double",
-						"description": "The number of seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z."
-					},
-					"nanoseconds": {
-						"type": "number",
-						"format": "double",
-						"description": "The non-negative fractions of a second at nanosecond resolution."
-					}
-				},
-				"required": [
-					"seconds",
-					"nanoseconds"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Voucher": {
-				"properties": {
-					"blockchainId": {
-						"type": "string"
-					},
-					"uid": {
-						"type": "string"
-					},
-					"amount": {
-						"type": "number",
-						"format": "double"
-					},
-					"category": {
-						"type": "string"
-					},
-					"contract": {
-						"type": "string"
-					},
-					"contractType": {
-						"type": "string",
-						"enum": [
-							"ERC20",
-							"ERC721",
-							"ERC1155"
-						]
-					},
-					"holder": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"type": {
-						"type": "string",
-						"enum": [
-							"blockchain",
-							"game"
-						]
-					},
-					"userId": {
-						"type": "string"
-					},
-					"image": {
-						"type": "string"
-					},
-					"receiver": {
-						"type": "string"
-					},
-					"tokenId": {
-						"type": "string"
-					},
-					"createdAt": {
-						"anyOf": [
-							{
-								"$ref": "#/components/schemas/FirebaseFirestore.FieldValue"
-							},
-							{
-								"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
-							}
-						]
-					},
-					"updatedAt": {
-						"anyOf": [
-							{
-								"$ref": "#/components/schemas/FirebaseFirestore.FieldValue"
-							},
-							{
-								"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
-							}
-						]
-					}
-				},
-				"required": [
-					"blockchainId",
-					"uid",
-					"amount",
-					"category",
-					"contract",
-					"contractType",
-					"holder",
-					"name",
-					"type",
-					"userId",
-					"createdAt",
-					"updatedAt"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"BigNumber": {},
-			"VoucherClaimSignature": {
-				"properties": {
-					"rewardContractType": {
-						"type": "number",
-						"format": "double"
-					},
-					"rewardHolderAddress": {
-						"type": "string"
-					},
-					"rewardContract": {
-						"type": "string"
-					},
-					"receiver": {
-						"type": "string"
-					},
-					"amount": {
-						"anyOf": [
-							{
-								"$ref": "#/components/schemas/BigNumber"
-							},
-							{
-								"type": "number",
-								"format": "double"
-							}
-						]
-					},
-					"claimableUntil": {
-						"type": "number",
-						"format": "double"
-					},
-					"voucherId": {
-						"type": "string"
-					},
-					"signature": {
-						"type": "string"
-					},
-					"tokenId": {
-						"type": "string"
-					},
-					"eggType": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"rewardContractType",
-					"rewardHolderAddress",
-					"rewardContract",
-					"receiver",
-					"amount",
-					"claimableUntil",
-					"voucherId",
-					"signature"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"MessageResponse": {
-				"properties": {
-					"message": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"message"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"User": {
 				"properties": {
 					"uid": {
@@ -282,6 +96,18 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"MessageResponse": {
+				"properties": {
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"Wallet": {
 				"properties": {
 					"userId": {
@@ -330,6 +156,33 @@
 					"message",
 					"token"
 				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"FirebaseFirestore.Timestamp": {
+				"description": "A Timestamp represents a point in time independent of any time zone or\ncalendar, represented as seconds and fractions of seconds at nanosecond\nresolution in UTC Epoch time. It is encoded using the Proleptic Gregorian\nCalendar which extends the Gregorian calendar backwards to year one. It is\nencoded assuming all minutes are 60 seconds long, i.e. leap seconds are\n\"smeared\" so that no leap second table is needed for interpretation. Range\nis from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z.",
+				"properties": {
+					"seconds": {
+						"type": "number",
+						"format": "double",
+						"description": "The number of seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z."
+					},
+					"nanoseconds": {
+						"type": "number",
+						"format": "double",
+						"description": "The non-negative fractions of a second at nanosecond resolution."
+					}
+				},
+				"required": [
+					"seconds",
+					"nanoseconds"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"FirebaseFirestore.FieldValue": {
+				"description": "Sentinel values that can be used when writing document fields with set(),\ncreate() or update().",
+				"properties": {},
 				"type": "object",
 				"additionalProperties": false
 			},
@@ -505,6 +358,7 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"BigNumber": {},
 			"MastersTraitType": {
 				"properties": {
 					"id": {
@@ -615,12 +469,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-09T02:56:01.406Z"
+						"default": "2025-01-09T23:16:09.774Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-09T02:56:01.406Z"
+						"default": "2025-01-09T23:16:09.775Z"
 					},
 					"name": {
 						"type": "string"
@@ -776,12 +630,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-09T02:56:01.413Z"
+						"default": "2025-01-09T23:16:09.786Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-09T02:56:01.414Z"
+						"default": "2025-01-09T23:16:09.786Z"
 					},
 					"name": {
 						"type": "string"
@@ -1087,12 +941,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-09T02:56:01.421Z"
+						"default": "2025-01-09T23:16:09.794Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-09T02:56:01.422Z"
+						"default": "2025-01-09T23:16:09.794Z"
 					},
 					"name": {
 						"type": "string"
@@ -1401,6 +1255,152 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"Voucher": {
+				"properties": {
+					"blockchainId": {
+						"type": "string"
+					},
+					"uid": {
+						"type": "string"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					},
+					"category": {
+						"type": "string"
+					},
+					"contract": {
+						"type": "string"
+					},
+					"contractType": {
+						"type": "string",
+						"enum": [
+							"ERC20",
+							"ERC721",
+							"ERC1155"
+						]
+					},
+					"holder": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"blockchain",
+							"game"
+						]
+					},
+					"userId": {
+						"type": "string"
+					},
+					"image": {
+						"type": "string"
+					},
+					"receiver": {
+						"type": "string"
+					},
+					"tokenId": {
+						"type": "string"
+					},
+					"createdAt": {
+						"anyOf": [
+							{
+								"$ref": "#/components/schemas/FirebaseFirestore.FieldValue"
+							},
+							{
+								"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+							}
+						]
+					},
+					"updatedAt": {
+						"anyOf": [
+							{
+								"$ref": "#/components/schemas/FirebaseFirestore.FieldValue"
+							},
+							{
+								"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+							}
+						]
+					}
+				},
+				"required": [
+					"blockchainId",
+					"uid",
+					"amount",
+					"category",
+					"contract",
+					"contractType",
+					"holder",
+					"name",
+					"type",
+					"userId",
+					"createdAt",
+					"updatedAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"VoucherClaimSignature": {
+				"properties": {
+					"rewardContractType": {
+						"type": "number",
+						"format": "double"
+					},
+					"rewardHolderAddress": {
+						"type": "string"
+					},
+					"rewardContract": {
+						"type": "string"
+					},
+					"receiver": {
+						"type": "string"
+					},
+					"amount": {
+						"anyOf": [
+							{
+								"$ref": "#/components/schemas/BigNumber"
+							},
+							{
+								"type": "number",
+								"format": "double"
+							}
+						]
+					},
+					"claimableUntil": {
+						"type": "number",
+						"format": "double"
+					},
+					"voucherId": {
+						"type": "string"
+					},
+					"signature": {
+						"type": "string"
+					},
+					"tokenId": {
+						"type": "string"
+					},
+					"eggType": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"rewardContractType",
+					"rewardHolderAddress",
+					"rewardContract",
+					"receiver",
+					"amount",
+					"claimableUntil",
+					"voucherId",
+					"signature"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {
@@ -1432,140 +1432,6 @@
 		"contact": {}
 	},
 	"paths": {
-		"/vouchers": {
-			"get": {
-				"operationId": "GetVouchers",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Voucher"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Vouchers"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/vouchers/random": {
-			"get": {
-				"operationId": "GetRandomBigNumber",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "string"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Vouchers"
-				],
-				"security": [],
-				"parameters": []
-			}
-		},
-		"/vouchers/claim": {
-			"post": {
-				"operationId": "GetVoucherClaimSignature",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/VoucherClaimSignature"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Vouchers"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"address": {
-										"type": "string"
-									},
-									"voucherId": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"address",
-									"voucherId"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/vouchers/{voucherId}": {
-			"delete": {
-				"operationId": "DeleteVoucher",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/MessageResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Vouchers"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "voucherId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
 		"/users": {
 			"get": {
 				"operationId": "GetUser",
@@ -4359,6 +4225,199 @@
 						"schema": {
 							"format": "double",
 							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/vouchers": {
+			"get": {
+				"operationId": "GetVouchers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Voucher"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vouchers"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/vouchers/random": {
+			"get": {
+				"operationId": "GetRandomBigNumber",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vouchers"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/vouchers/transfer": {
+			"post": {
+				"operationId": "TransferVouchers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vouchers"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"receiverEmail": {
+										"type": "string"
+									},
+									"voucherAmounts": {
+										"items": {
+											"type": "number",
+											"format": "double"
+										},
+										"type": "array"
+									},
+									"voucherIds": {
+										"items": {
+											"type": "string"
+										},
+										"type": "array"
+									}
+								},
+								"required": [
+									"receiverEmail",
+									"voucherAmounts",
+									"voucherIds"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/vouchers/claim": {
+			"post": {
+				"operationId": "GetVoucherClaimSignature",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/VoucherClaimSignature"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vouchers"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"address": {
+										"type": "string"
+									},
+									"voucherId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"address",
+									"voucherId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/vouchers/{voucherId}": {
+			"delete": {
+				"operationId": "DeleteVoucher",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vouchers"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "voucherId",
+						"required": true,
+						"schema": {
+							"type": "string"
 						}
 					}
 				]

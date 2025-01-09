@@ -18,6 +18,7 @@ import { isAddress } from "ethers/lib/utils";
 import { BadRequestError } from "../../errors/bad-request-error";
 import { BigNumber, ethers } from "ethers";
 import { MessageResponse } from "../../responses/message-response";
+import { isEmail } from "../../utils";
 
 @Route("vouchers")
 @Tags("Vouchers")
@@ -35,6 +36,23 @@ export class VouchersController extends Controller {
   public async getRandomBigNumber(
   ): Promise<string> {
     return ethers.BigNumber.from(ethers.utils.randomBytes(32)).toString();
+  }
+
+  @Security("jwt")
+  @Post("transfer")
+  public async transferVouchers(
+    @Request() request: any,
+    @Body() body: {
+      voucherIds: string[],
+      voucherAmounts: number[],
+      receiverEmail: string,
+    },
+  ): Promise<MessageResponse> {
+    const voucherService = new VouchersService();
+    await voucherService.transferVouchers(request.user.uid, body.voucherIds, body.receiverEmail);
+    return {
+      message: 'Vouchers transferred',
+    }
   }
 
   @Security("jwt")

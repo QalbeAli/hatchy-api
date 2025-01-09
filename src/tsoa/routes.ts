@@ -4,8 +4,6 @@
 import type { TsoaRoute } from '@tsoa/runtime';
 import {  fetchMiddlewares, ExpressTemplateService } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { VouchersController } from './../modules/vouchers/vouchers-controller';
-// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { UsersController } from './../modules/users/usersController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { LinkController } from './../modules/link/linkController';
@@ -35,6 +33,8 @@ import { ReferralsController } from './../modules/referrals/referrals-controller
 import { AssetsController } from './../modules/assets/assets-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { TicketsController } from './../modules/tickets/TicketsController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { VouchersController } from './../modules/vouchers/vouchers-controller';
 import { expressAuthentication } from './../authentication';
 // @ts-ignore - no great way to install types from subpackage
 import type { Request as ExRequest, Response as ExResponse, RequestHandler, Router } from 'express';
@@ -45,74 +45,6 @@ const expressAuthenticationRecasted = expressAuthentication as (req: ExRequest, 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
-    "FirebaseFirestore.FieldValue": {
-        "dataType": "refObject",
-        "properties": {
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "FirebaseFirestore.Timestamp": {
-        "dataType": "refObject",
-        "properties": {
-            "seconds": {"dataType":"double","required":true},
-            "nanoseconds": {"dataType":"double","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Voucher": {
-        "dataType": "refObject",
-        "properties": {
-            "blockchainId": {"dataType":"string","required":true},
-            "uid": {"dataType":"string","required":true},
-            "amount": {"dataType":"double","required":true},
-            "category": {"dataType":"string","required":true},
-            "contract": {"dataType":"string","required":true},
-            "contractType": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["ERC20"]},{"dataType":"enum","enums":["ERC721"]},{"dataType":"enum","enums":["ERC1155"]}],"required":true},
-            "holder": {"dataType":"string","required":true},
-            "name": {"dataType":"string","required":true},
-            "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["blockchain"]},{"dataType":"enum","enums":["game"]}],"required":true},
-            "userId": {"dataType":"string","required":true},
-            "image": {"dataType":"string"},
-            "receiver": {"dataType":"string"},
-            "tokenId": {"dataType":"string"},
-            "createdAt": {"dataType":"union","subSchemas":[{"ref":"FirebaseFirestore.FieldValue"},{"ref":"FirebaseFirestore.Timestamp"}],"required":true},
-            "updatedAt": {"dataType":"union","subSchemas":[{"ref":"FirebaseFirestore.FieldValue"},{"ref":"FirebaseFirestore.Timestamp"}],"required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "BigNumber": {
-        "dataType": "refAlias",
-        "type": {"dataType":"any","validators":{}},
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "VoucherClaimSignature": {
-        "dataType": "refObject",
-        "properties": {
-            "rewardContractType": {"dataType":"double","required":true},
-            "rewardHolderAddress": {"dataType":"string","required":true},
-            "rewardContract": {"dataType":"string","required":true},
-            "receiver": {"dataType":"string","required":true},
-            "amount": {"dataType":"union","subSchemas":[{"ref":"BigNumber"},{"dataType":"double"}],"required":true},
-            "claimableUntil": {"dataType":"double","required":true},
-            "voucherId": {"dataType":"string","required":true},
-            "signature": {"dataType":"string","required":true},
-            "tokenId": {"dataType":"string"},
-            "eggType": {"dataType":"double"},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "MessageResponse": {
-        "dataType": "refObject",
-        "properties": {
-            "message": {"dataType":"string","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "User": {
         "dataType": "refObject",
         "properties": {
@@ -132,6 +64,14 @@ const models: TsoaRoute.Models = {
             "discordId": {"dataType":"string"},
             "discordUsername": {"dataType":"string"},
             "wallets": {"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"createdAt":{"dataType":"double","required":true},"linked":{"dataType":"boolean","required":true},"nonce":{"dataType":"string","required":true},"address":{"dataType":"string","required":true}}}},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "MessageResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "message": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -160,6 +100,22 @@ const models: TsoaRoute.Models = {
         "properties": {
             "message": {"dataType":"string","required":true},
             "token": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "FirebaseFirestore.Timestamp": {
+        "dataType": "refObject",
+        "properties": {
+            "seconds": {"dataType":"double","required":true},
+            "nanoseconds": {"dataType":"double","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "FirebaseFirestore.FieldValue": {
+        "dataType": "refObject",
+        "properties": {
         },
         "additionalProperties": false,
     },
@@ -225,6 +181,11 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "BigNumber": {
+        "dataType": "refAlias",
+        "type": {"dataType":"any","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "MastersTraitType": {
         "dataType": "refObject",
         "properties": {
@@ -272,8 +233,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-09T02:42:54.327Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-09T02:42:54.328Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-09T23:16:09.774Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-09T23:16:09.775Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -333,8 +294,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-09T02:42:54.335Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-09T02:42:54.335Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-09T23:16:09.786Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-09T23:16:09.786Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -427,8 +388,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-09T02:42:54.343Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-09T02:42:54.344Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-09T23:16:09.794Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-09T23:16:09.794Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -527,6 +488,45 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Voucher": {
+        "dataType": "refObject",
+        "properties": {
+            "blockchainId": {"dataType":"string","required":true},
+            "uid": {"dataType":"string","required":true},
+            "amount": {"dataType":"double","required":true},
+            "category": {"dataType":"string","required":true},
+            "contract": {"dataType":"string","required":true},
+            "contractType": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["ERC20"]},{"dataType":"enum","enums":["ERC721"]},{"dataType":"enum","enums":["ERC1155"]}],"required":true},
+            "holder": {"dataType":"string","required":true},
+            "name": {"dataType":"string","required":true},
+            "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["blockchain"]},{"dataType":"enum","enums":["game"]}],"required":true},
+            "userId": {"dataType":"string","required":true},
+            "image": {"dataType":"string"},
+            "receiver": {"dataType":"string"},
+            "tokenId": {"dataType":"string"},
+            "createdAt": {"dataType":"union","subSchemas":[{"ref":"FirebaseFirestore.FieldValue"},{"ref":"FirebaseFirestore.Timestamp"}],"required":true},
+            "updatedAt": {"dataType":"union","subSchemas":[{"ref":"FirebaseFirestore.FieldValue"},{"ref":"FirebaseFirestore.Timestamp"}],"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "VoucherClaimSignature": {
+        "dataType": "refObject",
+        "properties": {
+            "rewardContractType": {"dataType":"double","required":true},
+            "rewardHolderAddress": {"dataType":"string","required":true},
+            "rewardContract": {"dataType":"string","required":true},
+            "receiver": {"dataType":"string","required":true},
+            "amount": {"dataType":"union","subSchemas":[{"ref":"BigNumber"},{"dataType":"double"}],"required":true},
+            "claimableUntil": {"dataType":"double","required":true},
+            "voucherId": {"dataType":"string","required":true},
+            "signature": {"dataType":"string","required":true},
+            "tokenId": {"dataType":"string"},
+            "eggType": {"dataType":"double"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const templateService = new ExpressTemplateService(models, {"noImplicitAdditionalProperties":"throw-on-extras","bodyCoercion":true});
 
@@ -544,130 +544,6 @@ export function RegisterRoutes(app: Router) {
 
 
     
-        app.get('/vouchers',
-            authenticateMiddleware([{"jwt":[]}]),
-            ...(fetchMiddlewares<RequestHandler>(VouchersController)),
-            ...(fetchMiddlewares<RequestHandler>(VouchersController.prototype.getVouchers)),
-
-            async function VouchersController_getVouchers(request: ExRequest, response: ExResponse, next: any) {
-            const args: Record<string, TsoaRoute.ParameterSchema> = {
-                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = templateService.getValidatedArgs({ args, request, response });
-
-                const controller = new VouchersController();
-
-              await templateService.apiHandler({
-                methodName: 'getVouchers',
-                controller,
-                response,
-                next,
-                validatedArgs,
-                successStatus: undefined,
-              });
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/vouchers/random',
-            ...(fetchMiddlewares<RequestHandler>(VouchersController)),
-            ...(fetchMiddlewares<RequestHandler>(VouchersController.prototype.getRandomBigNumber)),
-
-            async function VouchersController_getRandomBigNumber(request: ExRequest, response: ExResponse, next: any) {
-            const args: Record<string, TsoaRoute.ParameterSchema> = {
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = templateService.getValidatedArgs({ args, request, response });
-
-                const controller = new VouchersController();
-
-              await templateService.apiHandler({
-                methodName: 'getRandomBigNumber',
-                controller,
-                response,
-                next,
-                validatedArgs,
-                successStatus: undefined,
-              });
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/vouchers/claim',
-            authenticateMiddleware([{"jwt":[]}]),
-            ...(fetchMiddlewares<RequestHandler>(VouchersController)),
-            ...(fetchMiddlewares<RequestHandler>(VouchersController.prototype.getVoucherClaimSignature)),
-
-            async function VouchersController_getVoucherClaimSignature(request: ExRequest, response: ExResponse, next: any) {
-            const args: Record<string, TsoaRoute.ParameterSchema> = {
-                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
-                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"address":{"dataType":"string","required":true},"voucherId":{"dataType":"string","required":true}}},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = templateService.getValidatedArgs({ args, request, response });
-
-                const controller = new VouchersController();
-
-              await templateService.apiHandler({
-                methodName: 'getVoucherClaimSignature',
-                controller,
-                response,
-                next,
-                validatedArgs,
-                successStatus: undefined,
-              });
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.delete('/vouchers/:voucherId',
-            authenticateMiddleware([{"jwt":[]}]),
-            ...(fetchMiddlewares<RequestHandler>(VouchersController)),
-            ...(fetchMiddlewares<RequestHandler>(VouchersController.prototype.deleteVoucher)),
-
-            async function VouchersController_deleteVoucher(request: ExRequest, response: ExResponse, next: any) {
-            const args: Record<string, TsoaRoute.ParameterSchema> = {
-                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
-                    voucherId: {"in":"path","name":"voucherId","required":true,"dataType":"string"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = templateService.getValidatedArgs({ args, request, response });
-
-                const controller = new VouchersController();
-
-              await templateService.apiHandler({
-                methodName: 'deleteVoucher',
-                controller,
-                response,
-                next,
-                validatedArgs,
-                successStatus: undefined,
-              });
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/users',
             authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(UsersController)),
@@ -2644,6 +2520,162 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'getTicket',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/vouchers',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(VouchersController)),
+            ...(fetchMiddlewares<RequestHandler>(VouchersController.prototype.getVouchers)),
+
+            async function VouchersController_getVouchers(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new VouchersController();
+
+              await templateService.apiHandler({
+                methodName: 'getVouchers',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/vouchers/random',
+            ...(fetchMiddlewares<RequestHandler>(VouchersController)),
+            ...(fetchMiddlewares<RequestHandler>(VouchersController.prototype.getRandomBigNumber)),
+
+            async function VouchersController_getRandomBigNumber(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new VouchersController();
+
+              await templateService.apiHandler({
+                methodName: 'getRandomBigNumber',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/vouchers/transfer',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(VouchersController)),
+            ...(fetchMiddlewares<RequestHandler>(VouchersController.prototype.transferVouchers)),
+
+            async function VouchersController_transferVouchers(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"receiverEmail":{"dataType":"string","required":true},"voucherAmounts":{"dataType":"array","array":{"dataType":"double"},"required":true},"voucherIds":{"dataType":"array","array":{"dataType":"string"},"required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new VouchersController();
+
+              await templateService.apiHandler({
+                methodName: 'transferVouchers',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/vouchers/claim',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(VouchersController)),
+            ...(fetchMiddlewares<RequestHandler>(VouchersController.prototype.getVoucherClaimSignature)),
+
+            async function VouchersController_getVoucherClaimSignature(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"address":{"dataType":"string","required":true},"voucherId":{"dataType":"string","required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new VouchersController();
+
+              await templateService.apiHandler({
+                methodName: 'getVoucherClaimSignature',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/vouchers/:voucherId',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(VouchersController)),
+            ...(fetchMiddlewares<RequestHandler>(VouchersController.prototype.deleteVoucher)),
+
+            async function VouchersController_deleteVoucher(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    voucherId: {"in":"path","name":"voucherId","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new VouchersController();
+
+              await templateService.apiHandler({
+                methodName: 'deleteVoucher',
                 controller,
                 response,
                 next,

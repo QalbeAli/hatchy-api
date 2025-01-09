@@ -5,6 +5,8 @@ import { NotFoundError } from "../../errors/not-found-error";
 import { admin } from "../../firebase/firebase";
 import { Voucher } from "./voucher";
 import { VoucherClaimSignature } from "./voucher-claim-signature";
+import { isEmail } from "../../utils";
+import { UsersService } from "../users/usersService";
 
 export class VouchersService {
   chainId: number;
@@ -106,6 +108,42 @@ export class VouchersService {
         signature
       }
     }
+  }
+
+  public async transferVouchers(userId: string, voucherIds: string[], receiverEmail: string): Promise<Voucher[]> {
+    if (!voucherIds.length) {
+      throw new BadRequestError('No vouchers to transfer');
+    }
+    if (!isEmail(receiverEmail)) {
+      throw new BadRequestError('Invalid email');
+    }
+    let receiver = null
+    try {
+      receiver = await admin.auth().getUserByEmail(receiverEmail);
+    } catch (e) {
+      if (e.code === 'auth/user-not-found') {
+        throw new NotFoundError('User not found');
+      }
+    }
+    if (!receiver) {
+      throw new NotFoundError('User not found');
+    }
+    await admin.firestore().runTransaction(async (transaction) => {
+      for (const voucherId of voucherIds) {
+        const docRef = admin.firestore().collection('vouchers').doc(voucherId);
+        const voucher = (await transaction.get(docRef)).data();
+        if (!voucher) {
+          throw new NotFoundError('Voucher not found');
+        }
+        if (voucher.userId !== userId) {
+          throw new BadRequestError('Voucher not owned by user');
+        }
+        if (voucher.userId !== receiver.uid) {
+          transaction.update(docRef, { userId: receiver.uid });
+        }
+      }
+    });
+    return Promise.all(voucherIds.map(async (voucherId) => await this.getVoucherById(voucherId)));
   }
 
   public async deleteVoucher(voucher: Voucher): Promise<string> {
