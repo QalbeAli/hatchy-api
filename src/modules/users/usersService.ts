@@ -17,6 +17,13 @@ export class UsersService {
   private gameSavesCollection = admin.firestore().collection('game-saves');
   private vouchersCollection = admin.firestore().collection('vouchers');
 
+  public async getUserByEmail(email: string): Promise<User> {
+    const user = await this.collection.where('email', '==', email).get();
+    if (user.docs.length === 0) {
+      throw new NotFoundError("User not found");
+    }
+    return user.docs[0]?.data() as User;
+  }
   public async get(uid: string): Promise<User> {
     const user = (await this.collection.doc(uid).get()).data();
     return user as User;

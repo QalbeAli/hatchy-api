@@ -49,7 +49,7 @@ export class VouchersController extends Controller {
     },
   ): Promise<MessageResponse> {
     const voucherService = new VouchersService();
-    await voucherService.transferVouchers(request.user.uid, body.voucherIds, body.receiverEmail);
+    await voucherService.transferVouchers(request.user.uid, body.voucherIds, body.voucherAmounts, body.receiverEmail);
     return {
       message: 'Vouchers transferred',
     }
