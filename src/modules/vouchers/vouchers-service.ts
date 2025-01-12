@@ -17,9 +17,40 @@ export class VouchersService {
   }
 
   public async getVouchersOfUser(uid: string): Promise<Voucher[]> {
-    const docRef = admin.firestore().collection('vouchers').where('userId', '==', uid);
-    const vouchers = (await docRef.get());
-    return vouchers.docs.map((doc) => {
+    const vouchers = await this.vouchersCollection.where('userId', '==', uid).get();
+    const user = await new UsersService().get(uid);
+    if (!user) {
+      throw new NotFoundError('User not found');
+    }
+
+    if (!user.vouchersMerged) {
+      const mergedVouchers: { [key: string]: Voucher } = {};
+      vouchers.docs.forEach(doc => {
+        const voucher = doc.data() as Voucher;
+        const key = `${voucher.contract}-${voucher.tokenId}`;
+        if (mergedVouchers[key]) {
+          mergedVouchers[key].amount = Number(mergedVouchers[key].amount) + Number(voucher.amount);
+        } else {
+          mergedVouchers[key] = voucher;
+        }
+      });
+
+      const batch = admin.firestore().batch();
+      Object.values(mergedVouchers).forEach(voucher => {
+        const voucherRef = this.vouchersCollection.doc(voucher.uid);
+        batch.update(voucherRef, { amount: voucher.amount });
+      });
+      // delete duplicates
+      const duplicates = vouchers.docs.filter(doc => mergedVouchers[`${doc.data().contract}-${doc.data().tokenId}`].uid !== doc.id);
+      duplicates.forEach(doc => {
+        batch.delete(doc.ref);
+      });
+
+      await batch.commit();
+      await admin.firestore().collection('users').doc(uid).update({ vouchersMerged: true });
+    }
+
+    return (await this.vouchersCollection.where('userId', '==', uid).get()).docs.map(doc => {
       const data = doc.data();
       return {
         uid: doc.id,
@@ -34,7 +65,6 @@ export class VouchersService {
         tokenId: data.tokenId,
         blockchainId: data.blockchainId,
         category: data.category,
-        eggType: data.eggType,
         receiver: data.receiver,
         createdAt: data.createdAt,
         updatedAt: data.updatedAt,

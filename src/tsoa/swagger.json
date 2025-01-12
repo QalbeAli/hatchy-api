@@ -50,6 +50,9 @@
 					"mainWallet": {
 						"type": "string"
 					},
+					"vouchersMerged": {
+						"type": "boolean"
+					},
 					"discordConfirmed": {
 						"type": "boolean"
 					},
@@ -469,12 +472,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-10T22:56:28.812Z"
+						"default": "2025-01-12T15:32:46.191Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-10T22:56:28.813Z"
+						"default": "2025-01-12T15:32:46.192Z"
 					},
 					"name": {
 						"type": "string"
@@ -630,12 +633,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-10T22:56:28.820Z"
+						"default": "2025-01-12T15:32:46.200Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-10T22:56:28.820Z"
+						"default": "2025-01-12T15:32:46.200Z"
 					},
 					"name": {
 						"type": "string"
@@ -941,12 +944,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-10T22:56:28.829Z"
+						"default": "2025-01-12T15:32:46.214Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-10T22:56:28.829Z"
+						"default": "2025-01-12T15:32:46.214Z"
 					},
 					"name": {
 						"type": "string"
