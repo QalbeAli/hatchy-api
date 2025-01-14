@@ -472,12 +472,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-12T15:32:46.191Z"
+						"default": "2025-01-14T02:10:17.405Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-12T15:32:46.192Z"
+						"default": "2025-01-14T02:10:17.405Z"
 					},
 					"name": {
 						"type": "string"
@@ -633,12 +633,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-12T15:32:46.200Z"
+						"default": "2025-01-14T02:10:17.412Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-12T15:32:46.200Z"
+						"default": "2025-01-14T02:10:17.412Z"
 					},
 					"name": {
 						"type": "string"
@@ -944,12 +944,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-12T15:32:46.214Z"
+						"default": "2025-01-14T02:10:17.420Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-12T15:32:46.214Z"
+						"default": "2025-01-14T02:10:17.420Z"
 					},
 					"name": {
 						"type": "string"
@@ -4282,6 +4282,64 @@
 				],
 				"security": [],
 				"parameters": []
+			}
+		},
+		"/vouchers/admin/give": {
+			"post": {
+				"operationId": "GiveVoucherToUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vouchers"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"overrideTokenId": {
+										"type": "string"
+									},
+									"amount": {
+										"type": "number",
+										"format": "double"
+									},
+									"assetId": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"amount",
+									"assetId",
+									"email"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/vouchers/transfer": {

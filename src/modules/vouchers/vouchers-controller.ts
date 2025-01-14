@@ -38,6 +38,32 @@ export class VouchersController extends Controller {
     return ethers.BigNumber.from(ethers.utils.randomBytes(32)).toString();
   }
 
+  @Security("jwt", ["admin"])
+  @Post("admin/give")
+  public async giveVoucherToUser(
+    @Body() body: {
+      email: string,
+      assetId: string,
+      amount: number,
+      overrideTokenId?: string
+    },
+  ): Promise<MessageResponse> {
+    const voucherService = new VouchersService();
+
+    if (!isEmail(body.email)) {
+      throw new BadRequestError('Invalid email');
+    }
+    await voucherService.giveVoucherToUser(
+      body.email,
+      body.assetId,
+      body.amount,
+      body.overrideTokenId
+    );
+    return {
+      message: 'Voucher given',
+    }
+  }
+
   @Security("jwt")
   @Post("transfer")
   public async transferVouchers(

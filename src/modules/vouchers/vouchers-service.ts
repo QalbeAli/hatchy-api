@@ -7,6 +7,7 @@ import { Voucher } from "./voucher";
 import { VoucherClaimSignature } from "./voucher-claim-signature";
 import { isEmail } from "../../utils";
 import { UsersService } from "../users/usersService";
+import { Asset } from "../assets/asset";
 
 export class VouchersService {
   chainId: number;
@@ -232,6 +233,50 @@ export class VouchersService {
     }
     return 'Reward not deleted';
   }
+
+  public async giveVoucherToUser(
+    email: string, assetId: string, amount: number, overrideTokenId?: string
+  ) {
+    const user = await new UsersService().getUserByEmail(email);
+    if (!user) {
+      throw new NotFoundError('User not found');
+    }
+    const assets = await admin.firestore().collection('assets').doc(assetId).get();
+    if (!assets.exists) {
+      throw new NotFoundError('Asset not found');
+    }
+    const asset = assets.data() as Asset;
+    const auxTokenId = overrideTokenId || asset.tokenId;
+
+
+    const receiverVouchers = await this.getVouchersOfUser(user.uid);
+    const receiverVoucher = receiverVouchers.find(v => v.contract === asset.contract && v.tokenId === auxTokenId);
+    if (receiverVoucher) {
+      const receiverVoucherRef = this.vouchersCollection.doc(receiverVoucher.uid);
+      receiverVoucherRef.update({ amount: receiverVoucher.amount + amount });
+    } else {
+      const newVoucherRef = this.vouchersCollection.doc();
+      const newVoucher: Voucher = {
+        uid: newVoucherRef.id,
+        userId: user.uid,
+        holder: asset.holder,
+        contract: asset.contract,
+        contractType: asset.contractType,
+        type: asset.type,
+        name: asset.name,
+        amount,
+        image: asset.image,
+        tokenId: auxTokenId,
+        blockchainId: ethers.BigNumber.from(ethers.utils.randomBytes(32)).toString(),
+        category: asset.category,
+        receiver: null,
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+      };
+      await newVoucherRef.set(newVoucher);
+    }
+  }
+
 
   shouldDeleteReward = async (voucher: Voucher) => {
     const rewardDealerContract = getContract('hatchyRewardDealer', this.chainId);
