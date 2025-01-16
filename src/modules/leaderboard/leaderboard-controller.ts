@@ -77,6 +77,7 @@ export class LeaderboardController extends Controller {
     const userService = new UsersService();
     const leaderboardService = new LeaderboardService();
     const gameService = new GamesService();
+    console.log(body);
     const game = await gameService.getGameById(body.appId);
     const user = await userService.get(body.userId);
     const rank = await leaderboardService.updateRank(
