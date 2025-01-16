@@ -36,16 +36,18 @@ export function expressAuthentication(
   }
 
   if (securityName === "api_key_rank") {
+    const apiKeyHeader = request.headers['x-api-key'] as string;
     const authHeader = request.headers.authorization;
-    if (!authHeader) {
+    if (!authHeader && !apiKeyHeader) {
       return Promise.reject(new UnauthorizedError("No authorization header."));
     }
-    const token = authHeader.split('Bearer ')[1];
+    const token = authHeader?.split('Bearer ')[1];
+    const key = token ? token : apiKeyHeader;
     return new Promise((resolve, reject) => {
-      if (!token) {
+      if (!key) {
         reject(new UnauthorizedError("No token provided"));
       }
-      getApiKey(token).then((apiKey) => {
+      getApiKey(key).then((apiKey) => {
         if (apiKey.permissions && apiKey.permissions.includes("rank")) {
           if (request.body.appId !== apiKey.appId) {
             reject(new UnauthorizedError("Invalid API key."));
