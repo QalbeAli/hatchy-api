@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Middlewares,
   Path,
   Post,
   Query,
@@ -15,8 +16,10 @@ import { UsersService } from "../users/usersService";
 import { GamesService } from "../games/games-service";
 import { Score } from "./score";
 import { Rank } from "./rank";
+import { transformTimestampMiddleware } from "../../middlewares/transform-timestamp-middleware";
 
 @Route("leaderboard")
+@Middlewares(transformTimestampMiddleware)
 @Tags("Leaderboard")
 export class LeaderboardController extends Controller {
   @Security("jwt")

@@ -70,11 +70,17 @@ export const init = (async () => {
   DI.apiKeys = DI.orm.em.getRepository(ApiKey);
   DI.tickets = DI.orm.em.getRepository(Ticket);
 
-  app.use(transformTimestampMiddleware);
+  const corsOptions = {
+    origin: 'https://your-frontend-domain.com', // Replace with your frontend domain
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+    credentials: true, // If you need to allow credentials (cookies, authorization headers, etc.)
+  };
   app.use(json());
-  app.use(cors());
+  app.use(cors(corsOptions));
   app.use((req, res, next) => RequestContext.create(DI.orm.em, next));
   RegisterRoutes(app);
+  app.use(transformTimestampMiddleware);
   app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
   app.use(notFoundHandler);
   app.use(errorHandler);
