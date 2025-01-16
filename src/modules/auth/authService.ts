@@ -152,7 +152,7 @@ export class AuthService {
             // migrate vouchers
             for (const voucher of oldUserData.vouchers) {
               const voucherRef = admin.firestore().collection('vouchers').doc();
-              const voucherData: Voucher = {
+              const voucherData = {
                 blockchainId: ethers.BigNumber.from(ethers.utils.randomBytes(32)).toString(),
                 uid: voucherRef.id,
                 amount: voucher.amount,
@@ -175,7 +175,7 @@ export class AuthService {
             // migrate game saves
             for (const gameSave of oldUserData.gameSaves) {
               const gameSaveRef = admin.firestore().collection('game-saves').doc();
-              const gameSaveData: GameSave = {
+              const gameSaveData = {
                 ...gameSave,
                 gameId: gameSave.gameId,
                 userId: userRef.id,

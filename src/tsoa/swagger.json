@@ -162,33 +162,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"FirebaseFirestore.Timestamp": {
-				"description": "A Timestamp represents a point in time independent of any time zone or\ncalendar, represented as seconds and fractions of seconds at nanosecond\nresolution in UTC Epoch time. It is encoded using the Proleptic Gregorian\nCalendar which extends the Gregorian calendar backwards to year one. It is\nencoded assuming all minutes are 60 seconds long, i.e. leap seconds are\n\"smeared\" so that no leap second table is needed for interpretation. Range\nis from 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z.",
-				"properties": {
-					"seconds": {
-						"type": "number",
-						"format": "double",
-						"description": "The number of seconds of UTC time since Unix epoch 1970-01-01T00:00:00Z."
-					},
-					"nanoseconds": {
-						"type": "number",
-						"format": "double",
-						"description": "The non-negative fractions of a second at nanosecond resolution."
-					}
-				},
-				"required": [
-					"seconds",
-					"nanoseconds"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"FirebaseFirestore.FieldValue": {
-				"description": "Sentinel values that can be used when writing document fields with set(),\ncreate() or update().",
-				"properties": {},
-				"type": "object",
-				"additionalProperties": false
-			},
 			"GameSave": {
 				"properties": {
 					"uid": {
@@ -204,24 +177,10 @@
 						"type": "string"
 					},
 					"createdAt": {
-						"anyOf": [
-							{
-								"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
-							},
-							{
-								"$ref": "#/components/schemas/FirebaseFirestore.FieldValue"
-							}
-						]
+						"type": "string"
 					},
 					"updatedAt": {
-						"anyOf": [
-							{
-								"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
-							},
-							{
-								"$ref": "#/components/schemas/FirebaseFirestore.FieldValue"
-							}
-						]
+						"type": "string"
 					}
 				},
 				"required": [
@@ -311,10 +270,10 @@
 						"type": "string"
 					},
 					"createdAt": {
-						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+						"type": "string"
 					},
 					"updatedAt": {
-						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+						"type": "string"
 					}
 				},
 				"required": [
@@ -344,10 +303,10 @@
 						"type": "string"
 					},
 					"createdAt": {
-						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+						"type": "string"
 					},
 					"updatedAt": {
-						"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
+						"type": "string"
 					}
 				},
 				"required": [
@@ -472,12 +431,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-14T02:10:17.405Z"
+						"default": "2025-01-16T03:23:59.071Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-14T02:10:17.405Z"
+						"default": "2025-01-16T03:23:59.071Z"
 					},
 					"name": {
 						"type": "string"
@@ -633,12 +592,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-14T02:10:17.412Z"
+						"default": "2025-01-16T03:23:59.091Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-14T02:10:17.412Z"
+						"default": "2025-01-16T03:23:59.092Z"
 					},
 					"name": {
 						"type": "string"
@@ -944,12 +903,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-14T02:10:17.420Z"
+						"default": "2025-01-16T03:23:59.103Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-14T02:10:17.420Z"
+						"default": "2025-01-16T03:23:59.103Z"
 					},
 					"name": {
 						"type": "string"
@@ -1259,6 +1218,105 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"ApiKey": {
+				"properties": {
+					"uid": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"apiKey": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					},
+					"permissions": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"appId": {
+						"type": "string"
+					},
+					"eggsLimit": {
+						"type": "number",
+						"format": "double"
+					},
+					"tokenLimit": {
+						"type": "number",
+						"format": "double"
+					},
+					"commonChestLimit": {
+						"type": "number",
+						"format": "double"
+					},
+					"premiumChestLimit": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"uid",
+					"name",
+					"apiKey",
+					"createdAt",
+					"updatedAt",
+					"permissions"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_ApiKey.Exclude_keyofApiKey.uid-or-createdAt-or-updatedAt-or-apiKey__": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"permissions": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"appId": {
+						"type": "string"
+					},
+					"eggsLimit": {
+						"type": "number",
+						"format": "double"
+					},
+					"tokenLimit": {
+						"type": "number",
+						"format": "double"
+					},
+					"commonChestLimit": {
+						"type": "number",
+						"format": "double"
+					},
+					"premiumChestLimit": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"name",
+					"permissions"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_ApiKey.uid-or-createdAt-or-updatedAt-or-apiKey_": {
+				"$ref": "#/components/schemas/Pick_ApiKey.Exclude_keyofApiKey.uid-or-createdAt-or-updatedAt-or-apiKey__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"CreateApiKeyParams": {
+				"$ref": "#/components/schemas/Omit_ApiKey.uid-or-createdAt-or-updatedAt-or-apiKey_"
+			},
 			"Voucher": {
 				"properties": {
 					"blockchainId": {
@@ -1311,24 +1369,10 @@
 						"type": "string"
 					},
 					"createdAt": {
-						"anyOf": [
-							{
-								"$ref": "#/components/schemas/FirebaseFirestore.FieldValue"
-							},
-							{
-								"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
-							}
-						]
+						"type": "string"
 					},
 					"updatedAt": {
-						"anyOf": [
-							{
-								"$ref": "#/components/schemas/FirebaseFirestore.FieldValue"
-							},
-							{
-								"$ref": "#/components/schemas/FirebaseFirestore.Timestamp"
-							}
-						]
+						"type": "string"
 					}
 				},
 				"required": [
@@ -4228,6 +4272,103 @@
 						"schema": {
 							"format": "double",
 							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/api-keys": {
+			"get": {
+				"operationId": "GetApiKeys",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ApiKey"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"ApiKeys"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateApiKey",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiKey"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"ApiKeys"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateApiKeyParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api-keys/{uid}": {
+			"delete": {
+				"operationId": "DeleteApiKey",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"ApiKeys"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "uid",
+						"required": true,
+						"schema": {
+							"type": "string"
 						}
 					}
 				]

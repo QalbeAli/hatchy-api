@@ -14,6 +14,6 @@ export interface Voucher {
   image?: string;
   receiver?: string;
   tokenId?: string;
-  createdAt: FieldValue | Timestamp;
-  updatedAt: FieldValue | Timestamp;
+  createdAt: string;
+  updatedAt: string;
 }

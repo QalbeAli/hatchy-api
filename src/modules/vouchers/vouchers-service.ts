@@ -193,7 +193,7 @@ export class VouchersService {
         batch.update(receiverVoucherRef, { amount: receiverVoucher.amount + voucherAmount });
       } else {
         const newVoucherRef = this.vouchersCollection.doc();
-        const newVoucher: Voucher = {
+        const newVoucher = {
           uid: newVoucherRef.id,
           userId: receiver.uid,
           holder: voucher.holder,
@@ -256,7 +256,7 @@ export class VouchersService {
       receiverVoucherRef.update({ amount: receiverVoucher.amount + amount });
     } else {
       const newVoucherRef = this.vouchersCollection.doc();
-      const newVoucher: Voucher = {
+      const newVoucher = {
         uid: newVoucherRef.id,
         userId: user.uid,
         holder: asset.holder,

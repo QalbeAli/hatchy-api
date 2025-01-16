@@ -5,6 +5,6 @@ export interface Score {
   score: number;
   userId: string;
   username: string;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
+  createdAt: string;
+  updatedAt: string;
 }

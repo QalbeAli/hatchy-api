@@ -45,7 +45,9 @@ export class LeaderboardService {
         updatedAt: Timestamp.now(),
       }
       await newScoreRef.set(scoreData);
-      return scoreData;
+
+      const doc = await newScoreRef.get();
+      return doc.data() as Score;
     }
   }
 
@@ -96,20 +98,14 @@ export class LeaderboardService {
     if (!querySnapshot.empty) {
       const existingRankDoc = querySnapshot.docs[0];
       const rankData = existingRankDoc.data();
-      const now = Timestamp.now();
+      const now = admin.firestore.FieldValue.serverTimestamp();
       await existingRankDoc.ref.update({
         rank,
         updatedAt: now,
       });
-      return {
-        gameId: rankData.gameId,
-        userId: rankData.userId,
-        username: rankData.username,
-        rank,
-        createdAt: rankData.createdAt,
-        updatedAt: now,
-      };
 
+      const rankDoc = await existingRankDoc.ref.get();
+      return rankDoc.data() as Rank;
     } else {
       const userRank = {
         gameId: game.uid,
@@ -120,7 +116,8 @@ export class LeaderboardService {
         updatedAt: Timestamp.now(),
       };
       await docRef.doc().set(userRank);
-      return userRank;
+      const userRankDoc = await docRef.doc().get();
+      return userRankDoc.data() as Rank;
     }
   }
 

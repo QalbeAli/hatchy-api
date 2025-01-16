@@ -5,6 +5,6 @@ export interface Rank {
   userId: string;
   rank: number;
   username: string;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
+  createdAt: string;
+  updatedAt: string;
 }

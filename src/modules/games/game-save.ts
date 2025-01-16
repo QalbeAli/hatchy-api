@@ -5,7 +5,7 @@ export interface GameSave {
   gameId: string;
   saveName: string;
   userId: string;
-  createdAt: Timestamp | FieldValue;
-  updatedAt: Timestamp | FieldValue;
+  createdAt: string;
+  updatedAt: string;
   [key: string]: any
 }

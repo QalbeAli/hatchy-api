@@ -11,21 +11,23 @@ export class GamesSavesService {
   }, saveName: string): Promise<GameSave> {
     const docRef = admin.firestore().collection('game-saves').doc();
     const uid = docRef.id;
-    const gameSave: GameSave = {
+    const gameSave = {
       gameId,
       userId,
       data,
       saveName,
-      createdAt: Timestamp.now(),
-      updatedAt: Timestamp.now(),
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       uid
     };
     await docRef.set(gameSave);
+
+    const createdDoc = await docRef.get();
     return {
-      ...gameSave,
-      uid: docRef.id,
-    };
+      ...createdDoc.data()
+    } as GameSave;
   }
+
   public async updateGameSave(saveId: string, data: {
     [key: string]: any
   },): Promise<GameSave> {
@@ -37,7 +39,9 @@ export class GamesSavesService {
       updatedAt: Timestamp.now(),
     };
     await docRef.update(updatedGameSave);
-    return updatedGameSave;
+
+    const updatedDoc = await docRef.get();
+    return updatedDoc.data() as GameSave;
   }
 
   public async deleteGameSave(saveId: string): Promise<void> {

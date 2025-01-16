@@ -34,6 +34,8 @@ import { AssetsController } from './../modules/assets/assets-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { TicketsController } from './../modules/tickets/TicketsController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { ApiKeysController } from './../modules/api-keys/api-keys-controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { VouchersController } from './../modules/vouchers/vouchers-controller';
 import { expressAuthentication } from './../authentication';
 // @ts-ignore - no great way to install types from subpackage
@@ -105,22 +107,6 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "FirebaseFirestore.Timestamp": {
-        "dataType": "refObject",
-        "properties": {
-            "seconds": {"dataType":"double","required":true},
-            "nanoseconds": {"dataType":"double","required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "FirebaseFirestore.FieldValue": {
-        "dataType": "refObject",
-        "properties": {
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "GameSave": {
         "dataType": "refObject",
         "properties": {
@@ -128,8 +114,8 @@ const models: TsoaRoute.Models = {
             "gameId": {"dataType":"string","required":true},
             "saveName": {"dataType":"string","required":true},
             "userId": {"dataType":"string","required":true},
-            "createdAt": {"dataType":"union","subSchemas":[{"ref":"FirebaseFirestore.Timestamp"},{"ref":"FirebaseFirestore.FieldValue"}],"required":true},
-            "updatedAt": {"dataType":"union","subSchemas":[{"ref":"FirebaseFirestore.Timestamp"},{"ref":"FirebaseFirestore.FieldValue"}],"required":true},
+            "createdAt": {"dataType":"string","required":true},
+            "updatedAt": {"dataType":"string","required":true},
         },
         "additionalProperties": {"dataType":"any"},
     },
@@ -163,8 +149,8 @@ const models: TsoaRoute.Models = {
             "score": {"dataType":"double","required":true},
             "userId": {"dataType":"string","required":true},
             "username": {"dataType":"string","required":true},
-            "createdAt": {"ref":"FirebaseFirestore.Timestamp","required":true},
-            "updatedAt": {"ref":"FirebaseFirestore.Timestamp","required":true},
+            "createdAt": {"dataType":"string","required":true},
+            "updatedAt": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -176,8 +162,8 @@ const models: TsoaRoute.Models = {
             "userId": {"dataType":"string","required":true},
             "rank": {"dataType":"double","required":true},
             "username": {"dataType":"string","required":true},
-            "createdAt": {"ref":"FirebaseFirestore.Timestamp","required":true},
-            "updatedAt": {"ref":"FirebaseFirestore.Timestamp","required":true},
+            "createdAt": {"dataType":"string","required":true},
+            "updatedAt": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -234,8 +220,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-14T02:10:17.405Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-14T02:10:17.405Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-16T03:23:59.071Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-16T03:23:59.071Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -295,8 +281,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-14T02:10:17.412Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-14T02:10:17.412Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-16T03:23:59.091Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-16T03:23:59.092Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -389,8 +375,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-14T02:10:17.420Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-14T02:10:17.420Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-16T03:23:59.103Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-16T03:23:59.103Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -489,6 +475,39 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ApiKey": {
+        "dataType": "refObject",
+        "properties": {
+            "uid": {"dataType":"string","required":true},
+            "name": {"dataType":"string","required":true},
+            "apiKey": {"dataType":"string","required":true},
+            "createdAt": {"dataType":"string","required":true},
+            "updatedAt": {"dataType":"string","required":true},
+            "permissions": {"dataType":"array","array":{"dataType":"string"},"required":true},
+            "appId": {"dataType":"string"},
+            "eggsLimit": {"dataType":"double"},
+            "tokenLimit": {"dataType":"double"},
+            "commonChestLimit": {"dataType":"double"},
+            "premiumChestLimit": {"dataType":"double"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_ApiKey.Exclude_keyofApiKey.uid-or-createdAt-or-updatedAt-or-apiKey__": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"name":{"dataType":"string","required":true},"permissions":{"dataType":"array","array":{"dataType":"string"},"required":true},"appId":{"dataType":"string"},"eggsLimit":{"dataType":"double"},"tokenLimit":{"dataType":"double"},"commonChestLimit":{"dataType":"double"},"premiumChestLimit":{"dataType":"double"}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Omit_ApiKey.uid-or-createdAt-or-updatedAt-or-apiKey_": {
+        "dataType": "refAlias",
+        "type": {"ref":"Pick_ApiKey.Exclude_keyofApiKey.uid-or-createdAt-or-updatedAt-or-apiKey__","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "CreateApiKeyParams": {
+        "dataType": "refAlias",
+        "type": {"ref":"Omit_ApiKey.uid-or-createdAt-or-updatedAt-or-apiKey_","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Voucher": {
         "dataType": "refObject",
         "properties": {
@@ -505,8 +524,8 @@ const models: TsoaRoute.Models = {
             "image": {"dataType":"string"},
             "receiver": {"dataType":"string"},
             "tokenId": {"dataType":"string"},
-            "createdAt": {"dataType":"union","subSchemas":[{"ref":"FirebaseFirestore.FieldValue"},{"ref":"FirebaseFirestore.Timestamp"}],"required":true},
-            "updatedAt": {"dataType":"union","subSchemas":[{"ref":"FirebaseFirestore.FieldValue"},{"ref":"FirebaseFirestore.Timestamp"}],"required":true},
+            "createdAt": {"dataType":"string","required":true},
+            "updatedAt": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -2521,6 +2540,98 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'getTicket',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/api-keys',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(ApiKeysController)),
+            ...(fetchMiddlewares<RequestHandler>(ApiKeysController.prototype.getApiKeys)),
+
+            async function ApiKeysController_getApiKeys(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new ApiKeysController();
+
+              await templateService.apiHandler({
+                methodName: 'getApiKeys',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/api-keys',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(ApiKeysController)),
+            ...(fetchMiddlewares<RequestHandler>(ApiKeysController.prototype.createApiKey)),
+
+            async function ApiKeysController_createApiKey(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    body: {"in":"body","name":"body","required":true,"ref":"CreateApiKeyParams"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new ApiKeysController();
+
+              await templateService.apiHandler({
+                methodName: 'createApiKey',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/api-keys/:uid',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(ApiKeysController)),
+            ...(fetchMiddlewares<RequestHandler>(ApiKeysController.prototype.deleteApiKey)),
+
+            async function ApiKeysController_deleteApiKey(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    uid: {"in":"path","name":"uid","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new ApiKeysController();
+
+              await templateService.apiHandler({
+                methodName: 'deleteApiKey',
                 controller,
                 response,
                 next,

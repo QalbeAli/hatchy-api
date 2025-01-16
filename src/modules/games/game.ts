@@ -3,7 +3,6 @@ export interface Game {
   uid: string;
   name: string;
   description: string;
-  // createdAt: Timestamp;
   itchioEmbedLink?: string;
   itchioLink?: string;
   status?: string;

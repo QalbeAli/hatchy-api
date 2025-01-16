@@ -11,7 +11,7 @@ export type UserCreationParams = Pick<
 export interface ReferralCode {
   code: string;
   userId: string;
-  createdAt: Date;
+  createdAt: string;
   isActive: boolean;
 }
 
@@ -19,7 +19,7 @@ export interface ReferralRelationship {
   referrerId: string;
   referredId: string;
   referralCode: string;
-  createdAt: Date;
+  createdAt: string;
   status: 'pending' | 'completed';
 }
 
