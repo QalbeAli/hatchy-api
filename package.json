@@ -9,11 +9,11 @@
     "start:prod": "npm run build && NODE_ENV=prod PORT=3002 node dist/index.js",
     "build": "yarn run tsoa spec-and-routes && tsc -p .",
     "pregenerate-client": "rm -rf ./api-client-lib && yarn tsoa spec",
-    "pregenerate-csharp-client": "rm -rf ./api-client-csharp && rm -rf ../hatchyverse-unity-sdk/Assets/HatchyverseAPI/Api && rm -rf ../hatchyverse-unity-sdk/Assets/HatchyverseAPI/Model && yarn tsoa spec",
+    "pregenerate-csharp-client": "rm -rf ./api-client-csharp && rm -rf ../hatchyverse-unity-sdk/Assets/Hatchyverse/HatchyverseAPI/Api && rm -rf ../hatchyverse-unity-sdk/Assets/Hatchyverse/HatchyverseAPI/Model && yarn tsoa spec",
     "generate-client": "openapi --input ./src/tsoa/swagger.json --output ./api-client-lib --exportSchemas true --exportModels true",
     "postgenerate-client": "cd .. && cp -r ./hatchyverse-api/api-client-lib/* ./hatchyverse-website/hatchy-api-client/masters-api",
     "generate-csharp-client": "openapi-generator-cli generate -i ./src/tsoa/swagger.json -g csharp -c ./csharp-openapi-config.json -o ./api-client-csharp",
-    "postgenerate-csharp-client": "cd .. && sed -i '388,391d' ./hatchyverse-api/api-client-csharp/src/HatchyverseAPI/Client/ApiClient.cs && cp -r ./hatchyverse-api/api-client-csharp/src/HatchyverseAPI/Api ./hatchyverse-unity-sdk/Assets/HatchyverseAPI/Api && cp -r ./hatchyverse-api/api-client-csharp/src/HatchyverseAPI/Model ./hatchyverse-unity-sdk/Assets/HatchyverseAPI/Model",
+    "postgenerate-csharp-client": "cd .. && sed -i '388,391d' ./hatchyverse-api/api-client-csharp/src/HatchyverseAPI/Client/ApiClient.cs && cp -r ./hatchyverse-api/api-client-csharp/src/HatchyverseAPI/Api ./hatchyverse-unity-sdk/Assets/Hatchyverse/HatchyverseAPI/Api && cp -r ./hatchyverse-api/api-client-csharp/src/HatchyverseAPI/Model ./hatchyverse-unity-sdk/Assets/Hatchyverse/HatchyverseAPI/Model",
     "pm2:start:dev": "npm run build && pm2 startOrRestart ecosystem.config.js --only worker_dev",
     "pm2:start:prod": "npm run build && pm2 startOrRestart ecosystem.config.js --only worker_prod"
   },

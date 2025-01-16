@@ -220,8 +220,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-16T03:23:59.071Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-16T03:23:59.071Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-16T04:22:54.912Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-16T04:22:54.912Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -281,8 +281,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-16T03:23:59.091Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-16T03:23:59.092Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-16T04:22:54.919Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-16T04:22:54.919Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -375,8 +375,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-16T03:23:59.103Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-16T03:23:59.103Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-16T04:22:54.927Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-16T04:22:54.928Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -1255,14 +1255,13 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/leaderboard/rank',
-            authenticateMiddleware([{"jwt":[]}]),
+            authenticateMiddleware([{"api_key_rank":[]}]),
             ...(fetchMiddlewares<RequestHandler>(LeaderboardController)),
             ...(fetchMiddlewares<RequestHandler>(LeaderboardController.prototype.updateRank)),
 
             async function LeaderboardController_updateRank(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
-                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
-                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"clientId":{"dataType":"string"},"apiKey":{"dataType":"string"},"rank":{"dataType":"double","required":true},"gameId":{"dataType":"string","required":true}}},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"userId":{"dataType":"string","required":true},"rank":{"dataType":"double","required":true},"appId":{"dataType":"string","required":true}}},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -1286,13 +1285,13 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.get('/leaderboard/rank/:gameId',
+        app.get('/leaderboard/rank/:appId',
             ...(fetchMiddlewares<RequestHandler>(LeaderboardController)),
             ...(fetchMiddlewares<RequestHandler>(LeaderboardController.prototype.getRankLeaderboard)),
 
             async function LeaderboardController_getRankLeaderboard(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
-                    gameId: {"in":"path","name":"gameId","required":true,"dataType":"string"},
+                    appId: {"in":"path","name":"appId","required":true,"dataType":"string"},
                     limit: {"in":"query","name":"limit","dataType":"double"},
             };
 

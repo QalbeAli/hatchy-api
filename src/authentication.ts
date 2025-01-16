@@ -3,11 +3,18 @@ import { admin } from "./firebase/firebase";
 import config from "./config";
 import { User } from "./modules/users/user";
 import { UnauthorizedError } from "./errors/unauthorized-error";
+import { ApiKey } from "./modules/api-keys/api-key";
 
 async function getUser(uid: string): Promise<User> {
   const userCollection = admin.firestore().collection('users');
   const user = (await userCollection.doc(uid).get()).data();
   return user as User;
+}
+
+async function getApiKey(apiKey: string): Promise<ApiKey> {
+  const apiKeyCollection = admin.firestore().collection('api-keys');
+  const apiKeyDoc = await apiKeyCollection.where('apiKey', '==', apiKey).get();
+  return apiKeyDoc.docs[0].data() as ApiKey;
 }
 
 export function expressAuthentication(
@@ -28,6 +35,29 @@ export function expressAuthentication(
     }
   }
 
+  if (securityName === "api_key_rank") {
+    const authHeader = request.headers.authorization;
+    if (!authHeader) {
+      return Promise.reject(new UnauthorizedError("No authorization header."));
+    }
+    const token = authHeader.split('Bearer ')[1];
+    return new Promise((resolve, reject) => {
+      if (!token) {
+        reject(new UnauthorizedError("No token provided"));
+      }
+      getApiKey(token).then((apiKey) => {
+        if (apiKey.permissions && apiKey.permissions.includes("rank")) {
+          if (request.body.appId !== apiKey.appId) {
+            reject(new UnauthorizedError("Invalid API key."));
+          }
+          resolve(apiKey);
+        }
+        reject(new UnauthorizedError("Invalid API key."));
+      }).catch((error) => {
+        reject(new UnauthorizedError("Invalid API key."));
+      });
+    });
+  }
 
   if (securityName === "jwt") {
     const authHeader = request.headers.authorization;

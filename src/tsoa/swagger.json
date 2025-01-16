@@ -431,12 +431,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-16T03:23:59.071Z"
+						"default": "2025-01-16T04:23:35.939Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-16T03:23:59.071Z"
+						"default": "2025-01-16T04:23:35.940Z"
 					},
 					"name": {
 						"type": "string"
@@ -592,12 +592,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-16T03:23:59.091Z"
+						"default": "2025-01-16T04:23:35.948Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-16T03:23:59.092Z"
+						"default": "2025-01-16T04:23:35.948Z"
 					},
 					"name": {
 						"type": "string"
@@ -903,12 +903,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-16T03:23:59.103Z"
+						"default": "2025-01-16T04:23:35.963Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-16T03:23:59.103Z"
+						"default": "2025-01-16T04:23:35.963Z"
 					},
 					"name": {
 						"type": "string"
@@ -2334,7 +2334,7 @@
 				],
 				"security": [
 					{
-						"jwt": []
+						"api_key_rank": []
 					}
 				],
 				"parameters": [],
@@ -2344,23 +2344,21 @@
 						"application/json": {
 							"schema": {
 								"properties": {
-									"clientId": {
-										"type": "string"
-									},
-									"apiKey": {
+									"userId": {
 										"type": "string"
 									},
 									"rank": {
 										"type": "number",
 										"format": "double"
 									},
-									"gameId": {
+									"appId": {
 										"type": "string"
 									}
 								},
 								"required": [
+									"userId",
 									"rank",
-									"gameId"
+									"appId"
 								],
 								"type": "object"
 							}
@@ -2369,7 +2367,7 @@
 				}
 			}
 		},
-		"/leaderboard/rank/{gameId}": {
+		"/leaderboard/rank/{appId}": {
 			"get": {
 				"operationId": "GetRankLeaderboard",
 				"responses": {
@@ -2407,7 +2405,7 @@
 				"parameters": [
 					{
 						"in": "path",
-						"name": "gameId",
+						"name": "appId",
 						"required": true,
 						"schema": {
 							"type": "string"

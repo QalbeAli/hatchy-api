@@ -88,8 +88,8 @@ export class LeaderboardService {
   }
 
   public async updateRank(game: Game, user: User, rank: number): Promise<Rank> {
-    const docRef = admin.firestore().collection('ranks');
-    const querySnapshot = await docRef
+    const collection = admin.firestore().collection('ranks');
+    const querySnapshot = await collection
       .where('gameId', '==', game.uid)
       .where('userId', '==', user.uid)
       .limit(1)
@@ -107,6 +107,7 @@ export class LeaderboardService {
       const rankDoc = await existingRankDoc.ref.get();
       return rankDoc.data() as Rank;
     } else {
+      const collectionDoc = collection.doc();
       const userRank = {
         gameId: game.uid,
         userId: user.uid,
@@ -115,8 +116,8 @@ export class LeaderboardService {
         createdAt: Timestamp.now(),
         updatedAt: Timestamp.now(),
       };
-      await docRef.doc().set(userRank);
-      const userRankDoc = await docRef.doc().get();
+      await collectionDoc.set(userRank);
+      const userRankDoc = await collectionDoc.get();
       return userRankDoc.data() as Rank;
     }
   }

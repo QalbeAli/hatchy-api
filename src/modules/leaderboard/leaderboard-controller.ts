@@ -62,22 +62,20 @@ export class LeaderboardController extends Controller {
     return leaderboardService.getUserScore(gameId, request.user.uid);
   }
 
-  @Security("jwt")
+  @Security("api_key_rank")
   @Post("rank")
   public async updateRank(
-    @Request() request: any,
     @Body() body: {
-      gameId: string,
+      appId: string,
       rank: number,
-      apiKey?: string,
-      clientId?: string,
+      userId: string,
     }
   ): Promise<Rank> {
     const userService = new UsersService();
     const leaderboardService = new LeaderboardService();
     const gameService = new GamesService();
-    const game = await gameService.getGameById(body.gameId);
-    const user = await userService.get(request.user.uid);
+    const game = await gameService.getGameById(body.appId);
+    const user = await userService.get(body.userId);
     const rank = await leaderboardService.updateRank(
       game,
       user,
@@ -86,13 +84,13 @@ export class LeaderboardController extends Controller {
     return rank;
   }
 
-  @Get("rank/{gameId}")
+  @Get("rank/{appId}")
   public async getRankLeaderboard(
-    @Path() gameId: string,
+    @Path() appId: string,
     @Query() limit?: number
   ): Promise<{ userId: string, rank: number }[]> {
     const leaderboardService = new LeaderboardService();
-    return leaderboardService.getRankLeaderboard(gameId, limit);
+    return leaderboardService.getRankLeaderboard(appId, limit);
   }
 
   @Security("jwt")
