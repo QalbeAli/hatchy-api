@@ -112,7 +112,7 @@ export class LeaderboardService {
         gameId: game.uid,
         userId: user.uid,
         rank,
-        username: user.displayName,
+        username: user.displayName || 'User',
         createdAt: Timestamp.now(),
         updatedAt: Timestamp.now(),
       };
