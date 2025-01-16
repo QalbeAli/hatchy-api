@@ -70,10 +70,10 @@ export const init = (async () => {
   DI.apiKeys = DI.orm.em.getRepository(ApiKey);
   DI.tickets = DI.orm.em.getRepository(Ticket);
 
+  app.use(transformTimestampMiddleware);
   app.use(json());
   app.use(cors());
   app.use((req, res, next) => RequestContext.create(DI.orm.em, next));
-  app.use(transformTimestampMiddleware);
   RegisterRoutes(app);
   app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
   app.use(notFoundHandler);
