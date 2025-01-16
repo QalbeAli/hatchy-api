@@ -25,8 +25,6 @@ import { RegisterRoutes } from "./tsoa/routes";
 import swaggerDocument from "./tsoa/swagger.json";
 import swaggerUI from "swagger-ui-express";
 import { notFoundHandler } from "./middlewares/not-found-route-handler";
-import { transformTimestampMiddleware } from "./middlewares/transform-timestamp-middleware";
-
 
 export const DI = {} as {
   server: http.Server;
