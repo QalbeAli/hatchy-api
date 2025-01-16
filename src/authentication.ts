@@ -48,6 +48,7 @@ export function expressAuthentication(
         reject(new UnauthorizedError("No token provided"));
       }
       getApiKey(key).then((apiKey) => {
+        console.log(apiKey);
         if (apiKey.permissions && apiKey.permissions.includes("rank")) {
           if (request.body.appId !== apiKey.appId) {
             reject(new UnauthorizedError("Invalid API key."));

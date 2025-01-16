@@ -220,8 +220,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-16T21:12:14.715Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-16T21:12:14.715Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-16T21:24:58.859Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-16T21:24:58.859Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -281,8 +281,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-16T21:12:14.723Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-16T21:12:14.723Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-16T21:24:58.867Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-16T21:24:58.868Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -375,8 +375,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-16T21:12:14.739Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-16T21:12:14.739Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-16T21:24:58.876Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-16T21:24:58.877Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
