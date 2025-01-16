@@ -5,12 +5,11 @@ import { Game } from "./game";
 export class GamesService {
 
   public async getGameById(gameId: string): Promise<Game> {
-    const docRef = admin.firestore().collection('games').doc(gameId);
-    const data = (await docRef.get()).data();
-    if (!data) {
+    const data = await admin.firestore().collection('games').doc(gameId).get();
+    if (!data.exists) {
       throw new NotFoundError('Game not found');
     }
-    return data as Game;
+    return data.data() as Game;
   }
 
   public async getGames(): Promise<Game[]> {
