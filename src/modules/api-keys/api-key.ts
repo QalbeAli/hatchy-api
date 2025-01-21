@@ -6,8 +6,7 @@ export interface ApiKey {
   updatedAt: string;
   permissions: string[];
   appId?: string;
-  eggsLimit?: number;
-  tokenLimit?: number;
-  commonChestLimit?: number;
-  premiumChestLimit?: number;
+  balance: {
+    [key: string]: number;
+  }
 }

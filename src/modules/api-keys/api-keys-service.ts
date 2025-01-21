@@ -14,6 +14,11 @@ export class ApiKeysService {
     return snapshot.docs.map(doc => doc.data() as ApiKey);
   }
 
+  public async getApiKey(apiKey: string): Promise<ApiKey> {
+    const apiKeyDoc = await this.apiKeysCollection.where('apiKey', '==', apiKey).get();
+    return apiKeyDoc.docs[0].data() as ApiKey;
+  }
+
   public async createApiKey(apiKeyCreationData: CreateApiKeyParams): Promise<ApiKey> {
     const docRef = this.apiKeysCollection.doc();
     const uid = docRef.id;

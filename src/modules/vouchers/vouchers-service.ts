@@ -8,10 +8,12 @@ import { VoucherClaimSignature } from "./voucher-claim-signature";
 import { isEmail } from "../../utils";
 import { UsersService } from "../users/usersService";
 import { Asset } from "../assets/asset";
+import { ApiKeysService } from "../api-keys/api-keys-service";
 
 export class VouchersService {
   chainId: number;
   vouchersCollection = admin.firestore().collection('vouchers');
+  apiKeyService = new ApiKeysService();
 
   constructor(chainId?: number) {
     this.chainId = chainId || DefaultChainId;
@@ -232,6 +234,26 @@ export class VouchersService {
       return 'Reward deleted successfully'
     }
     return 'Reward not deleted';
+  }
+
+  public async giveVoucherWithApiKey(
+    apiKey: string, email: string, assetId: string, amount: number, overrideTokenId?: string
+  ) {
+    const apiKeyData = await this.apiKeyService.getApiKey(apiKey);
+    if (!apiKeyData.balance[assetId] || apiKeyData.balance[assetId] < amount) {
+      throw new BadRequestError('Insufficient asset limit');
+    }
+
+    if (!apiKeyData.permissions || !apiKeyData.permissions.includes('rewards')) {
+      throw new BadRequestError('API Key does not have permissions');
+    }
+    await this.giveVoucherToUser(email, assetId, amount, overrideTokenId);
+    // update the balance of the api key
+    const newBalance = { ...apiKeyData.balance };
+    newBalance[assetId] -= amount;
+    await admin.firestore().collection('api-keys').doc(apiKeyData.uid).update({ balance: newBalance });
+
+    return { message: 'Voucher given with API Key' };
   }
 
   public async giveVoucherToUser(

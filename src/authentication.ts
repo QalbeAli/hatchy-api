@@ -35,6 +35,27 @@ export function expressAuthentication(
     }
   }
 
+  if (securityName === "api_key_rewards") {
+    const apiKeyHeader = request.headers['x-api-key'] as string;
+    if (!apiKeyHeader) {
+      return Promise.reject(new UnauthorizedError("No authorization header."));
+    }
+    const key = apiKeyHeader;
+    return new Promise((resolve, reject) => {
+      if (!key) {
+        reject(new UnauthorizedError("No token provided"));
+      }
+      getApiKey(key).then((apiKey) => {
+        if (apiKey.permissions && apiKey.permissions.includes("rewards")) {
+          resolve(apiKey);
+        }
+        reject(new UnauthorizedError("Invalid API key."));
+      }).catch((error) => {
+        reject(new UnauthorizedError("Invalid API key."));
+      });
+    });
+  }
+
   if (securityName === "api_key_rank") {
     const apiKeyHeader = request.headers['x-api-key'] as string;
     if (!apiKeyHeader) {

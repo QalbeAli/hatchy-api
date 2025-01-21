@@ -220,8 +220,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-16T21:48:45.119Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-16T21:48:45.120Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-21T01:09:05.243Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-21T01:09:05.243Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -281,8 +281,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-16T21:48:45.127Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-16T21:48:45.127Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-21T01:09:05.251Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-21T01:09:05.251Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -375,8 +375,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-16T21:48:45.135Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-16T21:48:45.135Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-21T01:09:05.267Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-21T01:09:05.267Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -485,17 +485,14 @@ const models: TsoaRoute.Models = {
             "updatedAt": {"dataType":"string","required":true},
             "permissions": {"dataType":"array","array":{"dataType":"string"},"required":true},
             "appId": {"dataType":"string"},
-            "eggsLimit": {"dataType":"double"},
-            "tokenLimit": {"dataType":"double"},
-            "commonChestLimit": {"dataType":"double"},
-            "premiumChestLimit": {"dataType":"double"},
+            "balance": {"dataType":"nestedObjectLiteral","nestedProperties":{},"additionalProperties":{"dataType":"double"},"required":true},
         },
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Pick_ApiKey.Exclude_keyofApiKey.uid-or-createdAt-or-updatedAt-or-apiKey__": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"name":{"dataType":"string","required":true},"permissions":{"dataType":"array","array":{"dataType":"string"},"required":true},"appId":{"dataType":"string"},"eggsLimit":{"dataType":"double"},"tokenLimit":{"dataType":"double"},"commonChestLimit":{"dataType":"double"},"premiumChestLimit":{"dataType":"double"}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"name":{"dataType":"string","required":true},"permissions":{"dataType":"array","array":{"dataType":"string"},"required":true},"appId":{"dataType":"string"},"balance":{"dataType":"nestedObjectLiteral","nestedProperties":{},"additionalProperties":{"dataType":"double"},"required":true}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Omit_ApiKey.uid-or-createdAt-or-updatedAt-or-apiKey_": {
@@ -2722,6 +2719,38 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'giveVoucherToUser',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/vouchers/apikey/give',
+            authenticateMiddleware([{"api_key_rewards":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(VouchersController)),
+            ...(fetchMiddlewares<RequestHandler>(VouchersController.prototype.giveVoucherWithApiKey)),
+
+            async function VouchersController_giveVoucherWithApiKey(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"amount":{"dataType":"double","required":true},"assetId":{"dataType":"string","required":true},"email":{"dataType":"string","required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new VouchersController();
+
+              await templateService.apiHandler({
+                methodName: 'giveVoucherWithApiKey',
                 controller,
                 response,
                 next,

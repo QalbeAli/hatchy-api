@@ -64,6 +64,36 @@ export class VouchersController extends Controller {
     }
   }
 
+  @Security("api_key_rewards")
+  @Post("apikey/give")
+  public async giveVoucherWithApiKey(
+    @Request() request: any,
+    @Body() body: {
+      email: string,
+      assetId: string,
+      amount: number,
+    },
+  ): Promise<MessageResponse> {
+    if (!isEmail(body.email)) {
+      throw new BadRequestError('Invalid email');
+    }
+    if (body.amount <= 0) {
+      throw new BadRequestError('Amount must be greater than 0');
+    }
+
+    const voucherService = new VouchersService();
+    await voucherService.giveVoucherWithApiKey(
+      request.headers['x-api-key'],
+      body.email,
+      body.assetId,
+      body.amount,
+    );
+    return {
+      message: 'Voucher given',
+    }
+  }
+
+
   @Security("jwt")
   @Post("transfer")
   public async transferVouchers(

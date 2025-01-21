@@ -431,12 +431,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-16T21:48:45.119Z"
+						"default": "2025-01-21T01:09:05.243Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-16T21:48:45.120Z"
+						"default": "2025-01-21T01:09:05.243Z"
 					},
 					"name": {
 						"type": "string"
@@ -592,12 +592,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-16T21:48:45.127Z"
+						"default": "2025-01-21T01:09:05.251Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-16T21:48:45.127Z"
+						"default": "2025-01-21T01:09:05.251Z"
 					},
 					"name": {
 						"type": "string"
@@ -903,12 +903,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-16T21:48:45.135Z"
+						"default": "2025-01-21T01:09:05.267Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-16T21:48:45.135Z"
+						"default": "2025-01-21T01:09:05.267Z"
 					},
 					"name": {
 						"type": "string"
@@ -1244,21 +1244,13 @@
 					"appId": {
 						"type": "string"
 					},
-					"eggsLimit": {
-						"type": "number",
-						"format": "double"
-					},
-					"tokenLimit": {
-						"type": "number",
-						"format": "double"
-					},
-					"commonChestLimit": {
-						"type": "number",
-						"format": "double"
-					},
-					"premiumChestLimit": {
-						"type": "number",
-						"format": "double"
+					"balance": {
+						"properties": {},
+						"additionalProperties": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "object"
 					}
 				},
 				"required": [
@@ -1267,7 +1259,8 @@
 					"apiKey",
 					"createdAt",
 					"updatedAt",
-					"permissions"
+					"permissions",
+					"balance"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -1286,26 +1279,19 @@
 					"appId": {
 						"type": "string"
 					},
-					"eggsLimit": {
-						"type": "number",
-						"format": "double"
-					},
-					"tokenLimit": {
-						"type": "number",
-						"format": "double"
-					},
-					"commonChestLimit": {
-						"type": "number",
-						"format": "double"
-					},
-					"premiumChestLimit": {
-						"type": "number",
-						"format": "double"
+					"balance": {
+						"properties": {},
+						"additionalProperties": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "object"
 					}
 				},
 				"required": [
 					"name",
-					"permissions"
+					"permissions",
+					"balance"
 				],
 				"type": "object",
 				"description": "From T, pick a set of properties whose keys are in the union K"
@@ -4458,6 +4444,59 @@
 									"overrideTokenId": {
 										"type": "string"
 									},
+									"amount": {
+										"type": "number",
+										"format": "double"
+									},
+									"assetId": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"amount",
+									"assetId",
+									"email"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/vouchers/apikey/give": {
+			"post": {
+				"operationId": "GiveVoucherWithApiKey",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vouchers"
+				],
+				"security": [
+					{
+						"api_key_rewards": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
 									"amount": {
 										"type": "number",
 										"format": "double"
