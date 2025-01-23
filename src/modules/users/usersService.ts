@@ -17,6 +17,14 @@ export class UsersService {
   private gameSavesCollection = admin.firestore().collection('game-saves');
   private vouchersCollection = admin.firestore().collection('vouchers');
 
+  public async getUserByLinkedWallet(address: string): Promise<User> {
+    const wallet = await this.walletUsersCollection.doc(address).get();
+    if (!wallet.exists) {
+      throw new NotFoundError("Wallet not found");
+    }
+    return await this.get(wallet.data()?.userId);
+  }
+
   public async getUserByEmail(email: string): Promise<User> {
     const user = await this.collection.where('email', '==', email).get();
     if (user.docs.length === 0) {

@@ -220,8 +220,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-21T01:09:05.243Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-21T01:09:05.243Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-23T04:29:56.199Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-23T04:29:56.199Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -281,8 +281,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-21T01:09:05.251Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-21T01:09:05.251Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-23T04:29:56.207Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-23T04:29:56.207Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -375,8 +375,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-21T01:09:05.267Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-21T01:09:05.267Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-23T04:29:56.216Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-23T04:29:56.216Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -540,6 +540,15 @@ const models: TsoaRoute.Models = {
             "signature": {"dataType":"string","required":true},
             "tokenId": {"dataType":"string"},
             "eggType": {"dataType":"double"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "DepositSignature": {
+        "dataType": "refObject",
+        "properties": {
+            "payload": {"dataType":"array","array":{"dataType":"any"},"required":true},
+            "signature": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -2847,6 +2856,66 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'deleteVoucher',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/vouchers/deposit/sync',
+            ...(fetchMiddlewares<RequestHandler>(VouchersController)),
+            ...(fetchMiddlewares<RequestHandler>(VouchersController.prototype.syncDepositedAssets)),
+
+            async function VouchersController_syncDepositedAssets(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"depositId":{"dataType":"double","required":true},"receiver":{"dataType":"string","required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new VouchersController();
+
+              await templateService.apiHandler({
+                methodName: 'syncDepositedAssets',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/vouchers/deposit/signature',
+            ...(fetchMiddlewares<RequestHandler>(VouchersController)),
+            ...(fetchMiddlewares<RequestHandler>(VouchersController.prototype.getDepositSignature)),
+
+            async function VouchersController_getDepositSignature(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"amount":{"dataType":"double"},"amounts":{"dataType":"array","array":{"dataType":"double"}},"tokenIds":{"dataType":"array","array":{"dataType":"double"}},"assetAddress":{"dataType":"string","required":true},"assetType":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":["ERC20"]},{"dataType":"enum","enums":["ERC1155"]},{"dataType":"enum","enums":["ERC721"]}],"required":true},"receiver":{"dataType":"string","required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new VouchersController();
+
+              await templateService.apiHandler({
+                methodName: 'getDepositSignature',
                 controller,
                 response,
                 next,

@@ -14,6 +14,7 @@ import hatchyReward from "./HatchyReward.json";
 import hatchyRewardDealer from "./HatchyRewardDealer.json";
 import hatchyLPStakeABI from "./HatchyLPStake.json";
 import hatchySalary from "./HatchySalary.json";
+import voucherConverter from "./VoucherConverter.json";
 
 export default {
   mastersItems: MastersItems.abi,
@@ -32,5 +33,6 @@ export default {
   hatchyReward: hatchyReward.abi,
   hatchyRewardDealer: hatchyRewardDealer.abi,
   hatchyLPStake: hatchyLPStakeABI.abi,
-  hatchySalary: hatchySalary.abi
+  hatchySalary: hatchySalary.abi,
+  voucherConverter: voucherConverter.abi,
 };

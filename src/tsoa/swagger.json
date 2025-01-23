@@ -431,12 +431,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-21T01:09:05.243Z"
+						"default": "2025-01-23T04:29:56.199Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-21T01:09:05.243Z"
+						"default": "2025-01-23T04:29:56.199Z"
 					},
 					"name": {
 						"type": "string"
@@ -592,12 +592,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-21T01:09:05.251Z"
+						"default": "2025-01-23T04:29:56.207Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-21T01:09:05.251Z"
+						"default": "2025-01-23T04:29:56.207Z"
 					},
 					"name": {
 						"type": "string"
@@ -903,12 +903,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-21T01:09:05.267Z"
+						"default": "2025-01-23T04:29:56.216Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-21T01:09:05.267Z"
+						"default": "2025-01-23T04:29:56.216Z"
 					},
 					"name": {
 						"type": "string"
@@ -1430,6 +1430,23 @@
 					"amount",
 					"claimableUntil",
 					"voucherId",
+					"signature"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"DepositSignature": {
+				"properties": {
+					"payload": {
+						"items": {},
+						"type": "array"
+					},
+					"signature": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"payload",
 					"signature"
 				],
 				"type": "object",
@@ -4660,6 +4677,130 @@
 						}
 					}
 				]
+			}
+		},
+		"/vouchers/deposit/sync": {
+			"post": {
+				"operationId": "SyncDepositedAssets",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vouchers"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"depositId": {
+										"type": "number",
+										"format": "double"
+									},
+									"receiver": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"depositId",
+									"receiver"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/vouchers/deposit/signature": {
+			"post": {
+				"operationId": "GetDepositSignature",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DepositSignature"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vouchers"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"amount": {
+										"type": "number",
+										"format": "double"
+									},
+									"amounts": {
+										"items": {
+											"type": "number",
+											"format": "double"
+										},
+										"type": "array"
+									},
+									"tokenIds": {
+										"items": {
+											"type": "number",
+											"format": "double"
+										},
+										"type": "array"
+									},
+									"assetAddress": {
+										"type": "string"
+									},
+									"assetType": {
+										"type": "string",
+										"enum": [
+											"ERC20",
+											"ERC1155",
+											"ERC721"
+										]
+									},
+									"receiver": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"assetAddress",
+									"assetType",
+									"receiver"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
 			}
 		}
 	},

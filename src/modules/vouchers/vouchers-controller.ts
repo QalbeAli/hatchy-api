@@ -19,6 +19,7 @@ import { BadRequestError } from "../../errors/bad-request-error";
 import { BigNumber, ethers } from "ethers";
 import { MessageResponse } from "../../responses/message-response";
 import { isEmail } from "../../utils";
+import { DepositSignature } from "./deposit-signature";
 
 @Route("vouchers")
 @Tags("Vouchers")
@@ -150,5 +151,68 @@ export class VouchersController extends Controller {
     return {
       message,
     };
+  }
+
+  @Post("deposit/sync")
+  public async syncDepositedAssets(
+    @Body() body: {
+      receiver: string,
+      depositId: number
+    }
+  ) {
+    if (!isAddress(body.receiver)) {
+      throw new BadRequestError('Invalid address');
+    }
+    const voucherService = new VouchersService();
+    await voucherService.syncDepositedAssets(body.receiver, body.depositId);
+    return {
+      message: 'Deposited assets synced',
+    }
+  }
+
+  @Post("deposit/signature")
+  public async getDepositSignature(
+    @Body() body: {
+      receiver: string,
+      assetType: 'ERC20' | 'ERC1155' | 'ERC721',
+      assetAddress: string,
+      tokenIds?: number[]
+      amounts?: number[]; // only for erc1155
+      amount?: number; // only for erc20
+    },
+  ): Promise<DepositSignature> {
+    if (!isAddress(body.receiver)) {
+      throw new BadRequestError('Invalid address');
+    }
+
+    if (body.assetType === 'ERC20') {
+      if (!body.amount || body.amount <= 0) {
+        throw new BadRequestError('Invalid amount');
+      }
+    } else if (body.assetType === 'ERC1155') {
+      if (!body.amounts || body.amounts.length !== body.tokenIds.length) {
+        throw new BadRequestError('Invalid amounts');
+      }
+      if (body.amounts.some(amount => amount <= 0)) {
+        throw new BadRequestError('Invalid amounts');
+      }
+    } else if (body.assetType === 'ERC721') {
+      if (body.tokenIds.length !== 1) {
+        throw new BadRequestError('Invalid tokenIds');
+      }
+    } else {
+      throw new BadRequestError('Invalid assetType');
+    }
+
+    const voucherService = new VouchersService();
+    const depositSignature = await voucherService.getDepositSignature({
+      receiver: body.receiver,
+      assetType: body.assetType,
+      assetAddress: body.assetAddress,
+      tokenIds: body.tokenIds,
+      amounts: body.amounts,
+      amount: body.amount,
+    });
+    return depositSignature;
   }
 }

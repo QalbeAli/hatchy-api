@@ -4,6 +4,14 @@ import { CreateAssetParams } from "./create-asset-params";
 
 export class AssetsService {
 
+  public async getAssetByContract(address: string): Promise<Asset> {
+    const snapshot = await admin.firestore().collection('assets').where('contract', '==', address).get();
+    if (snapshot.empty || snapshot.docs.length === 0) {
+      throw new Error('Asset not found');
+    }
+    return snapshot.docs[0].data() as Asset;
+  }
+
   public async getAssets(): Promise<Asset[]> {
     const snapshot = await admin.firestore().collection('assets').get();
     return snapshot.docs.map(doc => doc.data() as Asset);

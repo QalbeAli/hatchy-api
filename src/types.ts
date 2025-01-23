@@ -35,7 +35,9 @@ export type ContractName =
   | "joepegsTickets"
   | "hatchyLPStake"
   | "hatchyLPPair"
-  | "hatchySalary";
+  | "hatchySalary"
+  | "voucherConverter"
+  ;
 
 export type NetworkData = {
   name: Network;
