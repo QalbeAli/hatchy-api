@@ -5,6 +5,11 @@ export function transformTimestampMiddleware(req: Request, response: Response, n
   const originalSend = response.send;
 
   response.send = function (body: any) {
+    // validate if body is a valid JSON
+    const contentType = response.get('Content-Type');
+    if (!contentType || !contentType.includes('application/json')) {
+      return originalSend.call(this, body);
+    }
     if (body) {
       body = JSON.parse(body);
       body = convertTimestampsToStrings(body);
