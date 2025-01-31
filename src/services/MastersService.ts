@@ -229,9 +229,12 @@ export class MastersService {
         throw new Error("No tickets available to mint avatar");
       }
       const currency = ethers.constants.AddressZero;
+      const values = [receiver, currency, 0, true, traits, nonce];
+      console.log(values);
+
       const hash = ethers.utils.solidityKeccak256(
         ["address", "address", "uint256", "bool", "uint256[]", "uint256"],
-        [receiver, currency, 0, true, traits, nonce]
+        values
       );
       const signature = await signer.signMessage(ethers.utils.arrayify(hash));
       return {

@@ -138,7 +138,11 @@ export class ItemsController extends Controller {
     }
     const itemsService = new ItemsService(chainId || DefaultChainId);
     const balancePromises = user.wallets.map(w => itemsService.getItemsBalance(w.address));
+    console.log(user.wallets);
+    console.log(balancePromises);
     const itemsBalanceArray = await Promise.all(balancePromises);
+    console.log(itemsBalanceArray);
+
     if (!includeSubnet) return mergeItems(itemsBalanceArray.flat());
 
     const itemsServiceSubnet = new ItemsService(subnetChainId);

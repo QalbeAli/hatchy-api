@@ -4,9 +4,6 @@ import { ContractName, NetworkData } from "../../types";
 import ABI from "./ABI";
 export const DefaultChainId = config.NODE_ENV == "dev" ? 43113 : 43114;
 
-import { createWalletClient, custom, http } from 'viem'
-import { privateKeyToAccount } from 'viem/accounts'
-
 const prodNetworks: Map<number, NetworkData> = new Map([
   [
     43114,
