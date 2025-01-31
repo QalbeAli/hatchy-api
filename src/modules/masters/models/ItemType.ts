@@ -5,5 +5,5 @@ export class ItemType {
   id!: number;
   name!: string;
   layers: ItemLayer[]
-  categories: ItemCategory[]
+  categories?: ItemCategory[]
 }

@@ -5,5 +5,5 @@ export class ItemLayer {
   name!: string;
   order!: number;
   layer!: string;
-  type: ItemType;
+  type: number;
 }

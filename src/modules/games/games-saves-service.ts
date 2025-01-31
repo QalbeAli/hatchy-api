@@ -58,8 +58,18 @@ export class GamesSavesService {
     return data as GameSave;
   }
 
-  public async getAllUserGameSaves(userId: string): Promise<GameSave[]> {
-    const querySnapshot = await admin.firestore().collection('game-saves').where('userId', '==', userId).get();
+  public async getAllUserGameSaves(userId: string, gameId?: string): Promise<GameSave[]> {
+    let querySnapshot;
+    if (gameId) {
+      querySnapshot = await admin.firestore().collection('game-saves')
+        .where('userId', '==', userId)
+        .where('gameId', '==', gameId)
+        .get();
+    } else {
+      querySnapshot = await admin.firestore().collection('game-saves')
+        .where('userId', '==', userId)
+        .get();
+    }
     return querySnapshot.docs.map((doc) => {
       return {
         ...doc.data(),

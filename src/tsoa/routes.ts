@@ -220,8 +220,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-31T05:00:35.181Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-31T05:00:35.182Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-31T23:08:28.805Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-31T23:08:28.805Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -244,17 +244,6 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "ItemType": {
-        "dataType": "refObject",
-        "properties": {
-            "id": {"dataType":"double","required":true},
-            "name": {"dataType":"string","required":true},
-            "layers": {"dataType":"array","array":{"dataType":"refObject","ref":"ItemLayer"},"required":true},
-            "categories": {"dataType":"array","array":{"dataType":"refObject","ref":"ItemCategory"},"required":true},
-        },
-        "additionalProperties": false,
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ItemLayer": {
         "dataType": "refObject",
         "properties": {
@@ -262,7 +251,7 @@ const models: TsoaRoute.Models = {
             "name": {"dataType":"string","required":true},
             "order": {"dataType":"double","required":true},
             "layer": {"dataType":"string","required":true},
-            "type": {"ref":"ItemType","required":true},
+            "type": {"dataType":"double","required":true},
         },
         "additionalProperties": false,
     },
@@ -277,12 +266,23 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ItemType": {
+        "dataType": "refObject",
+        "properties": {
+            "id": {"dataType":"double","required":true},
+            "name": {"dataType":"string","required":true},
+            "layers": {"dataType":"array","array":{"dataType":"refObject","ref":"ItemLayer"},"required":true},
+            "categories": {"dataType":"array","array":{"dataType":"refObject","ref":"ItemCategory"}},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "MastersItem": {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-31T05:00:35.189Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-31T05:00:35.189Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-31T23:08:28.813Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-31T23:08:28.813Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -375,8 +375,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-31T05:00:35.198Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-31T05:00:35.198Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-31T23:08:28.822Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-31T23:08:28.822Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -1099,6 +1099,7 @@ export function RegisterRoutes(app: Router) {
             async function GameSavesController_getAllGameSaves(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    gameId: {"in":"query","name":"gameId","dataType":"string"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

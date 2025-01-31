@@ -6,6 +6,7 @@ import {
   Path,
   Post,
   Put,
+  Query,
   Request,
   Route,
   Security,
@@ -101,9 +102,10 @@ export class GameSavesController extends Controller {
   @Get("saves")
   public async getAllGameSaves(
     @Request() request: any,
+    @Query() gameId?: string,
   ): Promise<GameSave[]> {
     const gameSavesService = new GamesSavesService();
-    const gameSaves = await gameSavesService.getAllUserGameSaves(request.user.uid);
+    const gameSaves = await gameSavesService.getAllUserGameSaves(request.user.uid, gameId);
     return gameSaves;
   }
 }

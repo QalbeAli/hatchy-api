@@ -431,12 +431,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-31T05:00:35.181Z"
+						"default": "2025-01-31T23:08:28.805Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-31T05:00:35.182Z"
+						"default": "2025-01-31T23:08:28.805Z"
 					},
 					"name": {
 						"type": "string"
@@ -501,37 +501,6 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"ItemType": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"layers": {
-						"items": {
-							"$ref": "#/components/schemas/ItemLayer"
-						},
-						"type": "array"
-					},
-					"categories": {
-						"items": {
-							"$ref": "#/components/schemas/ItemCategory"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"id",
-					"name",
-					"layers",
-					"categories"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"ItemLayer": {
 				"properties": {
 					"id": {
@@ -549,7 +518,8 @@
 						"type": "string"
 					},
 					"type": {
-						"$ref": "#/components/schemas/ItemType"
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
@@ -583,6 +553,36 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"ItemType": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"layers": {
+						"items": {
+							"$ref": "#/components/schemas/ItemLayer"
+						},
+						"type": "array"
+					},
+					"categories": {
+						"items": {
+							"$ref": "#/components/schemas/ItemCategory"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"layers"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"MastersItem": {
 				"properties": {
 					"id": {
@@ -592,12 +592,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-31T05:00:35.189Z"
+						"default": "2025-01-31T23:08:28.813Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-31T05:00:35.189Z"
+						"default": "2025-01-31T23:08:28.813Z"
 					},
 					"name": {
 						"type": "string"
@@ -903,12 +903,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-31T05:00:35.198Z"
+						"default": "2025-01-31T23:08:28.822Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-31T05:00:35.198Z"
+						"default": "2025-01-31T23:08:28.822Z"
 					},
 					"name": {
 						"type": "string"
@@ -2180,7 +2180,16 @@
 						"jwt": []
 					}
 				],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "gameId",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/games": {
