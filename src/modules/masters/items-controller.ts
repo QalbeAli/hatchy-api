@@ -132,21 +132,20 @@ export class ItemsController extends Controller {
     @Query() chainId?: number,
     @Query() includeSubnet?: boolean,
   ): Promise<MastersItemBalance[]> {
-    const user = await new UsersService().get(request.user.uid);
-    if (!user.wallets || user.wallets.length === 0) {
+    const linkedWallets = await new UsersService().getLinkedWallets(request.user.uid);
+    if (!linkedWallets || linkedWallets.length === 0) {
       throw new NotFoundError("No linked wallet found for the user");
     }
     const itemsService = new ItemsService(chainId || DefaultChainId);
-    const balancePromises = user.wallets.map(w => itemsService.getItemsBalance(w.address));
-    console.log(user.wallets);
-    console.log(balancePromises);
+    const balancePromises = linkedWallets.map(w => itemsService.getItemsBalance(w.address));
+    console.log(linkedWallets);
     const itemsBalanceArray = await Promise.all(balancePromises);
     console.log(itemsBalanceArray);
 
     if (!includeSubnet) return mergeItems(itemsBalanceArray.flat());
 
     const itemsServiceSubnet = new ItemsService(subnetChainId);
-    const balancePromisesSubnet = user.wallets.map(w => itemsServiceSubnet.getItemsBalance(w.address));
+    const balancePromisesSubnet = linkedWallets.map(w => itemsServiceSubnet.getItemsBalance(w.address));
     const itemsBalanceArraySubnet = await Promise.all(balancePromisesSubnet);
     return mergeItems(itemsBalanceArray.flat().concat(itemsBalanceArraySubnet.flat()));
   }
