@@ -3,7 +3,7 @@ import { Timestamp } from "firebase-admin/firestore";
 import { Game } from "../games/game";
 import { User } from "../users/user";
 import { Score } from "./score";
-import { Rank } from "./rank";
+import { RankItem } from "./rank";
 
 export class LeaderboardService {
   public async addScore(game: Game, user: User, score: number): Promise<Score> {
@@ -87,7 +87,7 @@ export class LeaderboardService {
     };
   }
 
-  public async updateRank(game: Game, user: User, rank: number): Promise<Rank> {
+  public async updateRank(game: Game, user: User, rank: number): Promise<RankItem> {
     const collection = admin.firestore().collection('ranks');
     const querySnapshot = await collection
       .where('gameId', '==', game.uid)
@@ -105,7 +105,7 @@ export class LeaderboardService {
       });
 
       const rankDoc = await existingRankDoc.ref.get();
-      return rankDoc.data() as Rank;
+      return rankDoc.data() as RankItem;
     } else {
       const collectionDoc = collection.doc();
       const userRank = {
@@ -118,11 +118,11 @@ export class LeaderboardService {
       };
       await collectionDoc.set(userRank);
       const userRankDoc = await collectionDoc.get();
-      return userRankDoc.data() as Rank;
+      return userRankDoc.data() as RankItem;
     }
   }
 
-  public async getRankLeaderboard(gameId: string, limit?: number): Promise<Rank[]> {
+  public async getRankLeaderboard(gameId: string, limit?: number): Promise<RankItem[]> {
     const querySnapshot = await admin.firestore().collection('ranks')
       .where('gameId', '==', gameId)
       .orderBy('rank', 'desc')
@@ -138,7 +138,7 @@ export class LeaderboardService {
     }));
   }
 
-  public async getUserRank(gameId: string, userId: string): Promise<Rank> {
+  public async getUserRank(gameId: string, userId: string): Promise<RankItem> {
     const querySnapshot = await admin.firestore().collection('ranks')
       .where('gameId', '==', gameId)
       .where('userId', '==', userId)

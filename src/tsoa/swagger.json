@@ -287,7 +287,7 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"Rank": {
+			"RankItem": {
 				"properties": {
 					"gameId": {
 						"type": "string"
@@ -431,12 +431,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-23T04:29:56.199Z"
+						"default": "2025-01-31T04:58:31.883Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-23T04:29:56.199Z"
+						"default": "2025-01-31T04:58:31.884Z"
 					},
 					"name": {
 						"type": "string"
@@ -592,12 +592,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-23T04:29:56.207Z"
+						"default": "2025-01-31T04:58:31.892Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-23T04:29:56.207Z"
+						"default": "2025-01-31T04:58:31.892Z"
 					},
 					"name": {
 						"type": "string"
@@ -903,12 +903,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-23T04:29:56.216Z"
+						"default": "2025-01-31T04:58:31.901Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-01-23T04:29:56.216Z"
+						"default": "2025-01-31T04:58:31.901Z"
 					},
 					"name": {
 						"type": "string"
@@ -1430,6 +1430,61 @@
 					"amount",
 					"claimableUntil",
 					"voucherId",
+					"signature"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"BatchVoucherClaimSignature": {
+				"properties": {
+					"rewardContractType": {
+						"type": "number",
+						"format": "double"
+					},
+					"rewardHolderAddress": {
+						"type": "string"
+					},
+					"rewardContract": {
+						"type": "string"
+					},
+					"receiver": {
+						"type": "string"
+					},
+					"tokenIds": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"amounts": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array"
+					},
+					"claimableUntil": {
+						"type": "number",
+						"format": "double"
+					},
+					"voucherIds": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"signature": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"rewardContractType",
+					"rewardHolderAddress",
+					"rewardContract",
+					"receiver",
+					"amounts",
+					"claimableUntil",
+					"voucherIds",
 					"signature"
 				],
 				"type": "object",
@@ -2326,7 +2381,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Rank"
+									"$ref": "#/components/schemas/RankItem"
 								}
 							}
 						}
@@ -2380,20 +2435,7 @@
 							"application/json": {
 								"schema": {
 									"items": {
-										"properties": {
-											"rank": {
-												"type": "number",
-												"format": "double"
-											},
-											"userId": {
-												"type": "string"
-											}
-										},
-										"required": [
-											"rank",
-											"userId"
-										],
-										"type": "object"
+										"$ref": "#/components/schemas/RankItem"
 									},
 									"type": "array"
 								}
@@ -2435,7 +2477,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Rank"
+									"$ref": "#/components/schemas/RankItem"
 								}
 							}
 						}
@@ -4644,9 +4686,60 @@
 				}
 			}
 		},
-		"/vouchers/{voucherId}": {
+		"/vouchers/claim/batch": {
+			"post": {
+				"operationId": "GetBatchVoucherClaimSignature",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/BatchVoucherClaimSignature"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vouchers"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"address": {
+										"type": "string"
+									},
+									"voucherIds": {
+										"items": {
+											"type": "string"
+										},
+										"type": "array"
+									}
+								},
+								"required": [
+									"address",
+									"voucherIds"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/vouchers/batch": {
 			"delete": {
-				"operationId": "DeleteVoucher",
+				"operationId": "DeleteBatchVouchers",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -4667,16 +4760,28 @@
 						"jwt": []
 					}
 				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "voucherId",
-						"required": true,
-						"schema": {
-							"type": "string"
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"voucherIds": {
+										"items": {
+											"type": "string"
+										},
+										"type": "array"
+									}
+								},
+								"required": [
+									"voucherIds"
+								],
+								"type": "object"
+							}
 						}
 					}
-				]
+				}
 			}
 		},
 		"/vouchers/deposit/sync": {

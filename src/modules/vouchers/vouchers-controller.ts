@@ -20,6 +20,7 @@ import { BigNumber, ethers } from "ethers";
 import { MessageResponse } from "../../responses/message-response";
 import { isEmail } from "../../utils";
 import { DepositSignature } from "./deposit-signature";
+import { BatchVoucherClaimSignature } from "./batch-voucher-claim-signature";
 
 @Route("vouchers")
 @Tags("Vouchers")
@@ -94,7 +95,6 @@ export class VouchersController extends Controller {
     }
   }
 
-
   @Security("jwt")
   @Post("transfer")
   public async transferVouchers(
@@ -137,17 +137,43 @@ export class VouchersController extends Controller {
   }
 
   @Security("jwt")
-  @Delete("{voucherId}")
-  public async deleteVoucher(
+  @Post("claim/batch")
+  public async getBatchVoucherClaimSignature(
     @Request() request: any,
-    @Path() voucherId: string,
-  ): Promise<MessageResponse> {
+    @Body() body: {
+      voucherIds: string[],
+      address: string,
+    },
+  ): Promise<BatchVoucherClaimSignature> {
+    if (!isAddress(body.address)) {
+      throw new BadRequestError('Invalid address');
+    }
     const voucherService = new VouchersService();
-    const voucher = await voucherService.getVoucherById(voucherId);
-    if (voucher.userId !== request.user.uid) {
+    const vouchers = await voucherService.getVouchersByIds(body.voucherIds);
+    if (vouchers.some(v => v.userId !== request.user.uid)) {
       throw new UnauthorizedError();
     }
-    const message = await voucherService.deleteVoucher(voucher);
+    if (vouchers.some(v => v.receiver && v.receiver !== body.address)) {
+      throw new BadRequestError('Address is not receiver');
+    }
+    const claimSignatureData = await voucherService.getBatchVoucherClaimSignature(vouchers, body.address);
+    return claimSignatureData;
+  }
+
+  @Security("jwt")
+  @Delete("batch")
+  public async deleteBatchVouchers(
+    @Request() request: any,
+    @Body() body: {
+      voucherIds: string[],
+    },
+  ): Promise<MessageResponse> {
+    const voucherService = new VouchersService();
+    const vouchers = await voucherService.getVouchersByIds(body.voucherIds);
+    if (vouchers.some(v => v.userId !== request.user.uid)) {
+      throw new UnauthorizedError();
+    }
+    const message = await voucherService.deleteBatchVouchers(vouchers);
     return {
       message,
     };

@@ -15,7 +15,7 @@ import { LeaderboardService } from "./leaderboard-service";
 import { UsersService } from "../users/usersService";
 import { GamesService } from "../games/games-service";
 import { Score } from "./score";
-import { Rank } from "./rank";
+import { RankItem } from "./rank";
 // import { transformTimestampMiddleware } from "../../middlewares/transform-timestamp-middleware";
 
 @Route("leaderboard")
@@ -73,7 +73,7 @@ export class LeaderboardController extends Controller {
       rank: number,
       userId: string,
     }
-  ): Promise<Rank> {
+  ): Promise<RankItem> {
     const userService = new UsersService();
     const leaderboardService = new LeaderboardService();
     const gameService = new GamesService();
@@ -91,7 +91,7 @@ export class LeaderboardController extends Controller {
   public async getRankLeaderboard(
     @Path() appId: string,
     @Query() limit?: number
-  ): Promise<{ userId: string, rank: number }[]> {
+  ): Promise<RankItem[]> {
     const leaderboardService = new LeaderboardService();
     return leaderboardService.getRankLeaderboard(appId, limit);
   }
@@ -101,7 +101,7 @@ export class LeaderboardController extends Controller {
   public async getUserRank(
     @Request() request: any,
     @Path() gameId: string
-  ): Promise<Rank> {
+  ): Promise<RankItem> {
     const leaderboardService = new LeaderboardService();
     return leaderboardService.getUserRank(gameId, request.user.uid);
   }

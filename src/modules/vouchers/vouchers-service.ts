@@ -12,6 +12,7 @@ import { ApiKeysService } from "../api-keys/api-keys-service";
 import { DepositSignature } from "./deposit-signature";
 import { AssetsService } from "../assets/assets-service";
 import { ItemsService } from "../masters/services/ItemsService";
+import { BatchVoucherClaimSignature } from "./batch-voucher-claim-signature";
 
 interface ConverterPayload {
   receiver: string
@@ -53,7 +54,7 @@ export class VouchersService {
     const totalDepositsProcessed = (await this.statsCollection.doc('vouchers').get()).data()?.totalDeposits || 0;
     const totalDeposits = await voucherConverter.totalConverts();
 
-    if (BigNumber.from(totalDepositsProcessed).gte(totalDeposits)) {
+    if (BigInt(totalDepositsProcessed) >= (totalDeposits)) {
       throw new BadRequestError('Deposit already claimed');
     }
 
@@ -65,15 +66,15 @@ export class VouchersService {
     const mainAsset = await this.assetsService.getAssetByContract(assetAddress);
     let itemsData = null;
     if (mainAsset.name === 'Masters Items') {
-      itemsData = await new ItemsService().getItemsByIds(convertedAssets.tokenIds.map(t => t.toNumber()));
+      itemsData = await new ItemsService().getItemsByIds(convertedAssets.tokenIds.map(t => Number(t)));
     }
     const batch = admin.firestore().batch();
     const depositedAssets = convertedAssets.tokenIds.map((tokenId, index) => {
       return {
         contract: convertedAssets.assetAddress,
         tokenId: tokenId.toString(),
-        amount: convertedAssets.amounts[index].toNumber(),
-        data: itemsData ? itemsData.find(i => i.id === tokenId.toNumber()) : null
+        amount: Number(convertedAssets.amounts[index]),
+        data: itemsData ? itemsData.find(i => i.id === Number(tokenId)) : null
       };
     });
     const vouchers = await this.getVouchersOfUser(user.uid);
@@ -232,7 +233,10 @@ export class VouchersService {
     };
   }
 
-  public async getVoucherClaimSignature(voucher: Voucher, address: string): Promise<VoucherClaimSignature> {
+  public async getVoucherClaimSignature(
+    voucher: Voucher,
+    address: string
+  ): Promise<VoucherClaimSignature> {
     await admin.firestore().collection('vouchers').doc(voucher.uid).update({ receiver: address });
 
     if (voucher.contract === getAddress('eggsGen2', this.chainId)) {
@@ -274,6 +278,42 @@ export class VouchersService {
         signature
       }
     }
+  }
+
+  public async getVouchersByIds(voucherIds: string[]): Promise<Voucher[]> {
+    return await Promise.all(voucherIds.map(id => this.getVoucherById(id)));
+  }
+
+  public async getBatchVoucherClaimSignature(
+    vouchers: Voucher[],
+    address: string
+  ): Promise<BatchVoucherClaimSignature> {
+    // set receiver on all vouchers
+    const batch = admin.firestore().batch();
+    vouchers.forEach(voucher => {
+      const voucherRef = this.vouchersCollection.doc(voucher.uid);
+      batch.update(voucherRef, { receiver: address });
+    });
+    await batch.commit();
+
+    const signature = await this.getBatchSignature(vouchers, address);
+    const areAllClaimed = await Promise.all(vouchers.map(v => this.isRewardClaimed(signature, v)));
+    if (areAllClaimed.some(c => c)) {
+      throw new BadRequestError('Reward already claimed');
+    }
+
+    const sampleVoucher = vouchers[0];
+    return {
+      rewardHolderAddress: sampleVoucher.holder || ethers.constants.AddressZero,
+      rewardContractType: contractTypeToUint8(sampleVoucher.contractType),
+      rewardContract: sampleVoucher.contract,
+      receiver: address,
+      tokenIds: vouchers.map(v => v.tokenId),
+      amounts: vouchers.map(v => v.amount),
+      claimableUntil: 0,
+      voucherIds: vouchers.map(v => v.blockchainId),
+      signature
+    };
   }
 
   public async transferVouchers(userId: string, voucherIds: string[], voucherAmounts: number[], receiverEmail: string): Promise<Voucher[]> {
@@ -359,6 +399,16 @@ export class VouchersService {
     return this.getVouchersOfUser(userId);
   }
 
+  public async deleteBatchVouchers(vouchers: Voucher[]): Promise<string> {
+    const batch = admin.firestore().batch();
+    vouchers.forEach(voucher => {
+      const voucherRef = this.vouchersCollection.doc(voucher.uid);
+      batch.delete(voucherRef);
+    });
+    await batch.commit();
+    return 'Vouchers deleted successfully';
+  }
+
   public async deleteVoucher(voucher: Voucher): Promise<string> {
     const deleteReward = await this.shouldDeleteReward(voucher);
     if (deleteReward) {
@@ -421,6 +471,7 @@ export class VouchersService {
         amount,
         image: asset.image,
         tokenId: auxTokenId,
+        // blockchainId: generateSecureNonceBigInt(),
         blockchainId: ethers.BigNumber.from(ethers.utils.randomBytes(32)).toString(),
         category: asset.category,
         receiver: null,
@@ -434,7 +485,7 @@ export class VouchersService {
 
   shouldDeleteReward = async (voucher: Voucher) => {
     const rewardDealerContract = getContract('hatchyRewardDealer', this.chainId);
-    const isClaimed: boolean = await rewardDealerContract.UsedVoucherIds(BigNumber.from(voucher.blockchainId));
+    const isClaimed: boolean = await rewardDealerContract.UsedVoucherIds(BigInt(voucher.blockchainId));
     return isClaimed;
   }
 
@@ -451,7 +502,7 @@ export class VouchersService {
     const signer = getSigner(this.chainId);
     const hash = ethers.utils.solidityKeccak256(
       ['address', 'uint256', 'uint256', 'uint256', 'uint256'],
-      [address, reward.tokenId, reward.amount, 0, reward.blockchainId]);
+      [address, Number(reward.tokenId), reward.amount, 0, BigNumber.from(reward.blockchainId)]);
     const signature = await signer.signMessage(ethers.utils.arrayify(hash));
     return signature;
   }
@@ -462,10 +513,38 @@ export class VouchersService {
       ethers.utils.parseEther(voucher.amount.toString()) :
       voucher.amount;
 
+    const values = [
+      voucher.holder || ethers.constants.AddressZero, contractTypeToUint8(voucher.contractType), voucher.contract, address,
+      voucher.tokenId || 0, amount, 0, BigNumber.from(voucher.blockchainId)
+    ]
+
     const hash = ethers.utils.solidityKeccak256(
       ['address', 'uint8', 'address', 'address', 'uint256', 'uint256', 'uint256', 'uint256'],
-      [voucher.holder || ethers.constants.AddressZero, contractTypeToUint8(voucher.contractType), voucher.contract, address,
-      voucher.tokenId || 0, amount, 0, BigNumber.from(voucher.blockchainId)]);
+      values
+    );
+    const signature = await signer.signMessage(ethers.utils.arrayify(hash));
+    return signature;
+  }
+
+  getBatchSignature = async (
+    vouchers: Voucher[],
+    address: string
+  ) => {
+    const sampleVoucher = vouchers[0];
+    const signer = getSigner(this.chainId);
+    const hash = ethers.utils.solidityKeccak256(
+      ['address', 'uint8', 'address', 'address', 'uint256[]', 'uint256[]', 'uint256', 'uint256[]'],
+      [
+        sampleVoucher.holder || ethers.constants.AddressZero,
+        contractTypeToUint8(sampleVoucher.contractType),
+        sampleVoucher.contract,
+        address,
+        vouchers.map(v => BigInt(v.tokenId)),
+        vouchers.map(v => BigInt(v.amount)),
+        0,
+        vouchers.map(v => BigInt(v.blockchainId))
+      ]
+    );
     const signature = await signer.signMessage(ethers.utils.arrayify(hash));
     return signature;
   }

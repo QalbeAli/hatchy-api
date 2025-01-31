@@ -1,5 +1,3 @@
-import { FieldValue, Timestamp } from "firebase-admin/firestore";
-
 export interface Voucher {
   blockchainId: string;
   uid: string;

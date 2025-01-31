@@ -155,7 +155,7 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Rank": {
+    "RankItem": {
         "dataType": "refObject",
         "properties": {
             "gameId": {"dataType":"string","required":true},
@@ -220,8 +220,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-23T04:29:56.199Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-23T04:29:56.199Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-31T04:58:31.883Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-31T04:58:31.884Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -281,8 +281,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-23T04:29:56.207Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-23T04:29:56.207Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-31T04:58:31.892Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-31T04:58:31.892Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -375,8 +375,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-01-23T04:29:56.216Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-01-23T04:29:56.216Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-01-31T04:58:31.901Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-01-31T04:58:31.901Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -540,6 +540,22 @@ const models: TsoaRoute.Models = {
             "signature": {"dataType":"string","required":true},
             "tokenId": {"dataType":"string"},
             "eggType": {"dataType":"double"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "BatchVoucherClaimSignature": {
+        "dataType": "refObject",
+        "properties": {
+            "rewardContractType": {"dataType":"double","required":true},
+            "rewardHolderAddress": {"dataType":"string","required":true},
+            "rewardContract": {"dataType":"string","required":true},
+            "receiver": {"dataType":"string","required":true},
+            "tokenIds": {"dataType":"array","array":{"dataType":"string"}},
+            "amounts": {"dataType":"array","array":{"dataType":"double"},"required":true},
+            "claimableUntil": {"dataType":"double","required":true},
+            "voucherIds": {"dataType":"array","array":{"dataType":"string"},"required":true},
+            "signature": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -2835,15 +2851,15 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.delete('/vouchers/:voucherId',
+        app.post('/vouchers/claim/batch',
             authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(VouchersController)),
-            ...(fetchMiddlewares<RequestHandler>(VouchersController.prototype.deleteVoucher)),
+            ...(fetchMiddlewares<RequestHandler>(VouchersController.prototype.getBatchVoucherClaimSignature)),
 
-            async function VouchersController_deleteVoucher(request: ExRequest, response: ExResponse, next: any) {
+            async function VouchersController_getBatchVoucherClaimSignature(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
-                    voucherId: {"in":"path","name":"voucherId","required":true,"dataType":"string"},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"address":{"dataType":"string","required":true},"voucherIds":{"dataType":"array","array":{"dataType":"string"},"required":true}}},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -2855,7 +2871,39 @@ export function RegisterRoutes(app: Router) {
                 const controller = new VouchersController();
 
               await templateService.apiHandler({
-                methodName: 'deleteVoucher',
+                methodName: 'getBatchVoucherClaimSignature',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/vouchers/batch',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(VouchersController)),
+            ...(fetchMiddlewares<RequestHandler>(VouchersController.prototype.deleteBatchVouchers)),
+
+            async function VouchersController_deleteBatchVouchers(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"voucherIds":{"dataType":"array","array":{"dataType":"string"},"required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new VouchersController();
+
+              await templateService.apiHandler({
+                methodName: 'deleteBatchVouchers',
                 controller,
                 response,
                 next,
