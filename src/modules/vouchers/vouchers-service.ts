@@ -5,7 +5,7 @@ import { NotFoundError } from "../../errors/not-found-error";
 import { admin } from "../../firebase/firebase";
 import { Voucher } from "./voucher";
 import { VoucherClaimSignature } from "./voucher-claim-signature";
-import { isEmail } from "../../utils";
+import { createArrayOf, isEmail } from "../../utils";
 import { UsersService } from "../users/usersService";
 import { Asset } from "../assets/asset";
 import { ApiKeysService } from "../api-keys/api-keys-service";
@@ -123,6 +123,16 @@ export class VouchersService {
   }): Promise<DepositSignature> {
     if (!ethers.utils.isAddress(body.receiver)) {
       throw new BadRequestError('Invalid address');
+    }
+    if (body.assetType === 'ERC1155') {
+      const erc1155Contract = getContract('mastersItems', this.chainId);
+      const balances = await erc1155Contract.balanceOfBatch(
+        createArrayOf((body.tokenIds || []).length, body.receiver),
+        body.tokenIds || []
+      );
+      if (balances.some((balance, index) => balance.lt(body.amounts[index]))) {
+        throw new BadRequestError('Insufficient balance');
+      }
     }
     const signer = getSigner(this.chainId);
     const hash = ethers.utils.solidityKeccak256(
