@@ -10,7 +10,7 @@ import {
   Security,
   Tags,
 } from "tsoa";
-import { DefaultChainId } from "../contracts/networks";
+import { DefaultChainId, getAddress } from "../contracts/networks";
 import { ItemsService } from "./services/ItemsService";
 import { ItemCategory } from "./models/ItemCategory";
 import { MastersItem } from "./models/MastersItem";
@@ -22,6 +22,7 @@ import { MastersItemBalance } from "./models/MastersItemBalance";
 import { UsersService } from "../users/usersService";
 import { NotFoundError } from "../../errors/not-found-error";
 import { BadRequestError } from "../../errors/bad-request-error";
+import { VouchersService } from "../vouchers/vouchers-service";
 
 function mergeItems(arr: any[]) {
   const mergedMap = new Map();
@@ -131,6 +132,7 @@ export class ItemsController extends Controller {
     @Request() request: any,
     @Query() chainId?: number,
     @Query() includeSubnet?: boolean,
+    @Query() includeVouchers?: boolean,
   ): Promise<MastersItemBalance[]> {
     const linkedWallets = await new UsersService().getLinkedWallets(request.user.uid);
     if (!linkedWallets || linkedWallets.length === 0) {
@@ -138,9 +140,17 @@ export class ItemsController extends Controller {
     }
     const itemsService = new ItemsService(chainId || DefaultChainId);
     const balancePromises = linkedWallets.map(w => itemsService.getItemsBalance(w.address));
-    console.log(linkedWallets);
     const itemsBalanceArray = await Promise.all(balancePromises);
-    console.log(itemsBalanceArray);
+    if (includeVouchers) {
+      const vouchersService = new VouchersService(chainId || DefaultChainId);
+      const vouchers = await vouchersService.getVouchersOfUser(request.user.uid);
+      const mastersItemsVouchers = vouchers.filter(v => v.contract === getAddress("mastersItems", chainId || DefaultChainId));
+      const itemsData = await itemsService.getItemsByIds(mastersItemsVouchers.map(v => Number(v.tokenId)));
+      itemsBalanceArray.push(itemsData.map(v => ({
+        ...v,
+        balance: mastersItemsVouchers.find(m => Number(m.tokenId) === v.id)?.amount || 0
+      })));
+    }
 
     if (!includeSubnet) return mergeItems(itemsBalanceArray.flat());
 

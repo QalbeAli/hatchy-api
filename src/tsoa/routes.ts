@@ -220,8 +220,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-02-02T01:06:45.422Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-02-02T01:06:45.422Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-02-02T02:12:51.080Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-02-02T02:12:51.080Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -281,8 +281,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-02-02T01:06:45.431Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-02-02T01:06:45.431Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-02-02T02:12:51.089Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-02-02T02:12:51.089Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -375,8 +375,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-02-02T01:06:45.440Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-02-02T01:06:45.440Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-02-02T02:12:51.099Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-02-02T02:12:51.099Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
@@ -1932,6 +1932,7 @@ export function RegisterRoutes(app: Router) {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
                     chainId: {"in":"query","name":"chainId","dataType":"double"},
                     includeSubnet: {"in":"query","name":"includeSubnet","dataType":"boolean"},
+                    includeVouchers: {"in":"query","name":"includeVouchers","dataType":"boolean"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
