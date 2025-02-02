@@ -461,7 +461,14 @@ export class VouchersService {
     }
     const asset = assets.data() as Asset;
     const auxTokenId = overrideTokenId || asset.tokenId;
-
+    if (asset.name === 'Masters Items') {
+      const itemsData = await new ItemsService().getItemsByIds([Number(auxTokenId)]);
+      if (!itemsData.length) {
+        throw new NotFoundError('Item not found');
+      }
+      asset.name = itemsData[0].name;
+      asset.image = itemsData[0].image;
+    }
 
     const receiverVouchers = await this.getVouchersOfUser(user.uid);
     const receiverVoucher = receiverVouchers.find(v => v.contract === asset.contract && v.tokenId === auxTokenId);
