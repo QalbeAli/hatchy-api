@@ -36,9 +36,10 @@ export class LootboxesController extends Controller {
       saveId: string
     }
   ): Promise<MastersItem[]> {
-    const chainId = 33669900;
-    const lootboxesService = new LootboxesService(chainId);
-    const itemsService = new ItemsService(chainId);
+    // ENABLE ONCE SUBNET IS READY
+    // const chainId = 33669900;
+    const lootboxesService = new LootboxesService();
+    const itemsService = new ItemsService();
     const gameSaves = new GamesSavesService();
     const { lootboxId, amount, currency, saveId } = body;
 
@@ -49,9 +50,10 @@ export class LootboxesController extends Controller {
       throw new BadRequestError('Invalid amount');
     }
 
-    if (!user.mainWallet || !isAddress(user.mainWallet)) {
-      throw new BadRequestError('Invalid receiver address');
-    }
+    // ENABLE ONCE SUBNET IS READY
+    // if (!user.mainWallet || !isAddress(user.mainWallet)) {
+    //   throw new BadRequestError('Invalid receiver address');
+    // }
 
     const lootbox = await lootboxesService.getLootboxById(Number(lootboxId));
     if (!lootbox || !lootbox.active || !lootbox.gameId) {
@@ -63,9 +65,12 @@ export class LootboxesController extends Controller {
       throw new BadRequestError('Invalid currency');
     }
 
-    const receiverAddress = user.mainWallet;
+    // ENABLE ONCE SUBNET IS READY
+    // const receiverAddress = user.mainWallet;
 
-    const selectedItemIds = await lootboxesService.getRandomSelectedItems(lootbox, amount, receiverAddress);
+    // const selectedItemIds = await lootboxesService.getRandomSelectedItems(lootbox, amount, receiverAddress);
+
+    const selectedItemIds = await lootboxesService.getRandomSelectedItems(lootbox, amount);
     const gameSave = await gameSaves.getGameSaveById(saveId);
     if (!gameSave || gameSave.userId !== user.uid) {
       throw new NotFoundError('Game Save not found');
@@ -73,9 +78,12 @@ export class LootboxesController extends Controller {
 
     const totalPrice = Number(lootboxPrice.price) * amount;
     await gameSaves.consumeCurrency(saveId, currency, totalPrice);
-    const tx = await itemsService.mintRewardItem(receiverAddress, selectedItemIds, Array.from({ length: selectedItemIds.length }, () => 1));
-    console.log(`tx Hash: ${tx.hash}`);
+    // ENABLE ONCE SUBNET IS READY
+    // const tx = await itemsService.mintRewardItem(receiverAddress, selectedItemIds, Array.from({ length: selectedItemIds.length }, () => 1));
+    //console.log(`tx Hash: ${tx.hash}`);
+    //
     const items = await itemsService.getItemsByIds(selectedItemIds);
+    await itemsService.giveVoucherItems(user, items, Array.from({ length: selectedItemIds.length }, () => 1));
     // transform the items array using the selectedItemIds so each item has the amount, the selectedItemIds can be [1, 1, 2, 3] for example
     // and the items array can be [{id: 1}, {id: 2}, {id: 3}]
     // the transformed array should be [{id: 1, amount: 2}, {id: 2, amount: 1}, {id: 3, amount: 1}]

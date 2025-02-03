@@ -3,6 +3,12 @@ import { DI } from "../../.."
 import { CreateItemParams } from "../../../models/CreateItemParams";
 import config from "../../../config";
 import { DefaultChainId, getContract } from "../../contracts/networks";
+import { VouchersService } from "../../vouchers/vouchers-service";
+import { MastersItem } from "../models/MastersItem";
+import { Loaded } from "@mikro-orm/core";
+import { Item } from "../../../entities/Item";
+import { User } from "../../users/user";
+import { AssetsService } from "../../assets/assets-service";
 
 export class ItemsService {
   chainId: number;
@@ -161,5 +167,20 @@ export class ItemsService {
     const itemsContract = getContract('mastersItems', this.chainId, true);
     const tx = await itemsContract.mintRewardItem(receiver, ids, amounts);
     return tx;
+  }
+
+  async giveVoucherItems(
+    user: User,
+    items: Loaded<Item, "category" | "gender" | "category.type" | "category.type.layers", "*", never>[],
+    amounts: number[]
+  ) {
+    const assetsService = new AssetsService();
+    const mastersItemsAsset = await assetsService.getAssetByContract(getContract('mastersItems', this.chainId).address);
+    const voucherService = new VouchersService();
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      const amount = amounts[i];
+      await voucherService.giveVoucherToUser(user.email, mastersItemsAsset.uid, amount, item.id.toString());
+    }
   }
 }

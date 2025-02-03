@@ -206,11 +206,14 @@ export class LootboxesService {
   async getRandomSelectedItems(
     lootbox: Loaded<MastersLootbox, "itemWeights" | "prices" | "itemWeights.item", "active" | "prices" | "id" | "ticketId" | "itemWeights.weight" | "itemWeights.item.id", never>,
     amount: number,
-    receiver: string,
+    // receiver: string,
   ) {
-    const itemsContract = getContract('mastersItems', this.chainId);
-    const mintedItems = await itemsContract.mintedItems(receiver);
-    const seed = `${receiver}-${mintedItems}-${config.RANDOM_SEED}`;
+    // ENABLE ONCE SUBNET IS READY
+    // const itemsContract = getContract('mastersItems', this.chainId);
+    // const mintedItems = await itemsContract.mintedItems(receiver);
+    // const seed = `${receiver}-${mintedItems}-${config.RANDOM_SEED}`;
+    // seed is random for now
+    const seed = `${Math.random()}`;
     const rng = seedrandom(seed);
 
     const itemIdsSelection: number[] = [];

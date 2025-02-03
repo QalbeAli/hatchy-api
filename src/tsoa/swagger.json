@@ -431,12 +431,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-02T02:41:44.204Z"
+						"default": "2025-02-03T18:12:26.087Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-02T02:41:44.204Z"
+						"default": "2025-02-03T18:12:26.087Z"
 					},
 					"name": {
 						"type": "string"
@@ -592,12 +592,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-02T02:41:44.212Z"
+						"default": "2025-02-03T18:12:26.099Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-02T02:41:44.213Z"
+						"default": "2025-02-03T18:12:26.099Z"
 					},
 					"name": {
 						"type": "string"
@@ -903,12 +903,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-02T02:41:44.222Z"
+						"default": "2025-02-03T18:12:26.107Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-02T02:41:44.222Z"
+						"default": "2025-02-03T18:12:26.108Z"
 					},
 					"name": {
 						"type": "string"
