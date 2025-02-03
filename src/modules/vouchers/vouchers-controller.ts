@@ -105,6 +105,9 @@ export class VouchersController extends Controller {
       receiverEmail: string,
     },
   ): Promise<MessageResponse> {
+    if (body.receiverEmail === request.user.email) {
+      throw new BadRequestError('Cannot transfer to yourself');
+    }
     const voucherService = new VouchersService();
     await voucherService.transferVouchers(request.user.uid, body.voucherIds, body.voucherAmounts, body.receiverEmail);
     return {
