@@ -431,12 +431,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-03T18:12:26.087Z"
+						"default": "2025-02-03T19:47:43.964Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-03T18:12:26.087Z"
+						"default": "2025-02-03T19:47:43.965Z"
 					},
 					"name": {
 						"type": "string"
@@ -590,14 +590,10 @@
 						"format": "double"
 					},
 					"createdAt": {
-						"type": "string",
-						"format": "date-time",
-						"default": "2025-02-03T18:12:26.099Z"
+						"type": "string"
 					},
 					"updatedAt": {
-						"type": "string",
-						"format": "date-time",
-						"default": "2025-02-03T18:12:26.099Z"
+						"type": "string"
 					},
 					"name": {
 						"type": "string"
@@ -606,37 +602,53 @@
 						"$ref": "#/components/schemas/ItemCategory"
 					},
 					"gender": {
-						"$ref": "#/components/schemas/TraitGender"
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/TraitGender"
+							}
+						],
+						"nullable": true
 					},
 					"description": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"image": {
 						"type": "string"
 					},
 					"frontImage": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"backImage": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"maskImage": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"rarity": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"effects": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"storyNotes": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					}
 				},
 				"required": [
 					"id",
+					"createdAt",
+					"updatedAt",
 					"name",
 					"category",
+					"gender",
+					"description",
 					"image"
 				],
 				"type": "object",
@@ -697,6 +709,62 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"MastersLootboxItem": {
+				"properties": {
+					"weight": {
+						"type": "number",
+						"format": "double"
+					},
+					"lootbox": {
+						"type": "number",
+						"format": "double"
+					},
+					"item": {
+						"$ref": "#/components/schemas/MastersItem"
+					}
+				},
+				"required": [
+					"weight",
+					"lootbox",
+					"item"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LootboxPrice": {
+				"properties": {
+					"lootbox": {
+						"type": "number",
+						"format": "double"
+					},
+					"currency": {
+						"type": "string"
+					},
+					"price": {
+						"type": "string"
+					},
+					"decimals": {
+						"type": "number",
+						"format": "double",
+						"nullable": true
+					},
+					"address": {
+						"type": "string",
+						"nullable": true
+					},
+					"image": {
+						"type": "string",
+						"nullable": true
+					}
+				},
+				"required": [
+					"lootbox",
+					"currency",
+					"price"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"MastersLootbox": {
 				"properties": {
 					"id": {
@@ -718,10 +786,12 @@
 					},
 					"chainId": {
 						"type": "number",
-						"format": "double"
+						"format": "double",
+						"nullable": true
 					},
 					"gameId": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"genderId": {
 						"type": "number",
@@ -729,7 +799,8 @@
 					},
 					"ticketId": {
 						"type": "number",
-						"format": "double"
+						"format": "double",
+						"nullable": true
 					},
 					"itemWeights": {
 						"items": {
@@ -751,63 +822,11 @@
 					"image",
 					"order",
 					"chainId",
+					"gameId",
 					"genderId",
 					"ticketId",
 					"itemWeights",
 					"prices"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"MastersLootboxItem": {
-				"properties": {
-					"weight": {
-						"type": "number",
-						"format": "double"
-					},
-					"lootbox": {
-						"$ref": "#/components/schemas/MastersLootbox"
-					},
-					"item": {
-						"$ref": "#/components/schemas/MastersItem"
-					}
-				},
-				"required": [
-					"weight",
-					"lootbox",
-					"item"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"LootboxPrice": {
-				"properties": {
-					"lootbox": {
-						"$ref": "#/components/schemas/MastersLootbox"
-					},
-					"currency": {
-						"type": "string"
-					},
-					"price": {
-						"type": "string"
-					},
-					"decimals": {
-						"type": "number",
-						"format": "double"
-					},
-					"address": {
-						"type": "string"
-					},
-					"image": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"currency",
-					"price",
-					"decimals",
-					"address",
-					"image"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -903,12 +922,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-03T18:12:26.107Z"
+						"default": "2025-02-03T19:47:43.981Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-03T18:12:26.108Z"
+						"default": "2025-02-03T19:47:43.981Z"
 					},
 					"name": {
 						"type": "string"

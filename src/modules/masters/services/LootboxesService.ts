@@ -25,7 +25,9 @@ export class LootboxesService {
         chainId: gameId ? null : this.chainId
       },
       populate: [
-        'prices', 'genderId', 'itemWeights', 'itemWeights.item',
+        'prices',
+        'genderId', 'itemWeights', 'itemWeights.item',
+        'itemWeights.item.gender',
         'itemWeights.item.category',
         'itemWeights.item.category.type',
         'itemWeights.item.category.type.layers',
