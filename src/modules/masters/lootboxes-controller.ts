@@ -36,6 +36,7 @@ export class LootboxesController extends Controller {
       saveId: string
     }
   ): Promise<MastersItem[]> {
+    console.log(body);
     // ENABLE ONCE SUBNET IS READY
     // const chainId = 33669900;
     const lootboxesService = new LootboxesService();

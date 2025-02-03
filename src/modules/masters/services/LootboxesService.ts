@@ -7,6 +7,7 @@ import { DI } from "../../..";
 import config from "../../../config";
 import { DefaultChainId, getContract } from "../../contracts/networks";
 import { CoingeckoService } from "../../../services/CoingeckoService";
+import { NotFoundError } from "../../../errors/not-found-error";
 
 export class LootboxesService {
   chainId: number;
@@ -51,6 +52,9 @@ export class LootboxesService {
       fields: ['id', 'active', 'ticketId', 'prices', 'itemWeights.item.id', 'itemWeights.weight', 'gameId'],
       populate: ['prices', 'itemWeights', 'itemWeights.item']
     });
+    if (!lootbox) {
+      throw new NotFoundError("Lootbox not found");
+    }
     const livePrice = await this.coingeckoService.getHatchyPrice();
     const usdtPrice = lootbox.prices.find(price => price.currency === 'usdt');
     const hatchyPrice = lootbox.prices.find(price => price.currency === 'hatchy');
