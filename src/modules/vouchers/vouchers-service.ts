@@ -5,7 +5,7 @@ import { NotFoundError } from "../../errors/not-found-error";
 import { admin } from "../../firebase/firebase";
 import { Voucher } from "./voucher";
 import { VoucherClaimSignature } from "./voucher-claim-signature";
-import { createArrayOf, isEmail } from "../../utils";
+import { createArrayOf, generateSecureNonce, isEmail } from "../../utils";
 import { UsersService } from "../users/usersService";
 import { Asset } from "../assets/asset";
 import { ApiKeysService } from "../api-keys/api-keys-service";
@@ -135,15 +135,17 @@ export class VouchersService {
       }
     }
     const signer = getSigner(this.chainId);
+    const secureNonce = generateSecureNonce();
     const hash = ethers.utils.solidityKeccak256(
-      ['address', 'uint8', 'address', 'uint256[]', 'uint256[]', 'uint256'],
+      ['address', 'uint8', 'address', 'uint256[]', 'uint256[]', 'uint256', 'uint256'],
       [
         body.receiver,
         contractTypeToUint8(body.assetType),
         body.assetAddress,
         body.tokenIds || [],
         body.amounts || [],
-        body.amount || 0
+        body.amount || 0,
+        secureNonce
       ]
     );
     const signature = await signer.signMessage(ethers.utils.arrayify(hash));
@@ -155,6 +157,7 @@ export class VouchersService {
         body.tokenIds || [],
         body.amounts || [],
         body.amount || 0,
+        secureNonce.toString(),
       ],
       signature
     };

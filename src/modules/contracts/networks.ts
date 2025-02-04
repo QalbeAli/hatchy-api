@@ -128,7 +128,7 @@ const devNetworks: Map<number, NetworkData> = new Map([
         hatchySalary: "0xAaCc9888424d805Ba6Cf80e318B9494eCd6BCF32",
         hatchyTickets: "0x79C75903558ab6Be1aFA48103c33D0a24464c78E",
         joepegsTickets: "0xbe68d2e50326571ee2399e7d87804c7d47abefaf",
-        voucherConverter: "0x81Be037A371F2594bC138bE1B30d53db2F4c1d1f",
+        voucherConverter: "0x00BA147F9FefB92D8FC78586f0304209170f62D4",
       },
     },
   ],
