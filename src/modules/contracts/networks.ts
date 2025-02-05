@@ -43,6 +43,7 @@ const prodNetworks: Map<number, NetworkData> = new Map([
         joepegsTickets: "0xBd2cFf1420389B28C85341F521C5b0cf7B60ec0E",
         mastersItems: "0x958cBb691E5D9f6A99B586995Ee63A61cDc9690a",
         mastersAvatars: "0x47cFa0d9B074Ca01613b7ACC351eFeC41610c11C",
+        voucherConverter: "0x8Ccdcb39d7b78B8B5a3135Bf987626209F7d8387",
       },
     },
   ],

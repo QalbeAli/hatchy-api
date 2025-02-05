@@ -431,12 +431,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-04T05:21:31.002Z"
+						"default": "2025-02-04T18:16:46.830Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-04T05:21:31.003Z"
+						"default": "2025-02-04T18:16:46.830Z"
 					},
 					"name": {
 						"type": "string"
@@ -922,12 +922,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-04T05:21:31.020Z"
+						"default": "2025-02-04T18:16:46.851Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-04T05:21:31.020Z"
+						"default": "2025-02-04T18:16:46.851Z"
 					},
 					"name": {
 						"type": "string"

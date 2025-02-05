@@ -220,8 +220,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-02-04T05:10:24.052Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-02-04T05:10:24.052Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-02-04T18:16:46.830Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-02-04T18:16:46.830Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -375,8 +375,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-02-04T05:10:24.071Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-02-04T05:10:24.071Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-02-04T18:16:46.851Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-02-04T18:16:46.851Z"},
             "name": {"dataType":"string","required":true},
             "category": {"ref":"ItemCategory","required":true},
             "gender": {"ref":"TraitGender"},
