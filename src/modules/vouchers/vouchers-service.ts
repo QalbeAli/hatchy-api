@@ -124,6 +124,9 @@ export class VouchersService {
     if (!ethers.utils.isAddress(body.receiver)) {
       throw new BadRequestError('Invalid address');
     }
+    if (body.assetType != 'ERC1155') {
+      throw new BadRequestError('Invalid assetType');
+    }
     if (body.assetType === 'ERC1155') {
       const erc1155Contract = getContract('mastersItems', this.chainId);
       const balances = await erc1155Contract.balanceOfBatch(
