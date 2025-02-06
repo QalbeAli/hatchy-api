@@ -431,12 +431,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-04T18:16:46.830Z"
+						"default": "2025-02-06T00:20:18.877Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-04T18:16:46.830Z"
+						"default": "2025-02-06T00:20:18.877Z"
 					},
 					"name": {
 						"type": "string"
@@ -647,8 +647,6 @@
 					"updatedAt",
 					"name",
 					"category",
-					"gender",
-					"description",
 					"image"
 				],
 				"type": "object",
@@ -758,7 +756,6 @@
 					}
 				},
 				"required": [
-					"lootbox",
 					"currency",
 					"price"
 				],
@@ -920,14 +917,10 @@
 						"format": "double"
 					},
 					"createdAt": {
-						"type": "string",
-						"format": "date-time",
-						"default": "2025-02-04T18:16:46.851Z"
+						"type": "string"
 					},
 					"updatedAt": {
-						"type": "string",
-						"format": "date-time",
-						"default": "2025-02-04T18:16:46.851Z"
+						"type": "string"
 					},
 					"name": {
 						"type": "string"
@@ -936,31 +929,43 @@
 						"$ref": "#/components/schemas/ItemCategory"
 					},
 					"gender": {
-						"$ref": "#/components/schemas/TraitGender"
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/TraitGender"
+							}
+						],
+						"nullable": true
 					},
 					"description": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"image": {
 						"type": "string"
 					},
 					"frontImage": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"backImage": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"maskImage": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"rarity": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"effects": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"storyNotes": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"balance": {
 						"type": "number",
@@ -969,6 +974,8 @@
 				},
 				"required": [
 					"id",
+					"createdAt",
+					"updatedAt",
 					"name",
 					"category",
 					"image",

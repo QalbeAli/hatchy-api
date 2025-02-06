@@ -2,14 +2,14 @@ import { ItemCategory } from './ItemCategory';
 import { TraitGender } from './TraitGender';
 
 export class MastersItem {
-  id!: number;
+  id: number;
   createdAt: string;
   updatedAt: string;
   name: string;
   category: ItemCategory
-  gender: TraitGender | null;
-  description: string | null;
-  image!: string;
+  gender?: TraitGender | null;
+  description?: string | null;
+  image: string;
   frontImage?: string | null;
   backImage?: string | null;
   maskImage?: string | null;

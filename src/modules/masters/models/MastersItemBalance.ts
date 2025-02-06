@@ -2,19 +2,19 @@ import { ItemCategory } from './ItemCategory';
 import { TraitGender } from './TraitGender';
 
 export class MastersItemBalance {
-  id!: number;
-  createdAt = new Date();
-  updatedAt = new Date();
-  name!: string;
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  name: string;
   category: ItemCategory
-  gender?: TraitGender
-  description?: string;
-  image!: string;
-  frontImage?: string;
-  backImage?: string;
-  maskImage?: string;
-  rarity?: string;
-  effects?: string;
-  storyNotes?: string;
+  gender?: TraitGender | null;
+  description?: string | null;
+  image: string;
+  frontImage?: string | null;
+  backImage?: string | null;
+  maskImage?: string | null;
+  rarity?: string | null;
+  effects?: string | null;
+  storyNotes?: string | null;
   balance: number;
 }

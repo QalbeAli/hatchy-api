@@ -1,5 +1,5 @@
 export class LootboxPrice {
-  lootbox: number;
+  lootbox?: number;
   currency: string;
   price: string;
   decimals?: number | null;
