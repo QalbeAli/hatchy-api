@@ -108,6 +108,9 @@ export class VouchersController extends Controller {
     if (body.receiverEmail === request.user.email) {
       throw new BadRequestError('Cannot transfer to yourself');
     }
+    if (body.voucherAmounts.some(amount => amount <= 0)) {
+      throw new BadRequestError('Invalid voucher amounts');
+    }
     const voucherService = new VouchersService();
     await voucherService.transferVouchers(request.user.uid, body.voucherIds, body.voucherAmounts, body.receiverEmail);
     return {
