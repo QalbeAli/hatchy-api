@@ -123,8 +123,7 @@ export class VouchersController extends Controller {
       voucherId: string,
       address: string,
     },
-  ): Promise<MessageResponse> {
-    /*
+  ): Promise<VoucherClaimSignature> {
     const voucherService = new VouchersService();
     const voucher = await voucherService.getVoucherById(body.voucherId);
     if (!isAddress(body.address)) {
@@ -138,10 +137,11 @@ export class VouchersController extends Controller {
     }
     const claimSignatureData = await voucherService.getVoucherClaimSignature(voucher, body.address);
     return claimSignatureData;
-    */
+    /*
     return {
       message: 'Claim signature is disabled',
     }
+    */
   }
 
   @Security("jwt")
@@ -152,8 +152,7 @@ export class VouchersController extends Controller {
       voucherIds: string[],
       address: string,
     },
-  ): Promise<MessageResponse> {
-    /*
+  ): Promise<BatchVoucherClaimSignature> {
     if (!isAddress(body.address)) {
       throw new BadRequestError('Invalid address');
     }
@@ -167,10 +166,11 @@ export class VouchersController extends Controller {
     }
     const claimSignatureData = await voucherService.getBatchVoucherClaimSignature(vouchers, body.address);
     return claimSignatureData;
-    */
+    /*
     return {
       message: 'Claim signature is disabled',
     }
+    */
   }
 
   @Security("jwt")
