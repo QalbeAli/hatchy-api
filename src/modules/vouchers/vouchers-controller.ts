@@ -43,6 +43,7 @@ export class VouchersController extends Controller {
   @Security("jwt", ["admin"])
   @Post("admin/give")
   public async giveVoucherToUser(
+    @Request() request: any,
     @Body() body: {
       email: string,
       assetId: string,
@@ -55,12 +56,23 @@ export class VouchersController extends Controller {
     if (!isEmail(body.email)) {
       throw new BadRequestError('Invalid email');
     }
-    await voucherService.giveVoucherToUser(
+    const res = await voucherService.giveVoucherToUser(
       body.email,
       body.assetId,
       body.amount,
       body.overrideTokenId
     );
+    await voucherService.logVoucher({
+      action: 'giveaway',
+      vouchersData: [{
+        ...res.voucher,
+        amount: body.amount,
+      }],
+      actionUserId: request.user.uid,
+      actionUserEmail: request.user.email,
+      toUserId: res.user.uid,
+      toUserEmail: res.user.email,
+    });
     return {
       message: 'Voucher given',
     }
@@ -84,12 +96,24 @@ export class VouchersController extends Controller {
     }
 
     const voucherService = new VouchersService();
-    await voucherService.giveVoucherWithApiKey(
+    const res = await voucherService.giveVoucherWithApiKey(
       request.headers['x-api-key'],
       body.email,
       body.assetId,
       body.amount,
     );
+    await voucherService.logVoucher({
+      action: 'giveaway',
+      vouchersData: [{
+        ...res.voucher,
+        amount: body.amount,
+      }],
+      apiKey: res.apiKey.uid,
+      actionUserId: '',
+      actionUserEmail: '',
+      toUserId: res.user.uid,
+      toUserEmail: res.user.email,
+    });
     return {
       message: 'Voucher given',
     }
@@ -112,7 +136,19 @@ export class VouchersController extends Controller {
       throw new BadRequestError('Invalid voucher amounts');
     }
     const voucherService = new VouchersService();
-    await voucherService.transferVouchers(request.user.uid, body.voucherIds, body.voucherAmounts, body.receiverEmail);
+    const res = await voucherService.transferVouchers(request.user.uid, body.voucherIds, body.voucherAmounts, body.receiverEmail);
+
+    await voucherService.logVoucher({
+      action: 'transfer',
+      vouchersData: res.vouchers.map((v, i) => ({
+        ...v.voucher,
+        amount: v.amount,
+      })),
+      actionUserId: request.user.uid,
+      actionUserEmail: request.user.email,
+      toUserId: res.user.uid,
+      toUserEmail: res.user.email,
+    });
     return {
       message: 'Vouchers transferred',
     }
@@ -139,12 +175,18 @@ export class VouchersController extends Controller {
       throw new BadRequestError('Address is not receiver');
     }
     const claimSignatureData = await voucherService.getVoucherClaimSignature(voucher, body.address);
+    await voucherService.logVoucher({
+      action: 'request-signature',
+      vouchersData: [{
+        ...voucher,
+        amount: voucher.amount,
+      }],
+      actionUserId: request.user.uid,
+      actionUserEmail: request.user.email,
+      toUserId: request.user.uid,
+      toUserEmail: request.user.email,
+    });
     return claimSignatureData;
-    /*
-    return {
-      message: 'Claim signature is disabled',
-    }
-    */
   }
 
   @Security("jwt")
@@ -167,13 +209,16 @@ export class VouchersController extends Controller {
     if (vouchers.some(v => v.receiver && v.receiver !== body.address)) {
       throw new BadRequestError('Address is not receiver');
     }
+    await voucherService.logVoucher({
+      action: 'request-signature',
+      vouchersData: vouchers,
+      actionUserId: request.user.uid,
+      actionUserEmail: request.user.email,
+      toUserId: request.user.uid,
+      toUserEmail: request.user.email,
+    });
     const claimSignatureData = await voucherService.getBatchVoucherClaimSignature(vouchers, body.address);
     return claimSignatureData;
-    /*
-    return {
-      message: 'Claim signature is disabled',
-    }
-    */
   }
 
   @Security("jwt")
@@ -189,14 +234,24 @@ export class VouchersController extends Controller {
     if (vouchers.some(v => v.userId !== request.user.uid)) {
       throw new UnauthorizedError();
     }
-    const message = await voucherService.deleteBatchVouchers(vouchers);
+    await voucherService.deleteBatchVouchers(vouchers);
+    await voucherService.logVoucher({
+      action: 'delete',
+      vouchersData: vouchers,
+      actionUserId: request.user.uid,
+      actionUserEmail: request.user.email,
+      toUserId: request.user.uid,
+      toUserEmail: request.user.email,
+    });
     return {
-      message,
+      message: 'Vouchers deleted',
     };
   }
 
+  @Security("jwt")
   @Post("deposit/sync")
   public async syncDepositedAssets(
+    @Request() request: any,
     @Body() body: {
       receiver: string,
       depositId: number
@@ -206,7 +261,15 @@ export class VouchersController extends Controller {
       throw new BadRequestError('Invalid address');
     }
     const voucherService = new VouchersService();
-    await voucherService.syncDepositedAssets(body.receiver, body.depositId);
+    const vouchers = await voucherService.syncDepositedAssets(body.receiver, body.depositId);
+    await voucherService.logVoucher({
+      action: 'sync-deposit',
+      vouchersData: vouchers,
+      actionUserId: request.user.uid,
+      actionUserEmail: request.user.email,
+      toUserId: request.user.uid,
+      toUserEmail: request.user.email,
+    });
     return {
       message: 'Deposited assets synced',
     }

@@ -220,8 +220,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-02-06T00:20:18.877Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-02-06T00:20:18.877Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-02-11T03:48:54.544Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-02-11T03:48:54.545Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -2733,6 +2733,7 @@ export function RegisterRoutes(app: Router) {
 
             async function VouchersController_giveVoucherToUser(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
                     body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"overrideTokenId":{"dataType":"string"},"amount":{"dataType":"double","required":true},"assetId":{"dataType":"string","required":true},"email":{"dataType":"string","required":true}}},
             };
 
@@ -2918,11 +2919,13 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/vouchers/deposit/sync',
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(VouchersController)),
             ...(fetchMiddlewares<RequestHandler>(VouchersController.prototype.syncDepositedAssets)),
 
             async function VouchersController_syncDepositedAssets(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
                     body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"depositId":{"dataType":"double","required":true},"receiver":{"dataType":"string","required":true}}},
             };
 

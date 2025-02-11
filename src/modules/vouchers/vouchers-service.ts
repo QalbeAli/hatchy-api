@@ -13,6 +13,7 @@ import { DepositSignature } from "./deposit-signature";
 import { AssetsService } from "../assets/assets-service";
 import { ItemsService } from "../masters/services/ItemsService";
 import { BatchVoucherClaimSignature } from "./batch-voucher-claim-signature";
+import { VoucherLog } from "./voucher-log";
 
 interface ConverterPayload {
   receiver: string
@@ -25,6 +26,7 @@ interface ConverterPayload {
 export class VouchersService {
   chainId: number;
   vouchersCollection = admin.firestore().collection('vouchers');
+  vouchersHistoryCollection = admin.firestore().collection('vouchers-logs');
   statsCollection = admin.firestore().collection('stats');
   apiKeyService = new ApiKeysService();
   assetsService = new AssetsService();
@@ -79,6 +81,7 @@ export class VouchersService {
     });
     const vouchers = await this.getVouchersOfUser(user.uid);
 
+    const depositedVouchers = []
     // give depositedAssets to the user in the form of vouchers by merging them if they have the same contract and tokenId and creating a new voucher if they don't
     depositedAssets.forEach(asset => {
       const voucher = vouchers.find(v => v.contract === asset.contract && v.tokenId === asset.tokenId);
@@ -105,12 +108,13 @@ export class VouchersService {
           updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         };
         batch.set(newVoucherRef, newVoucher);
+        depositedVouchers.push(newVoucher);
       }
     });
 
     await batch.commit();
     await this.statsCollection.doc('vouchers').update({ totalDeposits: totalDepositsProcessed + 1 });
-    return { message: 'Deposit claimed' };
+    return depositedVouchers;
   }
 
   public async getDepositSignature(body: {
@@ -165,8 +169,6 @@ export class VouchersService {
       signature
     };
   }
-
-
 
   public async getVouchersOfUser(uid: string): Promise<Voucher[]> {
     const vouchers = await this.vouchersCollection.where('userId', '==', uid).get();
@@ -332,7 +334,7 @@ export class VouchersService {
     };
   }
 
-  public async transferVouchers(userId: string, voucherIds: string[], voucherAmounts: number[], receiverEmail: string): Promise<Voucher[]> {
+  public async transferVouchers(userId: string, voucherIds: string[], voucherAmounts: number[], receiverEmail: string) {
     /*
       transfer voucher amounts to the receiverEmail user
       1. if the amount after transfer is 0, delete the voucher
@@ -357,6 +359,7 @@ export class VouchersService {
 
     const batch = admin.firestore().batch();
 
+    const insertedVouchers = [];
     for (let i = 0; i < voucherIds.length; i++) {
       const voucherId = voucherIds[i];
       const voucherAmount = voucherAmounts[i];
@@ -381,6 +384,10 @@ export class VouchersService {
       if (receiverVoucher) {
         const receiverVoucherRef = this.vouchersCollection.doc(receiverVoucher.uid);
         batch.update(receiverVoucherRef, { amount: receiverVoucher.amount + voucherAmount });
+        insertedVouchers.push({
+          voucher: receiverVoucher,
+          amount: voucherAmount
+        });
       } else {
         const newVoucherRef = this.vouchersCollection.doc();
         const newVoucher = {
@@ -401,6 +408,10 @@ export class VouchersService {
           updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         };
         batch.set(newVoucherRef, newVoucher);
+        insertedVouchers.push({
+          voucher: newVoucher,
+          amount: voucherAmount
+        });
       }
 
       const voucherRef = this.vouchersCollection.doc(voucherId);
@@ -412,17 +423,21 @@ export class VouchersService {
     }
 
     await batch.commit();
-    return this.getVouchersOfUser(userId);
+    return {
+      user: receiver,
+      vouchers: insertedVouchers
+    }
+    // return this.getVouchersOfUser(userId);
   }
 
-  public async deleteBatchVouchers(vouchers: Voucher[]): Promise<string> {
+  public async deleteBatchVouchers(vouchers: Voucher[]): Promise<Voucher[]> {
     const batch = admin.firestore().batch();
     vouchers.forEach(voucher => {
       const voucherRef = this.vouchersCollection.doc(voucher.uid);
       batch.delete(voucherRef);
     });
     await batch.commit();
-    return 'Vouchers deleted successfully';
+    return vouchers;
   }
 
   public async deleteVoucher(voucher: Voucher): Promise<string> {
@@ -445,13 +460,17 @@ export class VouchersService {
     if (!apiKeyData.permissions || !apiKeyData.permissions.includes('rewards')) {
       throw new BadRequestError('API Key does not have permissions');
     }
-    await this.giveVoucherToUser(email, assetId, amount, overrideTokenId);
+    const res = await this.giveVoucherToUser(email, assetId, amount, overrideTokenId);
     // update the balance of the api key
     const newBalance = { ...apiKeyData.balance };
     newBalance[assetId] -= amount;
     await admin.firestore().collection('api-keys').doc(apiKeyData.uid).update({ balance: newBalance });
 
-    return { message: 'Voucher given with API Key' };
+    return {
+      apiKey: apiKeyData,
+      user: res.user,
+      voucher: res.voucher
+    }
   }
 
   public async giveVoucherToUser(
@@ -478,9 +497,11 @@ export class VouchersService {
 
     const receiverVouchers = await this.getVouchersOfUser(user.uid);
     const receiverVoucher = receiverVouchers.find(v => v.contract === asset.contract && v.tokenId === auxTokenId);
+    let voucherId = '';
     if (receiverVoucher) {
       const receiverVoucherRef = this.vouchersCollection.doc(receiverVoucher.uid);
       receiverVoucherRef.update({ amount: receiverVoucher.amount + amount });
+      voucherId = receiverVoucher.uid;
     } else {
       const newVoucherRef = this.vouchersCollection.doc();
       const newVoucher = {
@@ -502,9 +523,51 @@ export class VouchersService {
         updatedAt: admin.firestore.FieldValue.serverTimestamp(),
       };
       await newVoucherRef.set(newVoucher);
+      voucherId = newVoucherRef.id;
+    }
+    // get updated or created voucher
+    const voucher = await this.getVoucherById(voucherId);
+    return {
+      user: {
+        uid: user.uid,
+        email: user.email,
+      },
+      voucher
     }
   }
 
+  public async logVoucher(data: {
+    action: VoucherLog['action'],
+    vouchersData: Voucher[],
+    actionUserId?: string,
+    actionUserEmail?: string,
+    toUserId: string,
+    toUserEmail: string,
+    apiKey?: string,
+  }) {
+    const log = {
+      actionUserId: data.actionUserId,
+      actionUserEmail: data.actionUserEmail,
+      apiKey: data.apiKey,
+      action: data.action,
+      toUserId: data.toUserId,
+      toUserEmail: data.toUserEmail,
+      vouchersData: data.vouchersData.map(v => (
+        {
+          image: v.image,
+          receiver: v.receiver,
+          tokenId: v.tokenId,
+          uid: v.uid,
+          amount: v.amount,
+          contract: v.contract,
+          holder: v.holder,
+          name: v.name,
+
+        })),
+      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    };
+    await this.vouchersHistoryCollection.add(log);
+  }
 
   shouldDeleteReward = async (voucher: Voucher) => {
     const rewardDealerContract = getContract('hatchyRewardDealer', this.chainId);

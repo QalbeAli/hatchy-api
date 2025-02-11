@@ -431,12 +431,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-06T00:20:18.877Z"
+						"default": "2025-02-11T03:52:48.994Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-06T00:20:18.877Z"
+						"default": "2025-02-11T03:52:48.995Z"
 					},
 					"name": {
 						"type": "string"
@@ -4853,7 +4853,11 @@
 				"tags": [
 					"Vouchers"
 				],
-				"security": [],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
