@@ -27,3 +27,5 @@ backup
 /src/firebase/*.json
 
 build
+
+*.csv

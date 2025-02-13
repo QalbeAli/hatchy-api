@@ -431,12 +431,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-11T03:52:48.994Z"
+						"default": "2025-02-13T04:22:52.404Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-11T03:52:48.995Z"
+						"default": "2025-02-13T04:22:52.405Z"
 					},
 					"name": {
 						"type": "string"
@@ -1328,6 +1328,181 @@
 			},
 			"CreateApiKeyParams": {
 				"$ref": "#/components/schemas/Omit_ApiKey.uid-or-createdAt-or-updatedAt-or-apiKey_"
+			},
+			"Event": {
+				"properties": {
+					"uid": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"gameId": {
+						"type": "string"
+					},
+					"image": {
+						"type": "string"
+					},
+					"rewards": {
+						"items": {
+							"properties": {
+								"assets": {
+									"items": {
+										"properties": {
+											"amount": {
+												"type": "number",
+												"format": "double"
+											},
+											"name": {
+												"type": "string"
+											},
+											"image": {
+												"type": "string"
+											},
+											"uid": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"amount",
+											"name",
+											"image",
+											"uid"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								},
+								"toRank": {
+									"type": "number",
+									"format": "double"
+								},
+								"fromRank": {
+									"type": "number",
+									"format": "double"
+								}
+							},
+							"required": [
+								"assets",
+								"toRank",
+								"fromRank"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					},
+					"rewardsGiven": {
+						"type": "boolean"
+					},
+					"startDate": {
+						"type": "string"
+					},
+					"endDate": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"uid",
+					"name",
+					"rewards",
+					"rewardsGiven",
+					"startDate",
+					"endDate"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_Event.Exclude_keyofEvent.uid__": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"image": {
+						"type": "string"
+					},
+					"gameId": {
+						"type": "string"
+					},
+					"rewards": {
+						"items": {
+							"properties": {
+								"assets": {
+									"items": {
+										"properties": {
+											"amount": {
+												"type": "number",
+												"format": "double"
+											},
+											"name": {
+												"type": "string"
+											},
+											"image": {
+												"type": "string"
+											},
+											"uid": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"amount",
+											"name",
+											"image",
+											"uid"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								},
+								"toRank": {
+									"type": "number",
+									"format": "double"
+								},
+								"fromRank": {
+									"type": "number",
+									"format": "double"
+								}
+							},
+							"required": [
+								"assets",
+								"toRank",
+								"fromRank"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					},
+					"rewardsGiven": {
+						"type": "boolean"
+					},
+					"startDate": {
+						"type": "string"
+					},
+					"endDate": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"rewards",
+					"rewardsGiven",
+					"startDate",
+					"endDate"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_Event.uid_": {
+				"$ref": "#/components/schemas/Pick_Event.Exclude_keyofEvent.uid__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"CreateEventParams": {
+				"$ref": "#/components/schemas/Omit_Event.uid_"
 			},
 			"Voucher": {
 				"properties": {
@@ -4440,6 +4615,103 @@
 				},
 				"tags": [
 					"ApiKeys"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "uid",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/events": {
+			"get": {
+				"operationId": "GetEvents",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Event"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Events"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateEvent",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Event"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Events"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateEventParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/events/{uid}": {
+			"delete": {
+				"operationId": "DeleteEvent",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Events"
 				],
 				"security": [
 					{

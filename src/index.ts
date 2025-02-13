@@ -3,6 +3,7 @@ config();
 import express, { json } from "express";
 import cors from "cors";
 import http from 'http';
+import cron from 'node-cron';
 
 import { errorHandler } from "./middlewares/error-handler";
 import { EntityManager, EntityRepository, MikroORM, RequestContext } from "@mikro-orm/postgresql";
@@ -26,6 +27,7 @@ import swaggerDocument from "./tsoa/swagger.json";
 import swaggerUI from "swagger-ui-express";
 import { notFoundHandler } from "./middlewares/not-found-route-handler";
 import { transformTimestampMiddleware } from "./middlewares/transform-timestamp-middleware";
+import { EventsService } from "./modules/events/events-service";
 
 
 export const DI = {} as {
@@ -78,6 +80,12 @@ export const init = (async () => {
   app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
   app.use(notFoundHandler);
   app.use(errorHandler);
+
+  const eventsService = new EventsService();
+  // cron.schedule("*/1 * * * *", () => {
+  cron.schedule("0 0 * * *", () => {
+    eventsService.giveEventRewards();
+  });
 
   DI.server = app.listen(PORT, () => {
     console.log(`Server Listening on PORT: ${PORT} http://localhost:${PORT}`);

@@ -476,7 +476,8 @@ export class VouchersService {
   public async giveVoucherToUser(
     email: string, assetId: string, amount: number, overrideTokenId?: string
   ) {
-    const user = await new UsersService().getUserByEmail(email);
+    const usersService = new UsersService();
+    const user = isEmail(email) ? await usersService.getUserByEmail(email) : await usersService.get(email);
     if (!user) {
       throw new NotFoundError('User not found');
     }

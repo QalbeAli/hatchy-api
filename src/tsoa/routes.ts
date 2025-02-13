@@ -36,6 +36,8 @@ import { TicketsController } from './../modules/tickets/TicketsController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { ApiKeysController } from './../modules/api-keys/api-keys-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { EventsController } from './../modules/events/events-controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { VouchersController } from './../modules/vouchers/vouchers-controller';
 import { expressAuthentication } from './../authentication';
 // @ts-ignore - no great way to install types from subpackage
@@ -220,8 +222,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-02-11T03:48:54.544Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-02-11T03:48:54.545Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-02-13T04:22:52.404Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-02-13T04:22:52.405Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -503,6 +505,37 @@ const models: TsoaRoute.Models = {
     "CreateApiKeyParams": {
         "dataType": "refAlias",
         "type": {"ref":"Omit_ApiKey.uid-or-createdAt-or-updatedAt-or-apiKey_","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Event": {
+        "dataType": "refObject",
+        "properties": {
+            "uid": {"dataType":"string","required":true},
+            "name": {"dataType":"string","required":true},
+            "description": {"dataType":"string"},
+            "gameId": {"dataType":"string"},
+            "image": {"dataType":"string"},
+            "rewards": {"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"assets":{"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"amount":{"dataType":"double","required":true},"name":{"dataType":"string","required":true},"image":{"dataType":"string","required":true},"uid":{"dataType":"string","required":true}}},"required":true},"toRank":{"dataType":"double","required":true},"fromRank":{"dataType":"double","required":true}}},"required":true},
+            "rewardsGiven": {"dataType":"boolean","required":true},
+            "startDate": {"dataType":"string","required":true},
+            "endDate": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_Event.Exclude_keyofEvent.uid__": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"name":{"dataType":"string","required":true},"description":{"dataType":"string"},"image":{"dataType":"string"},"gameId":{"dataType":"string"},"rewards":{"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"assets":{"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"amount":{"dataType":"double","required":true},"name":{"dataType":"string","required":true},"image":{"dataType":"string","required":true},"uid":{"dataType":"string","required":true}}},"required":true},"toRank":{"dataType":"double","required":true},"fromRank":{"dataType":"double","required":true}}},"required":true},"rewardsGiven":{"dataType":"boolean","required":true},"startDate":{"dataType":"string","required":true},"endDate":{"dataType":"string","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Omit_Event.uid_": {
+        "dataType": "refAlias",
+        "type": {"ref":"Pick_Event.Exclude_keyofEvent.uid__","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "CreateEventParams": {
+        "dataType": "refAlias",
+        "type": {"ref":"Omit_Event.uid_","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Voucher": {
@@ -2655,6 +2688,98 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'deleteApiKey',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/events',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(EventsController)),
+            ...(fetchMiddlewares<RequestHandler>(EventsController.prototype.getEvents)),
+
+            async function EventsController_getEvents(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new EventsController();
+
+              await templateService.apiHandler({
+                methodName: 'getEvents',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/events',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(EventsController)),
+            ...(fetchMiddlewares<RequestHandler>(EventsController.prototype.createEvent)),
+
+            async function EventsController_createEvent(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    body: {"in":"body","name":"body","required":true,"ref":"CreateEventParams"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new EventsController();
+
+              await templateService.apiHandler({
+                methodName: 'createEvent',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/events/:uid',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(EventsController)),
+            ...(fetchMiddlewares<RequestHandler>(EventsController.prototype.deleteEvent)),
+
+            async function EventsController_deleteEvent(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    uid: {"in":"path","name":"uid","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new EventsController();
+
+              await templateService.apiHandler({
+                methodName: 'deleteEvent',
                 controller,
                 response,
                 next,
