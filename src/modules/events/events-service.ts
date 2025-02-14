@@ -113,7 +113,7 @@ export class EventsService {
                   actionUserEmail: 'system@hatchypocket.com'
                 });
               }
-              console.log(`Gave ${op.amount}x ${op.assetId} to ${op.username}`);
+              // console.log(`Gave ${op.amount}x ${op.assetId} to ${op.username}`);
             } catch (error) {
               console.error(`Failed to give reward to ${op.username}:`, error);
             }
