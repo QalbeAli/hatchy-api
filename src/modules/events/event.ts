@@ -13,6 +13,7 @@ export interface Event {
       name: string
       amount: number;
       type?: 'blockchain' | 'game';
+      property?: string;
     }[]
   }[]
   rewardsGiven: boolean;

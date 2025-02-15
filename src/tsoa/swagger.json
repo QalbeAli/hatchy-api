@@ -431,12 +431,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-13T04:22:52.404Z"
+						"default": "2025-02-15T03:56:40.282Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-13T04:22:52.405Z"
+						"default": "2025-02-15T03:56:40.282Z"
 					},
 					"name": {
 						"type": "string"
@@ -1083,6 +1083,9 @@
 							"game"
 						]
 					},
+					"property": {
+						"type": "string"
+					},
 					"image": {
 						"type": "string"
 					}
@@ -1091,7 +1094,6 @@
 					"uid",
 					"name",
 					"category",
-					"description",
 					"image"
 				],
 				"type": "object",
@@ -1132,6 +1134,9 @@
 							"game"
 						]
 					},
+					"property": {
+						"type": "string"
+					},
 					"image": {
 						"type": "string"
 					}
@@ -1139,7 +1144,6 @@
 				"required": [
 					"name",
 					"category",
-					"description",
 					"image"
 				],
 				"type": "object",
@@ -1352,6 +1356,16 @@
 								"assets": {
 									"items": {
 										"properties": {
+											"property": {
+												"type": "string"
+											},
+											"type": {
+												"type": "string",
+												"enum": [
+													"blockchain",
+													"game"
+												]
+											},
 											"amount": {
 												"type": "number",
 												"format": "double"
@@ -1435,6 +1449,16 @@
 								"assets": {
 									"items": {
 										"properties": {
+											"property": {
+												"type": "string"
+											},
+											"type": {
+												"type": "string",
+												"enum": [
+													"blockchain",
+													"game"
+												]
+											},
 											"amount": {
 												"type": "number",
 												"format": "double"
