@@ -12,6 +12,7 @@ export interface Event {
       image: string;
       name: string
       amount: number;
+      type?: 'blockchain' | 'game';
     }[]
   }[]
   rewardsGiven: boolean;

@@ -80,7 +80,8 @@ export class EventsService {
               userId: user.userId,
               assetId: asset.uid,
               amount: asset.amount,
-              username: user.username
+              username: user.username,
+              type: asset.type
             }))
           );
         });
@@ -91,27 +92,40 @@ export class EventsService {
           const batch = voucherOperations.slice(i, i + BATCH_SIZE);
           await Promise.all(batch.map(async (op) => {
             try {
-              const result = await vouchersService.giveVoucherToUser(
-                op.userId,
-                op.assetId,
-                op.amount
-              );
-              // Get user data for logging
-              const user = await usersService.get(op.userId);
+              if (op.type == 'game') {
+                const asset = await this.assetsService.getAsset(op.assetId);
+                const property = asset.property;
+                if (asset.name.includes('Rampage')) {
+                  // update document in collection HatchyRampageGameData
+                  // increase the property value by op.amount
+                  const rampageGameDataRef = admin.firestore().collection('HatchyRampageGameData').doc(op.userId);
+                  await rampageGameDataRef.set({
+                    [property]: admin.firestore.FieldValue.increment(op.amount)
+                  }, { merge: true });
+                }
+              } else {
+                const result = await vouchersService.giveVoucherToUser(
+                  op.userId,
+                  op.assetId,
+                  op.amount
+                );
+                // Get user data for logging
+                const user = await usersService.get(op.userId);
 
-              if (user && result.voucher) {
-                // Log the voucher operation
-                await vouchersService.logVoucher({
-                  action: 'giveaway',
-                  vouchersData: [{
-                    ...result.voucher,
-                    amount: op.amount
-                  }],
-                  toUserId: user.uid,
-                  toUserEmail: user.email,
-                  actionUserId: 'system',
-                  actionUserEmail: 'system@hatchypocket.com'
-                });
+                if (user && result.voucher) {
+                  // Log the voucher operation
+                  await vouchersService.logVoucher({
+                    action: 'giveaway',
+                    vouchersData: [{
+                      ...result.voucher,
+                      amount: op.amount
+                    }],
+                    toUserId: user.uid,
+                    toUserEmail: user.email,
+                    actionUserId: 'system',
+                    actionUserEmail: 'system@hatchypocket.com'
+                  });
+                }
               }
               // console.log(`Gave ${op.amount}x ${op.assetId} to ${op.username}`);
             } catch (error) {
