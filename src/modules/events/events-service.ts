@@ -136,9 +136,11 @@ export class EventsService {
       }
 
       // Mark event as completed
-      await doc.ref.update({
-        rewardsGiven: true
-      });
+
+      // dont complete event
+      // await doc.ref.update({
+      //   rewardsGiven: true
+      // });
 
       console.log(`Processed event ${event.uid}: ${event.name}`);
     }));
