@@ -431,12 +431,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-15T03:56:40.282Z"
+						"default": "2025-02-18T23:50:02.073Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-15T03:56:40.282Z"
+						"default": "2025-02-18T23:50:02.073Z"
 					},
 					"name": {
 						"type": "string"
@@ -1555,7 +1555,8 @@
 						]
 					},
 					"holder": {
-						"type": "string"
+						"type": "string",
+						"nullable": true
 					},
 					"name": {
 						"type": "string"

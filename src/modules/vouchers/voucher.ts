@@ -5,7 +5,7 @@ export interface Voucher {
   category: string;
   contract: string;
   contractType: 'ERC20' | 'ERC721' | 'ERC1155';
-  holder: string;
+  holder: string | null;
   name: string;
   type: 'blockchain' | 'game';
   userId: string;
