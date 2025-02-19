@@ -431,12 +431,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-18T23:50:02.073Z"
+						"default": "2025-02-19T04:26:18.375Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-18T23:50:02.073Z"
+						"default": "2025-02-19T04:26:18.375Z"
 					},
 					"name": {
 						"type": "string"
@@ -1594,7 +1594,6 @@
 					"category",
 					"contract",
 					"contractType",
-					"holder",
 					"name",
 					"type",
 					"userId",

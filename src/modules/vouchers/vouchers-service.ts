@@ -71,23 +71,54 @@ export class VouchersService {
       itemsData = await new ItemsService().getItemsByIds(convertedAssets.tokenIds.map(t => Number(t)));
     }
     const batch = admin.firestore().batch();
-    const depositedAssets = convertedAssets.tokenIds.map((tokenId, index) => {
-      return {
-        contract: convertedAssets.assetAddress,
-        tokenId: tokenId.toString(),
-        amount: Number(convertedAssets.amounts[index]),
-        data: itemsData ? itemsData.find(i => i.id === Number(tokenId)) : null
-      };
-    });
-    const vouchers = await this.getVouchersOfUser(user.uid);
-
+    const existingVouchers = await this.getVouchersOfUser(user.uid);
     const depositedVouchers = []
-    // give depositedAssets to the user in the form of vouchers by merging them if they have the same contract and tokenId and creating a new voucher if they don't
-    depositedAssets.forEach(asset => {
-      const voucher = vouchers.find(v => v.contract === asset.contract && v.tokenId === asset.tokenId);
+    let depositedAssets = [];
+
+    if (convertedAssets.assetType === 1) { // ERC1155
+      depositedAssets = convertedAssets.tokenIds.map((tokenId, index) => {
+        return {
+          contract: convertedAssets.assetAddress,
+          tokenId: tokenId.toString(),
+          amount: Number(convertedAssets.amounts[index]),
+          data: itemsData ? itemsData.find(i => i.id === Number(tokenId)) : null
+        };
+      });
+      // give depositedAssets to the user in the form of vouchers by merging them if they have the same contract and tokenId and creating a new voucher if they don't
+      depositedAssets.forEach(asset => {
+        const voucher = existingVouchers.find(v => v.contract === asset.contract && v.tokenId === asset.tokenId);
+        if (voucher) {
+          const voucherRef = this.vouchersCollection.doc(voucher.uid);
+          batch.update(voucherRef, { amount: voucher.amount + asset.amount });
+        } else {
+          const newVoucherRef = this.vouchersCollection.doc();
+          const newVoucher = {
+            uid: newVoucherRef.id,
+            userId: user.uid,
+            holder: mainAsset.holder,
+            contract: mainAsset.contract,
+            contractType: mainAsset.contractType,
+            type: 'blockchain',
+            name: asset.data.name,
+            amount: asset.amount,
+            image: asset.data.image || mainAsset.image,
+            tokenId: asset.tokenId,
+            blockchainId: getRandomUint256(),
+            category: mainAsset.category,
+            // receiver: receiver,
+            createdAt: admin.firestore.FieldValue.serverTimestamp(),
+            updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+          };
+          batch.set(newVoucherRef, newVoucher);
+          depositedVouchers.push(newVoucher);
+        }
+      });
+    }
+    if (convertedAssets.assetType === 2) { // ERC20
+      const voucher = existingVouchers.find(v => v.contract === assetAddress);
       if (voucher) {
         const voucherRef = this.vouchersCollection.doc(voucher.uid);
-        batch.update(voucherRef, { amount: voucher.amount + asset.amount });
+        batch.update(voucherRef, { amount: voucher.amount + parseInt(ethers.utils.formatUnits(convertedAssets.amount)) });
       } else {
         const newVoucherRef = this.vouchersCollection.doc();
         const newVoucher = {
@@ -97,10 +128,9 @@ export class VouchersService {
           contract: mainAsset.contract,
           contractType: mainAsset.contractType,
           type: 'blockchain',
-          name: asset.data.name,
-          amount: asset.amount,
-          image: asset.data.image || mainAsset.image,
-          tokenId: asset.tokenId,
+          name: mainAsset.name,
+          amount: parseInt(ethers.utils.formatUnits(convertedAssets.amount)),
+          image: mainAsset.image,
           blockchainId: getRandomUint256(),
           category: mainAsset.category,
           // receiver: receiver,
@@ -110,8 +140,7 @@ export class VouchersService {
         batch.set(newVoucherRef, newVoucher);
         depositedVouchers.push(newVoucher);
       }
-    });
-
+    }
     await batch.commit();
     await this.statsCollection.doc('vouchers').update({ totalDeposits: totalDepositsProcessed + 1 });
     return depositedVouchers;
@@ -128,7 +157,7 @@ export class VouchersService {
     if (!ethers.utils.isAddress(body.receiver)) {
       throw new BadRequestError('Invalid address');
     }
-    if (body.assetType != 'ERC1155') {
+    if (!(body.assetType === 'ERC1155' || body.assetType === 'ERC20')) {
       throw new BadRequestError('Invalid assetType');
     }
     if (body.assetType === 'ERC1155') {
@@ -141,6 +170,16 @@ export class VouchersService {
         throw new BadRequestError('Insufficient balance');
       }
     }
+    if (body.assetType === 'ERC20') {
+      const erc20Contract = getContract('hatchy', this.chainId);
+      const balance = await erc20Contract.balanceOf(body.receiver);
+      if (balance.lt(body.amount)) {
+        throw new BadRequestError('Insufficient balance for the amount');
+      }
+    }
+    const amount = body.assetType == 'ERC20' ?
+      ethers.utils.parseEther(body.amount.toString()) :
+      undefined;
     const signer = getSigner(this.chainId);
     const secureNonce = generateSecureNonce();
     const hash = ethers.utils.solidityKeccak256(
@@ -151,7 +190,7 @@ export class VouchersService {
         body.assetAddress,
         body.tokenIds || [],
         body.amounts || [],
-        body.amount || 0,
+        amount || 0,
         secureNonce
       ]
     );
@@ -163,7 +202,7 @@ export class VouchersService {
         body.assetAddress,
         body.tokenIds || [],
         body.amounts || [],
-        body.amount || 0,
+        amount || 0,
         secureNonce.toString(),
       ],
       signature

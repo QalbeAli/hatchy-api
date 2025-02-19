@@ -23,6 +23,7 @@ export default {
   joepegsTickets: HatchyTickets.abi,
   tokenSale: TokenSaleABI.abi,
   erc20: erc20,
+  hatchy: erc20,
   eggsGen2: hatchypocketGen2EggsABI.abi,
   hatchypocketGen1: hatchypocketGen1ABI,
   hatchypocketGen1ProxySale: hatchypocketGen1ProxySaleABI.abi,

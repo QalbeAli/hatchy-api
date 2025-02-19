@@ -186,9 +186,11 @@ export class UsersService {
       mainWallet,
     });
 
-    await this.walletUsersCollection.doc(currentMainWallet?.address).update({
-      mainWallet: false,
-    });
+    if (!!currentMainWallet?.address) {
+      await this.walletUsersCollection.doc(currentMainWallet?.address).update({
+        mainWallet: false,
+      });
+    }
 
     await this.walletUsersCollection.doc(mainWallet).update({
       mainWallet: true,
