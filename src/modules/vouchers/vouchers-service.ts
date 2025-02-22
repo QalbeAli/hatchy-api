@@ -373,6 +373,69 @@ export class VouchersService {
     };
   }
 
+  public async createTrade(
+    userId: string,
+    requestAssetsIds: string[],
+    requestAmounts: number[],
+    offerVoucherIds: string[],
+    offerAmounts: number[],
+  ) {
+    /*
+      1. verify that the user has the offer voucher ids and amounts 
+      2. verify that the asset ids exists on the assets collection
+      3. create trade document on trades collection with the array with complete data of requested assets and offered assets plus an empty array of users optional offers
+    */
+
+    const requestAssets = await this.assetsService.getAssetsByIds(requestAssetsIds);
+    const offerVouchers = await this.getVouchersByIds(offerVoucherIds);
+
+    if (requestAssets.length !== requestAssetsIds.length) {
+      throw new BadRequestError('Invalid request assets');
+    }
+    if (offerVouchers.length !== offerVoucherIds.length) {
+      throw new BadRequestError('Invalid offer vouchers');
+    }
+
+    if (offerVouchers.some(v => v.userId !== userId)) {
+      throw new BadRequestError('Offer vouchers do not belong to user');
+    }
+
+    if (offerVouchers.some(v => v.amount <= 0)) {
+      throw new BadRequestError('Offer amount should be greater than 0');
+    }
+
+    const tradeRef = admin.firestore().collection('trades').doc();
+    const trade = {
+      uid: tradeRef.id,
+      userId,
+      requestAssets: requestAssets.map(a => ({
+        uid: a.uid,
+        name: a.name,
+        image: a.image,
+        contract: a.contract,
+        contractType: a.contractType,
+        category: a.category,
+        amount: requestAmounts[requestAssets.indexOf(a)],
+        tokenId: a.tokenId
+      })),
+      offerAssets: offerVouchers.map(v => ({
+        uid: v.uid,
+        name: v.name,
+        image: v.image,
+        contract: v.contract,
+        contractType: v.contractType,
+        category: v.category,
+        amount: offerAmounts[offerVouchers.indexOf(v)],
+        tokenId: v.tokenId
+      })),
+      usersOffers: [],
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    };
+    await tradeRef.set(trade);
+    return trade;
+  }
+
   public async transferVouchers(userId: string, voucherIds: string[], voucherAmounts: number[], receiverEmail: string) {
     /*
       transfer voucher amounts to the receiverEmail user

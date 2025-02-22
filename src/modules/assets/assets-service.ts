@@ -25,6 +25,11 @@ export class AssetsService {
     return snapshot.docs.map(doc => doc.data() as Asset);
   }
 
+  public async getAssetsByIds(ids: string[]): Promise<Asset[]> {
+    const snapshot = await admin.firestore().collection('assets').where('uid', 'in', ids).get();
+    return snapshot.docs.map(doc => doc.data() as Asset);
+  }
+
   public async createAsset(asset: CreateAssetParams): Promise<Asset> {
     const docRef = admin.firestore().collection('assets').doc();
     const uid = docRef.id;

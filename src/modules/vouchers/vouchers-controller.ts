@@ -120,6 +120,43 @@ export class VouchersController extends Controller {
   }
 
   @Security("jwt")
+  @Post("trade")
+  public async createTrade(
+    @Request() request: any,
+    @Body() body: {
+      requestAssetsIds: string[],
+      requestAmounts: number[],
+      offerVoucherIds: string[],
+      offerAmounts: number[]
+    },
+  ): Promise<MessageResponse> {
+    if (body.requestAmounts.some(amount => amount <= 0)) {
+      throw new BadRequestError('Invalid amounts');
+    }
+    if (body.offerAmounts.some(amount => amount <= 0)) {
+      throw new BadRequestError('Invalid amounts');
+    }
+    if (body.requestAssetsIds.length !== body.requestAmounts.length) {
+      throw new BadRequestError('Request assets ids and amounts must have the same length');
+    }
+    if (body.offerVoucherIds.length !== body.offerAmounts.length) {
+      throw new BadRequestError('Offer assets ids and amounts must have the same length');
+    }
+    const voucherService = new VouchersService();
+    await voucherService.createTrade(
+      request.user.uid,
+      body.requestAssetsIds,
+      body.requestAmounts,
+      body.offerVoucherIds,
+      body.offerAmounts,
+    );
+
+    return {
+      message: 'Trade created',
+    }
+  }
+
+  @Security("jwt")
   @Post("transfer")
   public async transferVouchers(
     @Request() request: any,

@@ -55,26 +55,26 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 export const init = (async () => {
-  DI.orm = await MikroORM.init();
-  DI.em = DI.orm.em;
-  DI.scores = DI.orm.em.getRepository(Score);
-  DI.traitGenders = DI.orm.em.getRepository(TraitGender);
-  DI.traitColors = DI.orm.em.getRepository(TraitColor);
-  DI.traitTypes = DI.orm.em.getRepository(TraitType);
-  DI.traits = DI.orm.em.getRepository(Trait);
-  DI.items = DI.orm.em.getRepository(Item);
-  DI.itemTypes = DI.orm.em.getRepository(ItemType);
-  DI.itemCategories = DI.orm.em.getRepository(ItemCategory);
-  DI.itemLayers = DI.orm.em.getRepository(ItemLayer);
-  DI.mastersLootboxes = DI.orm.em.getRepository(MastersLootbox);
-  DI.mastersAvatars = DI.orm.em.getRepository(MastersAvatar);
-  DI.mastersAvatarsPrice = DI.orm.em.getRepository(MastersAvatarPrice);
-  DI.apiKeys = DI.orm.em.getRepository(ApiKey);
-  DI.tickets = DI.orm.em.getRepository(Ticket);
+  // DI.orm = await MikroORM.init();
+  // DI.em = DI.orm.em;
+  // DI.scores = DI.orm.em.getRepository(Score);
+  // DI.traitGenders = DI.orm.em.getRepository(TraitGender);
+  // DI.traitColors = DI.orm.em.getRepository(TraitColor);
+  // DI.traitTypes = DI.orm.em.getRepository(TraitType);
+  // DI.traits = DI.orm.em.getRepository(Trait);
+  // DI.items = DI.orm.em.getRepository(Item);
+  // DI.itemTypes = DI.orm.em.getRepository(ItemType);
+  // DI.itemCategories = DI.orm.em.getRepository(ItemCategory);
+  // DI.itemLayers = DI.orm.em.getRepository(ItemLayer);
+  // DI.mastersLootboxes = DI.orm.em.getRepository(MastersLootbox);
+  // DI.mastersAvatars = DI.orm.em.getRepository(MastersAvatar);
+  // DI.mastersAvatarsPrice = DI.orm.em.getRepository(MastersAvatarPrice);
+  // DI.apiKeys = DI.orm.em.getRepository(ApiKey);
+  // DI.tickets = DI.orm.em.getRepository(Ticket);
 
   app.use(json());
   app.use(cors());
-  app.use((req, res, next) => RequestContext.create(DI.orm.em, next));
+  // app.use((req, res, next) => RequestContext.create(DI.orm.em, next));
   app.use(transformTimestampMiddleware);
   RegisterRoutes(app);
   app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
@@ -87,7 +87,8 @@ export const init = (async () => {
     eventsService.giveEventRewards();
   });
 
-  DI.server = app.listen(PORT, () => {
+  // DI.server = 
+  app.listen(PORT, () => {
     console.log(`Server Listening on PORT: ${PORT} http://localhost:${PORT}`);
   });
 })();

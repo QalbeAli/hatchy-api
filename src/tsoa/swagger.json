@@ -431,12 +431,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-19T04:26:18.375Z"
+						"default": "2025-02-22T05:07:52.160Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-19T04:26:18.375Z"
+						"default": "2025-02-22T05:07:52.160Z"
 					},
 					"name": {
 						"type": "string"
@@ -1527,6 +1527,95 @@
 			},
 			"CreateEventParams": {
 				"$ref": "#/components/schemas/Omit_Event.uid_"
+			},
+			"TradeAsset": {
+				"properties": {
+					"amount": {
+						"type": "number",
+						"format": "double"
+					},
+					"category": {
+						"type": "string"
+					},
+					"contract": {
+						"type": "string"
+					},
+					"contractType": {
+						"type": "string",
+						"enum": [
+							"ERC20",
+							"ERC721",
+							"ERC1155"
+						]
+					},
+					"image": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"tokenId": {
+						"type": "string"
+					},
+					"uid": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"amount",
+					"category",
+					"contract",
+					"contractType",
+					"name",
+					"uid"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Trade": {
+				"properties": {
+					"requestAssets": {
+						"items": {
+							"$ref": "#/components/schemas/TradeAsset"
+						},
+						"type": "array"
+					},
+					"offerAssets": {
+						"items": {
+							"$ref": "#/components/schemas/TradeAsset"
+						},
+						"type": "array"
+					},
+					"usersOffers": {
+						"items": {
+							"$ref": "#/components/schemas/TradeAsset"
+						},
+						"type": "array"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"uid": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"requestAssets",
+					"offerAssets",
+					"usersOffers",
+					"createdAt",
+					"updatedAt",
+					"userId",
+					"uid"
+				],
+				"type": "object",
+				"additionalProperties": false
 			},
 			"Voucher": {
 				"properties": {
@@ -4756,6 +4845,64 @@
 				]
 			}
 		},
+		"/trades": {
+			"get": {
+				"operationId": "GetTrades",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Trade"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Trades"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/trades/me": {
+			"get": {
+				"operationId": "GetMyTrades",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Trade"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Trades"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
 		"/vouchers": {
 			"get": {
 				"operationId": "GetVouchers",
@@ -4910,6 +5057,76 @@
 									"amount",
 									"assetId",
 									"email"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/vouchers/trade": {
+			"post": {
+				"operationId": "CreateTrade",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Vouchers"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"offerAmounts": {
+										"items": {
+											"type": "number",
+											"format": "double"
+										},
+										"type": "array"
+									},
+									"offerVoucherIds": {
+										"items": {
+											"type": "string"
+										},
+										"type": "array"
+									},
+									"requestAmounts": {
+										"items": {
+											"type": "number",
+											"format": "double"
+										},
+										"type": "array"
+									},
+									"requestAssetsIds": {
+										"items": {
+											"type": "string"
+										},
+										"type": "array"
+									}
+								},
+								"required": [
+									"offerAmounts",
+									"offerVoucherIds",
+									"requestAmounts",
+									"requestAssetsIds"
 								],
 								"type": "object"
 							}
