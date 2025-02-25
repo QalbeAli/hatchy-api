@@ -61,6 +61,7 @@ const models: TsoaRoute.Models = {
             "referrerId": {"dataType":"string"},
             "displayName": {"dataType":"string"},
             "picture": {"dataType":"string"},
+            "photoUrl": {"dataType":"string"},
             "disabled": {"dataType":"boolean"},
             "roles": {"dataType":"array","array":{"dataType":"string"}},
             "bio": {"dataType":"string"},
@@ -224,8 +225,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-02-22T05:07:52.160Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-02-22T05:07:52.160Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-02-25T18:59:03.906Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-02-25T18:59:03.907Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},

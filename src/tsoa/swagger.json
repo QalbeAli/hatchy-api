@@ -31,6 +31,9 @@
 					"picture": {
 						"type": "string"
 					},
+					"photoUrl": {
+						"type": "string"
+					},
 					"disabled": {
 						"type": "boolean"
 					},
@@ -431,12 +434,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-22T05:07:52.160Z"
+						"default": "2025-02-25T18:59:03.906Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-02-22T05:07:52.160Z"
+						"default": "2025-02-25T18:59:03.907Z"
 					},
 					"name": {
 						"type": "string"

@@ -6,6 +6,7 @@ export interface User {
   referrerId?: string;  // ID of the user who referred this user
   displayName?: string;
   picture?: string;
+  photoUrl?: string;
   disabled?: boolean;
   roles?: string[];
   bio?: string;
