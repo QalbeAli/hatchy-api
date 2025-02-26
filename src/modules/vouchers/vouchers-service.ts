@@ -446,11 +446,6 @@ export class VouchersService {
       5. if the receiver user already has a voucher with that contract address and tokenId, add the amount to the existing voucher
       6. if the receiver user does not have a voucher with that contract address and tokenId, create a new voucher
     */
-
-    if (!isEmail(receiverEmail)) {
-      throw new BadRequestError('Invalid email');
-    }
-
     const receiver = await new UsersService().getUserByEmail(receiverEmail);
     if (!receiver) {
       throw new BadRequestError('Receiver not found');

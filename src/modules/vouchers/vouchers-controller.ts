@@ -166,12 +166,29 @@ export class VouchersController extends Controller {
       receiverEmail: string,
     },
   ): Promise<MessageResponse> {
+    if (!isEmail(body.receiverEmail)) {
+      throw new BadRequestError('Invalid email');
+    }
     if (body.receiverEmail === request.user.email) {
       throw new BadRequestError('Cannot transfer to yourself');
     }
     if (body.voucherAmounts.some(amount => amount <= 0)) {
       throw new BadRequestError('Invalid voucher amounts');
     }
+    if (body.voucherIds.length !== body.voucherAmounts.length) {
+      throw new BadRequestError('Voucher ids and amounts must have the same length');
+    }
+
+    if (body.voucherIds.length === 0) {
+      throw new BadRequestError('No vouchers to transfer');
+    }
+
+    // check that voucher ids are unique
+    const uniqueVoucherIds = new Set(body.voucherIds);
+    if (uniqueVoucherIds.size !== body.voucherIds.length) {
+      throw new BadRequestError('Voucher ids must be unique');
+    }
+
     const voucherService = new VouchersService();
     const res = await voucherService.transferVouchers(request.user.uid, body.voucherIds, body.voucherAmounts, body.receiverEmail);
 
