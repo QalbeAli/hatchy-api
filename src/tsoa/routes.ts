@@ -225,8 +225,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-02-28T04:37:31.236Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-02-28T04:37:31.237Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-02-28T23:19:42.292Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-02-28T23:19:42.294Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -2874,6 +2874,37 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'getMyTrades',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/trades/:id',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(TradesController)),
+            ...(fetchMiddlewares<RequestHandler>(TradesController.prototype.getTrade)),
+
+            async function TradesController_getTrade(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new TradesController();
+
+              await templateService.apiHandler({
+                methodName: 'getTrade',
                 controller,
                 response,
                 next,
