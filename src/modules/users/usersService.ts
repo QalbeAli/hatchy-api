@@ -1,6 +1,7 @@
 import { BadRequestError } from "../../errors/bad-request-error";
 import { NotFoundError } from "../../errors/not-found-error";
 import { admin } from "../../firebase/firebase";
+import { LeaderboardService } from "../leaderboard/leaderboard-service";
 import { User } from "./user";
 import { Wallet } from "./wallet";
 
@@ -16,6 +17,7 @@ export class UsersService {
   private referralRelationsCollection = admin.firestore().collection('referral-relationships');
   private gameSavesCollection = admin.firestore().collection('game-saves');
   private vouchersCollection = admin.firestore().collection('vouchers');
+  private leaderboardService = new LeaderboardService();
 
   public async getUserByLinkedWallet(address: string): Promise<User> {
     const wallet = await this.walletUsersCollection.doc(address).get();
@@ -45,11 +47,21 @@ export class UsersService {
       referralCode?: string;
     }
   ): Promise<User> {
-    await this.collection.doc(uid).update({
-      displayName: body.displayName,
-      bio: body.bio,
-      referralCode: body.referralCode,
-    });
+    const updateData = {}
+    if (body.displayName) {
+      updateData['displayName'] = body.displayName;
+    }
+    if (body.bio) {
+      updateData['bio'] = body.bio;
+    }
+    if (body.referralCode) {
+      updateData['referralCode'] = body.referralCode;
+    }
+    await this.collection.doc(uid).update(updateData);
+    if (body.displayName) {
+      // update display name in ranks
+      await this.leaderboardService.updateUserRankDisplayName(uid, body.displayName);
+    }
     return await this.get(uid);
   }
 

@@ -157,4 +157,28 @@ export class LeaderboardService {
       rank: doc.data().rank,
     };
   }
+
+  public async updateUserRankDisplayName(userId: string, displayName: string): Promise<void> {
+    const querySnapshot = await admin.firestore().collection('ranks')
+      .where('userId', '==', userId)
+      .get();
+    if (!querySnapshot.empty) {
+      querySnapshot.docs.forEach(async (doc) => {
+        await doc.ref.update({
+          username: displayName,
+        });
+      });
+    }
+
+    const querySnapshotScores = await admin.firestore().collection('scores')
+      .where('userId', '==', userId)
+      .get();
+    if (!querySnapshotScores.empty) {
+      querySnapshotScores.docs.forEach(async (doc) => {
+        await doc.ref.update({
+          username: displayName,
+        });
+      });
+    }
+  }
 }
