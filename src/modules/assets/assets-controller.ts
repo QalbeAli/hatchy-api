@@ -12,10 +12,10 @@ import { Asset } from "./asset";
 import { AssetsService } from "./assets-service";
 import { CreateAssetParams } from "./create-asset-params";
 
-@Security("jwt", ["admin"])
 @Route("assets")
 @Tags("Assets")
 export class AssetsController extends Controller {
+  @Security("jwt")
   @Get("")
   public async getAssets(
   ): Promise<Asset[]> {
@@ -23,6 +23,7 @@ export class AssetsController extends Controller {
     return assets;
   }
 
+  @Security("jwt", ["admin"])
   @Post("")
   public async createAsset(
     @Body() body: CreateAssetParams,
@@ -31,6 +32,7 @@ export class AssetsController extends Controller {
     return asset;
   }
 
+  @Security("jwt", ["admin"])
   @Delete("{uid}")
   public async deleteAsset(
     uid: string,

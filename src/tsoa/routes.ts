@@ -225,8 +225,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-02-25T19:03:14.350Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-02-25T19:03:14.351Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-02-28T04:37:31.236Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-02-28T04:37:31.237Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -2428,7 +2428,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.get('/assets',
-            authenticateMiddleware([{"jwt":["admin"]}]),
+            authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(AssetsController)),
             ...(fetchMiddlewares<RequestHandler>(AssetsController.prototype.getAssets)),
 
