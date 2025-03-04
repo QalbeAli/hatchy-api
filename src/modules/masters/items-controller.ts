@@ -135,9 +135,6 @@ export class ItemsController extends Controller {
     @Query() includeVouchers?: boolean,
   ): Promise<MastersItemBalance[]> {
     const linkedWallets = await new UsersService().getLinkedWallets(request.user.uid);
-    if (!linkedWallets || linkedWallets.length === 0) {
-      throw new NotFoundError("No linked wallet found for the user");
-    }
     const itemsService = new ItemsService(chainId || DefaultChainId);
     const balancePromises = linkedWallets.map(w => itemsService.getItemsBalance(w.address));
     const itemsBalanceArray = await Promise.all(balancePromises);

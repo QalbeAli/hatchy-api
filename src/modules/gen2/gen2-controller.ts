@@ -3,13 +3,15 @@ import {
   Controller,
   Get,
   Post,
+  Request,
   Route,
+  Security,
   Tags,
 } from "tsoa";
 import { isAddress } from "ethers/lib/utils";
 import { DefaultChainId } from "../contracts/networks";
 import { CoingeckoService } from "../../services/CoingeckoService";
-import { Gen2Service } from "../../services/Gen2Service";
+import { Gen2Service } from "./gen2-Service";
 import { BigNumber, ethers } from "ethers";
 import { gen2DiscountMultiplier, gen2MaxPrice, gen2UsdtPrice } from "../../constants";
 import { NotFoundError } from "../../errors/not-found-error";
@@ -67,4 +69,21 @@ export class Gen2Controller extends Controller {
       price: Number(hatchyPrice)
     };
   }
+
+  /*
+  @Security("jwt")
+  @Get("balance")
+  public async getGen2Balance(
+    @Request() request: any,
+  ): Promise<{
+    balance: number;
+  }> {
+    const chainId = DefaultChainId;
+    const gen2Service = new Gen2Service(chainId);
+    const balance = await gen2Service.getGen2Balance(this.request.user.uid);
+    return {
+      balance: balance.toNumber()
+    };
+  }
+  */
 }

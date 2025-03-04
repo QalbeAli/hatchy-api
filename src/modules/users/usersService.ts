@@ -179,6 +179,9 @@ export class UsersService {
 
   public async getLinkedWallets(uid: string): Promise<Wallet[]> {
     const wallets = await this.walletUsersCollection.where('userId', '==', uid).get();
+    if (wallets.empty) {
+      return [];
+    }
     return wallets.docs.map((doc) => doc.data() as Wallet);
   }
 
