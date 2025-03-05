@@ -142,7 +142,9 @@ export class UsersService {
         .get();
 
       vouchersDocs.docs.forEach(doc => {
-        batch.delete(doc.ref);
+        batch.update(doc.ref, {
+          email: userData.email
+        })
       });
 
       // 6. Delete linked wallets
