@@ -1,0 +1,3747 @@
+[
+  {
+    "name": "Bamboozler",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/bamboozler_framed.gif",
+    "description": "Although they might appear slow and simple, they are known to attack aggressively with quick combos of punches and kicks.",
+    "rarity": "Common",
+    "height": 180,
+    "weight": 140,
+    "sound": "bamboozler.wav",
+    "element": "Plant",
+    "monsterId": 40,
+    "shiny": "bamboozler_shiny.gif",
+    "framed": "bamboozler_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 180
+      },
+      {
+        "trait_type": "Weight",
+        "value": 140
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 40
+      }
+    ]
+  },
+  {
+    "name": "Slobloom",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/slobloom_framed.gif",
+    "description": "Sloblooms are notorious for picking fights with those who deny their beauty.",
+    "rarity": "Common",
+    "height": 140,
+    "weight": 50,
+    "sound": "slobloom.wav",
+    "element": "Plant",
+    "monsterId": 41,
+    "shiny": "slobloom_shiny.gif",
+    "framed": "slobloom_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 140
+      },
+      {
+        "trait_type": "Weight",
+        "value": 50
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 41
+      }
+    ]
+  },
+  {
+    "name": "Lunashroom",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/lunashroom_framed.gif",
+    "description": "A Lunashroom is a solitary monster with toxic fungi on its head and back for defense. They can emit fatal nitrogenous clouds from their breath.",
+    "rarity": "Common",
+    "height": 90,
+    "weight": 40,
+    "sound": "lunashroom.wav",
+    "element": "Plant",
+    "monsterId": 42,
+    "shiny": "lunashroom_shiny.gif",
+    "framed": "lunashroom_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 90
+      },
+      {
+        "trait_type": "Weight",
+        "value": 40
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 42
+      }
+    ]
+  },
+  {
+    "name": "Floreen",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/floreen_framed.gif",
+    "description": "Floreens move quickly through the air and disorient attackers with their stunning beauty and pollenated displays.",
+    "rarity": "Common",
+    "height": 175,
+    "weight": 55,
+    "sound": "floreen.wav",
+    "element": "Plant",
+    "monsterId": 43,
+    "shiny": "floreen_shiny.gif",
+    "framed": "floreen_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 175
+      },
+      {
+        "trait_type": "Weight",
+        "value": 55
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 43
+      }
+    ]
+  },
+  {
+    "name": "Absolopede",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/absolopede_framed.gif",
+    "description": "In spite of its intimidating size, Absolopedes are unusually friendly even in the wild. They are prone to hugging and often refuse to let go, which can be unintentionally fatal.",
+    "rarity": "Common",
+    "height": 220,
+    "weight": 200,
+    "sound": "absolopede.wav",
+    "element": "Plant",
+    "monsterId": 44,
+    "shiny": "absolopede_shiny.gif",
+    "framed": "absolopede_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 220
+      },
+      {
+        "trait_type": "Weight",
+        "value": 200
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 44
+      }
+    ]
+  },
+  {
+    "name": "Carathorn",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/carathorn_framed.gif",
+    "description": "These strange monsters pretend to be part of the forest. The Carathorn hunts via movement, so remaining calm is the best defense against its long, spiked horn and venomous gaze.",
+    "rarity": "Common",
+    "height": 160,
+    "weight": 60,
+    "sound": "carathorn.wav",
+    "element": "Plant",
+    "monsterId": 45,
+    "shiny": "carathorn_shiny.gif",
+    "framed": "carathorn_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 160
+      },
+      {
+        "trait_type": "Weight",
+        "value": 60
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 45
+      }
+    ]
+  },
+  {
+    "name": "Terassus",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/terassus_framed.gif",
+    "description": "This prehistoric monster survives through the vitality of the forest and the beauty of its flowers. It tramples anyone or anything that threatens its trees and meadows, for the Terassus bears the weight of life.",
+    "rarity": "Common",
+    "height": 320,
+    "weight": 2000,
+    "sound": "terassus.wav",
+    "element": "Plant",
+    "monsterId": 46,
+    "shiny": "terassus_shiny.gif",
+    "framed": "terassus_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 320
+      },
+      {
+        "trait_type": "Weight",
+        "value": 2000
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 46
+      }
+    ]
+  },
+  {
+    "name": "Turtapollen",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/turtapollen_framed.gif",
+    "description": "The Turtapollen is a prehistoric monster that erupts with blinding and choking pollen. Its shell is harder than diamond, and it sparkles with the ancient power of the forest.",
+    "rarity": "Common",
+    "height": 160,
+    "weight": 150,
+    "sound": "turtapollen.wav",
+    "element": "Plant",
+    "monsterId": 47,
+    "shiny": "turtapollen_shiny.gif",
+    "framed": "turtapollen_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 160
+      },
+      {
+        "trait_type": "Weight",
+        "value": 150
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 47
+      }
+    ]
+  },
+  {
+    "name": "Vindroll",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/vindroll_framed.gif",
+    "description": "A stealthy, carnivorous plant that appears as a beautiful shrub. It ambushes its prey by unleashing sharp blades of grass in fierce and quick attacks.",
+    "rarity": "Common",
+    "height": 140,
+    "weight": 30,
+    "sound": "vindroll.wav",
+    "element": "Plant",
+    "monsterId": 48,
+    "shiny": "vindroll_shiny.gif",
+    "framed": "vindroll_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 140
+      },
+      {
+        "trait_type": "Weight",
+        "value": 30
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 48
+      }
+    ]
+  },
+  {
+    "name": "Pongo",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/pongo_framed.gif",
+    "description": "These powerful cyclopic monsters are able to move through the forest unnoticed. They are highly sentient and make tools and weapons with large branches.",
+    "rarity": "Common",
+    "height": 190,
+    "weight": 800,
+    "sound": "pongo.wav",
+    "element": "Plant",
+    "monsterId": 49,
+    "shiny": "pongo_shiny.gif",
+    "framed": "pongo_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 190
+      },
+      {
+        "trait_type": "Weight",
+        "value": 800
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 49
+      }
+    ]
+  },
+  {
+    "name": "Mancia",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/mancia_framed.gif",
+    "description": "Mancia are usually found hanging down on jungle branches waiting to catch unsuspecting prey with their tentacle like petals.",
+    "rarity": "Common",
+    "height": 110,
+    "weight": 100,
+    "sound": "mancia.wav",
+    "element": "Plant",
+    "monsterId": 50,
+    "shiny": "mancia_shiny.gif",
+    "framed": "mancia_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 110
+      },
+      {
+        "trait_type": "Weight",
+        "value": 100
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 50
+      }
+    ]
+  },
+  {
+    "name": "Buzzkill",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/buzzkill_framed.gif",
+    "description": "The herculean Buzzkill is a knightly force unto itself, capable of rapid flight, opponents who are shown mercy often only remember a loud buzzing blur before darkness.",
+    "rarity": "Common",
+    "height": 180,
+    "weight": 150,
+    "sound": "buzzkill.wav",
+    "element": "Plant",
+    "monsterId": 51,
+    "shiny": "buzzkill_shiny.gif",
+    "framed": "buzzkill_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 180
+      },
+      {
+        "trait_type": "Weight",
+        "value": 150
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 51
+      }
+    ]
+  },
+  {
+    "name": "Lignicia",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/lignicia_framed.gif",
+    "description": "Lignicia are usually deep in the forests and camouflage so well, they are often not seen or heard, many wonder if they exist at all.",
+    "rarity": "Common",
+    "height": 175,
+    "weight": 75,
+    "sound": "lignicia.wav",
+    "element": "Plant",
+    "monsterId": 52,
+    "shiny": "lignicia_shiny.gif",
+    "framed": "lignicia_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 175
+      },
+      {
+        "trait_type": "Weight",
+        "value": 75
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 52
+      }
+    ]
+  },
+  {
+    "name": "Growilla",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/growilla_framed.gif",
+    "description": "The Growilla is territorial like many other primates. Despite its size, the Growilla is very agile and will display its tremendous speed and strength if it feels threatened.",
+    "rarity": "Common",
+    "height": 185,
+    "weight": 450,
+    "sound": "growilla.wav",
+    "element": "Plant",
+    "monsterId": 53,
+    "shiny": "growilla_shiny.gif",
+    "framed": "growilla_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 185
+      },
+      {
+        "trait_type": "Weight",
+        "value": 450
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 53
+      }
+    ]
+  },
+  {
+    "name": "Tronk",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/tronk_framed.gif",
+    "description": "Tronks are feral forest monsters who spend their youths in search of the perfect fighting log. Although not especially blood-thirsty, their competitiveness and athletic vigor often leads to rough housing.",
+    "rarity": "Common",
+    "height": 195,
+    "weight": 120,
+    "sound": "tronk.wav",
+    "element": "Plant",
+    "monsterId": 54,
+    "shiny": "tronk_shiny.gif",
+    "framed": "tronk_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 195
+      },
+      {
+        "trait_type": "Weight",
+        "value": 120
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 54
+      }
+    ]
+  },
+  {
+    "name": "Pumelkin",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/pumelkin_framed.gif",
+    "description": "Pumelkins are aggressive monsters who aspire to compete in hatchy tournaments. They are easily pocketed by worthy Summoners but will fight ferociously against those it deems unworthy.",
+    "rarity": "Common",
+    "height": 140,
+    "weight": 90,
+    "sound": "pumelkin.wav",
+    "element": "Plant",
+    "monsterId": 55,
+    "shiny": "pumelkin_shiny.gif",
+    "framed": "pumelkin_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 140
+      },
+      {
+        "trait_type": "Weight",
+        "value": 90
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 55
+      }
+    ]
+  },
+  {
+    "name": "Shrubasaur",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/shrubasaur_framed.gif",
+    "description": "Shrubasaurs live in underground burrows and are often found in tall grass. These herbivores can change their skin color and texture to match the environment, even appearing as a leafless tree.",
+    "rarity": "Common",
+    "height": 170,
+    "weight": 150,
+    "sound": "shrubasaur.wav",
+    "element": "Plant",
+    "monsterId": 56,
+    "shiny": "shrubasaur_shiny.gif",
+    "framed": "shrubasaur_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 170
+      },
+      {
+        "trait_type": "Weight",
+        "value": 150
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 56
+      }
+    ]
+  },
+  {
+    "name": "Rhynocker",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/rhynocker_framed.gif",
+    "description": "Rhynockers dwell on the edges of forests and defend their territories with devastating charges. These large monsters will roll and lift boulders with their horns to form small caves for their young.",
+    "rarity": "Common",
+    "height": 250,
+    "weight": 3300,
+    "sound": "rhynocker.wav",
+    "element": "Plant",
+    "monsterId": 57,
+    "shiny": "rhynocker_shiny.gif",
+    "framed": "rhynocker_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 250
+      },
+      {
+        "trait_type": "Weight",
+        "value": 3300
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 57
+      }
+    ]
+  },
+  {
+    "name": "Behemoth",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/behemoth_framed.gif",
+    "description": "Fast, ferocious, and voracious, a Behemoth is most dangerous when pushed against the ropes. As a last resort, these monsters deploy their powerful stingers and weaken themselves to paralyze their opponents.",
+    "rarity": "Common",
+    "height": 180,
+    "weight": 80,
+    "sound": "behemoth.wav",
+    "element": "Plant",
+    "monsterId": 58,
+    "shiny": "behemoth_shiny.gif",
+    "framed": "behemoth_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 180
+      },
+      {
+        "trait_type": "Weight",
+        "value": 80
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 58
+      }
+    ]
+  },
+  {
+    "name": "Leaffur",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/leaffur_framed.gif",
+    "description": "Leaffurs travel as large families throughout the forest and defend themselves with surprising strength and courage. They are very protective of their Summoners and will often pre-emptively attack a perceived opponent.",
+    "rarity": "Common",
+    "height": 150,
+    "weight": 30,
+    "sound": "leaffur.wav",
+    "element": "Plant",
+    "monsterId": 59,
+    "shiny": "leaffur_shiny.gif",
+    "framed": "leaffur_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 150
+      },
+      {
+        "trait_type": "Weight",
+        "value": 30
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 59
+      }
+    ]
+  },
+  {
+    "name": "Boppelsmash",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/boppelsmash_framed.gif",
+    "description": "The Boppelsmash is an extremely athletic monster that jumps high in the air before crashing downward. Its impact creates small-scale tremors that can disorient its opponents.",
+    "rarity": "Common",
+    "height": 165,
+    "weight": 40,
+    "sound": "boppelsmash.wav",
+    "element": "Plant",
+    "monsterId": 60,
+    "shiny": "boppelsmash_shiny.gif",
+    "framed": "boppelsmash_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 165
+      },
+      {
+        "trait_type": "Weight",
+        "value": 40
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 60
+      }
+    ]
+  },
+  {
+    "name": "Biguana",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/biguana_framed.gif",
+    "description": "Biguana are agile fighters with powerful tails and fast kicks. Each Biguana develops its own fighting style, making them tough to predict.",
+    "rarity": "Common",
+    "height": 170,
+    "weight": 90,
+    "sound": "biguana.wav",
+    "element": "Plant",
+    "monsterId": 61,
+    "shiny": "biguana_shiny.gif",
+    "framed": "biguana_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 170
+      },
+      {
+        "trait_type": "Weight",
+        "value": 90
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 61
+      }
+    ]
+  },
+  {
+    "name": "Kalobber",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/kalobber_framed.gif",
+    "description": "Although it may appear lumbering and soft, a Kalobber eats leaves high up in trees, ready to drop down on unwary intruders.",
+    "rarity": "Common",
+    "height": 160,
+    "weight": 50,
+    "sound": "kalobber.wav",
+    "element": "Plant",
+    "monsterId": 62,
+    "shiny": "kalobber_shiny.gif",
+    "framed": "kalobber_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 160
+      },
+      {
+        "trait_type": "Weight",
+        "value": 50
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 62
+      }
+    ]
+  },
+  {
+    "name": "Hadrowhip",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/hadrowhip_framed.gif",
+    "description": "Hadrowhips shoot high-pressure water beams that whip across the waves and pierce through sheets of metal.",
+    "rarity": "Common",
+    "height": 188,
+    "weight": 100,
+    "sound": "hadrowhip.wav",
+    "element": "Water",
+    "monsterId": 63,
+    "shiny": "hadrowhip_shiny.gif",
+    "framed": "hadrowhip_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 188
+      },
+      {
+        "trait_type": "Weight",
+        "value": 100
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 63
+      }
+    ]
+  },
+  {
+    "name": "Psyren",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/psyren_framed.gif",
+    "description": "Psyrens are shy hatchies that usually avoid humans. They are found in small groups on exposed sea rocks, where their singing ironically attracts others to their beautiful sounds.",
+    "rarity": "Common",
+    "height": 176,
+    "weight": 60,
+    "sound": "psyren.wav",
+    "element": "Water",
+    "monsterId": 64,
+    "shiny": "psyren_shiny.gif",
+    "framed": "psyren_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 176
+      },
+      {
+        "trait_type": "Weight",
+        "value": 60
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 64
+      }
+    ]
+  },
+  {
+    "name": "Tentakill",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/tentakill_framed.gif",
+    "description": "Usually solitary in nature, a Tentakill has eight venemous tentacles and two strong arms that paralyze and immobilize their prey.",
+    "rarity": "Common",
+    "height": 168,
+    "weight": 48,
+    "sound": "tentakill.wav",
+    "element": "Water",
+    "monsterId": 65,
+    "shiny": "tentakill_shiny.gif",
+    "framed": "tentakill_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 168
+      },
+      {
+        "trait_type": "Weight",
+        "value": 48
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 65
+      }
+    ]
+  },
+  {
+    "name": "Clashsicle",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/clashsicle_framed.gif",
+    "description": "Able to move quickly through ice sheets and snow drifts, Clashicles channel water energy into sharp spears and projectiles.",
+    "rarity": "Common",
+    "height": 175,
+    "weight": 45,
+    "sound": "clashsicle.wav",
+    "element": "Water",
+    "monsterId": 66,
+    "shiny": "clashsicle_shiny.gif",
+    "framed": "clashsicle_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 175
+      },
+      {
+        "trait_type": "Weight",
+        "value": 45
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 66
+      }
+    ]
+  },
+  {
+    "name": "Platasaur",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/platasaur_framed.gif",
+    "description": "Platasaur are able to blast a powerful stream of bubbles with their mouth that can knock down their target.",
+    "rarity": "Common",
+    "height": 160,
+    "weight": 70,
+    "sound": "platasaur.wav",
+    "element": "Water",
+    "monsterId": 67,
+    "shiny": "platasaur_shiny.gif",
+    "framed": "platasaur_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 160
+      },
+      {
+        "trait_type": "Weight",
+        "value": 70
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 67
+      }
+    ]
+  },
+  {
+    "name": "Swordsnout",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/swordsnout_framed.gif",
+    "description": "Swordsnouts pierce through the ocean with their sharp beak-like noses and can swim great distances at top speed without relenting. They are fierce rivals against Sharakusii.",
+    "rarity": "Common",
+    "height": 190,
+    "weight": 95,
+    "sound": "swordsnout.wav",
+    "element": "Water",
+    "monsterId": 68,
+    "shiny": "swordsnout_shiny.gif",
+    "framed": "swordsnout_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 190
+      },
+      {
+        "trait_type": "Weight",
+        "value": 95
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 68
+      }
+    ]
+  },
+  {
+    "name": "Ramsplash",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/ramsplash_framed.gif",
+    "description": "Ramsplashies gather enough speed and power to launch their target high enough into the air that the surface tension feels like concrete.",
+    "rarity": "Common",
+    "height": 175,
+    "weight": 74,
+    "sound": "ramsplash.wav",
+    "element": "Water",
+    "monsterId": 69,
+    "shiny": "ramsplash_shiny.gif",
+    "framed": "ramsplash_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 175
+      },
+      {
+        "trait_type": "Weight",
+        "value": 74
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 69
+      }
+    ]
+  },
+  {
+    "name": "Jabberwelt",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/jabberwelt_framed.gif",
+    "description": "Jabberwelts are strange Hatchies, known to perform dance-like rituals, punching exhibitions, and rap battles to impress trainers they admire and mates they desire.",
+    "rarity": "Common",
+    "height": 188,
+    "weight": 88,
+    "sound": "jabberwelt.wav",
+    "element": "Water",
+    "monsterId": 70,
+    "shiny": "jabberwelt_shiny.gif",
+    "framed": "jabberwelt_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 188
+      },
+      {
+        "trait_type": "Weight",
+        "value": 88
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 70
+      }
+    ]
+  },
+  {
+    "name": "Crocodiver",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/crocodiver_framed.gif",
+    "description": "Silent stalkers of rivers and shores, a Crocodiver will sometimes wait patiently among the green shallows for many days before striking.",
+    "rarity": "Common",
+    "height": 182,
+    "weight": 105,
+    "sound": "crocodiver.wav",
+    "element": "Water",
+    "monsterId": 71,
+    "shiny": "crocodiver_shiny.gif",
+    "framed": "crocodiver_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 182
+      },
+      {
+        "trait_type": "Weight",
+        "value": 105
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 71
+      }
+    ]
+  },
+  {
+    "name": "Hydroslam",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/hydroslam_framed.gif",
+    "description": "Sometimes called 'River Horses Plus', Hydroslams are not as cute and cuddly as they may appear. In fact, they are powerful waterwalkers, whose body slams splash even large ships from the water.",
+    "rarity": "Common",
+    "height": 190,
+    "weight": 2500,
+    "sound": "hydroslam.wav",
+    "element": "Water",
+    "monsterId": 72,
+    "shiny": "hydroslam_shiny.gif",
+    "framed": "hydroslam_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 190
+      },
+      {
+        "trait_type": "Weight",
+        "value": 2500
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 72
+      }
+    ]
+  },
+  {
+    "name": "Tidalhorse",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/tidalhorse_framed.gif",
+    "description": "Although shy and aloof, a loyal Tidalhorse serves as a tremendous water steed and life-long friend. Many Tidalhorses outlive their trainers and become part of the family.",
+    "rarity": "Common",
+    "height": 270,
+    "weight": 3100,
+    "sound": "tidalhorse.wav",
+    "element": "Water",
+    "monsterId": 73,
+    "shiny": "tidalhorse_shiny.gif",
+    "framed": "tidalhorse_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 270
+      },
+      {
+        "trait_type": "Weight",
+        "value": 3100
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 73
+      }
+    ]
+  },
+  {
+    "name": "Magentic",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/magentic_framed.gif",
+    "description": "Fiercely loyal and regal to the core, Magentics display both chivalry and style when they fight. Honor, Courage, Might. These are their oaths.",
+    "rarity": "Common",
+    "height": 195,
+    "weight": 110,
+    "sound": "magentic.wav",
+    "element": "Water",
+    "monsterId": 74,
+    "shiny": "magentic_shiny.gif",
+    "framed": "magentic_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 195
+      },
+      {
+        "trait_type": "Weight",
+        "value": 110
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 74
+      }
+    ]
+  },
+  {
+    "name": "Malclam",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/malclam_framed.gif",
+    "description": "Malclams shoot powerful beams of light that penetrate the dark and heavy deeps. They emerge from the deeps only to recharge in the sunlight of the Sky Egg.",
+    "rarity": "Common",
+    "height": 185,
+    "weight": 220,
+    "sound": "malclam.wav",
+    "element": "Water",
+    "monsterId": 75,
+    "shiny": "malclam_shiny.gif",
+    "framed": "malclam_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 185
+      },
+      {
+        "trait_type": "Weight",
+        "value": 220
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 75
+      }
+    ]
+  },
+  {
+    "name": "Frosloth",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/frosloth_framed.gif",
+    "description": "Frosloths are powerful creatures that burrow deep into the permafrost to hibernate. It is never recommended to interrupt their slumber.",
+    "rarity": "Common",
+    "height": 202,
+    "weight": 240,
+    "sound": "frosloth.wav",
+    "element": "Water",
+    "monsterId": 76,
+    "shiny": "frosloth_shiny.gif",
+    "framed": "frosloth_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 202
+      },
+      {
+        "trait_type": "Weight",
+        "value": 240
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 76
+      }
+    ]
+  },
+  {
+    "name": "Arcticlaw",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/arcticlaw_framed.gif",
+    "description": "The howling of Arcticlaws can be heard in the evening and ealy morning hours. They move and hunt in large and highly-organized packs.",
+    "rarity": "Common",
+    "height": 210,
+    "weight": 140,
+    "sound": "arcticlaw.wav",
+    "element": "Water",
+    "monsterId": 77,
+    "shiny": "arcticlaw_shiny.gif",
+    "framed": "arcticlaw_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 210
+      },
+      {
+        "trait_type": "Weight",
+        "value": 140
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 77
+      }
+    ]
+  },
+  {
+    "name": "Painguin",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/painguin_framed.gif",
+    "description": "The sharp head-feathers of a Painguin can slice through any surface. Although voracious in the water, it is rather awkward and clumsy on dry land. With the right amount of fresh fish, they are easy to tame and train.",
+    "rarity": "Common",
+    "height": 160,
+    "weight": 90,
+    "sound": "painguin.wav",
+    "element": "Water",
+    "monsterId": 78,
+    "shiny": "painguin_shiny.gif",
+    "framed": "painguin_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 160
+      },
+      {
+        "trait_type": "Weight",
+        "value": 90
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 78
+      }
+    ]
+  },
+  {
+    "name": "Krabsmack",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/krabsmack_framed.gif",
+    "description": "A Krabsmack can exert enough pressure with its powerful claws to snap even the toughest prey in half. What is more, it uses sensitive antennae to predict incoming attacks.",
+    "rarity": "Common",
+    "height": 195,
+    "weight": 80,
+    "sound": "krabsmack.wav",
+    "element": "Water",
+    "monsterId": 79,
+    "shiny": "krabsmack_shiny.gif",
+    "framed": "krabsmack_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 195
+      },
+      {
+        "trait_type": "Weight",
+        "value": 80
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 79
+      }
+    ]
+  },
+  {
+    "name": "Snowsquatch",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/snowsquatch_framed.gif",
+    "description": "Snowsquatches are known for wielding snowballs with incredible force. They are believed to cause avalanches.",
+    "rarity": "Common",
+    "height": 230,
+    "weight": 450,
+    "sound": "snowsquatch.wav",
+    "element": "Water",
+    "monsterId": 80,
+    "shiny": "snowsquatch_shiny.gif",
+    "framed": "snowsquatch_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 230
+      },
+      {
+        "trait_type": "Weight",
+        "value": 450
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 80
+      }
+    ]
+  },
+  {
+    "name": "Riptyde",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/riptyde_framed.gif",
+    "description": "Once drawn into combat, there is no escape from a Riptyde. Their massive arms and powerful forms crush and drown all those who swim in their way.",
+    "rarity": "Common",
+    "height": 205,
+    "weight": 250,
+    "sound": "riptyde.wav",
+    "element": "Water",
+    "monsterId": 81,
+    "shiny": "riptyde_shiny.gif",
+    "framed": "riptyde_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 205
+      },
+      {
+        "trait_type": "Weight",
+        "value": 250
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 81
+      }
+    ]
+  },
+  {
+    "name": "Eelectra",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/eelectra_framed.gif",
+    "description": "Eelectras are shockingly potent and surprisingly slippery in combat. When in water, their bolts of electricity are magnified and projected for a great distance.",
+    "rarity": "Common",
+    "height": 160,
+    "weight": 40,
+    "sound": "eelectra.wav",
+    "element": "Water",
+    "monsterId": 82,
+    "shiny": "eelectra_shiny.gif",
+    "framed": "eelectra_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 160
+      },
+      {
+        "trait_type": "Weight",
+        "value": 40
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 82
+      }
+    ]
+  },
+  {
+    "name": "Anchorvie",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/anchorvie_framed.gif",
+    "description": "Though seldom seen above the surface, Anchorvies inspired humans to craft shipweights called anchors.",
+    "rarity": "Common",
+    "height": 190,
+    "weight": 94,
+    "sound": "anchorvie.wav",
+    "element": "Water",
+    "monsterId": 83,
+    "shiny": "anchorvie_shiny.gif",
+    "framed": "anchorvie_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 190
+      },
+      {
+        "trait_type": "Weight",
+        "value": 94
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 83
+      }
+    ]
+  },
+  {
+    "name": "Speartle",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/speartle_framed.gif",
+    "description": "Speartles live in large, war-like communities that migrate throughout the seasons via underwater rivers. When a Spurtle evolves into a Speartle, it uses its indestructible shell as a round shield.",
+    "rarity": "Common",
+    "height": 203,
+    "weight": 105,
+    "sound": "speartle.wav",
+    "element": "Water",
+    "monsterId": 84,
+    "shiny": "speartle_shiny.gif",
+    "framed": "speartle_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 203
+      },
+      {
+        "trait_type": "Weight",
+        "value": 105
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 84
+      }
+    ]
+  },
+  {
+    "name": "Coreeko",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/coreeko_framed.gif",
+    "description": "Coreekos may appear like colorful plants in shallows and reefs, but they become fierce fighters when nibbled on by larger fish and water Hatchies.",
+    "rarity": "Common",
+    "height": 155,
+    "weight": 88,
+    "sound": "coreeko.wav",
+    "element": "Water",
+    "monsterId": 85,
+    "shiny": "coreeko_shiny.gif",
+    "framed": "coreeko_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 155
+      },
+      {
+        "trait_type": "Weight",
+        "value": 88
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 85
+      }
+    ]
+  },
+  {
+    "name": "Lunamander",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/lunamander_framed.gif",
+    "description": "A distant cousin of the Solamander, the Lunamander is a nocturnal hunter of large insects. It is highly resistant to venoms and poisons of both plants and creatures.",
+    "rarity": "Common",
+    "height": 180,
+    "weight": 220,
+    "sound": "lunamander.wav",
+    "element": "Fire",
+    "monsterId": 86,
+    "shiny": "lunamander_shiny.gif",
+    "framed": "lunamander_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 180
+      },
+      {
+        "trait_type": "Weight",
+        "value": 220
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 86
+      }
+    ]
+  },
+  {
+    "name": "Minotorch",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/minotorch_framed.gif",
+    "description": "Large herds of Minotorches can be found on the lava fields and magmatic plains near firebergs. Their blazing stampedes can be felt for miles all around.",
+    "rarity": "Common",
+    "height": 185,
+    "weight": 95,
+    "sound": "minotorch.wav",
+    "element": "Fire",
+    "monsterId": 87,
+    "shiny": "minotorch_shiny.gif",
+    "framed": "minotorch_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 185
+      },
+      {
+        "trait_type": "Weight",
+        "value": 95
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 87
+      }
+    ]
+  },
+  {
+    "name": "Scythepaw",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/scythepaw_framed.gif",
+    "description": "Fast, agile, and ferocious, Scythepaws strike and slash from every direction and angle in combat. When they are not sleeping, they are reaping.",
+    "rarity": "Common",
+    "height": 178,
+    "weight": 78,
+    "sound": "scythepaw.wav",
+    "element": "Fire",
+    "monsterId": 88,
+    "shiny": "scythepaw_shiny.gif",
+    "framed": "scythepaw_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 178
+      },
+      {
+        "trait_type": "Weight",
+        "value": 78
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 88
+      }
+    ]
+  },
+  {
+    "name": "Butterflame",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/butterflame_framed.gif",
+    "description": "Related to Fireflies, the Butterflame is an elusive creature that lives within volcanoes and floats from fireflowers to magmapies.",
+    "rarity": "Common",
+    "height": 111,
+    "weight": 35,
+    "sound": "butterflame.wav",
+    "element": "Fire",
+    "monsterId": 89,
+    "shiny": "butterflame_shiny.gif",
+    "framed": "butterflame_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 111
+      },
+      {
+        "trait_type": "Weight",
+        "value": 35
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 89
+      }
+    ]
+  },
+  {
+    "name": "Asheater",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/asheater_framed.gif",
+    "description": "Contrary to popular belief, Asheaters do not eat burnt wood, but rather consume red ants, fire ants, and magmants in their ashen burrows.",
+    "rarity": "Common",
+    "height": 120,
+    "weight": 43,
+    "sound": "asheater.wav",
+    "element": "Fire",
+    "monsterId": 90,
+    "shiny": "asheater_shiny.gif",
+    "framed": "asheater_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 120
+      },
+      {
+        "trait_type": "Weight",
+        "value": 43
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 90
+      }
+    ]
+  },
+  {
+    "name": "Embird",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/embird_framed.gif",
+    "description": "Embirds spend much of their lives both finding and collecting new logs for their nests, which always burn down in short time.",
+    "rarity": "Common",
+    "height": 150,
+    "weight": 37,
+    "sound": "embird.wav",
+    "element": "Fire",
+    "monsterId": 91,
+    "shiny": "embird_shiny.gif",
+    "framed": "embird_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 150
+      },
+      {
+        "trait_type": "Weight",
+        "value": 37
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 91
+      }
+    ]
+  },
+  {
+    "name": "Candlekin",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/candlekin_framed.gif",
+    "description": "Candlekins are fiery little Hatchies who burn brighter as they get angrier.",
+    "rarity": "Common",
+    "height": 175,
+    "weight": 55,
+    "sound": "candlekin.wav",
+    "element": "Fire",
+    "monsterId": 92,
+    "shiny": "candlekin_shiny.gif",
+    "framed": "candlekin_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 175
+      },
+      {
+        "trait_type": "Weight",
+        "value": 55
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 92
+      }
+    ]
+  },
+  {
+    "name": "Charbeast",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/charbeast_framed.gif",
+    "description": "Powerful and wise, a Charbeast spends much of its time in meditation and thought. They dwell in caves on the sides of volcanoes.",
+    "rarity": "Common",
+    "height": 180,
+    "weight": 125,
+    "sound": "charbeast.wav",
+    "element": "Fire",
+    "monsterId": 93,
+    "shiny": "charbeast_shiny.gif",
+    "framed": "charbeast_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 180
+      },
+      {
+        "trait_type": "Weight",
+        "value": 125
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 93
+      }
+    ]
+  },
+  {
+    "name": "Taurrid",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/taurrid_framed.gif",
+    "description": "Taurrids are solitary creatures in the wild. Even their own reflection makes them boil with red rage.",
+    "rarity": "Common",
+    "height": 210,
+    "weight": 160,
+    "sound": "taurrid.wav",
+    "element": "Fire",
+    "monsterId": 94,
+    "shiny": "taurrid_shiny.gif",
+    "framed": "taurrid_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 210
+      },
+      {
+        "trait_type": "Weight",
+        "value": 160
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 94
+      }
+    ]
+  },
+  {
+    "name": "Brunner",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/brunner_framed.gif",
+    "description": "They burn when they run, and they run when they burn. Therefore, they never stop brunning.",
+    "rarity": "Common",
+    "height": 120,
+    "weight": 45,
+    "sound": "brunner.wav",
+    "element": "Fire",
+    "monsterId": 95,
+    "shiny": "brunner_shiny.gif",
+    "framed": "brunner_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 120
+      },
+      {
+        "trait_type": "Weight",
+        "value": 45
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 95
+      }
+    ]
+  },
+  {
+    "name": "Flaemu",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/flaemu_framed.gif",
+    "description": "Flaemus are fast and noisy Hatchies who scorch the ground when they run. Although flightless, their feathers burn so hot that they must flap them continually.",
+    "rarity": "Common",
+    "height": 192,
+    "weight": 70,
+    "sound": "flaemu.wav",
+    "element": "Fire",
+    "monsterId": 96,
+    "shiny": "flaemu_shiny.gif",
+    "framed": "flaemu_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 192
+      },
+      {
+        "trait_type": "Weight",
+        "value": 70
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 96
+      }
+    ]
+  },
+  {
+    "name": "Firazel",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/firazel_framed.gif",
+    "description": "The favorite activity of Firazels includes hiking to the top of a volcano and bellyflopping into the magma far below.",
+    "rarity": "Common",
+    "height": 179,
+    "weight": 77,
+    "sound": "firazel.wav",
+    "element": "Fire",
+    "monsterId": 97,
+    "shiny": "firazel_shiny.gif",
+    "framed": "firazel_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 179
+      },
+      {
+        "trait_type": "Weight",
+        "value": 77
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 97
+      }
+    ]
+  },
+  {
+    "name": "Emberslash",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/emberslash_framed.gif",
+    "description": "Do not approach an Emberslash during heat. In other words, never approach an Emberslash in the wild.",
+    "rarity": "Common",
+    "height": 165,
+    "weight": 58,
+    "sound": "emberslash.wav",
+    "element": "Fire",
+    "monsterId": 98,
+    "shiny": "emberslash_shiny.gif",
+    "framed": "emberslash_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 165
+      },
+      {
+        "trait_type": "Weight",
+        "value": 58
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 98
+      }
+    ]
+  },
+  {
+    "name": "Blasthopper",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/blasthopper_framed.gif",
+    "description": "Rule #35 in Hatchy World: There is never just one Blasthopper.",
+    "rarity": "Common",
+    "height": 170,
+    "weight": 62,
+    "sound": "blasthopper.wav",
+    "element": "Fire",
+    "monsterId": 99,
+    "shiny": "blasthopper_shiny.gif",
+    "framed": "blasthopper_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 170
+      },
+      {
+        "trait_type": "Weight",
+        "value": 62
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 99
+      }
+    ]
+  },
+  {
+    "name": "Kungferno",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/kungferno_framed.gif",
+    "description": "A Kungferno begins its training as a Hatchling and does not stop until it has mastered the arts of Karhoty.",
+    "rarity": "Common",
+    "height": 150,
+    "weight": 55,
+    "sound": "kungferno.wav",
+    "element": "Fire",
+    "monsterId": 100,
+    "shiny": "kungferno_shiny.gif",
+    "framed": "kungferno_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 150
+      },
+      {
+        "trait_type": "Weight",
+        "value": 55
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 100
+      }
+    ]
+  },
+  {
+    "name": "Pyren",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/pyren_framed.gif",
+    "description": "The pious priests called Pyrens dance on the tumultuous magmatic waves of inner volcanoes. ",
+    "rarity": "Common",
+    "height": 162,
+    "weight": 65,
+    "sound": "pyren.wav",
+    "element": "Fire",
+    "monsterId": 101,
+    "shiny": "pyren_shiny.gif",
+    "framed": "pyren_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 162
+      },
+      {
+        "trait_type": "Weight",
+        "value": 65
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 101
+      }
+    ]
+  },
+  {
+    "name": "Flamane",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/flamane_framed.gif",
+    "description": "Sometimes referred to as 'maneiacs', the Flamane is a short but hot-tempered Hatchy with surprisingly agility and acrobatic abilities.",
+    "rarity": "Common",
+    "height": 145,
+    "weight": 45,
+    "sound": "flamane.wav",
+    "element": "Fire",
+    "monsterId": 102,
+    "shiny": "flamane_shiny.gif",
+    "framed": "flamane_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 145
+      },
+      {
+        "trait_type": "Weight",
+        "value": 45
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 102
+      }
+    ]
+  },
+  {
+    "name": "Hotweiler",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/hotweiler_framed.gif",
+    "description": "Hotweilers in the wild may be ferocious and untrusting, but they are fiercely loyal and protective of their beloved trainers.",
+    "rarity": "Common",
+    "height": 192,
+    "weight": 165,
+    "sound": "hotweiler.wav",
+    "element": "Fire",
+    "monsterId": 103,
+    "shiny": "hotweiler_shiny.gif",
+    "framed": "hotweiler_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 192
+      },
+      {
+        "trait_type": "Weight",
+        "value": 165
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 103
+      }
+    ]
+  },
+  {
+    "name": "Bunsin",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/bunsin_framed.gif",
+    "description": "Few things burn hotter than a Bunsin, for which reason they are used to ignite large bunfires.",
+    "rarity": "Common",
+    "height": 211,
+    "weight": 480,
+    "sound": "bunsin.wav",
+    "element": "Fire",
+    "monsterId": 104,
+    "shiny": "bunsin_shiny.gif",
+    "framed": "bunsin_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 211
+      },
+      {
+        "trait_type": "Weight",
+        "value": 480
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 104
+      }
+    ]
+  },
+  {
+    "name": "Magmadon",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/magmadon_framed.gif",
+    "description": "The Magmadon is one of the most feared wild Hatchies on the sides of volcanoes. They use their heads to smash and their large legs to stomp any intruder.",
+    "rarity": "Common",
+    "height": 280,
+    "weight": 2200,
+    "sound": "magmadon.wav",
+    "element": "Fire",
+    "monsterId": 105,
+    "shiny": "magmadon_shiny.gif",
+    "framed": "magmadon_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 280
+      },
+      {
+        "trait_type": "Weight",
+        "value": 2200
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 105
+      }
+    ]
+  },
+  {
+    "name": "Firret",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/firret_framed.gif",
+    "description": "Firrets are pesky Hatchies that steal food from unwary travelers. They travel in groups and use distraction tactics.",
+    "rarity": "Common",
+    "height": 80,
+    "weight": 30,
+    "sound": "firret.wav",
+    "element": "Fire",
+    "monsterId": 106,
+    "shiny": "firret_shiny.gif",
+    "framed": "firret_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 80
+      },
+      {
+        "trait_type": "Weight",
+        "value": 30
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 106
+      }
+    ]
+  },
+  {
+    "name": "Inciniraptor",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/inciniraptor_framed.gif",
+    "description": "Incineraptors travel in large packs, working together to bring down large prey. Not even dragons are considered too dangerous for these hellish Hatchies to torment.",
+    "rarity": "Common",
+    "height": 200,
+    "weight": 90,
+    "sound": "inciniraptor.wav",
+    "element": "Fire",
+    "monsterId": 107,
+    "shiny": "inciniraptor_shiny.gif",
+    "framed": "inciniraptor_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 200
+      },
+      {
+        "trait_type": "Weight",
+        "value": 90
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 107
+      }
+    ]
+  },
+  {
+    "name": "Warmanger",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/warmanger_framed.gif",
+    "description": "The fireptiles called Warmangers are hot-blooded and hotter tempered. It is difficult to distinguish their angry hissing from the escaping gases of magma.",
+    "rarity": "Common",
+    "height": 350,
+    "weight": 78,
+    "sound": "warmanger.wav",
+    "element": "Fire",
+    "monsterId": 108,
+    "shiny": "warmanger_shiny.gif",
+    "framed": "warmanger_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 350
+      },
+      {
+        "trait_type": "Weight",
+        "value": 78
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 108
+      }
+    ]
+  },
+  {
+    "name": "Diamoxius",
+    "image": "https://hatchypocket.com/static/cards/gen2/dark/diamoxius_framed.gif",
+    "description": "The large horn of the Diamoxius strikes fear and death into all who disturb its darkness.",
+    "rarity": "Common",
+    "height": 340,
+    "weight": 80,
+    "sound": "diamoxius.wav",
+    "element": "Dark",
+    "monsterId": 109,
+    "shiny": "diamoxius_shiny.gif",
+    "framed": "diamoxius_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 340
+      },
+      {
+        "trait_type": "Weight",
+        "value": 80
+      },
+      {
+        "trait_type": "Element",
+        "value": "Dark"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 109
+      }
+    ]
+  },
+  {
+    "name": "Lucifell",
+    "image": "https://hatchypocket.com/static/cards/gen2/dark/lucifell_framed.gif",
+    "description": "Once the brightest of Hatchies in the world, the Lucifellae lost their light and cast themselves into the shadows of the deeps.",
+    "rarity": "Common",
+    "height": 176,
+    "weight": 66,
+    "sound": "lucifell.wav",
+    "element": "Dark",
+    "monsterId": 110,
+    "shiny": "lucifell_shiny.gif",
+    "framed": "lucifell_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 176
+      },
+      {
+        "trait_type": "Weight",
+        "value": 66
+      },
+      {
+        "trait_type": "Element",
+        "value": "Dark"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 110
+      }
+    ]
+  },
+  {
+    "name": "Doomcade",
+    "image": "https://hatchypocket.com/static/cards/gen2/dark/doomcade_framed.gif",
+    "description": "Once every ten years, the Doomcadae awaken from their slumbers in the forest and emerge in dark swarms that choke the sunlight of the Sky Egg.",
+    "rarity": "Common",
+    "height": 160,
+    "weight": 60,
+    "sound": "doomcade.wav",
+    "element": "Dark",
+    "monsterId": 111,
+    "shiny": "doomcade_shiny.gif",
+    "framed": "doomcade_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 160
+      },
+      {
+        "trait_type": "Weight",
+        "value": 60
+      },
+      {
+        "trait_type": "Element",
+        "value": "Dark"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 111
+      }
+    ]
+  },
+  {
+    "name": "Shadarkan",
+    "image": "https://hatchypocket.com/static/cards/gen2/dark/shadarkan_framed.gif",
+    "description": "Shadarkans are mysterious Hatchies with unclear ambitions. They enjoy riddles, tongue twisters, and obscure prophecies.",
+    "rarity": "Common",
+    "height": 176,
+    "weight": 62,
+    "sound": "shadarkan.wav",
+    "element": "Dark",
+    "monsterId": 112,
+    "shiny": "shadarkan_shiny.gif",
+    "framed": "shadarkan_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 176
+      },
+      {
+        "trait_type": "Weight",
+        "value": 62
+      },
+      {
+        "trait_type": "Element",
+        "value": "Dark"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 112
+      }
+    ]
+  },
+  {
+    "name": "Noxiren",
+    "image": "https://hatchypocket.com/static/cards/gen2/dark/noxiren_framed.gif",
+    "description": "When Noxiren gather, their plumes of toxic gas become insurmountable and devastating. Even the most viruelent creatures avoid these noxious gatherings.",
+    "rarity": "Common",
+    "height": 165,
+    "weight": 5,
+    "sound": "noxiren.wav",
+    "element": "Dark",
+    "monsterId": 113,
+    "shiny": "noxiren_shiny.gif",
+    "framed": "noxiren_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 165
+      },
+      {
+        "trait_type": "Weight",
+        "value": 5
+      },
+      {
+        "trait_type": "Element",
+        "value": "Dark"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 113
+      }
+    ]
+  },
+  {
+    "name": "Toadeth",
+    "image": "https://hatchypocket.com/static/cards/gen2/dark/toadeth_framed.gif",
+    "description": "The slimy skin of a Toadeth is so poisonous that it inspired the vow: 'Toadeth do us part'.",
+    "rarity": "Common",
+    "height": 185,
+    "weight": 88,
+    "sound": "toadeth.wav",
+    "element": "Dark",
+    "monsterId": 114,
+    "shiny": "toadeth_shiny.gif",
+    "framed": "toadeth_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 185
+      },
+      {
+        "trait_type": "Weight",
+        "value": 88
+      },
+      {
+        "trait_type": "Element",
+        "value": "Dark"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 114
+      }
+    ]
+  },
+  {
+    "name": "Dreamphibian",
+    "image": "https://hatchypocket.com/static/cards/gen2/dark/dreamphibian_framed.gif",
+    "description": "The Dreamphibian uses sound and movement to hypnotize its prey into a trance like state.",
+    "rarity": "Common",
+    "height": 169,
+    "weight": 61,
+    "sound": "dreamphibian.wav",
+    "element": "Dark",
+    "monsterId": 115,
+    "shiny": "dreamphibian_shiny.gif",
+    "framed": "dreamphibian_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 169
+      },
+      {
+        "trait_type": "Weight",
+        "value": 61
+      },
+      {
+        "trait_type": "Element",
+        "value": "Dark"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 115
+      }
+    ]
+  },
+  {
+    "name": "Murcial",
+    "image": "https://hatchypocket.com/static/cards/gen2/dark/murcial_framed.gif",
+    "description": "Murcials are fast and use deadly poisons they gather and trade amongst each other.",
+    "rarity": "Common",
+    "height": 170,
+    "weight": 48,
+    "sound": "murcial.wav",
+    "element": "Dark",
+    "monsterId": 116,
+    "shiny": "murcial_shiny.gif",
+    "framed": "murcial_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 170
+      },
+      {
+        "trait_type": "Weight",
+        "value": 48
+      },
+      {
+        "trait_type": "Element",
+        "value": "Dark"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 116
+      }
+    ]
+  },
+  {
+    "name": "Leechblight",
+    "image": "https://hatchypocket.com/static/cards/gen2/dark/leechblight_framed.gif",
+    "description": "Leechblights are dangerous and should be avoided in the wild. When they latch onto prey, they suck the strength from their forms until pale and weak.",
+    "rarity": "Common",
+    "height": 184,
+    "weight": 85,
+    "sound": "leechblight.wav",
+    "element": "Dark",
+    "monsterId": 117,
+    "shiny": "leechblight_shiny.gif",
+    "framed": "leechblight_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 184
+      },
+      {
+        "trait_type": "Weight",
+        "value": 85
+      },
+      {
+        "trait_type": "Element",
+        "value": "Dark"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 117
+      }
+    ]
+  },
+  {
+    "name": "Hypnoshade",
+    "image": "https://hatchypocket.com/static/cards/gen2/dark/hypnoshade_framed.gif",
+    "description": "Hypnoshades are devious tricksters that play tricks on people for sheer amusement. It's all fun and games as long as someone loses an eye.",
+    "rarity": "Common",
+    "height": 140,
+    "weight": 30,
+    "sound": "hypnoshade.wav",
+    "element": "Dark",
+    "monsterId": 118,
+    "shiny": "hypnoshade_shiny.gif",
+    "framed": "hypnoshade_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 140
+      },
+      {
+        "trait_type": "Weight",
+        "value": 30
+      },
+      {
+        "trait_type": "Element",
+        "value": "Dark"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 118
+      }
+    ]
+  },
+  {
+    "name": "Toxiloris",
+    "image": "https://hatchypocket.com/static/cards/gen2/dark/toxiloris_framed.gif",
+    "description": "A Toxiloris will use its large tail to launch itself on a target. A single sting from the toxic barbs on its horn causes painful paralysis and short breath.",
+    "rarity": "Common",
+    "height": 150,
+    "weight": 55,
+    "sound": "toxiloris.wav",
+    "element": "Dark",
+    "monsterId": 119,
+    "shiny": "toxiloris_shiny.gif",
+    "framed": "toxiloris_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 150
+      },
+      {
+        "trait_type": "Weight",
+        "value": 55
+      },
+      {
+        "trait_type": "Element",
+        "value": "Dark"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 119
+      }
+    ]
+  },
+  {
+    "name": "Bristlebain",
+    "image": "https://hatchypocket.com/static/cards/gen2/dark/bristlebain_framed.gif",
+    "description": "Bristlebains camouflage themselves like stones in the shade. Stepping on one of their spikes is the last wrong-step that a traveler can make.",
+    "rarity": "Common",
+    "height": 174,
+    "weight": 65,
+    "sound": "bristlebain.wav",
+    "element": "Dark",
+    "monsterId": 120,
+    "shiny": "bristlebain_shiny.gif",
+    "framed": "bristlebain_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 174
+      },
+      {
+        "trait_type": "Weight",
+        "value": 65
+      },
+      {
+        "trait_type": "Element",
+        "value": "Dark"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 120
+      }
+    ]
+  },
+  {
+    "name": "Abydon",
+    "image": "https://hatchypocket.com/static/cards/gen2/dark/abydon_framed.gif",
+    "description": "Abydons disappear into shadows and stalk their prey as silently as death itself.",
+    "rarity": "Common",
+    "height": 310,
+    "weight": 130,
+    "sound": "abydon.wav",
+    "element": "Dark",
+    "monsterId": 121,
+    "shiny": "abydon_shiny.gif",
+    "framed": "abydon_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 310
+      },
+      {
+        "trait_type": "Weight",
+        "value": 130
+      },
+      {
+        "trait_type": "Element",
+        "value": "Dark"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 121
+      }
+    ]
+  },
+  {
+    "name": "Doomhopper",
+    "image": "https://hatchypocket.com/static/cards/gen2/dark/doomhopper_framed.gif",
+    "description": "A herd of Doomhoppers is called a storm because they sound like rolling thunder across the horizon.",
+    "rarity": "Common",
+    "height": 200,
+    "weight": 200,
+    "sound": "doomhopper.wav",
+    "element": "Dark",
+    "monsterId": 122,
+    "shiny": "doomhopper_shiny.gif",
+    "framed": "doomhopper_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 200
+      },
+      {
+        "trait_type": "Weight",
+        "value": 200
+      },
+      {
+        "trait_type": "Element",
+        "value": "Dark"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 122
+      }
+    ]
+  },
+  {
+    "name": "Loprogard",
+    "image": "https://hatchypocket.com/static/cards/gen2/light/loprogard_framed.gif",
+    "description": "These guardians are found near the Temple of Light. Loprogards are able to sense the intentions of those who approach them.",
+    "rarity": "Common",
+    "height": 222,
+    "weight": 9999,
+    "sound": "loprogard.wav",
+    "element": "Light",
+    "monsterId": 123,
+    "shiny": "loprogard_shiny.gif",
+    "framed": "loprogard_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 222
+      },
+      {
+        "trait_type": "Weight",
+        "value": 9999
+      },
+      {
+        "trait_type": "Element",
+        "value": "Light"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 123
+      }
+    ]
+  },
+  {
+    "name": "Dawnclaw",
+    "image": "https://hatchypocket.com/static/cards/gen2/light/dawnclaw_framed.gif",
+    "description": "Rising early to hunt in the twilight, a Dawnclaw cuts through the undergrowth with its razor sharp nails.",
+    "rarity": "Common",
+    "height": 190,
+    "weight": 67,
+    "sound": "dawnclaw.wav",
+    "element": "Light",
+    "monsterId": 124,
+    "shiny": "dawnclaw_shiny.gif",
+    "framed": "dawnclaw_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 190
+      },
+      {
+        "trait_type": "Weight",
+        "value": 67
+      },
+      {
+        "trait_type": "Element",
+        "value": "Light"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 124
+      }
+    ]
+  },
+  {
+    "name": "Pixelite",
+    "image": "https://hatchypocket.com/static/cards/gen2/light/pixelite_framed.gif",
+    "description": "Pixelites spend their evenings in tall grasses and wide meadows, where they glow in fluttering dance.",
+    "rarity": "Common",
+    "height": 170,
+    "weight": 53,
+    "sound": "pixelite.wav",
+    "element": "Light",
+    "monsterId": 125,
+    "shiny": "pixelite_shiny.gif",
+    "framed": "pixelite_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 170
+      },
+      {
+        "trait_type": "Weight",
+        "value": 53
+      },
+      {
+        "trait_type": "Element",
+        "value": "Light"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 125
+      }
+    ]
+  },
+  {
+    "name": "Raydon",
+    "image": "https://hatchypocket.com/static/cards/gen2/light/raydon_framed.gif",
+    "description": "The slashing claws of a Raydon are as piercing as morning light and twice as blinding.",
+    "rarity": "Common",
+    "height": 185,
+    "weight": 70,
+    "sound": "raydon.wav",
+    "element": "Light",
+    "monsterId": 126,
+    "shiny": "raydon_shiny.gif",
+    "framed": "raydon_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 185
+      },
+      {
+        "trait_type": "Weight",
+        "value": 70
+      },
+      {
+        "trait_type": "Element",
+        "value": "Light"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 126
+      }
+    ]
+  },
+  {
+    "name": "Blitzard",
+    "image": "https://hatchypocket.com/static/cards/gen2/light/blitzard_framed.gif",
+    "description": "Blitzards are lightning-fast Hatchies that use their powerful tails to propel themselves away from danger or towards a meal.",
+    "rarity": "Common",
+    "height": 210,
+    "weight": 350,
+    "sound": "blitzard.wav",
+    "element": "Light",
+    "monsterId": 127,
+    "shiny": "blitzard_shiny.gif",
+    "framed": "blitzard_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 210
+      },
+      {
+        "trait_type": "Weight",
+        "value": 350
+      },
+      {
+        "trait_type": "Element",
+        "value": "Light"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 127
+      }
+    ]
+  },
+  {
+    "name": "Knightlight",
+    "image": "https://hatchypocket.com/static/cards/gen2/light/knightlight_framed.gif",
+    "description": "Knightlights are fierce warriors who belong to fraternal orders. Their code demands a lifetime of sacrifice against chaos.",
+    "rarity": "Common",
+    "height": 202,
+    "weight": 74,
+    "sound": "knightlight.wav",
+    "element": "Light",
+    "monsterId": 128,
+    "shiny": "knightlight_shiny.gif",
+    "framed": "knightlight_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 202
+      },
+      {
+        "trait_type": "Weight",
+        "value": 74
+      },
+      {
+        "trait_type": "Element",
+        "value": "Light"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 128
+      }
+    ]
+  },
+  {
+    "name": "Flutterflight",
+    "image": "https://hatchypocket.com/static/cards/gen2/light/flutterflight_framed.gif",
+    "description": "Flutterflights are gentle and lovable Hatchies that dwell in flowerfields and grasslands. They are a favorite household friend of humans in Hatchy World.",
+    "rarity": "Common",
+    "height": 120,
+    "weight": 33,
+    "sound": "flutterflight.wav",
+    "element": "Light",
+    "monsterId": 129,
+    "shiny": "flutterflight_shiny.gif",
+    "framed": "flutterflight_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 120
+      },
+      {
+        "trait_type": "Weight",
+        "value": 33
+      },
+      {
+        "trait_type": "Element",
+        "value": "Light"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 129
+      }
+    ]
+  },
+  {
+    "name": "Briteling",
+    "image": "https://hatchypocket.com/static/cards/gen2/light/briteling_framed.gif",
+    "description": "Considered to be extremely lucky, Britelings are sought out by humans because a simple look in their direction brings two weeks good fortune.",
+    "rarity": "Common",
+    "height": 140,
+    "weight": 45,
+    "sound": "briteling.wav",
+    "element": "Light",
+    "monsterId": 130,
+    "shiny": "briteling_shiny.gif",
+    "framed": "briteling_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 140
+      },
+      {
+        "trait_type": "Weight",
+        "value": 45
+      },
+      {
+        "trait_type": "Element",
+        "value": "Light"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 130
+      }
+    ]
+  },
+  {
+    "name": "Pharoclops",
+    "image": "https://hatchypocket.com/static/cards/gen2/light/pharoclops_framed.gif",
+    "description": "Pharaclops are solitary Hatchies who practice the powerful arts of the third-eye. They see what most others cannot.",
+    "rarity": "Common",
+    "height": 170,
+    "weight": 80,
+    "sound": "pharoclops.wav",
+    "element": "Light",
+    "monsterId": 131,
+    "shiny": "pharoclops_shiny.gif",
+    "framed": "pharoclops_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 170
+      },
+      {
+        "trait_type": "Weight",
+        "value": 80
+      },
+      {
+        "trait_type": "Element",
+        "value": "Light"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 131
+      }
+    ]
+  },
+  {
+    "name": "Owluminate",
+    "image": "https://hatchypocket.com/static/cards/gen2/light/owluminate_framed.gif",
+    "description": "Owluminates are nocturnal creatures that can dim themselves while hunting. Once their prey is caught, however, they glow brightly to warn away other would-be scavengers.",
+    "rarity": "Common",
+    "height": 150,
+    "weight": 50,
+    "sound": "owluminate.wav",
+    "element": "Light",
+    "monsterId": 132,
+    "shiny": "owluminate_shiny.gif",
+    "framed": "owluminate_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 150
+      },
+      {
+        "trait_type": "Weight",
+        "value": 50
+      },
+      {
+        "trait_type": "Element",
+        "value": "Light"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 132
+      }
+    ]
+  },
+  {
+    "name": "Gaeltus",
+    "image": "https://hatchypocket.com/static/cards/gen2/light/gaeltus_framed.gif",
+    "description": "Its bronze beak and razor sharp talons make the Gaeltus a fearsome predator in the skies. Gaeltus feathers are so sharply thin that chefs use them for kitchen knives.",
+    "rarity": "Common",
+    "height": 210,
+    "weight": 60,
+    "sound": "gaeltus.wav",
+    "element": "Light",
+    "monsterId": 133,
+    "shiny": "gaeltus_shiny.gif",
+    "framed": "gaeltus_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 210
+      },
+      {
+        "trait_type": "Weight",
+        "value": 60
+      },
+      {
+        "trait_type": "Element",
+        "value": "Light"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 133
+      }
+    ]
+  },
+  {
+    "name": "Seraph",
+    "image": "https://hatchypocket.com/static/cards/gen2/light/seraph_framed.gif",
+    "description": "Seraphs are slow-moving and sedentary in nature. Only when hungry do they move with a sense of urgency.",
+    "rarity": "Common",
+    "height": 320,
+    "weight": 2800,
+    "sound": "seraph.wav",
+    "element": "Light",
+    "monsterId": 134,
+    "shiny": "seraph_shiny.gif",
+    "framed": "seraph_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 320
+      },
+      {
+        "trait_type": "Weight",
+        "value": 2800
+      },
+      {
+        "trait_type": "Element",
+        "value": "Light"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 134
+      }
+    ]
+  },
+  {
+    "name": "Airsupial",
+    "image": "https://hatchypocket.com/static/cards/gen2/light/airsupial_framed.gif",
+    "description": "Airsupials are so light in body and mind that clouds form underneath and carry them across the vaults of the sky.",
+    "rarity": "Common",
+    "height": 160,
+    "weight": 70,
+    "sound": "airsupial.wav",
+    "element": "Light",
+    "monsterId": 135,
+    "shiny": "airsupial_shiny.gif",
+    "framed": "airsupial_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 160
+      },
+      {
+        "trait_type": "Weight",
+        "value": 70
+      },
+      {
+        "trait_type": "Element",
+        "value": "Light"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 135
+      }
+    ]
+  },
+  {
+    "name": "Skyren",
+    "image": "https://hatchypocket.com/static/cards/gen2/light/skyren_framed.gif",
+    "description": "Like their elemental cousins, the Skyrens are powerful conjurers of the energies that fill each domain.",
+    "rarity": "Common",
+    "height": 183,
+    "weight": 65,
+    "sound": "skyren.wav",
+    "element": "Light",
+    "monsterId": 136,
+    "shiny": "skyren_shiny.gif",
+    "framed": "skyren_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Common"
+      },
+      {
+        "trait_type": "Height",
+        "value": 183
+      },
+      {
+        "trait_type": "Weight",
+        "value": 65
+      },
+      {
+        "trait_type": "Element",
+        "value": "Light"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 136
+      }
+    ]
+  },
+  {
+    "name": "Tarragonus",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/tarragonus_shiny.gif",
+    "description": "Believed to have been created by the primordial demigods of the Plant Hatchies, a Tarragonus can summon a forest at will.",
+    "rarity": "Shiny",
+    "height": 3000,
+    "weight": 5000,
+    "sound": "tarragonus.wav",
+    "element": "Plant",
+    "monsterId": 137,
+    "shiny": "tarragonus_shiny.gif",
+    "framed": "tarragonus_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Shiny"
+      },
+      {
+        "trait_type": "Height",
+        "value": 3000
+      },
+      {
+        "trait_type": "Weight",
+        "value": 5000
+      },
+      {
+        "trait_type": "Element",
+        "value": "Plant"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 137
+      }
+    ]
+  },
+  {
+    "name": "Frostvern",
+    "image": "https://hatchypocket.com/static/cards/gen2/water/frostvern_shiny.gif",
+    "description": "Wherever a Frostvern chooses to nest, the land experiences a perpetual winter without growth.",
+    "rarity": "Shiny",
+    "height": 3000,
+    "weight": 5000,
+    "sound": "frostvern.wav",
+    "element": "Water",
+    "monsterId": 138,
+    "shiny": "frostvern_shiny.gif",
+    "framed": "frostvern_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Shiny"
+      },
+      {
+        "trait_type": "Height",
+        "value": 3000
+      },
+      {
+        "trait_type": "Weight",
+        "value": 5000
+      },
+      {
+        "trait_type": "Element",
+        "value": "Water"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 138
+      }
+    ]
+  },
+  {
+    "name": "Firadra",
+    "image": "https://hatchypocket.com/static/cards/gen2/fire/firadra_shiny.gif",
+    "description": "Firadra are believed to live deep in the world's core, sleeping in the molten seas of rock.",
+    "rarity": "Shiny",
+    "height": 3000,
+    "weight": 5000,
+    "sound": "firadra.wav",
+    "element": "Fire",
+    "monsterId": 139,
+    "shiny": "firadra_shiny.gif",
+    "framed": "firadra_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Shiny"
+      },
+      {
+        "trait_type": "Height",
+        "value": 3000
+      },
+      {
+        "trait_type": "Weight",
+        "value": 5000
+      },
+      {
+        "trait_type": "Element",
+        "value": "Fire"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 139
+      }
+    ]
+  },
+  {
+    "name": "Blasilisk",
+    "image": "https://hatchypocket.com/static/cards/gen2/dark/blasilisk_shiny.gif",
+    "description": "Blasilisk horns are equipped with deadly poisons and acids that can eat through any material known to man.",
+    "rarity": "Shiny",
+    "height": 3000,
+    "weight": 5000,
+    "sound": "blasilisk.wav",
+    "element": "Dark",
+    "monsterId": 140,
+    "shiny": "blasilisk_shiny.gif",
+    "framed": "blasilisk_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Shiny"
+      },
+      {
+        "trait_type": "Height",
+        "value": 3000
+      },
+      {
+        "trait_type": "Weight",
+        "value": 5000
+      },
+      {
+        "trait_type": "Element",
+        "value": "Dark"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 140
+      }
+    ]
+  },
+  {
+    "name": "Lucirrus",
+    "image": "https://hatchypocket.com/static/cards/gen2/light/lucirrus_shiny.gif",
+    "description": "Luccirrus unleashes powerful beams of light from its mouth that carve mountain ranges into valleys and plains.",
+    "rarity": "Shiny",
+    "height": 3000,
+    "weight": 5000,
+    "sound": "lucirrus.wav",
+    "element": "Light",
+    "monsterId": 141,
+    "shiny": "lucirrus_shiny.gif",
+    "framed": "lucirrus_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Shiny"
+      },
+      {
+        "trait_type": "Height",
+        "value": 3000
+      },
+      {
+        "trait_type": "Weight",
+        "value": 5000
+      },
+      {
+        "trait_type": "Element",
+        "value": "Light"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 141
+      }
+    ]
+  },
+  {
+    "name": "Negato",
+    "image": "https://hatchypocket.com/static/cards/gen2/void/negato_shiny.gif",
+    "description": "The Void Spirit created the race of Negatos with special intent and gifted them the ability to bend space and time.",
+    "rarity": "Shiny",
+    "height": 3000,
+    "weight": 5000,
+    "sound": "negato.wav",
+    "element": "Void",
+    "monsterId": 142,
+    "shiny": "negato_shiny.gif",
+    "framed": "negato_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Shiny"
+      },
+      {
+        "trait_type": "Height",
+        "value": 3000
+      },
+      {
+        "trait_type": "Weight",
+        "value": 5000
+      },
+      {
+        "trait_type": "Element",
+        "value": "Void"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 142
+      }
+    ]
+  },
+  {
+    "name": "Almega",
+    "image": "https://hatchypocket.com/static/cards/gen2/void/almega_shiny.gif",
+    "description": "Almega can see into the near future and predict upcoming attacks. They seem to ignore the laws of space-time.",
+    "rarity": "Shiny",
+    "height": 9999,
+    "weight": 9999,
+    "sound": "almega.wav",
+    "element": "Void",
+    "monsterId": 10011001,
+    "shiny": "almega_shiny.gif",
+    "framed": "almega_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Shiny"
+      },
+      {
+        "trait_type": "Height",
+        "value": 9999
+      },
+      {
+        "trait_type": "Weight",
+        "value": 9999
+      },
+      {
+        "trait_type": "Element",
+        "value": "Void"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 10011001
+      }
+    ]
+  },
+  {
+    "name": "Badara",
+    "image": "https://hatchypocket.com/static/cards/gen2/void/badara_shiny.gif",
+    "description": "Its speed and strength are amplified in the moonlight. After sunset, there is little to nothing that can stop a Badara.",
+    "rarity": "Shiny",
+    "height": 220,
+    "weight": 180,
+    "sound": "badara.wav",
+    "element": "Void",
+    "monsterId": 10100101,
+    "shiny": "badara_shiny.gif",
+    "framed": "badara_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Shiny"
+      },
+      {
+        "trait_type": "Height",
+        "value": 220
+      },
+      {
+        "trait_type": "Weight",
+        "value": 180
+      },
+      {
+        "trait_type": "Element",
+        "value": "Void"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 10100101
+      }
+    ]
+  },
+  {
+    "name": "Kaiborg",
+    "image": "https://hatchypocket.com/static/cards/gen2/void/kaiborg_shiny.gif",
+    "description": "The Kaiborgs promised never to return to dust, so they created new selves of metal.",
+    "rarity": "Shiny",
+    "height": 200,
+    "weight": 140,
+    "sound": "kaiborg.wav",
+    "element": "Void",
+    "monsterId": 10101001,
+    "shiny": "kaiborg_shiny.gif",
+    "framed": "kaiborg_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Shiny"
+      },
+      {
+        "trait_type": "Height",
+        "value": 200
+      },
+      {
+        "trait_type": "Weight",
+        "value": 140
+      },
+      {
+        "trait_type": "Element",
+        "value": "Void"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 10101001
+      }
+    ]
+  },
+  {
+    "name": "Omnipotens",
+    "image": "https://hatchypocket.com/static/cards/gen2/void/omnipotens_shiny.gif",
+    "description": "In times of peace, they sleep in the shadows and wait. In the end of times, they shake the heavens with pillars of white light.",
+    "rarity": "Shiny",
+    "height": 220,
+    "weight": 240,
+    "sound": "omnipotens.wav",
+    "element": "Void",
+    "monsterId": 11111111,
+    "shiny": "omnipotens_shiny.gif",
+    "framed": "omnipotens_framed.gif",
+    "attributes": [
+      {
+        "trait_type": "Rarity",
+        "value": "Shiny"
+      },
+      {
+        "trait_type": "Height",
+        "value": 220
+      },
+      {
+        "trait_type": "Weight",
+        "value": 240
+      },
+      {
+        "trait_type": "Element",
+        "value": "Void"
+      },
+      {
+        "trait_type": "MonsterID",
+        "value": 11111111
+      }
+    ]
+  }
+]

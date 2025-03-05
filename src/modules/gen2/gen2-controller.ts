@@ -14,8 +14,8 @@ import { CoingeckoService } from "../../services/CoingeckoService";
 import { Gen2Service } from "./gen2-Service";
 import { BigNumber, ethers } from "ethers";
 import { gen2DiscountMultiplier, gen2MaxPrice, gen2UsdtPrice } from "../../constants";
-import { NotFoundError } from "../../errors/not-found-error";
 import { BadRequestError } from "../../errors/bad-request-error";
+import { HatchyBalance } from "./hatchy-balance";
 
 @Route("gen2")
 @Tags("Gen2")
@@ -70,20 +70,14 @@ export class Gen2Controller extends Controller {
     };
   }
 
-  /*
   @Security("jwt")
   @Get("balance")
   public async getGen2Balance(
     @Request() request: any,
-  ): Promise<{
-    balance: number;
-  }> {
+  ): Promise<HatchyBalance[]> {
     const chainId = DefaultChainId;
     const gen2Service = new Gen2Service(chainId);
-    const balance = await gen2Service.getGen2Balance(this.request.user.uid);
-    return {
-      balance: balance.toNumber()
-    };
+    const balances = await gen2Service.getGen2Balance(request.user.uid);
+    return balances;
   }
-  */
 }

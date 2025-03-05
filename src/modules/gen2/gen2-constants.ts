@@ -1,3 +1,7 @@
+import _hatchiesDataGen2 from "./gen2MetadataArray.json";
+
+export const hatchiesDataGen2: any = _hatchiesDataGen2;
+
 import { createRangeArray, getGen2ShinyIds } from "../../utils";
 
 export const gen1VoidIds = [0];
