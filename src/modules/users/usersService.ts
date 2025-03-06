@@ -34,7 +34,11 @@ export class UsersService {
     }
     return user.docs[0]?.data() as User;
   }
-  public async get(uid: string): Promise<User> {
+  public async get(uid: string, transaction?: admin.firestore.Transaction): Promise<User> {
+    if (transaction) {
+      const user = (await transaction.get(this.collection.doc(uid))).data();
+      return user as User;
+    }
     const user = (await this.collection.doc(uid).get()).data();
     return user as User;
   }

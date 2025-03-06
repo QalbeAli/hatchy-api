@@ -32,6 +32,7 @@ export class VouchersService {
   apiKeyService = new ApiKeysService();
   gamesWalletsService = new GamesWalletsService();
   assetsService = new AssetsService();
+  usersCollection = admin.firestore().collection('users');
 
   constructor(chainId?: number) {
     this.chainId = chainId || DefaultChainId;
@@ -211,13 +212,14 @@ export class VouchersService {
     };
   }
 
-  public async getVouchersOfUser(uid: string): Promise<Voucher[]> {
-    const vouchers = await this.vouchersCollection.where('userId', '==', uid).get();
-    const user = await new UsersService().get(uid);
+  public async getVouchersOfUser(uid: string, transaction?: admin.firestore.Transaction): Promise<Voucher[]> {
+    // const vouchers = await this.vouchersCollection.where('userId', '==', uid).get();
+    const user = await new UsersService().get(uid, transaction);
     if (!user) {
       throw new NotFoundError('User not found');
     }
 
+    /*
     if (!user.vouchersMerged) {
       const mergedVouchers: { [key: string]: Voucher } = {};
       vouchers.docs.forEach(doc => {
@@ -243,6 +245,30 @@ export class VouchersService {
 
       await batch.commit();
       await admin.firestore().collection('users').doc(uid).update({ vouchersMerged: true });
+    }
+    */
+    if (transaction) {
+      const vouchers = (await transaction.get(this.vouchersCollection.where('userId', '==', uid))).docs.map(doc => {
+        const data = doc.data();
+        return {
+          uid: doc.id,
+          userId: data.userId,
+          holder: data.holder,
+          contract: data.contract,
+          contractType: data.contractType,
+          type: data.type,
+          name: data.name,
+          amount: data.amount,
+          image: data.image,
+          tokenId: data.tokenId,
+          blockchainId: data.blockchainId,
+          category: data.category,
+          receiver: data.receiver,
+          createdAt: data.createdAt,
+          updatedAt: data.updatedAt,
+        };
+      });
+      return vouchers;
     }
 
     return (await this.vouchersCollection.where('userId', '==', uid).get()).docs.map(doc => {
@@ -452,80 +478,87 @@ export class VouchersService {
     if (!receiver) {
       throw new BadRequestError('Receiver not found');
     }
+    return admin.firestore().runTransaction(async (transaction) => {
+      const vouchers = await this.getVouchersOfUser(userId, transaction);
+      const receiverVouchers = await this.getVouchersOfUser(receiver.uid, transaction);
 
-    const vouchers = await this.getVouchersOfUser(userId);
-    const receiverVouchers = await this.getVouchersOfUser(receiver.uid);
+      // const batch = admin.firestore().batch();
 
-    const batch = admin.firestore().batch();
+      const insertedVouchers = [];
+      for (let i = 0; i < voucherIds.length; i++) {
+        const voucherId = voucherIds[i];
+        const voucherAmount = voucherAmounts[i];
+        const voucher = vouchers.find(v => v.uid === voucherId);
+        if (!voucher) {
+          throw new BadRequestError('Voucher not found');
+        }
 
-    const insertedVouchers = [];
-    for (let i = 0; i < voucherIds.length; i++) {
-      const voucherId = voucherIds[i];
-      const voucherAmount = voucherAmounts[i];
-      const voucher = vouchers.find(v => v.uid === voucherId);
-      if (!voucher) {
-        throw new BadRequestError('Voucher not found');
+        if (voucher.userId !== userId) {
+          throw new BadRequestError('Voucher does not belong to user');
+        }
+
+        if (voucherAmount > voucher.amount) {
+          throw new BadRequestError('Voucher amount is not enough');
+        }
+
+        if (voucher.receiver === receiver.email) {
+          throw new BadRequestError('Cannot transfer to yourself');
+        }
+
+        const receiverVoucher = receiverVouchers.find(v => v.contract === voucher.contract && v.tokenId === voucher.tokenId);
+        if (receiverVoucher) {
+          const receiverVoucherRef = this.vouchersCollection.doc(receiverVoucher.uid);
+          transaction.update(receiverVoucherRef, { amount: receiverVoucher.amount + voucherAmount });
+          insertedVouchers.push({
+            voucher: receiverVoucher,
+            amount: voucherAmount
+          });
+        } else {
+          const newVoucherRef = this.vouchersCollection.doc();
+          const newVoucher = {
+            uid: newVoucherRef.id,
+            userId: receiver.uid,
+            holder: voucher.holder,
+            contract: voucher.contract,
+            contractType: voucher.contractType,
+            type: voucher.type,
+            name: voucher.name,
+            amount: voucherAmount,
+            image: voucher.image,
+            tokenId: voucher.tokenId,
+            blockchainId: voucher.blockchainId,
+            category: voucher.category,
+            receiver: voucher.receiver || null,
+            createdAt: admin.firestore.FieldValue.serverTimestamp(),
+            updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+          };
+          transaction.set(newVoucherRef, newVoucher);
+          insertedVouchers.push({
+            voucher: newVoucher,
+            amount: voucherAmount
+          });
+        }
+
+        const voucherRef = this.vouchersCollection.doc(voucherId);
+        if (voucher.amount - voucherAmount === 0) {
+          transaction.delete(voucherRef);
+        } else {
+          transaction.update(voucherRef, { amount: voucher.amount - voucherAmount });
+        }
       }
-
-      if (voucher.userId !== userId) {
-        throw new BadRequestError('Voucher does not belong to user');
+      return insertedVouchers;
+      // await batch.commit();
+    }).then((insertedVouchers) => {
+      return {
+        user: receiver,
+        vouchers: insertedVouchers
       }
+    })
 
-      if (voucherAmount > voucher.amount) {
-        throw new BadRequestError('Voucher amount is not enough');
-      }
-
-      if (voucher.receiver === receiver.email) {
-        throw new BadRequestError('Cannot transfer to yourself');
-      }
-
-      const receiverVoucher = receiverVouchers.find(v => v.contract === voucher.contract && v.tokenId === voucher.tokenId);
-      if (receiverVoucher) {
-        const receiverVoucherRef = this.vouchersCollection.doc(receiverVoucher.uid);
-        batch.update(receiverVoucherRef, { amount: receiverVoucher.amount + voucherAmount });
-        insertedVouchers.push({
-          voucher: receiverVoucher,
-          amount: voucherAmount
-        });
-      } else {
-        const newVoucherRef = this.vouchersCollection.doc();
-        const newVoucher = {
-          uid: newVoucherRef.id,
-          userId: receiver.uid,
-          holder: voucher.holder,
-          contract: voucher.contract,
-          contractType: voucher.contractType,
-          type: voucher.type,
-          name: voucher.name,
-          amount: voucherAmount,
-          image: voucher.image,
-          tokenId: voucher.tokenId,
-          blockchainId: voucher.blockchainId,
-          category: voucher.category,
-          receiver: voucher.receiver || null,
-          createdAt: admin.firestore.FieldValue.serverTimestamp(),
-          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-        };
-        batch.set(newVoucherRef, newVoucher);
-        insertedVouchers.push({
-          voucher: newVoucher,
-          amount: voucherAmount
-        });
-      }
-
-      const voucherRef = this.vouchersCollection.doc(voucherId);
-      if (voucher.amount - voucherAmount === 0) {
-        batch.delete(voucherRef);
-      } else {
-        batch.update(voucherRef, { amount: voucher.amount - voucherAmount });
-      }
-    }
-
-    await batch.commit();
-    return {
-      user: receiver,
-      vouchers: insertedVouchers
-    }
+    // return {
+    //   user: receiver,
+    //   vouchers: insertedVouchers
+    // }
     // return this.getVouchersOfUser(userId);
   }
 

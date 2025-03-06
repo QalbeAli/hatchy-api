@@ -101,6 +101,7 @@ export class AuthService {
       disabled: false,
       referralCount: 0,
       referralCode: request.user.uid,
+      vouchersMerged: true,
       referrerId,
       roles: ['user'],
     }
@@ -109,18 +110,19 @@ export class AuthService {
     await admin.firestore().runTransaction(async (transaction) => {
       const userDoc = await transaction.get(userRef);
       try {
-        const oldUserResponse = await fetch(`${config.HATCHY_API}/users/migration?email=${request.user.email}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            apiKey: config.ADMIN_KEY,
-          })
-        });
-        const oldUserData = await oldUserResponse.json() as UserMigrationData;
+        // const oldUserResponse = await fetch(`${config.HATCHY_API}/users/migration?email=${request.user.email}`, {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        //   body: JSON.stringify({
+        //     apiKey: config.ADMIN_KEY,
+        //   })
+        // });
+        // const oldUserData = await oldUserResponse.json() as UserMigrationData;
 
         if (!userDoc.exists) {
+          /*
           if (oldUserData.user) {
             const oldUser = oldUserData.user;
             if (oldUser.username) {
@@ -201,6 +203,7 @@ export class AuthService {
               });
             }
           }
+          */
 
           // Create new user document
           transaction.set(userRef, userCreationParams);
@@ -225,7 +228,9 @@ export class AuthService {
               createdAt: admin.firestore.FieldValue.serverTimestamp(),
               status: 'completed'
             });
-          } else {
+          }
+          /*
+          else {
             // migrate referrer
             if (oldUserData.referrer?.email) {
               const referralRef = this.usersCollection.doc(userCreationParams.uid);
@@ -257,8 +262,10 @@ export class AuthService {
               }
             }
           }
+          */
 
           // migrate referrals
+          /*
           if (oldUserData.referrals) {
             const referrerRef = this.usersCollection.doc(userCreationParams.uid);
             for (const referral of oldUserData.referrals) {
@@ -285,6 +292,7 @@ export class AuthService {
               });
             }
           }
+          */
         }
       } catch (error) {
         console.log(error);
