@@ -1,6 +1,8 @@
+import { BadRequestError } from "../../errors/bad-request-error";
 import { admin } from "../../firebase/firebase";
 import { AssetsService } from "../assets/assets-service";
 import { GamesService } from "../games/games-service";
+import { GamesWalletsService } from "../games/games-wallets-service";
 import { LeaderboardService } from "../leaderboard/leaderboard-service";
 import { UsersService } from "../users/usersService";
 import { VouchersService } from "../vouchers/vouchers-service";
@@ -48,6 +50,7 @@ export class EventsService {
     const vouchersService = new VouchersService();
     const gamesService = new GamesService();
     const usersService = new UsersService();
+    const gamesWalletsService = new GamesWalletsService();
 
     await Promise.all(snapshot.docs.map(async (doc) => {
       const event = doc.data() as Event;
@@ -85,6 +88,27 @@ export class EventsService {
             }))
           );
         });
+
+        // verify that gamesWallet.balance has the required amount for all the voucherOperations
+        const gamesWallet = await gamesWalletsService.getGameWalletById(event.gameId);
+        const balance = gamesWallet.balance;
+        // sum all the amounts for each assetId
+        const assetAmounts = voucherOperations.reduce((acc, op) => {
+          acc[op.assetId] = (acc[op.assetId] || 0) + op.amount;
+          return acc;
+        }, {} as { [key: string]: number });
+
+        // check if the balance is sufficient for all the voucherOperations
+        const insufficientBalance = Object.entries(assetAmounts).some(([assetId, amount]) => {
+          return !balance[assetId] || balance[assetId] < amount;
+        });
+
+        if (insufficientBalance) {
+          throw new BadRequestError('Insufficient balance for event rewards');
+        }
+        await Promise.all(Object.entries(assetAmounts).map(([assetId, amount]) => {
+          return gamesWalletsService.consumeBalance(event.gameId, assetId, amount);
+        }));
 
         // Process vouchers in batches of 500
         const BATCH_SIZE = 100;

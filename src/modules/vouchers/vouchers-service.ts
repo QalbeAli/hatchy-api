@@ -14,6 +14,7 @@ import { AssetsService } from "../assets/assets-service";
 import { ItemsService } from "../masters/services/ItemsService";
 import { BatchVoucherClaimSignature } from "./batch-voucher-claim-signature";
 import { VoucherLog } from "./voucher-log";
+import { GamesWalletsService } from "../games/games-wallets-service";
 
 interface ConverterPayload {
   receiver: string
@@ -29,6 +30,7 @@ export class VouchersService {
   vouchersHistoryCollection = admin.firestore().collection('vouchers-logs');
   statsCollection = admin.firestore().collection('stats');
   apiKeyService = new ApiKeysService();
+  gamesWalletsService = new GamesWalletsService();
   assetsService = new AssetsService();
 
   constructor(chainId?: number) {
@@ -550,7 +552,8 @@ export class VouchersService {
     apiKey: string, email: string, assetId: string, amount: number, overrideTokenId?: string
   ) {
     const apiKeyData = await this.apiKeyService.getApiKey(apiKey);
-    if (!apiKeyData.balance[assetId] || apiKeyData.balance[assetId] < amount) {
+    const gameWallet = await this.gamesWalletsService.getGameWalletById(apiKeyData.appId);
+    if (!gameWallet.balance || !gameWallet.balance[assetId] || gameWallet.balance[assetId] < amount) {
       throw new BadRequestError('Insufficient asset limit');
     }
 
@@ -559,12 +562,14 @@ export class VouchersService {
     }
     const res = await this.giveVoucherToUser(email, assetId, amount, overrideTokenId);
     // update the balance of the api key
-    const newBalance = { ...apiKeyData.balance };
-    newBalance[assetId] -= amount;
-    await admin.firestore().collection('api-keys').doc(apiKeyData.uid).update({ balance: newBalance });
+    await this.gamesWalletsService.consumeBalance(apiKeyData.appId, assetId, amount);
 
     return {
       apiKey: apiKeyData,
+      balance: {
+        ...gameWallet.balance,
+        [assetId]: gameWallet.balance[assetId] - amount
+      },
       user: res.user,
       voucher: res.voucher
     }
