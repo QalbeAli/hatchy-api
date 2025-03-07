@@ -68,6 +68,35 @@ const prodNetworks: Map<number, NetworkData> = new Map([
       },
     },
   ],
+  [
+    56,
+    {
+      name: "bsc",
+      label: "BSC",
+      symbol: "BNB",
+      rpc: "https://bsc-dataseed.binance.org/",
+      nativeCurrency: {
+        name: "BNB",
+        symbol: "BNB",
+        decimals: 18,
+      },
+      layerzeroId: 102,
+      coingeckoId: "binancecoin",
+      chainId: 56,
+      icon: "/icons/networks/binance-coin.png",
+      availableBridges: {
+        token: [43114],
+      },
+      addresses: {
+        hatchy: "0x8Af48050534ee9bDe12Ec6e45EA3Db4908c04777",
+        eggsGen2: "0x69a211F5891E77c18493c7C72d6BF50E1637a055",
+        hatchypocketGen2: "0xc91c80817344c0694f5063FEAB7bb063319A3B21",
+        hatchypocketStakingGen2: "0xe7869DA18E6bF1B23276161F02FFb419CBB0CBc5",
+        stakingGen2: "0xe7869DA18E6bF1B23276161F02FFb419CBB0CBc5",
+        hatchyReward: "0x2092F5Dd755EfFe83A85C4d4c2362a1A0998bDCa",
+      },
+    },
+  ],
 ]);
 
 const devNetworks: Map<number, NetworkData> = new Map([
@@ -133,9 +162,86 @@ const devNetworks: Map<number, NetworkData> = new Map([
       },
     },
   ],
+  [
+    97,
+    {
+      name: "bsc-testnet",
+      label: "BSC Testnet",
+      layerzeroId: 10102,
+      coingeckoId: "binancecoin",
+      chainId: 97,
+      icon: "/icons/networks/binance-coin.png",
+      symbol: "BNB",
+      rpc: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+      nativeCurrency: {
+        name: "BNB",
+        symbol: "BNB",
+        decimals: 18,
+      },
+      availableBridges: {
+        token: [43113, 80001, 4002],
+      },
+      addresses: {
+        hatchy: "0x9cA2AF043C3665bE989615fe7fa0280211059743",
+      },
+    },
+  ],
+  [
+    4002,
+    {
+      name: "fantom-testnet",
+      label: "Fantom Testnet",
+      layerzeroId: 10112,
+      coingeckoId: "fantom",
+      chainId: 4002,
+      symbol: "FTM",
+      rpc: "https://rpc.testnet.fantom.network",
+      nativeCurrency: {
+        name: "FTM",
+        symbol: "FTM",
+        decimals: 18,
+      },
+      icon: "/icons/networks/fantom.png",
+      availableBridges: {
+        token: [97, 43113, 80001, 421613],
+        omnigens: [43113],
+        omnigensItems: [43113],
+      },
+      addresses: {
+        hatchy: "0x1ea04baf411A4b66ce3C03689C8d95ea7CD4b151",
+        omnigens: "0x87dA7b0153e41AEFc5f3A002E898eBFeC45A5742",
+        omnigensItems: "0xF0879A585Eaf5e2026E6Ac3306d189f13c77247F",
+      },
+    },
+  ],
+  [
+    80001,
+    {
+      name: "mumbai",
+      label: "Mumbai Testnet",
+      layerzeroId: 10109,
+      coingeckoId: "polygon",
+      chainId: 80001,
+      symbol: "MATIC",
+      rpc: "https://rpc-mumbai.matic.today",
+      nativeCurrency: {
+        name: "MATIC",
+        symbol: "MATIC",
+        decimals: 18,
+      },
+      icon: "/icons/networks/mumbai.png",
+      availableBridges: {
+        token: [43113, 4002],
+      },
+      addresses: {
+        hatchy: "0x8Af48050534ee9bDe12Ec6e45EA3Db4908c04777",
+      },
+    },
+  ],
 ]);
 
 export const Networks = config.NODE_ENV == "dev" ? devNetworks : prodNetworks;
+const AllNetworks = new Map([...prodNetworks, ...devNetworks]);
 export const NetworksArray = Array.from(Networks.values());
 
 export const getAddress = (
@@ -186,6 +292,15 @@ export const getProvider = (chainId?: number) => {
     console.log(`Network ${_chainId} is not supported`);
     return;
   }
+  const provider = new ethers.providers.JsonRpcProvider(
+    networkData.rpc
+  );
+  return provider;
+}
+
+export const getAnyProvider = (chainId?: number) => {
+  const _chainId = chainId || DefaultChainId;
+  const networkData = AllNetworks.get(_chainId);
   const provider = new ethers.providers.JsonRpcProvider(
     networkData.rpc
   );

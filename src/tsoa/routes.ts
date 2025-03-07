@@ -40,6 +40,8 @@ import { TradesController } from './../modules/trades/trades-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { Gen2Controller } from './../modules/gen2/gen2-controller';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { ContractsController } from './../modules/contracts/contracts-controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { VouchersController } from './../modules/vouchers/vouchers-controller';
 import { expressAuthentication } from './../authentication';
 // @ts-ignore - no great way to install types from subpackage
@@ -220,8 +222,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-03-06T15:31:18.999Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-03-06T15:31:19.000Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-03-07T04:05:34.320Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-03-07T04:05:34.321Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -582,6 +584,38 @@ const models: TsoaRoute.Models = {
             "shinyAmount": {"dataType":"double","required":true},
         },
         "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Contract": {
+        "dataType": "refObject",
+        "properties": {
+            "uid": {"dataType":"string","required":true},
+            "name": {"dataType":"string","required":true},
+            "description": {"dataType":"string"},
+            "address": {"dataType":"string","required":true},
+            "chainId": {"dataType":"double","required":true},
+            "link": {"dataType":"string","required":true},
+            "contractType": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["ERC721"]},{"dataType":"enum","enums":["ERC1155"]},{"dataType":"enum","enums":["ERC20"]},{"dataType":"enum","enums":["Other"]}]},
+            "deployDate": {"dataType":"string","required":true},
+            "owner": {"dataType":"string","required":true},
+            "verified": {"dataType":"boolean","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Pick_Contract.Exclude_keyofContract.uid-or-owner__": {
+        "dataType": "refAlias",
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"name":{"dataType":"string","required":true},"description":{"dataType":"string"},"contractType":{"dataType":"union","subSchemas":[{"dataType":"enum","enums":["ERC721"]},{"dataType":"enum","enums":["ERC1155"]},{"dataType":"enum","enums":["ERC20"]},{"dataType":"enum","enums":["Other"]}]},"address":{"dataType":"string","required":true},"chainId":{"dataType":"double","required":true},"link":{"dataType":"string","required":true},"deployDate":{"dataType":"string","required":true},"verified":{"dataType":"boolean","required":true}},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Omit_Contract.uid-or-owner_": {
+        "dataType": "refAlias",
+        "type": {"ref":"Pick_Contract.Exclude_keyofContract.uid-or-owner__","validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "CreateContractParams": {
+        "dataType": "refAlias",
+        "type": {"ref":"Omit_Contract.uid-or-owner_","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Voucher": {
@@ -2949,6 +2983,129 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'getGen2Balance',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/contracts',
+            ...(fetchMiddlewares<RequestHandler>(ContractsController)),
+            ...(fetchMiddlewares<RequestHandler>(ContractsController.prototype.getContracts)),
+
+            async function ContractsController_getContracts(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new ContractsController();
+
+              await templateService.apiHandler({
+                methodName: 'getContracts',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/contracts',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(ContractsController)),
+            ...(fetchMiddlewares<RequestHandler>(ContractsController.prototype.createContract)),
+
+            async function ContractsController_createContract(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    body: {"in":"body","name":"body","required":true,"ref":"CreateContractParams"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new ContractsController();
+
+              await templateService.apiHandler({
+                methodName: 'createContract',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.put('/contracts/:uid',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(ContractsController)),
+            ...(fetchMiddlewares<RequestHandler>(ContractsController.prototype.updateContract)),
+
+            async function ContractsController_updateContract(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    uid: {"in":"path","name":"uid","required":true,"dataType":"string"},
+                    body: {"in":"body","name":"body","required":true,"ref":"CreateContractParams"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new ContractsController();
+
+              await templateService.apiHandler({
+                methodName: 'updateContract',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/contracts/:uid',
+            authenticateMiddleware([{"jwt":["admin"]}]),
+            ...(fetchMiddlewares<RequestHandler>(ContractsController)),
+            ...(fetchMiddlewares<RequestHandler>(ContractsController.prototype.deleteContract)),
+
+            async function ContractsController_deleteContract(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    uid: {"in":"path","name":"uid","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new ContractsController();
+
+              await templateService.apiHandler({
+                methodName: 'deleteContract',
                 controller,
                 response,
                 next,
