@@ -1,3 +1,4 @@
+import { Transaction } from "firebase-admin/firestore";
 import { BadRequestError } from "../../errors/bad-request-error";
 import { NotFoundError } from "../../errors/not-found-error";
 import { admin } from "../../firebase/firebase";
@@ -27,7 +28,14 @@ export class UsersService {
     return await this.get(wallet.data()?.userId);
   }
 
-  public async getUserByEmail(email: string): Promise<User> {
+  public async getUserByEmail(email: string, transaction?: Transaction): Promise<User> {
+    if (transaction) {
+      const user = await transaction.get(this.collection.where('email', '==', email));
+      if (user.docs.length === 0) {
+        throw new NotFoundError("User not found");
+      }
+      return user.docs[0]?.data() as User;
+    }
     const user = await this.collection.where('email', '==', email).get();
     if (user.docs.length === 0) {
       throw new NotFoundError("User not found");
@@ -80,97 +88,86 @@ export class UsersService {
    */
   public async deleteAccount(userId: string): Promise<void> {
     try {
-      // Start a batch write
-      const batch = admin.firestore().batch();
-
-      // 1. Get user data to check for referrer
-      const userDoc = await this.usersCollection.doc(userId).get();
-      const userData = userDoc.data();
-
-      if (!userData) {
-        throw new BadRequestError("User not found");
-      }
-
-      // 2. If user was referred, decrease referrer's count
-      if (userData.referrerId) {
-        const referrerRef = this.usersCollection.doc(userData.referrerId);
-        if ((await referrerRef.get()).exists) {
-          batch.update(referrerRef, {
+      return admin.firestore().runTransaction(async (transaction) => {
+        // with transaction
+        const userDoc = await transaction.get(this.usersCollection.doc(userId));
+        if (!userDoc.exists) {
+          throw new BadRequestError("User not found");
+        }
+        const userData = userDoc.data();
+        if (userData.referrerId) {
+          const referrerRef = this.usersCollection.doc(userData.referrerId);
+          // using transaction
+          const referrerDoc = await transaction.get(referrerRef);
+          if (!referrerDoc.exists) {
+            throw new BadRequestError("Referrer not found");
+          }
+          transaction.update(referrerRef, {
             referralCount: admin.firestore.FieldValue.increment(-1),
             // If you're using XP points, decrease them as well
             xpPoints: admin.firestore.FieldValue.increment(-100) // Adjust the amount as needed
           });
         }
-      }
 
-      // 3. Get all referral relationships where user is either referrer or referred
-      const [asReferrerDocs, asReferredDocs] = await Promise.all([
-        this.referralRelationsCollection
-          .where('referrerId', '==', userId)
-          .get(),
-        this.referralRelationsCollection
-          .where('referredId', '==', userId)
-          .get()
-      ]);
+        // 3. Get all referral relationships where user is either referrer or referred
+        const [asReferrerDocs, asReferredDocs] = await Promise.all([
+          transaction.get(this.referralRelationsCollection.where('referrerId', '==', userId)),
+          transaction.get(this.referralRelationsCollection.where('referredId', '==', userId))
+        ]);
 
-      // Delete all referral relationships
-      asReferrerDocs.docs.forEach(doc => {
-        batch.delete(doc.ref);
+        // Delete all referral relationships
+        asReferrerDocs.docs.forEach(doc => {
+          transaction.delete(doc.ref);
+        });
+        asReferredDocs.docs.forEach(doc => {
+          transaction.delete(doc.ref);
+        });
+
+        // set referred user document referrerId to null
+        asReferredDocs.docs.forEach(doc => {
+          const referredUserData = doc.data();
+          if (referredUserData) {
+            transaction.update(this.usersCollection.doc(referredUserData.referredId), {
+              referrerId: null
+            });
+          }
+        });
+
+        // 4. Get and delete all game saves
+        const gameSavesDocs = await transaction.get(this.gameSavesCollection
+          .where('userId', '==', userId));
+
+        gameSavesDocs.docs.forEach(doc => {
+          transaction.delete(doc.ref);
+        });
+
+        // 5. Get and delete vouchers
+        const vouchersDocs = await transaction.get(this.vouchersCollection
+          .where('userId', '==', userId));
+
+        vouchersDocs.docs.forEach(doc => {
+          transaction.update(doc.ref, {
+            email: userData.email
+          })
+        });
+
+        // 6. Delete linked wallets
+        const walletUsersDocs = await transaction.get(this.walletUsersCollection
+          .where('userId', '==', userId));
+
+        walletUsersDocs.docs.forEach(doc => {
+          transaction.delete(doc.ref);
+        });
+
+        // 6. Delete user document
+        transaction.delete(this.usersCollection.doc(userId));
+
+        // 8. Delete Firebase Auth user (this must be done after batch commit as it's a separate system)
+        await admin.auth().deleteUser(userId);
+
+        console.log(`Successfully deleted account and all related data for user: ${userId}`);
+
       });
-      asReferredDocs.docs.forEach(doc => {
-        batch.delete(doc.ref);
-      });
-
-      // set referred user document referrerId to null
-      asReferredDocs.docs.forEach(doc => {
-        const referredUserData = doc.data();
-        if (referredUserData) {
-          batch.update(this.usersCollection.doc(referredUserData.referredId), {
-            referrerId: null
-          });
-        }
-      });
-
-      // 4. Get and delete all game saves
-      const gameSavesDocs = await this.gameSavesCollection
-        .where('userId', '==', userId)
-        .get();
-
-      gameSavesDocs.docs.forEach(doc => {
-        batch.delete(doc.ref);
-      });
-
-      // 5. Get and delete vouchers
-      const vouchersDocs = await this.vouchersCollection
-        .where('userId', '==', userId)
-        .get();
-
-      vouchersDocs.docs.forEach(doc => {
-        batch.update(doc.ref, {
-          email: userData.email
-        })
-      });
-
-      // 6. Delete linked wallets
-      const walletUsersDocs = await this.walletUsersCollection
-        .where('userId', '==', userId)
-        .get();
-
-      walletUsersDocs.docs.forEach(doc => {
-        batch.delete(doc.ref);
-      });
-
-      // 6. Delete user document
-      batch.delete(this.usersCollection.doc(userId));
-
-      // 7. Execute batch operations
-      await batch.commit();
-
-      // 8. Delete Firebase Auth user (this must be done after batch commit as it's a separate system)
-      await admin.auth().deleteUser(userId);
-
-      console.log(`Successfully deleted account and all related data for user: ${userId}`);
-
     } catch (error) {
       console.error('Error deleting account:', error);
 

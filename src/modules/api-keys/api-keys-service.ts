@@ -1,3 +1,4 @@
+import { Transaction } from "firebase-admin/firestore";
 import { admin } from "../../firebase/firebase";
 import { ApiKey } from "./api-key";
 import { CreateApiKeyParams } from "./create-api-key-params";
@@ -14,7 +15,12 @@ export class ApiKeysService {
     return snapshot.docs.map(doc => doc.data() as ApiKey);
   }
 
-  public async getApiKey(apiKey: string): Promise<ApiKey> {
+  public async getApiKey(apiKey: string, transaction?: Transaction): Promise<ApiKey> {
+    if (transaction) {
+      const apiKeyDoc = await transaction.get(this.apiKeysCollection
+        .where('apiKey', '==', apiKey));
+      return apiKeyDoc.docs[0].data() as ApiKey;
+    }
     const apiKeyDoc = await this.apiKeysCollection.where('apiKey', '==', apiKey).get();
     return apiKeyDoc.docs[0].data() as ApiKey;
   }

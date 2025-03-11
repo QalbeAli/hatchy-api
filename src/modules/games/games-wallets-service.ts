@@ -1,26 +1,35 @@
 import { NotFoundError } from "../../errors/not-found-error";
 import { admin } from "../../firebase/firebase";
-import { Timestamp } from "firebase-admin/firestore";
+import { Timestamp, Transaction } from "firebase-admin/firestore";
 import { GameWallet } from "./game-wallet";
 
 export class GamesWalletsService {
   collection = admin.firestore().collection('game-wallets');
-  public async getGameWalletById(gameId: string): Promise<GameWallet> {
+  public async getGameWalletById(gameId: string, transaction?: Transaction): Promise<GameWallet> {
     const docRef = this.collection.doc(gameId);
-    const data = (await docRef.get()).data();
-    if (!data) {
-      throw new NotFoundError('not found');
+    if (transaction) {
+      const gameWalletDoc = await transaction.get(docRef);
+      if (!gameWalletDoc.exists) {
+        throw new NotFoundError('not found');
+      }
+      return gameWalletDoc.data() as GameWallet;
+    } else {
+      const data = await docRef.get();
+      if (!data.exists) {
+        throw new NotFoundError('not found');
+      }
+      return data.data() as GameWallet;
     }
-    return data as GameWallet;
   }
 
   public async consumeBalance(
     gameId: string,
     assetId: string,
-    amount: number
+    amount: number,
+    transaction: Transaction
   ) {
     const docRef = this.collection.doc(gameId);
-    const gameWallet = await this.getGameWalletById(gameId);
+    const gameWallet = await this.getGameWalletById(gameId, transaction);
     const updatedGameWallet = {
       ...gameWallet,
       balance: {
@@ -29,6 +38,6 @@ export class GamesWalletsService {
       },
       updatedAt: Timestamp.now(),
     };
-    await docRef.update(updatedGameWallet);
+    transaction.update(docRef, updatedGameWallet);
   }
 }

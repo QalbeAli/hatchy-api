@@ -4,13 +4,8 @@ import * as crypto from 'crypto';
 import { WalletSignatureMessage } from "./walletSignatureMessage";
 import { AuthCustomToken } from "./authCustomToken";
 import { ethers } from "ethers";
-import { FieldValue, Timestamp } from "firebase-admin/firestore";
+import { FieldValue } from "firebase-admin/firestore";
 import { ReferralsService } from "../referrals/referrals-service";
-import config from "../../config";
-import { UserMigrationData } from "../../types";
-import { Voucher } from "../vouchers/voucher";
-import { GameSave } from "../games/game-save";
-import { isAddress } from "ethers/lib/utils";
 
 export type UserCreationParams = Pick<
   User,
