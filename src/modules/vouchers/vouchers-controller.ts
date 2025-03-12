@@ -21,6 +21,7 @@ import { MessageResponse } from "../../responses/message-response";
 import { isEmail } from "../../utils";
 import { DepositSignature } from "./deposit-signature";
 import { BatchVoucherClaimSignature } from "./batch-voucher-claim-signature";
+import { admin } from "../../firebase/firebase";
 
 @Route("vouchers")
 @Tags("Vouchers")
@@ -56,26 +57,29 @@ export class VouchersController extends Controller {
     if (!isEmail(body.email)) {
       throw new BadRequestError('Invalid email');
     }
-    const res = await voucherService.giveVoucherToUser(
-      body.email,
-      body.assetId,
-      body.amount,
-      body.overrideTokenId
-    );
-    await voucherService.logVoucher({
-      action: 'giveaway',
-      vouchersData: [{
-        ...res.voucher,
-        amount: body.amount,
-      }],
-      actionUserId: request.user.uid,
-      actionUserEmail: request.user.email,
-      toUserId: res.user.uid,
-      toUserEmail: res.user.email,
+    return admin.firestore().runTransaction(async (transaction) => {
+      const res = await voucherService.giveVoucherToUser(
+        transaction,
+        body.email,
+        body.assetId,
+        body.amount,
+        body.overrideTokenId
+      );
+      await voucherService.logVoucher({
+        action: 'giveaway',
+        vouchersData: [{
+          ...res.voucher,
+          amount: body.amount,
+        }],
+        actionUserId: request.user.uid,
+        actionUserEmail: request.user.email,
+        toUserId: res.user.uid,
+        toUserEmail: res.user.email,
+      });
+      return {
+        message: 'Voucher given',
+      }
     });
-    return {
-      message: 'Voucher given',
-    }
   }
 
   @Security("api_key_rewards")

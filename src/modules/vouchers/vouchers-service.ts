@@ -600,7 +600,7 @@ export class VouchersService {
       if (!apiKeyData.permissions || !apiKeyData.permissions.includes('rewards')) {
         throw new BadRequestError('API Key does not have permissions');
       }
-      const res = await this.giveVoucherToUser(email, assetId, amount, transaction, overrideTokenId);
+      const res = await this.giveVoucherToUser(transaction, email, assetId, amount, overrideTokenId);
       // update the balance of the api key
       await this.gamesWalletsService.consumeBalance(apiKeyData.appId, assetId, amount, transaction);
 
@@ -617,10 +617,10 @@ export class VouchersService {
   }
 
   public async giveVoucherToUser(
+    transaction: Transaction,
     email: string,
     assetId: string,
     amount: number,
-    transaction: Transaction,
     overrideTokenId?: string,
   ) {
     const usersService = new UsersService();

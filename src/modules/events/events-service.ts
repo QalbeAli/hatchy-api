@@ -37,136 +37,137 @@ export class EventsService {
 
   public async giveEventRewards(): Promise<void> {
     console.log('Giving event rewards...');
-    const snapshot = await this.eventsCollection
-      .where('endDate', '<', new Date().toISOString())
-      .where('rewardsGiven', '==', false)
-      .get();
-    if (snapshot.empty) {
-      console.log('No events to process');
-      return;
-    }
-
-    const leaderboardService = new LeaderboardService();
-    const vouchersService = new VouchersService();
-    const gamesService = new GamesService();
-    const usersService = new UsersService();
-    const gamesWalletsService = new GamesWalletsService();
-
-    await Promise.all(snapshot.docs.map(async (doc) => {
-      const event = doc.data() as Event;
-      let leaderboard = [];
-      // Get leaderboard based on game type
-      if (event.gameId) {
-        const game = await gamesService.getGameById(event.gameId);
-        if (!game.name.includes('Rampage')) {
-          // Get regular game leaderboard
-          leaderboard = await leaderboardService.getScoreLeaderboard(event.gameId);
-        } else {
-          // Get Rampage game leaderboard
-          const rampageSnapshot = await admin.firestore()
-            .collection('HatchyRampageGameLeaderboards')
-            .orderBy('EnemiesKilled', 'desc')
-            .get();
-
-          leaderboard = rampageSnapshot.docs.map(doc => ({
-            userId: doc.data().Uid,
-            score: doc.data().EnemiesKilled,
-            username: doc.data().DisplayName
-          }));
-        }
-
-        // Prepare all voucher operations
-        const voucherOperations = event.rewards.flatMap(reward => {
-          const qualifyingUsers = leaderboard.slice(reward.fromRank - 1, reward.toRank);
-          return qualifyingUsers.flatMap(user =>
-            reward.assets.map(asset => ({
-              userId: user.userId,
-              assetId: asset.uid,
-              amount: asset.amount,
-              username: user.username,
-              type: asset.type
-            }))
-          );
-        });
-
-        // verify that gamesWallet.balance has the required amount for all the voucherOperations
-        const gamesWallet = await gamesWalletsService.getGameWalletById(event.gameId);
-        const balance = gamesWallet.balance;
-        // sum all the amounts for each assetId
-        const assetAmounts = voucherOperations.reduce((acc, op) => {
-          acc[op.assetId] = (acc[op.assetId] || 0) + op.amount;
-          return acc;
-        }, {} as { [key: string]: number });
-
-        // check if the balance is sufficient for all the voucherOperations
-        const insufficientBalance = Object.entries(assetAmounts).some(([assetId, amount]) => {
-          return !balance[assetId] || balance[assetId] < amount;
-        });
-
-        if (insufficientBalance) {
-          throw new BadRequestError('Insufficient balance for event rewards');
-        }
-        await Promise.all(Object.entries(assetAmounts).map(([assetId, amount]) => {
-          return gamesWalletsService.consumeBalance(event.gameId, assetId, amount);
-        }));
-
-        // Process vouchers in batches of 500
-        const BATCH_SIZE = 100;
-        for (let i = 0; i < voucherOperations.length; i += BATCH_SIZE) {
-          const batch = voucherOperations.slice(i, i + BATCH_SIZE);
-          await Promise.all(batch.map(async (op) => {
-            try {
-              if (op.type == 'game') {
-                const asset = await this.assetsService.getAsset(op.assetId);
-                const property = asset.property;
-                if (asset.name.includes('Rampage')) {
-                  // update document in collection HatchyRampageGameData
-                  // increase the property value by op.amount
-                  const rampageGameDataRef = admin.firestore().collection('HatchyRampageGameData').doc(op.userId);
-                  await rampageGameDataRef.set({
-                    [property]: admin.firestore.FieldValue.increment(op.amount)
-                  }, { merge: true });
-                }
-              } else {
-                const result = await vouchersService.giveVoucherToUser(
-                  op.userId,
-                  op.assetId,
-                  op.amount
-                );
-                // Get user data for logging
-                const user = await usersService.get(op.userId);
-
-                if (user && result.voucher) {
-                  // Log the voucher operation
-                  await vouchersService.logVoucher({
-                    action: 'giveaway',
-                    vouchersData: [{
-                      ...result.voucher,
-                      amount: op.amount
-                    }],
-                    toUserId: user.uid,
-                    toUserEmail: user.email,
-                    actionUserId: 'system',
-                    actionUserEmail: 'system@hatchypocket.com'
-                  });
-                }
-              }
-              // console.log(`Gave ${op.amount}x ${op.assetId} to ${op.username}`);
-            } catch (error) {
-              console.error(`Failed to give reward to ${op.username}:`, error);
-            }
-          }));
-        }
+    return admin.firestore().runTransaction(async (transaction) => {
+      const snapshot = await transaction.get(this.eventsCollection
+        .where('endDate', '<', new Date().toISOString())
+        .where('rewardsGiven', '==', false));
+      if (snapshot.empty) {
+        console.log('No events to process');
+        return;
       }
 
-      // Mark event as completed
+      const leaderboardService = new LeaderboardService();
+      const vouchersService = new VouchersService();
+      const gamesService = new GamesService();
+      const usersService = new UsersService();
+      const gamesWalletsService = new GamesWalletsService();
 
-      // dont complete event
-      // await doc.ref.update({
-      //   rewardsGiven: true
-      // });
+      await Promise.all(snapshot.docs.map(async (doc) => {
+        const event = doc.data() as Event;
+        let leaderboard = [];
+        // Get leaderboard based on game type
+        if (event.gameId) {
+          const game = await gamesService.getGameById(event.gameId);
+          if (!game.name.includes('Rampage')) {
+            // Get regular game leaderboard
+            leaderboard = await leaderboardService.getScoreLeaderboard(event.gameId, undefined, transaction);
+          } else {
+            // Get Rampage game leaderboard
+            const rampageSnapshot = await transaction.get(admin.firestore()
+              .collection('HatchyRampageGameLeaderboards')
+              .orderBy('EnemiesKilled', 'desc'));
 
-      console.log(`Processed event ${event.uid}: ${event.name}`);
-    }));
+            leaderboard = rampageSnapshot.docs.map(doc => ({
+              userId: doc.data().Uid,
+              score: doc.data().EnemiesKilled,
+              username: doc.data().DisplayName
+            }));
+          }
+
+          // Prepare all voucher operations
+          const voucherOperations = event.rewards.flatMap(reward => {
+            const qualifyingUsers = leaderboard.slice(reward.fromRank - 1, reward.toRank);
+            return qualifyingUsers.flatMap(user =>
+              reward.assets.map(asset => ({
+                userId: user.userId,
+                assetId: asset.uid,
+                amount: asset.amount,
+                username: user.username,
+                type: asset.type
+              }))
+            );
+          });
+
+          // verify that gamesWallet.balance has the required amount for all the voucherOperations
+          const gamesWallet = await gamesWalletsService.getGameWalletById(event.gameId, transaction);
+          const balance = gamesWallet.balance;
+          // sum all the amounts for each assetId
+          const assetAmounts = voucherOperations.reduce((acc, op) => {
+            acc[op.assetId] = (acc[op.assetId] || 0) + op.amount;
+            return acc;
+          }, {} as { [key: string]: number });
+
+          // check if the balance is sufficient for all the voucherOperations
+          const insufficientBalance = Object.entries(assetAmounts).some(([assetId, amount]) => {
+            return !balance[assetId] || balance[assetId] < amount;
+          });
+
+          if (insufficientBalance) {
+            throw new BadRequestError('Insufficient balance for event rewards');
+          }
+          await Promise.all(Object.entries(assetAmounts).map(([assetId, amount]) => {
+            return gamesWalletsService.consumeBalance(event.gameId, assetId, amount, transaction);
+          }));
+
+          // Process vouchers in batches of 500
+          const BATCH_SIZE = 100;
+          for (let i = 0; i < voucherOperations.length; i += BATCH_SIZE) {
+            const batch = voucherOperations.slice(i, i + BATCH_SIZE);
+            await Promise.all(batch.map(async (op) => {
+              try {
+                if (op.type == 'game') {
+                  const asset = await this.assetsService.getAsset(op.assetId);
+                  const property = asset.property;
+                  if (asset.name.includes('Rampage')) {
+                    // update document in collection HatchyRampageGameData
+                    // increase the property value by op.amount
+                    const rampageGameDataRef = admin.firestore().collection('HatchyRampageGameData').doc(op.userId);
+                    transaction.set(rampageGameDataRef, {
+                      [property]: admin.firestore.FieldValue.increment(op.amount)
+                    }, { merge: true });
+                  }
+                } else {
+                  const result = await vouchersService.giveVoucherToUser(
+                    transaction,
+                    op.userId,
+                    op.assetId,
+                    op.amount
+                  );
+                  // Get user data for logging
+                  const user = await usersService.get(op.userId);
+
+                  if (user && result.voucher) {
+                    // Log the voucher operation
+                    await vouchersService.logVoucher({
+                      action: 'giveaway',
+                      vouchersData: [{
+                        ...result.voucher,
+                        amount: op.amount
+                      }],
+                      toUserId: user.uid,
+                      toUserEmail: user.email,
+                      actionUserId: 'system',
+                      actionUserEmail: 'system@hatchypocket.com'
+                    });
+                  }
+                }
+                // console.log(`Gave ${op.amount}x ${op.assetId} to ${op.username}`);
+              } catch (error) {
+                console.error(`Failed to give reward to ${op.username}:`, error);
+              }
+            }));
+          }
+        }
+
+        // Mark event as completed
+
+        // dont complete event
+        // await doc.ref.update({
+        //   rewardsGiven: true
+        // });
+
+        console.log(`Processed event ${event.uid}: ${event.name}`);
+      }));
+    });
   }
 }

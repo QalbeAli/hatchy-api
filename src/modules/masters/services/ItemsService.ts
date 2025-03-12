@@ -9,6 +9,7 @@ import { Loaded } from "@mikro-orm/core";
 import { Item } from "../../../entities/Item";
 import { User } from "../../users/user";
 import { AssetsService } from "../../assets/assets-service";
+import { admin } from "../../../firebase/firebase";
 
 export class ItemsService {
   chainId: number;
@@ -174,13 +175,15 @@ export class ItemsService {
     items: Loaded<Item, "category" | "gender" | "category.type" | "category.type.layers", "*", never>[],
     amounts: number[]
   ) {
-    const assetsService = new AssetsService();
-    const mastersItemsAsset = await assetsService.getAssetByContract(getContract('mastersItems', this.chainId).address);
-    const voucherService = new VouchersService();
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-      const amount = amounts[i];
-      await voucherService.giveVoucherToUser(user.email, mastersItemsAsset.uid, amount, item.id.toString());
-    }
+    return admin.firestore().runTransaction(async (transaction) => {
+      const assetsService = new AssetsService();
+      const mastersItemsAsset = await assetsService.getAssetByContract(getContract('mastersItems', this.chainId).address);
+      const voucherService = new VouchersService();
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        const amount = amounts[i];
+        await voucherService.giveVoucherToUser(transaction, user.email, mastersItemsAsset.uid, amount, item.id.toString());
+      }
+    });
   }
 }

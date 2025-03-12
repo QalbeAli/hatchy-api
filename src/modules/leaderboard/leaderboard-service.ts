@@ -1,5 +1,5 @@
 import { admin } from "../../firebase/firebase";
-import { Timestamp } from "firebase-admin/firestore";
+import { Timestamp, Transaction } from "firebase-admin/firestore";
 import { Game } from "../games/game";
 import { User } from "../users/user";
 import { Score } from "./score";
@@ -7,56 +7,63 @@ import { RankItem } from "./rank";
 
 export class LeaderboardService {
   public async addScore(game: Game, user: User, score: number): Promise<Score> {
-    const scoresRef = admin.firestore().collection('scores');
-    const querySnapshot = await scoresRef
-      .where('gameId', '==', game.uid)
-      .where('userId', '==', user.uid)
-      .limit(1)
-      .get();
+    return admin.firestore().runTransaction(async (transaction) => {
+      const scoresRef = admin.firestore().collection('scores');
+      const querySnapshot = await transaction.get(scoresRef
+        .where('gameId', '==', game.uid)
+        .where('userId', '==', user.uid)
+        .limit(1));
 
-    if (!querySnapshot.empty) {
-      const existingScoreDoc = querySnapshot.docs[0];
-      const existingScore = existingScoreDoc.data().score;
-      const scoreData = existingScoreDoc.data();
-      const now = Timestamp.now();
-      if (score > existingScore) {
-        await existingScoreDoc.ref.update({
-          score: score,
-          updatedAt: now,
-        });
+      if (!querySnapshot.empty) {
+        const existingScoreDoc = querySnapshot.docs[0];
+        const existingScore = existingScoreDoc.data().score;
+        const scoreData = existingScoreDoc.data();
+        const now = Timestamp.now();
+        if (score > existingScore) {
+          transaction.update(existingScoreDoc.ref, {
+            score: score,
+            updatedAt: now,
+          });
+        }
+        return {
+          gameId: scoreData.gameId,
+          userId: scoreData.userId,
+          username: scoreData.username,
+          score: score > existingScore ? score : existingScore,
+          createdAt: scoreData.createdAt,
+          updatedAt: score > existingScore ? now : scoreData.updatedAt,
+        };
+
+      } else {
+        const newScoreRef = scoresRef.doc();
+        const scoreData = {
+          gameId: game.uid,
+          userId: user.uid,
+          username: user.displayName,
+          score,
+          createdAt: Timestamp.now(),
+          updatedAt: Timestamp.now(),
+        }
+        transaction.set(newScoreRef, scoreData);
+
+        const doc = await transaction.get(newScoreRef);
+        return doc.data() as Score;
       }
-      return {
-        gameId: scoreData.gameId,
-        userId: scoreData.userId,
-        username: scoreData.username,
-        score: score > existingScore ? score : existingScore,
-        createdAt: scoreData.createdAt,
-        updatedAt: score > existingScore ? now : scoreData.updatedAt,
-      };
-
-    } else {
-      const newScoreRef = scoresRef.doc();
-      const scoreData = {
-        gameId: game.uid,
-        userId: user.uid,
-        username: user.displayName,
-        score,
-        createdAt: Timestamp.now(),
-        updatedAt: Timestamp.now(),
-      }
-      await newScoreRef.set(scoreData);
-
-      const doc = await newScoreRef.get();
-      return doc.data() as Score;
-    }
+    });
   }
 
-  public async getScoreLeaderboard(gameId: string, limit?: number): Promise<Score[]> {
-    const querySnapshot = await admin.firestore().collection('scores')
-      .where('gameId', '==', gameId)
-      .orderBy('score', 'desc')
-      .limit(limit || 10)
-      .get();
+  public async getScoreLeaderboard(gameId: string, limit?: number, transaction?: Transaction): Promise<Score[]> {
+    const querySnapshot = transaction != null ?
+      await transaction.get(admin.firestore().collection('scores')
+        .where('gameId', '==', gameId)
+        .orderBy('score', 'desc')
+        .limit(limit || 10)) :
+      await admin.firestore().collection('scores')
+        .where('gameId', '==', gameId)
+        .orderBy('score', 'desc')
+        .limit(limit || 10)
+        .get();
+
     return querySnapshot.docs.map((doc) => ({
       userId: doc.data().userId,
       gameId: doc.data().gameId,
