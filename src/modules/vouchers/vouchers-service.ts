@@ -602,7 +602,7 @@ export class VouchersService {
       }
       const res = await this.giveVoucherToUser(transaction, email, assetId, amount, overrideTokenId);
       // update the balance of the api key
-      await this.gamesWalletsService.consumeBalance(apiKeyData.appId, assetId, amount, transaction);
+      await this.gamesWalletsService.consumeBalance(gameWallet, assetId, amount, transaction);
 
       return {
         apiKey: apiKeyData,
@@ -623,64 +623,142 @@ export class VouchersService {
     amount: number,
     overrideTokenId?: string,
   ) {
-    const usersService = new UsersService();
-    const user = isEmail(email) ? await usersService.getUserByEmail(email, transaction) : await usersService.get(email, transaction);
-    if (!user) {
-      throw new NotFoundError('User not found');
-    }
-    const assets = await admin.firestore().collection('assets').doc(assetId).get();
-    if (!assets.exists) {
-      throw new NotFoundError('Asset not found');
-    }
-    const asset = assets.data() as Asset;
-    const auxTokenId = overrideTokenId || asset.tokenId;
-    if (asset.name === 'Masters Items') {
-      const itemsData = await new ItemsService().getItemsByIds([Number(auxTokenId)]);
-      if (!itemsData.length) {
-        throw new NotFoundError('Item not found');
+    try {
+      // console.log(`Gave ${op.amount}x ${op.assetId} to ${op.username}`);
+      const usersService = new UsersService();
+      const user = isEmail(email) ? await usersService.getUserByEmail(email, transaction) : await usersService.get(email, transaction);
+      if (!user) {
+        throw new NotFoundError('User not found');
       }
-      asset.name = itemsData[0].name;
-      asset.image = itemsData[0].image;
-    }
+      const assets = await admin.firestore().collection('assets').doc(assetId).get();
+      if (!assets.exists) {
+        throw new NotFoundError('Asset not found');
+      }
+      const asset = assets.data() as Asset;
+      const auxTokenId = overrideTokenId || asset.tokenId;
+      if (asset.name === 'Masters Items') {
+        const itemsData = await new ItemsService().getItemsByIds([Number(auxTokenId)]);
+        if (!itemsData.length) {
+          throw new NotFoundError('Item not found');
+        }
+        asset.name = itemsData[0].name;
+        asset.image = itemsData[0].image;
+      }
 
-    const receiverVouchers = await this.getVouchersOfUser(user.uid, transaction);
-    const receiverVoucher = receiverVouchers.find(v => v.contract === asset.contract && v.tokenId === auxTokenId);
-    let voucherId = '';
-    if (receiverVoucher) {
-      const receiverVoucherRef = this.vouchersCollection.doc(receiverVoucher.uid);
-      transaction.update(receiverVoucherRef, { amount: receiverVoucher.amount + amount });
-      voucherId = receiverVoucher.uid;
-    } else {
-      const newVoucherRef = this.vouchersCollection.doc();
-      const newVoucher = {
-        uid: newVoucherRef.id,
-        userId: user.uid,
-        holder: asset.holder,
-        contract: asset.contract,
-        contractType: asset.contractType,
-        type: asset.type,
-        name: asset.name,
-        amount,
-        image: asset.image,
-        tokenId: auxTokenId,
-        // blockchainId: generateSecureNonceBigInt(),
-        blockchainId: ethers.BigNumber.from(ethers.utils.randomBytes(32)).toString(),
-        category: asset.category,
-        receiver: null,
-        createdAt: admin.firestore.FieldValue.serverTimestamp(),
-        updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-      };
-      transaction.set(newVoucherRef, newVoucher);
-      voucherId = newVoucherRef.id;
+      const receiverVouchers = await this.getVouchersOfUser(user.uid, transaction);
+      const receiverVoucher = receiverVouchers.find(v => v.contract === asset.contract && v.tokenId === auxTokenId);
+      let voucherId = '';
+      if (receiverVoucher) {
+        const receiverVoucherRef = this.vouchersCollection.doc(receiverVoucher.uid);
+        transaction.update(receiverVoucherRef, { amount: receiverVoucher.amount + amount });
+        voucherId = receiverVoucher.uid;
+      } else {
+        const newVoucherRef = this.vouchersCollection.doc();
+        const newVoucher = {
+          uid: newVoucherRef.id,
+          userId: user.uid,
+          holder: asset.holder,
+          contract: asset.contract,
+          contractType: asset.contractType,
+          type: asset.type,
+          name: asset.name,
+          amount,
+          image: asset.image,
+          tokenId: auxTokenId,
+          // blockchainId: generateSecureNonceBigInt(),
+          blockchainId: ethers.BigNumber.from(ethers.utils.randomBytes(32)).toString(),
+          category: asset.category,
+          receiver: null,
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
+          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+        };
+        await newVoucherRef.set(newVoucher);
+        voucherId = newVoucherRef.id;
+      }
+      // get updated or created voucher
+      const voucher = await this.getVoucherById(voucherId);
+      return {
+        user: {
+          uid: user.uid,
+          email: user.email,
+        },
+        voucher
+      }
+    } catch (error) {
+      console.error(`Failed to give reward`, error);
+      throw new BadRequestError('Failed to give reward');
     }
-    // get updated or created voucher
-    const voucher = await this.getVoucherById(voucherId);
-    return {
-      user: {
-        uid: user.uid,
-        email: user.email,
-      },
-      voucher
+  }
+
+  public async giveVoucherToUserWithoutTransaction(
+    email: string,
+    assetId: string,
+    amount: number,
+    overrideTokenId?: string,
+  ) {
+    try {
+      const user = isEmail(email) ? await new UsersService().getUserByEmail(email) : await new UsersService().get(email);
+      if (!user) {
+        throw new NotFoundError('User not found');
+      }
+      const assets = await admin.firestore().collection('assets').doc(assetId).get();
+      if (!assets.exists) {
+        throw new NotFoundError('Asset not found');
+      }
+      const asset = assets.data() as Asset;
+      const auxTokenId = overrideTokenId || asset.tokenId;
+      if (asset.name === 'Masters Items') {
+        const itemsData = await new ItemsService().getItemsByIds([Number(auxTokenId)]);
+        if (!itemsData.length) {
+          throw new NotFoundError('Item not found');
+        }
+        asset.name = itemsData[0].name;
+        asset.image = itemsData[0].image;
+      }
+
+      const receiverVouchers = await this.getVouchersOfUser(user.uid);
+      const receiverVoucher = receiverVouchers.find(v => v.contract === asset.contract && v.tokenId === auxTokenId);
+      let voucherId = '';
+      if (receiverVoucher) {
+        const receiverVoucherRef = this.vouchersCollection.doc(receiverVoucher.uid);
+        await receiverVoucherRef.update({ amount: receiverVoucher.amount + amount });
+        voucherId = receiverVoucher.uid;
+      } else {
+        const newVoucherRef = this.vouchersCollection.doc();
+        const newVoucher = {
+          uid: newVoucherRef.id,
+          userId: user.uid,
+          holder: asset.holder,
+          contract: asset.contract,
+          contractType: asset.contractType,
+          type: asset.type,
+          name: asset.name,
+          amount,
+          image: asset.image,
+          tokenId: auxTokenId,
+          // blockchainId: generateSecureNonceBigInt(),
+          blockchainId: ethers.BigNumber.from(ethers.utils.randomBytes(32)).toString(),
+          category: asset.category,
+          receiver: null,
+          createdAt: admin.firestore.FieldValue.serverTimestamp(),
+          updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+        };
+        await newVoucherRef.set(newVoucher);
+        voucherId = newVoucherRef.id;
+      }
+      // get updated or created voucher
+      const voucher = await this.getVoucherById(voucherId);
+      return {
+        user: {
+          uid: user.uid,
+          email: user.email,
+        },
+        voucher
+      }
+    }
+    catch (error) {
+      console.error(`Failed to give reward`, error);
+      throw new BadRequestError('Failed to give reward');
     }
   }
 

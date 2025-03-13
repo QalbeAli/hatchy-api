@@ -46,7 +46,7 @@ export class LeaderboardService {
         }
         transaction.set(newScoreRef, scoreData);
 
-        const doc = await transaction.get(newScoreRef);
+        const doc = await newScoreRef.get();
         return doc.data() as Score;
       }
     });

@@ -23,21 +23,33 @@ export class GamesWalletsService {
   }
 
   public async consumeBalance(
-    gameId: string,
+    gameWallet: GameWallet,
     assetId: string,
     amount: number,
-    transaction: Transaction
+    transaction?: Transaction
   ) {
-    const docRef = this.collection.doc(gameId);
-    const gameWallet = await this.getGameWalletById(gameId, transaction);
-    const updatedGameWallet = {
-      ...gameWallet,
-      balance: {
-        ...gameWallet.balance,
-        [assetId]: gameWallet.balance[assetId] - amount
-      },
-      updatedAt: Timestamp.now(),
-    };
-    transaction.update(docRef, updatedGameWallet);
+    if (transaction) {
+      const docRef = this.collection.doc(gameWallet.uid);
+      const updatedGameWallet = {
+        ...gameWallet,
+        balance: {
+          ...gameWallet.balance,
+          [assetId]: gameWallet.balance[assetId] - amount
+        },
+        updatedAt: Timestamp.now(),
+      };
+      transaction.update(docRef, updatedGameWallet);
+    } else {
+      const docRef = this.collection.doc(gameWallet.uid);
+      const updatedGameWallet = {
+        ...gameWallet,
+        balance: {
+          ...gameWallet.balance,
+          [assetId]: gameWallet.balance[assetId] - amount
+        },
+        updatedAt: Timestamp.now(),
+      };
+      docRef.update(updatedGameWallet);
+    }
   }
 }

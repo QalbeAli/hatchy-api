@@ -111,8 +111,8 @@ export class UsersService {
 
         // 3. Get all referral relationships where user is either referrer or referred
         const [asReferrerDocs, asReferredDocs] = await Promise.all([
-          transaction.get(this.referralRelationsCollection.where('referrerId', '==', userId)),
-          transaction.get(this.referralRelationsCollection.where('referredId', '==', userId))
+          this.referralRelationsCollection.where('referrerId', '==', userId).get(),
+          this.referralRelationsCollection.where('referredId', '==', userId).get()
         ]);
 
         // Delete all referral relationships
@@ -134,16 +134,16 @@ export class UsersService {
         });
 
         // 4. Get and delete all game saves
-        const gameSavesDocs = await transaction.get(this.gameSavesCollection
-          .where('userId', '==', userId));
+        const gameSavesDocs = await this.gameSavesCollection
+          .where('userId', '==', userId).get();
 
         gameSavesDocs.docs.forEach(doc => {
           transaction.delete(doc.ref);
         });
 
         // 5. Get and delete vouchers
-        const vouchersDocs = await transaction.get(this.vouchersCollection
-          .where('userId', '==', userId));
+        const vouchersDocs = await this.vouchersCollection
+          .where('userId', '==', userId).get();
 
         vouchersDocs.docs.forEach(doc => {
           transaction.update(doc.ref, {
@@ -152,8 +152,8 @@ export class UsersService {
         });
 
         // 6. Delete linked wallets
-        const walletUsersDocs = await transaction.get(this.walletUsersCollection
-          .where('userId', '==', userId));
+        const walletUsersDocs = await this.walletUsersCollection
+          .where('userId', '==', userId).get();
 
         walletUsersDocs.docs.forEach(doc => {
           transaction.delete(doc.ref);
