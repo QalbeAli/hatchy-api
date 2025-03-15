@@ -82,8 +82,8 @@ export const init = (async () => {
   app.use(errorHandler);
 
   const eventsService = new EventsService();
-  cron.schedule("*/1 * * * *", () => {
-    // cron.schedule("0 0 * * 1", () => {
+  // cron.schedule("*/1 * * * *", () => {
+  cron.schedule("0 0 * * 1", () => {
     eventsService.giveEventRewards();
   });
 
