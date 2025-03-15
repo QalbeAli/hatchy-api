@@ -590,7 +590,7 @@ export class VouchersService {
   public async giveVoucherWithApiKey(
     apiKey: string, email: string, assetId: string, amount: number, overrideTokenId?: string
   ) {
-    return admin.firestore().runTransaction(async (transaction) => {
+    const voucherData = await admin.firestore().runTransaction(async (transaction) => {
       const apiKeyData = await this.apiKeyService.getApiKey(apiKey, transaction);
       const gameWallet = await this.gamesWalletsService.getGameWalletById(apiKeyData.appId, transaction);
       if (!gameWallet.balance || !gameWallet.balance[assetId] || gameWallet.balance[assetId] < amount) {
@@ -611,9 +611,14 @@ export class VouchersService {
           [assetId]: gameWallet.balance[assetId] - amount
         },
         user: res.user,
-        voucher: res.voucher
+        voucherId: res.voucherId
       }
-    });
+    })
+    const voucher = await this.getVoucherById(voucherData.voucherId);
+    return {
+      ...voucherData,
+      voucher
+    }
   }
 
   public async giveVoucherToUser(
@@ -672,17 +677,17 @@ export class VouchersService {
           createdAt: admin.firestore.FieldValue.serverTimestamp(),
           updatedAt: admin.firestore.FieldValue.serverTimestamp(),
         };
-        await newVoucherRef.set(newVoucher);
+        transaction.set(newVoucherRef, newVoucher);
         voucherId = newVoucherRef.id;
       }
       // get updated or created voucher
-      const voucher = await this.getVoucherById(voucherId);
+      // const voucher = await this.getVoucherById(voucherId);
       return {
         user: {
           uid: user.uid,
           email: user.email,
         },
-        voucher
+        voucherId
       }
     } catch (error) {
       console.error(`Failed to give reward`, error);

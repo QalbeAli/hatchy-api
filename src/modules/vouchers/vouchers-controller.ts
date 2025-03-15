@@ -57,7 +57,7 @@ export class VouchersController extends Controller {
     if (!isEmail(body.email)) {
       throw new BadRequestError('Invalid email');
     }
-    return admin.firestore().runTransaction(async (transaction) => {
+    const voucherData = await admin.firestore().runTransaction(async (transaction) => {
       const res = await voucherService.giveVoucherToUser(
         transaction,
         body.email,
@@ -65,21 +65,23 @@ export class VouchersController extends Controller {
         body.amount,
         body.overrideTokenId
       );
-      await voucherService.logVoucher({
-        action: 'giveaway',
-        vouchersData: [{
-          ...res.voucher,
-          amount: body.amount,
-        }],
-        actionUserId: request.user.uid,
-        actionUserEmail: request.user.email,
-        toUserId: res.user.uid,
-        toUserEmail: res.user.email,
-      });
-      return {
-        message: 'Voucher given',
-      }
+      return res;
+    })
+    const voucher = await voucherService.getVoucherById(voucherData.voucherId);
+    await voucherService.logVoucher({
+      action: 'giveaway',
+      vouchersData: [{
+        ...voucher,
+        amount: body.amount,
+      }],
+      actionUserId: request.user.uid,
+      actionUserEmail: request.user.email,
+      toUserId: voucherData.user.uid,
+      toUserEmail: voucherData.user.email,
     });
+    return {
+      message: 'Voucher given',
+    }
   }
 
   @Security("api_key_rewards")
@@ -100,7 +102,7 @@ export class VouchersController extends Controller {
     }
 
     const voucherService = new VouchersService();
-    const res = await voucherService.giveVoucherWithApiKey(
+    const voucherData = await voucherService.giveVoucherWithApiKey(
       request.headers['x-api-key'],
       body.email,
       body.assetId,
@@ -109,14 +111,14 @@ export class VouchersController extends Controller {
     await voucherService.logVoucher({
       action: 'giveaway',
       vouchersData: [{
-        ...res.voucher,
+        ...voucherData.voucher,
         amount: body.amount,
       }],
-      apiKey: res.apiKey.uid,
+      apiKey: voucherData.apiKey.uid,
       actionUserId: '',
       actionUserEmail: '',
-      toUserId: res.user.uid,
-      toUserEmail: res.user.email,
+      toUserId: voucherData.user.uid,
+      toUserEmail: voucherData.user.email,
     });
     return {
       message: 'Voucher given',
