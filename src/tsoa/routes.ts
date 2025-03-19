@@ -222,8 +222,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-03-15T18:28:00.316Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-03-15T18:28:00.317Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-03-19T03:28:26.834Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-03-19T03:28:26.835Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -410,6 +410,17 @@ const models: TsoaRoute.Models = {
             "equippedItems": {"dataType":"array","array":{"dataType":"refObject","ref":"MastersItem"},"required":true},
             "traits": {"dataType":"array","array":{"dataType":"refObject","ref":"MastersTrait"},"required":true},
             "layers": {"dataType":"array","array":{"dataType":"string"},"required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "AssetAgreement": {
+        "dataType": "refObject",
+        "properties": {
+            "uid": {"dataType":"string","required":true},
+            "date": {"dataType":"string","required":true},
+            "role": {"dataType":"string","required":true},
+            "accepted": {"dataType":"boolean","required":true},
         },
         "additionalProperties": false,
     },
@@ -2404,6 +2415,69 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'getReferredUsers',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/assets/agreement',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(AssetsController)),
+            ...(fetchMiddlewares<RequestHandler>(AssetsController.prototype.getAssetsAgreement)),
+
+            async function AssetsController_getAssetsAgreement(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new AssetsController();
+
+              await templateService.apiHandler({
+                methodName: 'getAssetsAgreement',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/assets/agreement',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(AssetsController)),
+            ...(fetchMiddlewares<RequestHandler>(AssetsController.prototype.postAssetsAgreement)),
+
+            async function AssetsController_postAssetsAgreement(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"role":{"dataType":"string","required":true},"accepted":{"dataType":"boolean","required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new AssetsController();
+
+              await templateService.apiHandler({
+                methodName: 'postAssetsAgreement',
                 controller,
                 response,
                 next,

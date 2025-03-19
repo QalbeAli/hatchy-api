@@ -8,6 +8,7 @@ export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { ApiKey } from './models/ApiKey';
 export { Asset } from './models/Asset';
+export type { AssetAgreement } from './models/AssetAgreement';
 export type { AuthCustomToken } from './models/AuthCustomToken';
 export type { BatchVoucherClaimSignature } from './models/BatchVoucherClaimSignature';
 export type { BigNumber } from './models/BigNumber';
@@ -62,6 +63,7 @@ export type { WalletSignatureMessage } from './models/WalletSignatureMessage';
 
 export { $ApiKey } from './schemas/$ApiKey';
 export { $Asset } from './schemas/$Asset';
+export { $AssetAgreement } from './schemas/$AssetAgreement';
 export { $AuthCustomToken } from './schemas/$AuthCustomToken';
 export { $BatchVoucherClaimSignature } from './schemas/$BatchVoucherClaimSignature';
 export { $BigNumber } from './schemas/$BigNumber';
