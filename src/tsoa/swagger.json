@@ -433,12 +433,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-03-26T03:46:42.876Z"
+						"default": "2025-03-26T04:31:44.652Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-03-26T03:46:42.877Z"
+						"default": "2025-03-26T04:31:44.654Z"
 					},
 					"name": {
 						"type": "string"
@@ -5099,6 +5099,76 @@
 			}
 		},
 		"/trades/{id}": {
+			"put": {
+				"operationId": "UpdateTrade",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Trades"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"offerAmounts": {
+										"items": {
+											"type": "number",
+											"format": "double"
+										},
+										"type": "array"
+									},
+									"offerVoucherIds": {
+										"items": {
+											"type": "string"
+										},
+										"type": "array"
+									},
+									"requestAmounts": {
+										"items": {
+											"type": "number",
+											"format": "double"
+										},
+										"type": "array"
+									},
+									"requestAssetsIds": {
+										"items": {
+											"type": "string"
+										},
+										"type": "array"
+									}
+								},
+								"required": [
+									"offerAmounts",
+									"offerVoucherIds",
+									"requestAmounts",
+									"requestAssetsIds"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			},
 			"get": {
 				"operationId": "GetTrade",
 				"responses": {

@@ -222,8 +222,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-03-26T03:46:42.876Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-03-26T03:46:42.877Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-03-26T04:31:21.482Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-03-26T04:31:21.483Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -2969,6 +2969,39 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'createTrade',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.put('/trades/:id',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(TradesController)),
+            ...(fetchMiddlewares<RequestHandler>(TradesController.prototype.updateTrade)),
+
+            async function TradesController_updateTrade(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"string"},
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"offerAmounts":{"dataType":"array","array":{"dataType":"double"},"required":true},"offerVoucherIds":{"dataType":"array","array":{"dataType":"string"},"required":true},"requestAmounts":{"dataType":"array","array":{"dataType":"double"},"required":true},"requestAssetsIds":{"dataType":"array","array":{"dataType":"string"},"required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new TradesController();
+
+              await templateService.apiHandler({
+                methodName: 'updateTrade',
                 controller,
                 response,
                 next,

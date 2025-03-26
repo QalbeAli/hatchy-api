@@ -6,12 +6,14 @@ import { VouchersService } from "../vouchers/vouchers-service";
 import { UsersService } from "../users/usersService";
 import { Voucher } from "../vouchers/voucher";
 import { BadRequestError } from "../../errors/bad-request-error";
+import { AssetsService } from "../assets/assets-service";
 
 export class TradesService {
   tradesCollection = admin.firestore().collection('trades');
   vouchersCollection = admin.firestore().collection('vouchers');
   vouchersService = new VouchersService();
   usersService = new UsersService();
+  assetsService = new AssetsService();
 
   public async getTrade(uid: string, transaction?: Transaction): Promise<Trade> {
     if (transaction) {
@@ -39,6 +41,72 @@ export class TradesService {
       .orderBy('createdAt', 'desc')
       .get();
     return snapshot.docs.map(doc => doc.data() as Trade);
+  }
+
+  public async updateTrade(
+    tradeId: string,
+    userId: string,
+    requestAssetsIds: string[],
+    requestAmounts: number[],
+    offerVoucherIds: string[],
+    offerAmounts: number[],
+  ) {
+    /*
+      1. verify that the user has the offer voucher ids and amounts 
+      2. verify that the asset ids exists on the assets collection
+      3. create trade document on trades collection with the array with complete data of requested assets and offered assets plus an empty array of users optional offers
+    */
+    const user = await new UsersService().get(userId);
+
+    const requestAssets = await this.assetsService.getAssetsByIds(requestAssetsIds);
+    const offerVouchers = await this.vouchersService.getVouchersByIds(offerVoucherIds);
+
+    if (requestAssets.length !== requestAssetsIds.length) {
+      throw new BadRequestError('Invalid request assets');
+    }
+    if (offerVouchers.length !== offerVoucherIds.length) {
+      throw new BadRequestError('Invalid offer vouchers');
+    }
+
+    if (offerVouchers.some(v => v.userId !== userId)) {
+      throw new BadRequestError('Offer vouchers do not belong to user');
+    }
+
+    if (offerVouchers.some(v => v.amount <= 0)) {
+      throw new BadRequestError('Offer amount should be greater than 0');
+    }
+
+    const tradeRef = admin.firestore().collection('trades').doc(tradeId);
+    const trade = {
+      uid: tradeRef.id,
+      userId,
+      username: user.displayName,
+      requestAssets: requestAssets.map(a => ({
+        uid: a.uid,
+        name: a.name,
+        image: a.image,
+        contract: a.contract,
+        contractType: a.contractType,
+        category: a.category,
+        amount: requestAmounts[requestAssets.indexOf(a)],
+        tokenId: a.tokenId
+      })),
+      offerAssets: offerVouchers.map(v => ({
+        uid: v.uid,
+        name: v.name,
+        image: v.image,
+        contract: v.contract,
+        contractType: v.contractType,
+        category: v.category,
+        amount: offerAmounts[offerVouchers.indexOf(v)],
+        tokenId: v.tokenId
+      })),
+      usersOffers: [],
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+    };
+    await tradeRef.set(trade);
+    return trade;
   }
 
   public async deleteTrade(uid: string): Promise<void> {
