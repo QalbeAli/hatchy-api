@@ -222,8 +222,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-03-26T04:31:21.482Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-03-26T04:31:21.483Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-03-26T04:46:57.271Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-03-26T04:46:57.272Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -3051,6 +3051,7 @@ export function RegisterRoutes(app: Router) {
             async function TradesController_deleteTrade(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     id: {"in":"path","name":"id","required":true,"dataType":"string"},
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

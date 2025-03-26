@@ -96,6 +96,11 @@ export class TradesController extends Controller {
     if (body.offerVoucherIds.length !== body.offerAmounts.length) {
       throw new BadRequestError('Offer assets ids and amounts must have the same length');
     }
+    const tradesService = new TradesService();
+    const currentTrade = await tradesService.getTrade(id);
+    if (currentTrade.userId !== request.user.uid) {
+      throw new BadRequestError('Trade does not belong to user');
+    }
     await new TradesService().updateTrade(
       id,
       request.user.uid,
@@ -115,7 +120,15 @@ export class TradesController extends Controller {
 
   @Security("jwt")
   @Delete("{id}")
-  public async deleteTrade(id: string): Promise<void> {
+  public async deleteTrade(
+    id: string,
+    @Request() request: any,
+  ): Promise<void> {
+    const tradesService = new TradesService();
+    const currentTrade = await tradesService.getTrade(id);
+    if (currentTrade.userId !== request.user.uid) {
+      throw new BadRequestError('Trade does not belong to user');
+    }
     await new TradesService().deleteTrade(id);
   }
 
