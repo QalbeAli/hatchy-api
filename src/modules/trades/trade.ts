@@ -16,5 +16,7 @@ export interface Trade {
   createdAt: string;
   updatedAt: string;
   userId: string;
+  username: string;
+  status: string;
   uid: string;
 }

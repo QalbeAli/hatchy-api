@@ -433,12 +433,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-03-19T03:28:26.834Z"
+						"default": "2025-03-26T03:46:42.876Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-03-19T03:28:26.835Z"
+						"default": "2025-03-26T03:46:42.877Z"
 					},
 					"name": {
 						"type": "string"
@@ -1628,6 +1628,12 @@
 					"userId": {
 						"type": "string"
 					},
+					"username": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string"
+					},
 					"uid": {
 						"type": "string"
 					}
@@ -1639,6 +1645,8 @@
 					"createdAt",
 					"updatedAt",
 					"userId",
+					"username",
+					"status",
 					"uid"
 				],
 				"type": "object",
@@ -4989,12 +4997,76 @@
 				"tags": [
 					"Trades"
 				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateTrade",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Trades"
+				],
 				"security": [
 					{
 						"jwt": []
 					}
 				],
-				"parameters": []
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"offerAmounts": {
+										"items": {
+											"type": "number",
+											"format": "double"
+										},
+										"type": "array"
+									},
+									"offerVoucherIds": {
+										"items": {
+											"type": "string"
+										},
+										"type": "array"
+									},
+									"requestAmounts": {
+										"items": {
+											"type": "number",
+											"format": "double"
+										},
+										"type": "array"
+									},
+									"requestAssetsIds": {
+										"items": {
+											"type": "string"
+										},
+										"type": "array"
+									}
+								},
+								"required": [
+									"offerAmounts",
+									"offerVoucherIds",
+									"requestAmounts",
+									"requestAssetsIds"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/trades/me": {
@@ -5039,6 +5111,56 @@
 								}
 							}
 						}
+					}
+				},
+				"tags": [
+					"Trades"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeleteTrade",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Trades"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/trades/accept/{id}": {
+			"post": {
+				"operationId": "AcceptTrade",
+				"responses": {
+					"204": {
+						"description": "No content"
 					}
 				},
 				"tags": [

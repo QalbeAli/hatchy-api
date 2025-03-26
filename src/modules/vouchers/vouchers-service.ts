@@ -419,6 +419,7 @@ export class VouchersService {
       2. verify that the asset ids exists on the assets collection
       3. create trade document on trades collection with the array with complete data of requested assets and offered assets plus an empty array of users optional offers
     */
+    const user = await new UsersService().get(userId);
 
     const requestAssets = await this.assetsService.getAssetsByIds(requestAssetsIds);
     const offerVouchers = await this.getVouchersByIds(offerVoucherIds);
@@ -442,6 +443,7 @@ export class VouchersService {
     const trade = {
       uid: tradeRef.id,
       userId,
+      username: user.displayName,
       requestAssets: requestAssets.map(a => ({
         uid: a.uid,
         name: a.name,
