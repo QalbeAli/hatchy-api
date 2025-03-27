@@ -433,12 +433,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-03-26T04:46:57.271Z"
+						"default": "2025-03-27T23:27:33.944Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-03-26T04:46:57.272Z"
+						"default": "2025-03-27T23:27:33.946Z"
 					},
 					"name": {
 						"type": "string"
@@ -2757,7 +2757,7 @@
 				],
 				"security": [
 					{
-						"jwt": []
+						"api_key_scores": []
 					}
 				],
 				"parameters": [],
@@ -2767,23 +2767,21 @@
 						"application/json": {
 							"schema": {
 								"properties": {
-									"clientId": {
-										"type": "string"
-									},
-									"apiKey": {
+									"email": {
 										"type": "string"
 									},
 									"score": {
 										"type": "number",
 										"format": "double"
 									},
-									"gameId": {
+									"appId": {
 										"type": "string"
 									}
 								},
 								"required": [
+									"email",
 									"score",
-									"gameId"
+									"appId"
 								],
 								"type": "object"
 							}
@@ -5691,76 +5689,6 @@
 									"amount",
 									"assetId",
 									"email"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/vouchers/trade": {
-			"post": {
-				"operationId": "CreateTrade",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/MessageResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Vouchers"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"offerAmounts": {
-										"items": {
-											"type": "number",
-											"format": "double"
-										},
-										"type": "array"
-									},
-									"offerVoucherIds": {
-										"items": {
-											"type": "string"
-										},
-										"type": "array"
-									},
-									"requestAmounts": {
-										"items": {
-											"type": "number",
-											"format": "double"
-										},
-										"type": "array"
-									},
-									"requestAssetsIds": {
-										"items": {
-											"type": "string"
-										},
-										"type": "array"
-									}
-								},
-								"required": [
-									"offerAmounts",
-									"offerVoucherIds",
-									"requestAmounts",
-									"requestAssetsIds"
 								],
 								"type": "object"
 							}

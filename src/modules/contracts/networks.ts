@@ -48,23 +48,21 @@ const prodNetworks: Map<number, NetworkData> = new Map([
     },
   ],
   [
-    88888888,
+    8198,
     {
-      name: "hatchyverse-testnet",
-      rpc: 'https://fujirpc.hatchyverse.com/ext/bc/2wbPkbwH9xqoEnX5Lep6SLqLGdiZ1UTQpi7V7fgYNFC1jeWrNg/rpc',
-      label: "Hatchyverse Testnet",
-      layerzeroId: 10106,
+      name: "hatchyverse",
+      rpc: 'https://hatchyverse.ash.center/rpc',
+      label: "Hatchyverse",
+      layerzeroId: 8198,
       coingeckoId: "avalanche-2",
-      chainId: 88888888,
+      chainId: 8,
       icon: "/icons/networks/hatchy.svg",
       availableBridges: {
         token: [],
       },
       addresses: {
-        hatchy: "0x84CFc0d9e28a15cA458497ACFaAA075fBbc4F62B",
-        hatchyTickets: "0xbbB7f4021e46ECa367F2DC53d6d7FA57632332C8",
-        mastersItems: "0xdc3F8938D71531cAB5716685D7896B2549273644",
-        mastersAvatars: "0x4E896dA533D73D92a34c7645270Bc07d0c1713A3",
+        gameLeaderboard: '0x4558C56B2D754aa12ED3e0b31D17cB4ED9A1e446',
+        gameRanks: '0x7bE5826F9A072759477A663ace0e0959f5b15B36'
       },
     },
   ],

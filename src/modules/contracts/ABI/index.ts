@@ -15,6 +15,8 @@ import hatchyRewardDealer from "./HatchyRewardDealer.json";
 import hatchyLPStakeABI from "./HatchyLPStake.json";
 import hatchySalary from "./HatchySalary.json";
 import voucherConverter from "./VoucherConverter.json";
+import gameLeaderboard from "./GameLeaderboard.json";
+import gameRanks from "./GameRanks.json";
 
 export default {
   mastersItems: MastersItems.abi,
@@ -36,4 +38,6 @@ export default {
   hatchyLPStake: hatchyLPStakeABI.abi,
   hatchySalary: hatchySalary.abi,
   voucherConverter: voucherConverter.abi,
+  gameLeaderboard: gameLeaderboard.abi,
+  gameRanks: gameRanks.abi,
 };

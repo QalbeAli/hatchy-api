@@ -22,22 +22,20 @@ import { RankItem } from "./rank";
 // @Middlewares(transformTimestampMiddleware)
 @Tags("Leaderboard")
 export class LeaderboardController extends Controller {
-  @Security("jwt")
+  @Security("api_key_scores")
   @Post("scores")
   public async addScore(
-    @Request() request: any,
     @Body() body: {
-      gameId: string,
+      appId: string,
       score: number,
-      apiKey?: string,
-      clientId?: string,
+      email: string,
     }
   ): Promise<Score> {
     const userService = new UsersService();
     const leaderboardService = new LeaderboardService();
     const gameService = new GamesService();
-    const game = await gameService.getGameById(body.gameId);
-    const user = await userService.get(request.user.uid);
+    const game = await gameService.getGameById(body.appId);
+    const user = await userService.getUserByEmail(body.email);
     const score = await leaderboardService.addScore(
       game,
       user,

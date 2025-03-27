@@ -11,6 +11,7 @@ export type Network =
   | "polygon"
   | "arbitrum"
   | "fantom"
+  | "hatchyverse"
   | "hatchyverse-testnet";
 
 export type ContractName =
@@ -37,6 +38,8 @@ export type ContractName =
   | "hatchyLPPair"
   | "hatchySalary"
   | "voucherConverter"
+  | "gameLeaderboard"
+  | "gameRanks"
   ;
 
 export type NetworkData = {

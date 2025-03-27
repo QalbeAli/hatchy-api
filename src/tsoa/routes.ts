@@ -222,8 +222,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-03-26T04:46:57.271Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-03-26T04:46:57.272Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-03-27T23:27:33.944Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-03-27T23:27:33.946Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -1309,14 +1309,13 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/leaderboard/scores',
-            authenticateMiddleware([{"jwt":[]}]),
+            authenticateMiddleware([{"api_key_scores":[]}]),
             ...(fetchMiddlewares<RequestHandler>(LeaderboardController)),
             ...(fetchMiddlewares<RequestHandler>(LeaderboardController.prototype.addScore)),
 
             async function LeaderboardController_addScore(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
-                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
-                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"clientId":{"dataType":"string"},"apiKey":{"dataType":"string"},"score":{"dataType":"double","required":true},"gameId":{"dataType":"string","required":true}}},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"email":{"dataType":"string","required":true},"score":{"dataType":"double","required":true},"appId":{"dataType":"string","required":true}}},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -3433,38 +3432,6 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'giveVoucherWithApiKey',
-                controller,
-                response,
-                next,
-                validatedArgs,
-                successStatus: undefined,
-              });
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/vouchers/trade',
-            authenticateMiddleware([{"jwt":[]}]),
-            ...(fetchMiddlewares<RequestHandler>(VouchersController)),
-            ...(fetchMiddlewares<RequestHandler>(VouchersController.prototype.createTrade)),
-
-            async function VouchersController_createTrade(request: ExRequest, response: ExResponse, next: any) {
-            const args: Record<string, TsoaRoute.ParameterSchema> = {
-                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
-                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"offerAmounts":{"dataType":"array","array":{"dataType":"double"},"required":true},"offerVoucherIds":{"dataType":"array","array":{"dataType":"string"},"required":true},"requestAmounts":{"dataType":"array","array":{"dataType":"double"},"required":true},"requestAssetsIds":{"dataType":"array","array":{"dataType":"string"},"required":true}}},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = templateService.getValidatedArgs({ args, request, response });
-
-                const controller = new VouchersController();
-
-              await templateService.apiHandler({
-                methodName: 'createTrade',
                 controller,
                 response,
                 next,

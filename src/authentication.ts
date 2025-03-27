@@ -80,6 +80,30 @@ export function expressAuthentication(
     });
   }
 
+  if (securityName === "api_key_scores") {
+    const apiKeyHeader = request.headers['x-api-key'] as string;
+    if (!apiKeyHeader) {
+      return Promise.reject(new UnauthorizedError("No authorization header."));
+    }
+    const key = apiKeyHeader;
+    return new Promise((resolve, reject) => {
+      if (!key) {
+        reject(new UnauthorizedError("No token provided"));
+      }
+      getApiKey(key).then((apiKey) => {
+        if (apiKey.permissions && apiKey.permissions.includes("scores")) {
+          if (request.body.appId !== apiKey.appId) {
+            reject(new UnauthorizedError("Invalid API key."));
+          }
+          resolve(apiKey);
+        }
+        reject(new UnauthorizedError("Invalid API key."));
+      }).catch((error) => {
+        reject(new UnauthorizedError("Invalid API key."));
+      });
+    });
+  }
+
   if (securityName === "jwt") {
     const authHeader = request.headers.authorization;
     if (!authHeader) {

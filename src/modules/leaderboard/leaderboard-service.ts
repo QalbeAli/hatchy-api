@@ -4,9 +4,16 @@ import { Game } from "../games/game";
 import { User } from "../users/user";
 import { Score } from "./score";
 import { RankItem } from "./rank";
+import { getContract } from "../contracts/networks";
 
 export class LeaderboardService {
+  chainId = 8198;
+
   public async addScore(game: Game, user: User, score: number): Promise<Score> {
+    // const gameLeaderboardContract = getContract('gameLeaderboard', this.chainId, true);
+    // const tx = await gameLeaderboardContract.setHighScore(game.uid, user.mainWallet || ZeroAdd, score);
+    // console.log(tx);
+
     return admin.firestore().runTransaction(async (transaction) => {
       const scoresRef = admin.firestore().collection('scores');
       const querySnapshot = await transaction.get(scoresRef
