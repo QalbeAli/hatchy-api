@@ -149,7 +149,7 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Score": {
+    "ScoreItem": {
         "dataType": "refObject",
         "properties": {
             "gameId": {"dataType":"string","required":true},
@@ -222,8 +222,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-03-27T23:27:33.944Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-03-27T23:27:33.946Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-03-27T23:57:58.575Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-03-27T23:57:58.576Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},

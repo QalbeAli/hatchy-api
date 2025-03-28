@@ -257,7 +257,7 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"Score": {
+			"ScoreItem": {
 				"properties": {
 					"gameId": {
 						"type": "string"
@@ -433,12 +433,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-03-27T23:27:33.944Z"
+						"default": "2025-03-27T23:57:58.575Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-03-27T23:27:33.946Z"
+						"default": "2025-03-27T23:57:58.576Z"
 					},
 					"name": {
 						"type": "string"
@@ -2746,7 +2746,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Score"
+									"$ref": "#/components/schemas/ScoreItem"
 								}
 							}
 						}
@@ -2800,7 +2800,7 @@
 							"application/json": {
 								"schema": {
 									"items": {
-										"$ref": "#/components/schemas/Score"
+										"$ref": "#/components/schemas/ScoreItem"
 									},
 									"type": "array"
 								}
@@ -2842,7 +2842,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Score"
+									"$ref": "#/components/schemas/ScoreItem"
 								}
 							}
 						}

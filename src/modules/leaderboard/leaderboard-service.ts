@@ -2,19 +2,19 @@ import { admin } from "../../firebase/firebase";
 import { Timestamp, Transaction } from "firebase-admin/firestore";
 import { Game } from "../games/game";
 import { User } from "../users/user";
-import { Score } from "./score";
+import { ScoreItem } from "./score";
 import { RankItem } from "./rank";
 import { getContract } from "../contracts/networks";
+import { ethers } from "ethers";
 
 export class LeaderboardService {
   chainId = 8198;
 
-  public async addScore(game: Game, user: User, score: number): Promise<Score> {
-    // const gameLeaderboardContract = getContract('gameLeaderboard', this.chainId, true);
-    // const tx = await gameLeaderboardContract.setHighScore(game.uid, user.mainWallet || ZeroAdd, score);
-    // console.log(tx);
+  public async addScore(game: Game, user: User, score: number): Promise<ScoreItem> {
+    const gameLeaderboardContract = getContract('gameLeaderboard', this.chainId, true);
+    const tx = await gameLeaderboardContract.setHighScore(game.uid, user.mainWallet || ethers.constants.AddressZero, score);
 
-    return admin.firestore().runTransaction(async (transaction) => {
+    const AddedScore = await admin.firestore().runTransaction(async (transaction) => {
       const scoresRef = admin.firestore().collection('scores');
       const querySnapshot = await transaction.get(scoresRef
         .where('gameId', '==', game.uid)
@@ -54,12 +54,13 @@ export class LeaderboardService {
         transaction.set(newScoreRef, scoreData);
 
         const doc = await newScoreRef.get();
-        return doc.data() as Score;
+        return doc.data() as ScoreItem;
       }
     });
+    return AddedScore;
   }
 
-  public async getScoreLeaderboard(gameId: string, limit?: number, transaction?: Transaction): Promise<Score[]> {
+  public async getScoreLeaderboard(gameId: string, limit?: number, transaction?: Transaction): Promise<ScoreItem[]> {
     const querySnapshot = transaction != null ?
       await transaction.get(admin.firestore().collection('scores')
         .where('gameId', '==', gameId)
@@ -81,7 +82,7 @@ export class LeaderboardService {
     }));
   }
 
-  public async getUserScore(gameId: string, userId: string): Promise<Score> {
+  public async getUserScore(gameId: string, userId: string): Promise<ScoreItem> {
     const querySnapshot = await admin.firestore().collection('scores')
       .where('gameId', '==', gameId)
       .where('userId', '==', userId)

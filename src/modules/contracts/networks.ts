@@ -236,6 +236,25 @@ const devNetworks: Map<number, NetworkData> = new Map([
       },
     },
   ],
+  [
+    8198,
+    {
+      name: "hatchyverse",
+      rpc: 'https://hatchyverse.ash.center/rpc',
+      label: "Hatchyverse",
+      layerzeroId: 8198,
+      coingeckoId: "avalanche-2",
+      chainId: 8,
+      icon: "/icons/networks/hatchy.svg",
+      availableBridges: {
+        token: [],
+      },
+      addresses: {
+        gameLeaderboard: '0x4558C56B2D754aa12ED3e0b31D17cB4ED9A1e446',
+        gameRanks: '0x7bE5826F9A072759477A663ace0e0959f5b15B36'
+      },
+    },
+  ],
 ]);
 
 export const Networks = config.NODE_ENV == "dev" ? devNetworks : prodNetworks;

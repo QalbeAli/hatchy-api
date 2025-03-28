@@ -1,6 +1,4 @@
-import { Timestamp } from "firebase-admin/firestore";
-
-export interface Score {
+export interface ScoreItem {
   gameId: string;
   score: number;
   userId: string;
