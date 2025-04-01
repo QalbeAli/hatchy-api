@@ -124,7 +124,7 @@ export class LootboxesService {
         nonce,
         claimableUntil: 0,
         currency: currencyAddress, // lootboxPrice.address,
-        price, // price.toString(),
+        price: price.toString(),
         decimals: 18, // lootboxPrice?.decimals,
         payWithTicket: true,
         ticketId: lootbox.ticketId,

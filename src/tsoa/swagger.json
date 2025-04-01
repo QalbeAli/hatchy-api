@@ -433,12 +433,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-03-27T23:57:58.575Z"
+						"default": "2025-03-28T00:02:36.694Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-03-27T23:57:58.576Z"
+						"default": "2025-03-28T00:02:36.696Z"
 					},
 					"name": {
 						"type": "string"
