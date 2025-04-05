@@ -17,6 +17,8 @@ import hatchySalary from "./HatchySalary.json";
 import voucherConverter from "./VoucherConverter.json";
 import gameLeaderboard from "./GameLeaderboard.json";
 import gameRanks from "./GameRanks.json";
+import hatchyverseUltigen from "./HatchyverseUltigen.json";
+import ultigenEggs from "./UltigenEggs.json";
 
 export default {
   mastersItems: MastersItems.abi,
@@ -40,4 +42,7 @@ export default {
   voucherConverter: voucherConverter.abi,
   gameLeaderboard: gameLeaderboard.abi,
   gameRanks: gameRanks.abi,
+  wrappedHatchy: erc20,
+  ultigenEggs: ultigenEggs.abi,
+  hatchyverseUltigen: hatchyverseUltigen.abi,
 };

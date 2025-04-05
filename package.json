@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "NODE_ENV=dev PORT=3001 nodemon",
+    "nodemon:prod": "NODE_ENV=prod PORT=3002 nodemon",
     "start:dev": "npm run build && NODE_ENV=dev PORT=3001 node dist/index.js",
     "start:prod": "npm run build && NODE_ENV=prod PORT=3002 node dist/index.js",
     "build": "yarn run tsoa spec-and-routes && tsc -p .",

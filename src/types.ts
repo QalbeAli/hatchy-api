@@ -40,6 +40,9 @@ export type ContractName =
   | "voucherConverter"
   | "gameLeaderboard"
   | "gameRanks"
+  | "wrappedHatchy"
+  | "ultigenEggs"
+  | "hatchyverseUltigen"
   ;
 
 export type NetworkData = {

@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "name": "Fire Egg",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/bamboozler_framed.gif",
+    "description": "Fire",
+    "element": "Fire"
+  },
+  {
+    "id": 2,
+    "name": "Plant Egg",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/slobloom_framed.gif",
+    "description": "Plant",
+    "element": "Plant"
+  },
+  {
+    "id": 3,
+    "name": "Water Egg",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/bamboozler_framed.gif",
+    "description": "Water",
+    "element": "Water"
+  },
+  {
+    "id": 4,
+    "name": "Dark Egg",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/bamboozler_framed.gif",
+    "description": "Dark",
+    "element": "Dark"
+  },
+  {
+    "id": 5,
+    "name": "Light Egg",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/bamboozler_framed.gif",
+    "description": "Light",
+    "element": "Light"
+  }
+]

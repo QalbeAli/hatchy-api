@@ -472,6 +472,36 @@ export class VouchersService {
     return trade;
   }
 
+  public async consumeVoucher(
+    userId: string,
+    voucherId: string,
+    amount: number,
+    transaction?: Transaction
+  ) {
+    const voucher = await this.getVoucherById(voucherId);
+    if (voucher.userId !== userId) {
+      throw new BadRequestError('Voucher does not belong to user');
+    }
+    if (voucher.amount < amount) {
+      throw new BadRequestError('Insufficient voucher amount');
+    }
+    if (transaction) {
+      const voucherRef = this.vouchersCollection.doc(voucherId);
+      if (voucher.amount - amount === 0) {
+        transaction.delete(voucherRef);
+      } else {
+        transaction.update(voucherRef, { amount: voucher.amount - amount });
+      }
+    } else {
+      if (voucher.amount - amount === 0) {
+        await this.vouchersCollection.doc(voucherId).delete();
+      } else {
+        await this.vouchersCollection.doc(voucherId).update({ amount: voucher.amount - amount });
+      }
+    }
+    return voucher;
+  }
+
   public async transferVouchers(userId: string, voucherIds: string[], voucherAmounts: number[], receiverEmail: string) {
     /*
       transfer voucher amounts to the receiverEmail user

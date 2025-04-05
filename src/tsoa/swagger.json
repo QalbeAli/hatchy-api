@@ -433,12 +433,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-03-28T00:02:36.694Z"
+						"default": "2025-04-05T17:35:00.319Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-03-28T00:02:36.696Z"
+						"default": "2025-04-05T17:35:00.320Z"
 					},
 					"name": {
 						"type": "string"
@@ -1791,6 +1791,61 @@
 			},
 			"CreateContractParams": {
 				"$ref": "#/components/schemas/Omit_Contract.uid-or-owner_"
+			},
+			"UltigenMonster": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"element": {
+						"type": "string"
+					},
+					"image": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"element",
+					"image"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UltigenEggsBalance": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"element": {
+						"type": "string"
+					},
+					"image": {
+						"type": "string"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"element",
+					"image",
+					"amount"
+				],
+				"type": "object",
+				"additionalProperties": false
 			},
 			"Voucher": {
 				"properties": {
@@ -5533,6 +5588,218 @@
 						}
 					}
 				]
+			}
+		},
+		"/ultigen/monsters/balance": {
+			"get": {
+				"operationId": "GetUltigenMonstersBalance",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/UltigenMonster"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Ultigen"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/ultigen/eggs/balance": {
+			"get": {
+				"operationId": "GetUltigenEggsBalance",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/UltigenEggsBalance"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Ultigen"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/ultigen/eggs/hatch": {
+			"post": {
+				"operationId": "HatchEggs",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Ultigen"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"amount": {
+										"type": "number",
+										"format": "double"
+									},
+									"eggType": {
+										"type": "number",
+										"format": "double"
+									}
+								},
+								"required": [
+									"amount",
+									"eggType"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/ultigen/eggs/buy": {
+			"post": {
+				"operationId": "BuyEggs",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Ultigen"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"amount": {
+										"type": "number",
+										"format": "double"
+									},
+									"eggType": {
+										"type": "number",
+										"format": "double"
+									}
+								},
+								"required": [
+									"amount",
+									"eggType"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/ultigen/eggs/give": {
+			"post": {
+				"operationId": "GiveEggWithApiKey",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Ultigen"
+				],
+				"security": [
+					{
+						"api_key_rewards": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"amount": {
+										"type": "number",
+										"format": "double"
+									},
+									"eggType": {
+										"type": "number",
+										"format": "double"
+									},
+									"email": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"amount",
+									"eggType",
+									"email"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
 			}
 		},
 		"/vouchers": {

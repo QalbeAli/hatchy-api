@@ -55,14 +55,17 @@ const prodNetworks: Map<number, NetworkData> = new Map([
       label: "Hatchyverse",
       layerzeroId: 8198,
       coingeckoId: "avalanche-2",
-      chainId: 8,
+      chainId: 8198,
       icon: "/icons/networks/hatchy.svg",
       availableBridges: {
         token: [],
       },
       addresses: {
         gameLeaderboard: '0x4558C56B2D754aa12ED3e0b31D17cB4ED9A1e446',
-        gameRanks: '0x7bE5826F9A072759477A663ace0e0959f5b15B36'
+        gameRanks: '0x7bE5826F9A072759477A663ace0e0959f5b15B36',
+        wrappedHatchy: '0x3ee939b0EA957b1F8F931c506f7c4D2ab8147260',
+        ultigenEggs: '0xF321e1E71876726266fb934282874858b526C44D',
+        hatchyverseUltigen: '0x6fED3bcb415107cD5beDc1cf26B29d1F89E4F666',
       },
     },
   ],
@@ -244,14 +247,17 @@ const devNetworks: Map<number, NetworkData> = new Map([
       label: "Hatchyverse",
       layerzeroId: 8198,
       coingeckoId: "avalanche-2",
-      chainId: 8,
+      chainId: 8198,
       icon: "/icons/networks/hatchy.svg",
       availableBridges: {
         token: [],
       },
       addresses: {
         gameLeaderboard: '0x4558C56B2D754aa12ED3e0b31D17cB4ED9A1e446',
-        gameRanks: '0x7bE5826F9A072759477A663ace0e0959f5b15B36'
+        gameRanks: '0x7bE5826F9A072759477A663ace0e0959f5b15B36',
+        wrappedHatchy: '0x3ee939b0EA957b1F8F931c506f7c4D2ab8147260',
+        ultigenEggs: '0xF321e1E71876726266fb934282874858b526C44D',
+        hatchyverseUltigen: '0x6fED3bcb415107cD5beDc1cf26B29d1F89E4F666',
       },
     },
   ],
