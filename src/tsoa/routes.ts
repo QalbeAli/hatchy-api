@@ -224,8 +224,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-04-07T03:35:02.090Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-04-07T03:35:02.092Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-04-07T03:50:12.523Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-04-07T03:50:12.524Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},

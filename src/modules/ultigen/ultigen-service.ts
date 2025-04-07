@@ -15,7 +15,7 @@ import * as path from 'path';
 import csvParser from "csv-parser";
 import { UltigenMonster } from "./ultigen-monster";
 
-const filePath = path.join(__dirname, 'ultigen-data.csv');
+const filePath = path.join(__dirname, '../../assets/ultigen-data.csv');
 
 type CSVData = {
   element: string;
