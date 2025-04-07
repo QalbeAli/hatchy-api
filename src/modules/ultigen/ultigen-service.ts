@@ -1,8 +1,6 @@
-import { BigNumber, ethers, logger, Wallet } from "ethers";
-import config from "../../config";
-import { DefaultChainId, getContract } from "../contracts/networks";
+import { BigNumber } from "ethers";
+import { getContract } from "../contracts/networks";
 import { CoingeckoService } from "../../services/CoingeckoService";
-import { gen2DiscountMultiplier, gen2MaxPrice, gen2UsdtPrice } from "../../constants";
 import { UsersService } from "../users/usersService";
 import { createArrayOf, createRangeArray } from "../../utils";
 import { cloudfrontBaseUrl, ultigenEggPrice, ultigenEggsData, ultigenEggsIds } from "./ultigen-constants";
@@ -12,8 +10,51 @@ import { admin } from "../../firebase/firebase";
 import { ApiKeysService } from "../api-keys/api-keys-service";
 import { GamesWalletsService } from "../games/games-wallets-service";
 import { VouchersService } from "../vouchers/vouchers-service";
-import { UltigenMonstersBalance } from "./ultigen-monsters-balance";
+import * as fs from 'fs';
+import * as path from 'path';
+import csvParser from "csv-parser";
 import { UltigenMonster } from "./ultigen-monster";
+
+const filePath = path.join(__dirname, 'ultigen-data.csv');
+
+type CSVData = {
+  element: string;
+  id: number;
+  stage: number;
+  name: string;
+  walk_speed: number;
+  attack_damage: number;
+  aspd: number;
+  health: number;
+  behavior: string;
+  dps: number;
+};
+
+const loadCSV = (filePath: string): Promise<CSVData[]> => {
+  return new Promise((resolve, reject) => {
+    const results: CSVData[] = [];
+    fs.createReadStream(filePath)
+      .pipe(csvParser())
+      .on('data', (data) => {
+        const parsedData: CSVData = {
+          id: Number(data.id.trim()),
+          element: data.element.trim(),
+          stage: Number(data.stage.trim()),
+          name: data.name.trim(),
+          walk_speed: parseFloat(data.walk_speed.trim()),
+          attack_damage: parseFloat(data.attack_damage.trim()),
+          aspd: parseFloat(data.aspd.trim()),
+          health: parseFloat(data.health.trim()),
+          behavior: data.behavior.trim(),
+          dps: parseFloat(data.dps.trim()),
+        };
+        results.push(parsedData);
+      })
+      .on('end', () => resolve(results))
+      .on('error', (error) => reject(error));
+  });
+};
+
 
 export class UltigenService {
   chainId: number;
@@ -21,10 +62,22 @@ export class UltigenService {
   userService = new UsersService();
   apiKeyService = new ApiKeysService();
   gamesWalletsService = new GamesWalletsService();
+  ultigenData = null;
 
   constructor(chainId?: number) {
     this.chainId = chainId || 8198;
     this.coingeckoService = new CoingeckoService();
+  }
+
+  async loadUltigenData() {
+    try {
+      if (this.ultigenData === null) {
+        const data = await loadCSV(filePath);
+        this.ultigenData = data;
+      }
+    } catch (error) {
+      console.error('Error reading CSV file:', error);
+    }
   }
 
   async getUltigenMonstersAmounts(address: string): Promise<UltigenMonster[]> {
@@ -33,21 +86,32 @@ export class UltigenService {
     const tokensOfOwner = await Promise.all(createRangeArray(0, balance.toNumber() - 1).map((i) => {
       return ultigen.tokenOfOwnerByIndex(address, i);
     }));
-    const monsterData = await Promise.all(tokensOfOwner.map((tokenId) => {
+    const monsterChainData = await Promise.all(tokensOfOwner.map((tokenId) => {
       return ultigen.getMonster(tokenId);
     }));
     return tokensOfOwner.map((tokenId, index) => {
-      const monster = monsterData[index];
+      const monster = monsterChainData[index];
+      const monsterId = monster[1].toNumber();
+      const monsterData = this.ultigenData.find((m) => m.id === monsterId);
+      if (!monsterData) {
+        throw new BadRequestError(`Data not found for tokenId ${tokenId}`);
+      }
       return {
         id: tokenId.toNumber(),
-        name: 'monster name',
+        name: monsterData.name,
         image: `${cloudfrontBaseUrl}ultigen/monsters/name.gif`,
-        element: 'element',
-        monsterId: monster[1].toNumber(),
+        element: monsterData.element,
+        monsterId: monsterData.id,
         level: monster[2].toNumber(),
         stage: monster[3].toNumber(),
         xp: monster[4].toNumber(),
-        skills: []
+        skills: [],
+        walkSpeed: monsterData.walk_speed,
+        attackDamage: monsterData.attack_damage,
+        aspd: monsterData.aspd,
+        health: monsterData.health,
+        behavior: monsterData.behavior,
+        dps: monsterData.dps,
       };
     });
   }
@@ -77,12 +141,14 @@ export class UltigenService {
         element: hatchy.element,
       };
     }).filter((b) => b !== null) as UltigenMonstersBalance[];
-
+  
     */
     return allBalances;
   }
 
   public async getUltigenMonstersBalance(uid: string): Promise<UltigenMonster[]> {
+    await this.loadUltigenData();
+
     const linkedWallets = await this.userService.getLinkedWallets(uid);
     if (linkedWallets && linkedWallets.length > 0) {
       const balance = await this.getAddressessUltigenMonstersBalance(linkedWallets.map((wallet) => wallet.address));
@@ -189,11 +255,11 @@ export class UltigenService {
       if (!user.mainWallet) {
         throw new BadRequestError('No linked wallets found');
       }
-      const hatchyVoucher = vouchers.find((v) => v.name === "Hatchy Token" && v.amount >= ultigenEggPrice);
+      const hatchyVoucher = vouchers.find((v) => v.name === "Hatchy Token" && v.amount >= ultigenEggPrice * amount);
       if (!hatchyVoucher) {
         throw new BadRequestError('Insufficient voucher balance');
       }
-      await voucherService.consumeVoucher(userId, hatchyVoucher.uid, ultigenEggPrice, transaction);
+      await voucherService.consumeVoucher(userId, hatchyVoucher.uid, ultigenEggPrice * amount, transaction);
       await this.giveEggToUser(user.mainWallet, eggType, amount);
     });
   }

@@ -2,18 +2,20 @@ import _ultigenEggsData from "./ultigenEggsMetadata.json";
 
 export const ultigenEggPrice = 1000;
 export const ultigenEggsData: any = _ultigenEggsData;
-export const ultigenEggsIds = [
-  1, // Fire Egg
-  2, // Plant Egg
-  3, // Water Egg
-  4, // Dark Egg
-  5, // Light Egg
-]
+
 export const fireEggId = 1;
-export const plantEggId = 2;
-export const waterEggId = 3;
-export const darkEggId = 4;
-export const lightEggId = 5;
+export const waterEggId = 2;
+export const plantEggId = 3;
+export const lightEggId = 4;
+export const darkEggId = 5;
+
+export const ultigenEggsIds = [
+  fireEggId, // Fire Egg
+  waterEggId, // Plant Egg
+  plantEggId, // Water Egg
+  lightEggId, // Dark Egg
+  darkEggId, // Light Egg
+]
 
 
 import { createRangeArray, getGen2ShinyIds } from "../../utils";

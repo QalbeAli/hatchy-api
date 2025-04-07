@@ -433,12 +433,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-04-05T17:39:42.437Z"
+						"default": "2025-04-07T03:35:02.090Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-04-05T17:39:42.438Z"
+						"default": "2025-04-07T03:35:02.092Z"
 					},
 					"name": {
 						"type": "string"
@@ -1806,13 +1806,67 @@
 					},
 					"image": {
 						"type": "string"
+					},
+					"monsterId": {
+						"type": "number",
+						"format": "double"
+					},
+					"level": {
+						"type": "number",
+						"format": "double"
+					},
+					"stage": {
+						"type": "number",
+						"format": "double"
+					},
+					"xp": {
+						"type": "number",
+						"format": "double"
+					},
+					"skills": {
+						"items": {},
+						"type": "array"
+					},
+					"walkSpeed": {
+						"type": "number",
+						"format": "double"
+					},
+					"attackDamage": {
+						"type": "number",
+						"format": "double"
+					},
+					"aspd": {
+						"type": "number",
+						"format": "double"
+					},
+					"health": {
+						"type": "number",
+						"format": "double"
+					},
+					"behavior": {
+						"type": "string"
+					},
+					"dps": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
 					"id",
 					"name",
 					"element",
-					"image"
+					"image",
+					"monsterId",
+					"level",
+					"stage",
+					"xp",
+					"skills",
+					"walkSpeed",
+					"attackDamage",
+					"aspd",
+					"health",
+					"behavior",
+					"dps"
 				],
 				"type": "object",
 				"additionalProperties": false

@@ -1,0 +1,100 @@
+element,id,stage,name,walk_speed,attack_damage,aspd,health,behavior,dps
+Water,20000,0,Water blob,0.55,10.0,1.2,10,chase,12
+Water,200001,1,Water humanoid,0.6,15.0,1,30,chase,15
+Water,200002,1,Water quadruped,0.7,15.0,1,30,chase,15
+Water,200003,1,Water fluffy,0.7,15.0,1,30,chase,15
+Water,200004,1,Water lizard,0.7,15.0,1,30,chase,15
+Water,200005,1,Water amphibian,0.7,15.0,1,30,chase,15
+Water,200006,1,Water minibug,0.7,15.0,1,30,"swarm, directional, horizontal or vertical",15
+Water,2000011,2,Water elemental,0.7,20.0,1,60,chase,20
+Water,2000012,2,Water compound,0.7,20.0,1,60,chase,20
+Water,2000021,2,Water beast,0.7,20.0,1,60,chase,20
+Water,2000022,2,Water ape,0.7,20.0,1,60,chase,20
+Water,2000023,2,Water cat,0.7,20.0,1,60,chase,20
+Water,2000031,2,Water rabbit,0.7,20.0,1,60,chase,20
+Water,2000032,2,Water bird,0.8,20.0,1,60,chase,20
+Water,2000041,2,Water lizard,0.7,20.0,1,60,chase,20
+Water,2000042,2,Water turtle,0.6,20.0,1.2,60,"circle wall, closing",24
+Water,2000051,2,Water frog,0.7,20.0,1,60,chase,20
+Water,2000052,2,Water naga,0.7,20.0,1,60,chase,20
+Water,2000061,2,Water fish,0.7,20.0,1,60,chase,20
+Water,2000062,2,Water bug,0.7,20.0,1,60,"swarm, directional, horizontal or vertical",20
+Fire,10000,0,Fire blob,0.6,11.0,0.96,8,chase,10.56
+Fire,100001,1,Fire humanoid,0.65,16.5,0.8,24,chase,13.2
+Fire,100002,1,Fire quadruped,0.75,16.5,0.8,24,chase,13.2
+Fire,100003,1,Fire fluffy,0.75,16.5,0.8,24,chase,13.2
+Fire,100004,1,Fire lizard,0.75,16.5,0.8,24,chase,13.2
+Fire,100005,1,Fire amphibian,0.75,16.5,0.8,24,chase,13.2
+Fire,100006,1,Fire minibug,0.75,16.5,0.8,24,"swarm, directional, horizontal or vertical",13.2
+Fire,1000011,2,Fire elemental,0.75,22.0,0.8,48,chase,17.6
+Fire,1000012,2,Fire compound,0.75,22.0,0.8,48,chase,17.6
+Fire,1000021,2,Fire beast,0.75,22.0,0.8,48,chase,17.6
+Fire,1000022,2,Fire ape,0.75,22.0,0.8,48,chase,17.6
+Fire,1000023,2,Fire cat,0.75,22.0,0.8,48,chase,17.6
+Fire,1000031,2,Fire rabbit,0.75,22.0,0.8,48,chase,17.6
+Fire,1000032,2,Fire bird,0.85,22.0,0.8,48,chase,17.6
+Fire,1000041,2,Fire lizard,0.75,22.0,0.8,48,chase,17.6
+Fire,1000042,2,Fire turtle,0.65,22.0,0.96,48,"circle wall, closing",21.12
+Fire,1000051,2,Fire frog,0.75,22.0,0.8,48,chase,17.6
+Fire,1000052,2,Fire naga,0.75,22.0,0.8,48,chase,17.6
+Fire,1000061,2,Fire fish,0.75,22.0,0.8,48,chase,17.6
+Fire,1000062,2,Fire bug,0.75,22.0,0.8,48,"swarm, directional, horizontal or vertical",17.6
+Plant,30000,0,Plant blob,0.5,8.0,1.44,12,chase,11.52
+Plant,300001,1,Plant humanoid,0.55,15.0,1.2,36,chase,18
+Plant,300002,1,Plant quadruped,0.65,15.0,1.2,36,chase,18
+Plant,300003,1,Plant fluffy,0.65,15.0,1.2,36,chase,18
+Plant,300004,1,Plant lizard,0.65,15.0,1.2,36,chase,18
+Plant,300005,1,Plant amphibian,0.65,15.0,1.2,36,chase,18
+Plant,300006,1,Plant minibug,0.65,15.0,1.2,36,"swarm, directional, horizontal or vertical",18
+Plant,3000011,2,Plant elemental,0.65,24.0,1.2,72,chase,28.8
+Plant,3000012,2,Plant compound,0.65,24.0,1.2,72,chase,28.8
+Plant,3000021,2,Plant beast,0.65,24.0,1.2,72,chase,28.8
+Plant,3000022,2,Plant ape,0.65,24.0,1.2,72,chase,28.8
+Plant,3000023,2,Plant cat,0.65,24.0,1.2,72,chase,28.8
+Plant,3000031,2,Plant rabbit,0.65,24.0,1.2,72,chase,28.8
+Plant,3000032,2,Plant bird,0.75,24.0,1.2,72,chase,28.8
+Plant,3000041,2,Plant lizard,0.65,24.0,1.2,72,chase,28.8
+Plant,3000042,2,Plant turtle,0.55,24.0,1.44,72,"circle wall, closing",34.56
+Plant,3000051,2,Plant frog,0.65,24.0,1.2,72,chase,28.8
+Plant,3000052,2,Plant naga,0.65,24.0,1.2,72,chase,28.8
+Plant,3000061,2,Plant fish,0.65,24.0,1.2,72,chase,28.8
+Plant,3000062,2,Plant bug,0.65,24.0,1.2,72,"swarm, directional, horizontal or vertical",28.8
+Dark,50000,0,Dark blob,0.495,8.8,1.32,14.4,chase,11.616
+Dark,500001,1,Dark humanoid,0.54,16.5,1.1,43.2,chase,18.15
+Dark,500002,1,Dark quadruped,0.63,16.5,1.1,43.2,chase,18.15
+Dark,500003,1,Dark fluffy,0.63,16.5,1.1,43.2,chase,18.15
+Dark,500004,1,Dark lizard,0.63,16.5,1.1,43.2,chase,18.15
+Dark,500005,1,Dark amphibian,0.63,16.5,1.1,43.2,chase,18.15
+Dark,500006,1,Dark minibug,0.63,16.5,1.1,43.2,chase,18.15
+Dark,5000011,2,Dark elemental,0.63,26.4,1.1,86.4,chase,29.04
+Dark,5000012,2,Dark compound,0.63,26.4,1.1,86.4,chase,29.04
+Dark,5000021,2,Dark beast,0.63,26.4,1.1,86.4,chase,29.04
+Dark,5000022,2,Dark cat,0.63,26.4,1.1,86.4,chase,29.04
+Dark,5000031,2,Dark rabbit,0.63,26.4,1.1,86.4,chase,29.04
+Dark,5000032,2,Dark bird,0.63,26.4,1.1,86.4,chase,29.04
+Dark,5000041,2,Dark lizard,0.72,26.4,1.1,86.4,"circle wall, closing",29.04
+Dark,5000042,2,Dark turtle,0.63,26.4,1.1,86.4,chase,29.04
+Dark,5000051,2,Dark frog,0.54,26.4,1.32,86.4,chase,34.848
+Dark,5000052,2,Dark naga,0.63,26.4,1.1,86.4,chase,29.04
+Dark,5000061,2,Dark fish,0.63,26.4,1.1,86.4,chase,29.04
+Dark,5000062,2,Dark bug,0.63,26.4,1.1,86.4,"swarm, directional, horizontal or vertical",29.04
+Light,40000,0,Light blob,0.66,12.1,1.056,6.4,chase,12.7776
+Light,400001,1,Light humanoid,0.715,18.15,0.88,19.2,chase,15.972
+Light,400002,1,Light quadruped,0.825,18.15,0.88,19.2,chase,15.972
+Light,400003,1,Light fluffy,0.825,18.15,0.88,19.2,chase,15.972
+Light,400004,1,Light lizard,0.825,18.15,0.88,19.2,chase,15.972
+Light,400005,1,Light amphibian,0.825,18.15,0.88,19.2,chase,15.972
+Light,400006,1,Light minibug,0.825,18.15,0.88,19.2,swarm,15.972
+Light,4000011,2,Light elemental,0.825,24.2,0.88,38.4,chase,21.296
+Light,4000012,2,Light compound,0.825,24.2,0.88,38.4,chase,21.296
+Light,4000021,2,Light beast,0.825,24.2,0.88,38.4,chase,21.296
+Light,4000022,2,Light ape,0.825,24.2,0.88,38.4,chase,21.296
+Light,4000023,2,Light cat,0.825,24.2,0.88,38.4,chase,21.296
+Light,4000031,2,Light rabbit,0.825,24.2,0.88,38.4,chase,21.296
+Light,4000032,2,Light bird,0.935,24.2,0.88,38.4,chase,21.296
+Light,4000041,2,Light lizard,0.825,24.2,0.88,38.4,chase,21.296
+Light,4000042,2,Light turtle,0.715,24.2,1.056,38.4,"circle wall, closing",25.5552
+Light,4000051,2,Light frog,0.825,24.2,0.88,38.4,chase,21.296
+Light,4000052,2,Light naga,0.825,24.2,0.88,38.4,chase,21.296
+Light,4000061,2,Light fish,0.825,24.2,0.88,38.4,chase,21.296
+Light,4000062,2,Light bug,0.825,24.2,0.88,38.4,"swarm, directional, horizontal or vertical",21.296

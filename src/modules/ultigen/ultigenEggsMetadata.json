@@ -8,30 +8,30 @@
   },
   {
     "id": 2,
-    "name": "Plant Egg",
-    "image": "https://hatchypocket.com/static/cards/gen2/plant/slobloom_framed.gif",
-    "description": "Plant",
-    "element": "Plant"
-  },
-  {
-    "id": 3,
     "name": "Water Egg",
     "image": "https://hatchypocket.com/static/cards/gen2/plant/bamboozler_framed.gif",
     "description": "Water",
     "element": "Water"
   },
   {
-    "id": 4,
-    "name": "Dark Egg",
-    "image": "https://hatchypocket.com/static/cards/gen2/plant/bamboozler_framed.gif",
-    "description": "Dark",
-    "element": "Dark"
+    "id": 3,
+    "name": "Plant Egg",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/slobloom_framed.gif",
+    "description": "Plant",
+    "element": "Plant"
   },
   {
-    "id": 5,
+    "id": 4,
     "name": "Light Egg",
     "image": "https://hatchypocket.com/static/cards/gen2/plant/bamboozler_framed.gif",
     "description": "Light",
     "element": "Light"
+  },
+  {
+    "id": 5,
+    "name": "Dark Egg",
+    "image": "https://hatchypocket.com/static/cards/gen2/plant/bamboozler_framed.gif",
+    "description": "Dark",
+    "element": "Dark"
   }
 ]
