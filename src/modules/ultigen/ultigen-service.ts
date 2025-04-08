@@ -3,7 +3,7 @@ import { getContract } from "../contracts/networks";
 import { CoingeckoService } from "../../services/CoingeckoService";
 import { UsersService } from "../users/usersService";
 import { createArrayOf, createRangeArray } from "../../utils";
-import { cloudfrontBaseUrl, ultigenEggPrice, ultigenEggsData, ultigenEggsIds } from "./ultigen-constants";
+import { availableMonsterIds, cloudfrontBaseUrl, ultigenEggPrice, ultigenEggsData, ultigenEggsIds } from "./ultigen-constants";
 import { BadRequestError } from "../../errors/bad-request-error";
 import { UltigenEggsBalance } from "./ultigen-eggs-balance";
 import { admin } from "../../firebase/firebase";
@@ -234,14 +234,21 @@ export class UltigenService {
       const previousMonsters = await this.getUltigenMonstersAmounts(user.mainWallet);
 
       const ultigenEggs = getContract('ultigenEggs', this.chainId, true);
+      // generate random numbers selection in array [10000, 20000, 30000] for given amount
+      const selectedMonsterIds = [];
+      for (let i = 0; i < amount; i++) {
+        const randomNumber = Math.floor(Math.random() * availableMonsterIds.length);
+        selectedMonsterIds.push(availableMonsterIds[randomNumber]);
+      }
+
       const receipt = await ultigenEggs.hatchEggsToAddress(
         user.mainWallet,
         eggType,
-        amount
+        amount,
+        selectedMonsterIds
       );
       await receipt.wait(1);
       const latestMonsters = await this.getUltigenMonstersAmounts(user.mainWallet);
-      // new monsters are the monsters that are in latest but not in previous monsters
       const newMonsters = latestMonsters.filter((monster) => {
         return !previousMonsters.some((prevMonster) => {
           return prevMonster.id === monster.id;

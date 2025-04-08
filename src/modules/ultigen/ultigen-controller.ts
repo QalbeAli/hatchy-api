@@ -15,6 +15,7 @@ import { isEmail } from "../../utils";
 import { BadRequestError } from "../../errors/bad-request-error";
 import { UltigenMonster } from "./ultigen-monster";
 
+const validEggTypes = [1];
 @Route("ultigen")
 @Tags("Ultigen")
 export class UltigenController extends Controller {
@@ -52,7 +53,7 @@ export class UltigenController extends Controller {
     if (!Number.isInteger(amount) || amount <= 0) {
       throw new BadRequestError('Invalid amount');
     }
-    if (!Number.isInteger(eggType) || ![1, 2, 3, 4, 5].includes(eggType)) {
+    if (!Number.isInteger(eggType) || !validEggTypes.includes(eggType)) {
       throw new BadRequestError('Invalid egg type');
     }
 
@@ -78,7 +79,7 @@ export class UltigenController extends Controller {
     if (!Number.isInteger(amount) || amount <= 0) {
       throw new BadRequestError('Invalid amount');
     }
-    if (!Number.isInteger(eggType) || ![1, 2, 3, 4, 5].includes(eggType)) {
+    if (!Number.isInteger(eggType) || !validEggTypes.includes(eggType)) {
       throw new BadRequestError('Invalid egg type');
     }
 
@@ -110,7 +111,7 @@ export class UltigenController extends Controller {
     if (body.amount <= 0) {
       throw new BadRequestError('Amount must be greater than 0');
     }
-    if (!Number.isInteger(body.eggType) || ![1, 2, 3, 4, 5].includes(body.eggType)) {
+    if (!Number.isInteger(body.eggType) || !validEggTypes.includes(body.eggType)) {
       throw new BadRequestError('Invalid egg type');
     }
 
