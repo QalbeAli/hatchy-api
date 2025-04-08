@@ -224,8 +224,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-04-08T03:25:31.529Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-04-08T03:25:31.530Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-04-08T21:49:52.585Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-04-08T21:49:52.587Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -3502,6 +3502,68 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'giveEggWithApiKey',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/ultigen/monsters/xp',
+            authenticateMiddleware([{"api_key_ultigen_xp":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(UltigenController)),
+            ...(fetchMiddlewares<RequestHandler>(UltigenController.prototype.giveXPToMonster)),
+
+            async function UltigenController_giveXPToMonster(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"xp":{"dataType":"double","required":true},"id":{"dataType":"double","required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new UltigenController();
+
+              await templateService.apiHandler({
+                methodName: 'giveXPToMonster',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/ultigen/monsters/:id',
+            ...(fetchMiddlewares<RequestHandler>(UltigenController)),
+            ...(fetchMiddlewares<RequestHandler>(UltigenController.prototype.getMonsterData)),
+
+            async function UltigenController_getMonsterData(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"double"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new UltigenController();
+
+              await templateService.apiHandler({
+                methodName: 'getMonsterData',
                 controller,
                 response,
                 next,

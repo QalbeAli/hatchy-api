@@ -15,9 +15,16 @@ import * as path from 'path';
 import csvParser from "csv-parser";
 import { UltigenMonster } from "./ultigen-monster";
 
-const filePath = path.join(__dirname, '../../assets/ultigen-data.csv');
+const ultigenDataFilePath = path.join(__dirname, '../../assets/ultigen-data.csv');
+const levelDataFilePath = path.join(__dirname, '../../assets/ultigen-levels.csv');
 
-type CSVData = {
+type LevelsData = {
+  level: number;
+  stage: number;
+  required_xp: number;
+}
+
+type UltigenCSVData = {
   element: string;
   id: number;
   stage: number;
@@ -30,13 +37,13 @@ type CSVData = {
   dps: number;
 };
 
-const loadCSV = (filePath: string): Promise<CSVData[]> => {
+const loadUltigenCSV = (filePath: string): Promise<UltigenCSVData[]> => {
   return new Promise((resolve, reject) => {
-    const results: CSVData[] = [];
+    const results: UltigenCSVData[] = [];
     fs.createReadStream(filePath)
       .pipe(csvParser())
       .on('data', (data) => {
-        const parsedData: CSVData = {
+        const parsedData: UltigenCSVData = {
           id: Number(data.id.trim()),
           element: data.element.trim(),
           stage: Number(data.stage.trim()),
@@ -55,6 +62,25 @@ const loadCSV = (filePath: string): Promise<CSVData[]> => {
   });
 };
 
+const loadLevelsCSV = (filePath: string): Promise<LevelsData[]> => {
+  return new Promise((resolve, reject) => {
+    const results: LevelsData[] = [];
+    fs.createReadStream(filePath)
+      .pipe(csvParser())
+      .on('data', (data) => {
+        const parsedData: LevelsData = {
+          level: Number(data.level.trim()),
+          stage: Number(data.stage.trim()),
+          required_xp: Number(data.required_xp.trim()),
+        };
+        results.push(parsedData);
+      })
+      .on('end', () => resolve(results))
+      .on('error', (error) => reject(error));
+
+  });
+}
+
 
 export class UltigenService {
   chainId: number;
@@ -63,6 +89,7 @@ export class UltigenService {
   apiKeyService = new ApiKeysService();
   gamesWalletsService = new GamesWalletsService();
   ultigenData = null;
+  levelsData: LevelsData[] = null;
 
   constructor(chainId?: number) {
     this.chainId = chainId || 8198;
@@ -72,12 +99,93 @@ export class UltigenService {
   async loadUltigenData() {
     try {
       if (this.ultigenData === null) {
-        const data = await loadCSV(filePath);
+        const data = await loadUltigenCSV(ultigenDataFilePath);
         this.ultigenData = data;
       }
     } catch (error) {
       console.error('Error reading CSV file:', error);
     }
+  }
+
+  async loadLevelsData() {
+    try {
+      if (this.levelsData === null) {
+        const data = await loadLevelsCSV(levelDataFilePath);
+        this.levelsData = data;
+      }
+    } catch (error) {
+      console.error('Error reading CSV file:', error);
+    }
+  }
+
+  async giveXPToMonster(
+    monsterId: number,
+    xp: number,
+  ) {
+    await this.loadLevelsData();
+    const ultigen = getContract('hatchyverseUltigen', this.chainId, true);
+    const monster = await this.getMonsterData(monsterId);
+    const currentXp = monster.xp;
+    const newXp = currentXp + xp;
+
+    const dataIndex = this.levelsData.findIndex((l) => l.level === monster.level);
+    const currentLevelData = this.levelsData[dataIndex];
+    if (newXp >= currentLevelData.required_xp) {
+      const residualXP = newXp - currentLevelData.required_xp;
+
+      const nextLevelData = this.levelsData[dataIndex + 1];
+      let newMonsterId = monster.monsterId;
+      if (nextLevelData.stage != currentLevelData.stage) {
+        newMonsterId = monster.monsterId * 10 + 1;
+      }
+      const receipt = await ultigen.updateMonster(
+        monsterId,
+        newMonsterId,
+        nextLevelData.level,
+        nextLevelData.stage,
+        residualXP
+      );
+      await receipt.wait(1);
+    } else {
+      const receipt = await ultigen.updateMonster(
+        monsterId,
+        monster.monsterId,
+        monster.level,
+        monster.stage,
+        newXp
+      );
+      await receipt.wait(1);
+    }
+    const newMonsterData = await this.getMonsterData(monsterId);
+    return newMonsterData;
+  }
+
+  async getMonsterData(uniqueId: number): Promise<UltigenMonster> {
+    await this.loadUltigenData();
+    const ultigen = getContract('hatchyverseUltigen', this.chainId);
+    const monsterChainData = await ultigen.getMonster(uniqueId);
+    const monsterId = monsterChainData[1].toNumber();
+    const monsterData = this.ultigenData.find((m) => m.id === monsterId);
+    if (!monsterData) {
+      throw new BadRequestError(`Data not found for tokenId ${uniqueId}`);
+    }
+    return {
+      id: uniqueId,
+      name: monsterData.name,
+      image: `${cloudfrontBaseUrl}ultigen/monsters/name.gif`,
+      element: monsterData.element,
+      monsterId: monsterData.id,
+      level: monsterChainData[2].toNumber(),
+      stage: monsterChainData[3].toNumber(),
+      xp: monsterChainData[4].toNumber(),
+      skills: [],
+      walkSpeed: monsterData.walk_speed,
+      attackDamage: monsterData.attack_damage,
+      aspd: monsterData.aspd,
+      health: monsterData.health,
+      behavior: monsterData.behavior,
+      dps: monsterData.dps,
+    };
   }
 
   async getUltigenMonstersAmounts(address: string): Promise<UltigenMonster[]> {

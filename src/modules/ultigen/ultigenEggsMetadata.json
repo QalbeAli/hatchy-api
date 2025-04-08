@@ -1,10 +1,10 @@
 [
   {
     "id": 1,
-    "name": "Fire Egg",
+    "name": "Rainbow Egg",
     "image": "https://hatchypocket.com/static/cards/gen2/plant/bamboozler_framed.gif",
-    "description": "Fire",
-    "element": "Fire"
+    "description": "Can hatch plant, water or fire blobs",
+    "element": "Rainbow"
   },
   {
     "id": 2,

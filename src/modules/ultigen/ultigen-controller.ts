@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Path,
   Post,
   Request,
   Route,
@@ -127,5 +128,44 @@ export class UltigenController extends Controller {
       message: 'Egg given',
       // ...data
     }
+  }
+
+  @Security("api_key_ultigen_xp")
+  @Post("monsters/xp")
+  public async giveXPToMonster(
+    @Request() request: any,
+    @Body() body: {
+      id: number,
+      xp: number,
+    },
+  ): Promise<UltigenMonster> {
+
+    if (body.xp <= 0) {
+      throw new BadRequestError('xp must be greater than 0');
+    }
+    if (!Number.isInteger(body.id)) {
+      throw new BadRequestError('Invalid id');
+    }
+
+    const ultigenService = new UltigenService(8198);
+    const data = await ultigenService.giveXPToMonster(
+      body.id,
+      body.xp,
+    );
+    return data;
+  }
+
+  @Get("monsters/{id}")
+  public async getMonsterData(
+    @Path() id: number,
+  ): Promise<UltigenMonster> {
+    if (!Number.isInteger(id) || id <= 0) {
+      throw new BadRequestError('Invalid id');
+    }
+    const ultigenService = new UltigenService(8198);
+    const data = await ultigenService.getMonsterData(
+      id
+    );
+    return data;
   }
 }

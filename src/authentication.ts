@@ -17,6 +17,51 @@ async function getApiKey(apiKey: string): Promise<ApiKey> {
   return apiKeyDoc.docs[0].data() as ApiKey;
 }
 
+const apiKeySecurityNames = [
+  {
+    name: 'api_key_ultigen_xp',
+    permission: 'ultigen-xp',
+  },
+  {
+    name: 'api_key_rewards',
+    permission: 'rewards',
+  },
+  {
+    name: 'api_key_rank',
+    permission: 'rank',
+  },
+  {
+    name: 'api_key_scores',
+    permission: 'scores',
+  }
+]
+
+function validateApiKey(securityName: string, request: any): Promise<ApiKey> {
+  const apiKeyHeader = request.headers['x-api-key'] as string;
+  if (!apiKeyHeader) {
+    return Promise.reject(new UnauthorizedError("No authorization header."));
+  }
+  const key = apiKeyHeader;
+  const apiKeyPermissionName = apiKeySecurityNames.find(a => a.name === securityName)?.permission;
+  return new Promise((resolve, reject) => {
+    if (!key) {
+      reject(new UnauthorizedError("No token provided"));
+    }
+    getApiKey(key).then((apiKey) => {
+      if (apiKey.permissions && apiKey.permissions.includes(apiKeyPermissionName)) {
+        if (["api_key_rank", "api_key_scores"].includes(securityName) && request.body.appId !== apiKey.appId) {
+          reject(new UnauthorizedError("Invalid API key."));
+        }
+        resolve(apiKey);
+      } else {
+        reject(new UnauthorizedError("Invalid API key."));
+      }
+    }).catch((error) => {
+      reject(new UnauthorizedError("Invalid API key."));
+    });
+  });
+}
+
 export function expressAuthentication(
   request: express.Request,
   securityName: string,
@@ -35,73 +80,8 @@ export function expressAuthentication(
     }
   }
 
-  if (securityName === "api_key_rewards") {
-    const apiKeyHeader = request.headers['x-api-key'] as string;
-    if (!apiKeyHeader) {
-      return Promise.reject(new UnauthorizedError("No authorization header."));
-    }
-    const key = apiKeyHeader;
-    return new Promise((resolve, reject) => {
-      if (!key) {
-        reject(new UnauthorizedError("No token provided"));
-      }
-      getApiKey(key).then((apiKey) => {
-        if (apiKey.permissions && apiKey.permissions.includes("rewards")) {
-          resolve(apiKey);
-        }
-        reject(new UnauthorizedError("Invalid API key."));
-      }).catch((error) => {
-        reject(new UnauthorizedError("Invalid API key."));
-      });
-    });
-  }
-
-  if (securityName === "api_key_rank") {
-    const apiKeyHeader = request.headers['x-api-key'] as string;
-    if (!apiKeyHeader) {
-      return Promise.reject(new UnauthorizedError("No authorization header."));
-    }
-    const key = apiKeyHeader;
-    return new Promise((resolve, reject) => {
-      if (!key) {
-        reject(new UnauthorizedError("No token provided"));
-      }
-      getApiKey(key).then((apiKey) => {
-        if (apiKey.permissions && apiKey.permissions.includes("rank")) {
-          if (request.body.appId !== apiKey.appId) {
-            reject(new UnauthorizedError("Invalid API key."));
-          }
-          resolve(apiKey);
-        }
-        reject(new UnauthorizedError("Invalid API key."));
-      }).catch((error) => {
-        reject(new UnauthorizedError("Invalid API key."));
-      });
-    });
-  }
-
-  if (securityName === "api_key_scores") {
-    const apiKeyHeader = request.headers['x-api-key'] as string;
-    if (!apiKeyHeader) {
-      return Promise.reject(new UnauthorizedError("No authorization header."));
-    }
-    const key = apiKeyHeader;
-    return new Promise((resolve, reject) => {
-      if (!key) {
-        reject(new UnauthorizedError("No token provided"));
-      }
-      getApiKey(key).then((apiKey) => {
-        if (apiKey.permissions && apiKey.permissions.includes("scores")) {
-          if (request.body.appId !== apiKey.appId) {
-            reject(new UnauthorizedError("Invalid API key."));
-          }
-          resolve(apiKey);
-        }
-        reject(new UnauthorizedError("Invalid API key."));
-      }).catch((error) => {
-        reject(new UnauthorizedError("Invalid API key."));
-      });
-    });
+  if (apiKeySecurityNames.some(a => a.name === securityName)) {
+    return validateApiKey(securityName, request);
   }
 
   if (securityName === "jwt") {

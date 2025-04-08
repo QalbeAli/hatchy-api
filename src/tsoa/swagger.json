@@ -433,12 +433,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-04-08T03:25:31.529Z"
+						"default": "2025-04-08T21:49:52.585Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-04-08T03:25:31.530Z"
+						"default": "2025-04-08T21:49:52.587Z"
 					},
 					"name": {
 						"type": "string"
@@ -5857,6 +5857,88 @@
 						}
 					}
 				}
+			}
+		},
+		"/ultigen/monsters/xp": {
+			"post": {
+				"operationId": "GiveXPToMonster",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UltigenMonster"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Ultigen"
+				],
+				"security": [
+					{
+						"api_key_ultigen_xp": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"xp": {
+										"type": "number",
+										"format": "double"
+									},
+									"id": {
+										"type": "number",
+										"format": "double"
+									}
+								},
+								"required": [
+									"xp",
+									"id"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/ultigen/monsters/{id}": {
+			"get": {
+				"operationId": "GetMonsterData",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UltigenMonster"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Ultigen"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			}
 		},
 		"/vouchers": {
