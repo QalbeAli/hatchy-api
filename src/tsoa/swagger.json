@@ -433,12 +433,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-04-07T03:50:12.523Z"
+						"default": "2025-04-08T02:12:11.714Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-04-07T03:50:12.524Z"
+						"default": "2025-04-08T02:12:11.719Z"
 					},
 					"name": {
 						"type": "string"
@@ -5711,7 +5711,10 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/MessageResponse"
+									"items": {
+										"$ref": "#/components/schemas/UltigenMonster"
+									},
+									"type": "array"
 								}
 							}
 						}

@@ -46,7 +46,7 @@ export class UltigenController extends Controller {
       eggType: number,
       amount: number,
     },
-  ): Promise<MessageResponse> {
+  ): Promise<UltigenMonster[]> {
     const ultigenService = new UltigenService(8198);
     const { eggType, amount } = body;
     if (!Number.isInteger(amount) || amount <= 0) {
@@ -56,14 +56,12 @@ export class UltigenController extends Controller {
       throw new BadRequestError('Invalid egg type');
     }
 
-    await ultigenService.hatchEggs(
+    const monsterData = await ultigenService.hatchEggs(
       request.user.uid,
       eggType,
       amount,
     );
-    return {
-      message: 'Eggs hatched',
-    }
+    return monsterData;
   }
 
   @Security("jwt")

@@ -225,18 +225,31 @@ export class UltigenService {
     eggType: number,
     amount: number,
   ) {
-    await admin.firestore().runTransaction(async (transaction) => {
+    const monsterData = await admin.firestore().runTransaction(async (transaction) => {
       const user = await this.userService.get(userId, transaction);
       if (!user.mainWallet) {
         throw new BadRequestError('No linked wallets found');
       }
+      await this.loadUltigenData();
+      const previousMonsters = await this.getUltigenMonstersAmounts(user.mainWallet);
+
       const ultigenEggs = getContract('ultigenEggs', this.chainId, true);
-      await ultigenEggs.hatchEggsToAddress(
+      const receipt = await ultigenEggs.hatchEggsToAddress(
         user.mainWallet,
         eggType,
         amount
       );
+      await receipt.wait(1);
+      const latestMonsters = await this.getUltigenMonstersAmounts(user.mainWallet);
+      // new monsters are the monsters that are in latest but not in previous monsters
+      const newMonsters = latestMonsters.filter((monster) => {
+        return !previousMonsters.some((prevMonster) => {
+          return prevMonster.id === monster.id;
+        });
+      });
+      return newMonsters;
     });
+    return monsterData
   }
 
   // consume hatchy voucher from user account and give eggs to user
