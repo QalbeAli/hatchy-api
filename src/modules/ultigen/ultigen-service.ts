@@ -119,36 +119,84 @@ export class UltigenService {
   }
 
   async giveXPToMonster(
-    monsterId: number,
+    uniqueId: number,
     xp: number,
+    newMonsterId?: number,
   ) {
     await this.loadLevelsData();
     const ultigen = getContract('hatchyverseUltigen', this.chainId, true);
-    const monster = await this.getMonsterData(monsterId);
+    const monster = await this.getMonsterData(uniqueId);
     const currentXp = monster.xp;
     const newXp = currentXp + xp;
 
     const dataIndex = this.levelsData.findIndex((l) => l.level === monster.level);
     const currentLevelData = this.levelsData[dataIndex];
     if (newXp >= currentLevelData.required_xp) {
-      const residualXP = newXp - currentLevelData.required_xp;
-
+      // new level reached
       const nextLevelData = this.levelsData[dataIndex + 1];
-      let newMonsterId = monster.monsterId;
       if (nextLevelData.stage != currentLevelData.stage) {
-        newMonsterId = monster.monsterId * 10 + 1;
+        // new stage reached
+        if (newMonsterId != null) {
+          // Initialize variables for accumulated XP, new level, and new stage
+          let accXP = newXp;
+          let currentLevel = currentLevelData.level;
+          let currentStage = currentLevelData.stage;
+
+          // Loop through levels to determine the maximum level achievable within the current stage
+          for (let i = dataIndex; i < this.levelsData.length; i++) {
+            const levelData = this.levelsData[i];
+
+            // Stop if the next level's stage is greater than the current stage
+            if (levelData.stage > currentStage) {
+              break;
+            }
+
+            // Deduct the required XP for the next level
+            if (accXP >= levelData.required_xp) {
+              accXP -= levelData.required_xp;
+              currentLevel = levelData.level;
+            } else {
+              break; // Stop leveling up if there's not enough XP for the next level
+            }
+          }
+
+          // Update the monster with the new level, stage, and residual XP
+          const receipt = await ultigen.updateMonster(
+            uniqueId,
+            newMonsterId,
+            currentLevel,
+            currentStage,
+            accXP // Residual XP after leveling up
+          );
+          await receipt.wait(1);
+
+        } else {
+          // accumulate xp withouth going to next level
+          const receipt = await ultigen.updateMonster(
+            uniqueId,
+            monster.monsterId,
+            currentLevelData.level,
+            currentLevelData.stage,
+            newXp
+          );
+          await receipt.wait(1);
+        }
+      } else {
+        const residualXP = newXp - currentLevelData.required_xp;
+        // new level reached, same stage
+        const receipt = await ultigen.updateMonster(
+          uniqueId,
+          monster.monsterId,
+          nextLevelData.level,
+          nextLevelData.stage,
+          residualXP
+        );
+        await receipt.wait(1);
       }
-      const receipt = await ultigen.updateMonster(
-        monsterId,
-        newMonsterId,
-        nextLevelData.level,
-        nextLevelData.stage,
-        residualXP
-      );
-      await receipt.wait(1);
     } else {
+      // simple xp increment
       const receipt = await ultigen.updateMonster(
-        monsterId,
+        uniqueId,
         monster.monsterId,
         monster.level,
         monster.stage,
@@ -156,7 +204,7 @@ export class UltigenService {
       );
       await receipt.wait(1);
     }
-    const newMonsterData = await this.getMonsterData(monsterId);
+    const newMonsterData = await this.getMonsterData(uniqueId);
     return newMonsterData;
   }
 

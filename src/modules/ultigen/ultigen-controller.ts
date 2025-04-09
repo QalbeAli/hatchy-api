@@ -133,10 +133,10 @@ export class UltigenController extends Controller {
   @Security("api_key_ultigen_xp")
   @Post("monsters/xp")
   public async giveXPToMonster(
-    @Request() request: any,
     @Body() body: {
       id: number,
       xp: number,
+      newMonsterId?: number,
     },
   ): Promise<UltigenMonster> {
 
@@ -147,10 +147,15 @@ export class UltigenController extends Controller {
       throw new BadRequestError('Invalid id');
     }
 
+    if (!Number.isInteger(body.newMonsterId) || body.newMonsterId <= 0) {
+      throw new BadRequestError('Invalid id');
+    }
+
     const ultigenService = new UltigenService(8198);
     const data = await ultigenService.giveXPToMonster(
       body.id,
       body.xp,
+      body.newMonsterId
     );
     return data;
   }
