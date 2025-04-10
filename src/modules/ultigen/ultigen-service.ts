@@ -140,7 +140,7 @@ export class UltigenService {
           // Initialize variables for accumulated XP, new level, and new stage
           let accXP = newXp;
           let currentLevel = currentLevelData.level;
-          let currentStage = currentLevelData.stage;
+          let currentStage = currentLevelData.stage + 1;
 
           // Loop through levels to determine the maximum level achievable within the current stage
           for (let i = dataIndex; i < this.levelsData.length; i++) {
