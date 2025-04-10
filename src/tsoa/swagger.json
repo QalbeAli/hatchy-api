@@ -433,12 +433,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-04-08T21:49:52.585Z"
+						"default": "2025-04-09T03:40:11.902Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-04-08T21:49:52.587Z"
+						"default": "2025-04-09T03:40:11.903Z"
 					},
 					"name": {
 						"type": "string"
@@ -5889,6 +5889,10 @@
 						"application/json": {
 							"schema": {
 								"properties": {
+									"newMonsterId": {
+										"type": "number",
+										"format": "double"
+									},
 									"xp": {
 										"type": "number",
 										"format": "double"

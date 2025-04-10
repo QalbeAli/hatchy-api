@@ -147,8 +147,10 @@ export class UltigenController extends Controller {
       throw new BadRequestError('Invalid id');
     }
 
-    if (!Number.isInteger(body.newMonsterId) || body.newMonsterId <= 0) {
-      throw new BadRequestError('Invalid id');
+    if (body.newMonsterId) {
+      if (!Number.isInteger(body.newMonsterId) || body.newMonsterId <= 0) {
+        throw new BadRequestError('Invalid id');
+      }
     }
 
     const ultigenService = new UltigenService(8198);
