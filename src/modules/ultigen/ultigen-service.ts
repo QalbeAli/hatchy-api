@@ -121,7 +121,7 @@ export class UltigenService {
   async giveXPToMonster(
     uniqueId: number,
     xp: number,
-    newMonsterId?: number,
+    newMonsterId?: number | null,
   ) {
     await this.loadLevelsData();
     const ultigen = getContract('hatchyverseUltigen', this.chainId, true);

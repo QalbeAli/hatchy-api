@@ -136,7 +136,7 @@ export class UltigenController extends Controller {
     @Body() body: {
       id: number,
       xp: number,
-      newMonsterId?: number,
+      newMonsterId?: number | null,
     },
   ): Promise<UltigenMonster> {
 
@@ -147,7 +147,7 @@ export class UltigenController extends Controller {
       throw new BadRequestError('Invalid id');
     }
 
-    if (body.newMonsterId) {
+    if (body.newMonsterId != null) {
       if (!Number.isInteger(body.newMonsterId) || body.newMonsterId <= 0) {
         throw new BadRequestError('Invalid id');
       }
