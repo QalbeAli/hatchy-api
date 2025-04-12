@@ -6,6 +6,7 @@ import { LeaderboardService } from "../leaderboard/leaderboard-service";
 import { User } from "./user";
 import { Wallet } from "./wallet";
 import { TradesService } from "../trades/trades-service";
+import { ethers } from "ethers";
 
 export type UserCreationParams = Pick<
   User,
@@ -13,7 +14,6 @@ export type UserCreationParams = Pick<
 >;
 
 export class UsersService {
-  collection = admin.firestore().collection('users');
   walletUsersCollection = admin.firestore().collection('wallet-users');
   private usersCollection = admin.firestore().collection('users');
   private referralRelationsCollection = admin.firestore().collection('referral-relationships');
@@ -31,13 +31,13 @@ export class UsersService {
 
   public async getUserByEmail(email: string, transaction?: Transaction): Promise<User> {
     if (transaction) {
-      const user = await transaction.get(this.collection.where('email', '==', email));
+      const user = await transaction.get(this.usersCollection.where('email', '==', email));
       if (user.docs.length === 0) {
         throw new NotFoundError("User not found");
       }
       return user.docs[0]?.data() as User;
     }
-    const user = await this.collection.where('email', '==', email).get();
+    const user = await this.usersCollection.where('email', '==', email).get();
     if (user.docs.length === 0) {
       throw new NotFoundError("User not found");
     }
@@ -45,10 +45,10 @@ export class UsersService {
   }
   public async get(uid: string, transaction?: admin.firestore.Transaction): Promise<User> {
     if (transaction) {
-      const user = (await transaction.get(this.collection.doc(uid))).data();
+      const user = (await transaction.get(this.usersCollection.doc(uid))).data();
       return user as User;
     }
-    const user = (await this.collection.doc(uid).get()).data();
+    const user = (await this.usersCollection.doc(uid).get()).data();
     return user as User;
   }
 
@@ -70,7 +70,7 @@ export class UsersService {
     if (body.referralCode) {
       updateData['referralCode'] = body.referralCode;
     }
-    await this.collection.doc(uid).update(updateData);
+    await this.usersCollection.doc(uid).update(updateData);
     if (body.displayName) {
       // update display name in ranks
       await this.leaderboardService.updateUserRankDisplayName(uid, body.displayName);
@@ -159,7 +159,13 @@ export class UsersService {
           .where('userId', '==', userId).get();
 
         walletUsersDocs.docs.forEach(doc => {
-          transaction.delete(doc.ref);
+          if (doc.data().isInternalWallet) {
+            transaction.update(doc.ref, {
+              email: userData.email,
+            });
+          } else {
+            transaction.delete(doc.ref);
+          }
         });
 
         // 6. Delete user document
@@ -188,7 +194,45 @@ export class UsersService {
     if (wallets.empty) {
       return [];
     }
-    return wallets.docs.map((doc) => doc.data() as Wallet);
+    return wallets.docs.map((doc) => ({
+      userId: doc.data().userId,
+      address: doc.data().address,
+      mainWallet: doc.data().mainWallet,
+      isInternalWallet: doc.data().isInternalWallet,
+    } as Wallet));
+  }
+
+  public async createWallet(
+    uid: string,
+  ): Promise<Wallet> {
+    // create a new ethereum wallet and save it to the database
+    // save the address, private key, public key and seed phrase in the wallet-users collection
+    // also set it as the main wallet for the user
+    // do this only if the user has not a main wallet already
+    const linkedWallets = await this.getLinkedWallets(uid);
+    if (linkedWallets.length > 0) {
+      throw new BadRequestError("User already has a wallet linked");
+    }
+
+    const newWallet = ethers.Wallet.createRandom();
+    const walletAddress = newWallet.address;
+    const walletPrivateKey = newWallet.privateKey;
+    const walletPublicKey = newWallet.publicKey;
+    const walletSeedPhrase = newWallet.mnemonic.phrase;
+    const walletData: Wallet = {
+      address: walletAddress,
+      privateKey: walletPrivateKey,
+      publicKey: walletPublicKey,
+      seedPhrase: walletSeedPhrase,
+      userId: uid,
+      mainWallet: true,
+      isInternalWallet: true,
+    };
+    await this.walletUsersCollection.doc(walletAddress).set(walletData);
+    await this.usersCollection.doc(uid).update({
+      mainWallet: walletAddress,
+    });
+    return walletData;
   }
 
   public async setMainWallet(
@@ -203,7 +247,7 @@ export class UsersService {
     if (!hasAddress) {
       throw new NotFoundError("Address not found in user wallets");
     }
-    await this.collection.doc(uid).update({
+    await this.usersCollection.doc(uid).update({
       mainWallet,
     });
 
@@ -221,7 +265,7 @@ export class UsersService {
 
   public async searchUsers(query: string): Promise<User> {
     // search all users whose display name or email contains the query
-    const users = await this.collection
+    const users = await this.usersCollection
       .where('email', '==', query)
       .get();
     return users.docs.map((doc) => doc.data() as User)[0];

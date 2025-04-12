@@ -94,6 +94,10 @@ const models: TsoaRoute.Models = {
             "userId": {"dataType":"string","required":true},
             "address": {"dataType":"string","required":true},
             "mainWallet": {"dataType":"boolean"},
+            "privateKey": {"dataType":"string"},
+            "publicKey": {"dataType":"string"},
+            "seedPhrase": {"dataType":"string"},
+            "isInternalWallet": {"dataType":"boolean"},
         },
         "additionalProperties": false,
     },
@@ -224,8 +228,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-04-11T02:28:30.331Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-04-11T02:28:30.332Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-04-12T19:10:36.476Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-04-12T19:10:36.477Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -894,6 +898,37 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'setMainWallet',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/users/wallets/create',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(UsersController)),
+            ...(fetchMiddlewares<RequestHandler>(UsersController.prototype.createWallet)),
+
+            async function UsersController_createWallet(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new UsersController();
+
+              await templateService.apiHandler({
+                methodName: 'createWallet',
                 controller,
                 response,
                 next,

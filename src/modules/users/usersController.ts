@@ -80,6 +80,22 @@ export class UsersController extends Controller {
     return user;
   }
 
+  @Security("jwt")
+  @Post("wallets/create")
+  public async createWallet(
+    @Request() request: any,
+  ): Promise<{
+    message: string;
+    address: string;
+  }> {
+    const usersService = new UsersService();
+    const wallet = await usersService.createWallet(request.user.uid);
+    return {
+      message: "Wallet created",
+      address: wallet.address
+    }
+  }
+
   @Security("jwt", ["admin"])
   @Get("search")
   public async searchUsers(

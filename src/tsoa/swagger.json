@@ -124,6 +124,18 @@
 					},
 					"mainWallet": {
 						"type": "boolean"
+					},
+					"privateKey": {
+						"type": "string"
+					},
+					"publicKey": {
+						"type": "string"
+					},
+					"seedPhrase": {
+						"type": "string"
+					},
+					"isInternalWallet": {
+						"type": "boolean"
 					}
 				},
 				"required": [
@@ -433,12 +445,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-04-11T02:28:30.331Z"
+						"default": "2025-04-12T19:10:36.476Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-04-11T02:28:30.332Z"
+						"default": "2025-04-12T19:10:36.477Z"
 					},
 					"name": {
 						"type": "string"
@@ -2301,6 +2313,44 @@
 						}
 					}
 				}
+			}
+		},
+		"/users/wallets/create": {
+			"post": {
+				"operationId": "CreateWallet",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"address": {
+											"type": "string"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"address",
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
 			}
 		},
 		"/users/search": {

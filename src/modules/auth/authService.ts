@@ -6,6 +6,7 @@ import { AuthCustomToken } from "./authCustomToken";
 import { ethers } from "ethers";
 import { FieldValue } from "firebase-admin/firestore";
 import { ReferralsService } from "../referrals/referrals-service";
+import { Wallet } from "../users/wallet";
 
 export type UserCreationParams = Pick<
   User,
@@ -29,6 +30,7 @@ const newReferralPoints = 100;
 
 export class AuthService {
   usersCollection = admin.firestore().collection('users');
+  walletUsersCollection = admin.firestore().collection('wallet-users');
   referralsCollection = admin.firestore().collection('referral-relationships');
   private referralsService: ReferralsService;
   constructor() {
@@ -200,7 +202,28 @@ export class AuthService {
           }
           */
 
+
+          // Crate new wallet document
+          const newWallet = ethers.Wallet.createRandom();
+          const walletAddress = newWallet.address;
+          const walletPrivateKey = newWallet.privateKey;
+          const walletPublicKey = newWallet.publicKey;
+          const walletSeedPhrase = newWallet.mnemonic.phrase;
+          const walletData: Wallet = {
+            address: walletAddress,
+            privateKey: walletPrivateKey,
+            publicKey: walletPublicKey,
+            seedPhrase: walletSeedPhrase,
+            userId: request.user.uid,
+            mainWallet: true,
+            isInternalWallet: true,
+          };
+          // Create new wallet user document
+          const walletUserRef = this.walletUsersCollection.doc(walletAddress);
+          transaction.set(walletUserRef, walletData);
+
           // Create new user document
+          userCreationParams.mainWallet = walletAddress;
           transaction.set(userRef, userCreationParams);
 
           // If there's a valid referrer, update their stats
