@@ -83,7 +83,8 @@ export const init = (async () => {
 
   const eventsService = new EventsService();
   // cron.schedule("*/1 * * * *", () => {
-  cron.schedule("0 0 * * 1", () => {
+  // run daily at 00:00 UTC
+  cron.schedule("0 0 * * *", () => {
     eventsService.giveEventRewards();
   });
 
