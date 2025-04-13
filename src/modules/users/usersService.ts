@@ -7,6 +7,7 @@ import { User } from "./user";
 import { Wallet } from "./wallet";
 import { TradesService } from "../trades/trades-service";
 import { ethers } from "ethers";
+import { UltigenService } from "../ultigen/ultigen-service";
 
 export type UserCreationParams = Pick<
   User,
@@ -247,15 +248,25 @@ export class UsersService {
     if (!hasAddress) {
       throw new NotFoundError("Address not found in user wallets");
     }
+    if (currentMainWallet.isInternalWallet) {
+      const ultigenService = new UltigenService();
+      const internalWallet = await this.walletUsersCollection.doc(currentMainWallet.address).get();
+      await ultigenService.transferUltigenAssets(
+        internalWallet.data() as Wallet,
+        mainWallet
+      )
+      await this.walletUsersCollection.doc(currentMainWallet.address).delete();
+    } else {
+      if (!!currentMainWallet?.address) {
+        await this.walletUsersCollection.doc(currentMainWallet?.address).update({
+          mainWallet: false,
+        });
+      }
+    }
     await this.usersCollection.doc(uid).update({
       mainWallet,
     });
 
-    if (!!currentMainWallet?.address) {
-      await this.walletUsersCollection.doc(currentMainWallet?.address).update({
-        mainWallet: false,
-      });
-    }
 
     await this.walletUsersCollection.doc(mainWallet).update({
       mainWallet: true,

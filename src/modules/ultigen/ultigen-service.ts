@@ -1,5 +1,5 @@
-import { BigNumber } from "ethers";
-import { getContract } from "../contracts/networks";
+import { BigNumber, ethers } from "ethers";
+import { getContract, getSigner } from "../contracts/networks";
 import { CoingeckoService } from "../../services/CoingeckoService";
 import { UsersService } from "../users/usersService";
 import { createArrayOf, createRangeArray } from "../../utils";
@@ -14,6 +14,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import csvParser from "csv-parser";
 import { UltigenMonster } from "./ultigen-monster";
+import { Wallet } from "../users/wallet";
 
 const ultigenDataFilePath = path.join(__dirname, '../../assets/ultigen-data.csv');
 const levelDataFilePath = path.join(__dirname, '../../assets/ultigen-levels.csv');
@@ -502,4 +503,143 @@ export class UltigenService {
       amount
     );
   }
+
+  async transferUltigenAssets(fromWalletData: Wallet, toAddress: string) {
+    // create wallet with privateKey of fromAddress
+    const chainId = 8198;
+
+    if (!fromWalletData || !ethers.utils.isAddress(fromWalletData.address) || !fromWalletData.privateKey) {
+      throw new Error('Invalid fromWalletData provided.');
+    }
+    if (!ethers.utils.isAddress(toAddress)) {
+      throw new Error('Invalid toAddress provided.');
+    }
+
+    const fromAddress = fromWalletData.address;
+    const fromWallet = getSigner(chainId, fromWalletData.privateKey);
+    // instance ultigen monsters and eggs contracts
+    const ultigenEggs = getContract('ultigenEggs', chainId, true, fromWallet);
+    const ultigenMonsters = getContract('hatchyverseUltigen', chainId, true, fromWallet);
+
+    // get balance of ultigen eggs and monsters for fromAddress
+    const monstersBalance = await ultigenMonsters.balanceOf(fromAddress);
+    const monstersTokens: BigNumber[] = await Promise.all(createRangeArray(0, monstersBalance.toNumber() - 1).map((i) => {
+      return ultigenMonsters.tokenOfOwnerByIndex(fromAddress, i);
+    }));
+
+    const eggsAmounts: BigNumber[] = await ultigenEggs.balanceOfBatch(
+      createArrayOf(ultigenEggsIds.length, fromAddress),
+      ultigenEggsIds
+    );
+    // Validate if there are assets to transfer
+    if (monstersTokens.length === 0 && eggsAmounts.every((amount) => amount.isZero())) {
+      // console.log('No assets to transfer.');
+      return;
+    }
+
+    // get required gas for transferBatch function of ultigen monsters and eggs contracts
+    let totalGasLimit = BigNumber.from(0);
+
+    if (monstersTokens.length > 0) {
+      const singleGasLimit = await ultigenMonsters.estimateGas.transferFrom(fromAddress, toAddress, monstersTokens[0]);
+      totalGasLimit = totalGasLimit.add(singleGasLimit.mul(monstersTokens.length));
+    }
+
+
+    if (eggsAmounts.some((amount) => !amount.isZero())) {
+      const eggsGasLimit = await ultigenEggs.estimateGas.safeBatchTransferFrom(
+        fromAddress,
+        toAddress,
+        ultigenEggsIds,
+        eggsAmounts,
+        '0x00'
+      );
+      totalGasLimit = totalGasLimit.add(eggsGasLimit);
+    }
+    // Add a buffer to the gas limit
+    totalGasLimit = totalGasLimit.mul(2); // Increase buffer multiplier for safety
+    // Fetch the current gas price from the provider
+    const gasPrice = await fromWallet.provider.getGasPrice();
+    const totalCost = totalGasLimit.mul(gasPrice);
+
+    // Transfer gas amount to fromAddress
+    const apiSigner = getSigner(chainId);
+    try {
+      const tx = await apiSigner.sendTransaction({
+        to: fromAddress,
+        value: totalCost,
+      });
+
+      // Wait for the transaction to be mined
+      const receipt = await tx.wait();
+      // console.log(`Transaction confirmed in block ${receipt.blockNumber}`);
+    } catch (error) {
+      console.error('Error transferring gas to fromAddress:', error);
+      throw new Error('Failed to transfer gas to fromAddress.');
+    }
+
+    // Perform transfers with error handling
+    try {
+      for (const tokenId of monstersTokens) {
+        await ultigenMonsters.transferFrom(fromAddress, toAddress, tokenId);
+        // console.log(`Transferred monster token ID: ${tokenId.toString()}`);
+      }
+    } catch (error) {
+      console.error('Error transferring monsters:', error);
+      throw new Error('Failed to transfer monsters.');
+    }
+
+    try {
+      if (eggsAmounts.some((amount) => !amount.isZero())) {
+        await ultigenEggs.safeBatchTransferFrom(
+          fromAddress,
+          toAddress,
+          ultigenEggsIds,
+          eggsAmounts,
+          '0x00'
+        );
+        // console.log('Transferred eggs successfully.');
+      }
+    } catch (error) {
+      console.error('Error transferring eggs:', error);
+      throw new Error('Failed to transfer eggs.');
+    }
+
+    // Transfer remaining native token (e.g., ETH, BNB) to API signer
+    /*
+    try {
+      const nativeBalance = await fromWallet.provider.getBalance(fromAddress);
+      const signerAddress = await apiSigner.getAddress();
+
+      const gasPrice = await fromWallet.provider.getGasPrice();
+
+      const estimateGas = await fromWallet.estimateGas({
+        from: fromWalletData.address,
+        to: signerAddress,
+        value: nativeBalance,
+      });
+      console.log(estimateGas.toString(), 'estimate gas for transfer remaining native token');
+
+      // Calculate the total gas cost
+      const totalGasCost = estimateGas.mul(gasPrice);
+      const transferableBalance = nativeBalance.sub(totalGasCost);
+
+      if (transferableBalance.gt(0)) {
+        await fromWallet.sendTransaction({
+          to: signerAddress,
+          value: transferableBalance,
+        });
+        console.log(`Transferred remaining native token (${ethers.utils.formatEther(transferableBalance)}) to API signer.`);
+      } else {
+        console.log('No remaining native token to transfer.');
+      }
+    } catch (error) {
+      console.error('Error transferring remaining native token:', error);
+      throw new Error('Failed to transfer remaining native token.');
+    }
+    */
+
+    // console.log('Transfer of ultigen assets completed.');
+  }
+
 }

@@ -12,10 +12,10 @@ export const darkEggId = 5;
 
 export const ultigenEggsIds = [
   fireEggId, // Fire Egg
-  waterEggId, // Plant Egg
-  plantEggId, // Water Egg
-  lightEggId, // Dark Egg
-  darkEggId, // Light Egg
+  // waterEggId, // Plant Egg
+  // plantEggId, // Water Egg
+  // lightEggId, // Dark Egg
+  // darkEggId, // Light Egg
 ]
 
 

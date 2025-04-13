@@ -287,7 +287,8 @@ export const getAddress = (
 export const getContract = (
   contractName: ContractName,
   chainId?: number,
-  signer?: boolean
+  signer?: boolean,
+  signerObj?: ethers.Signer
 ) => {
   const _chainId = chainId || DefaultChainId;
   const provider = getProvider(_chainId);
@@ -295,7 +296,7 @@ export const getContract = (
     const contract = new ethers.Contract(
       getAddress(contractName, chainId),
       ABI[contractName],
-      getSigner(_chainId)
+      signerObj || getSigner(_chainId)
     );
     return contract;
   } else {
@@ -330,9 +331,11 @@ export const getAnyProvider = (chainId?: number) => {
   return provider;
 }
 
-export const getSigner = (chainId?: number) => {
+export const getSigner = (chainId?: number, privateKey?: string) => {
   const _chainId = chainId || DefaultChainId;
   const provider = getProvider(_chainId);
-  const signer = new Wallet(config.MASTERS_SIGNER_KEY, provider);
+  const signer = privateKey ?
+    new Wallet(privateKey, provider) :
+    new Wallet(config.MASTERS_SIGNER_KEY, provider);
   return signer;
 }
