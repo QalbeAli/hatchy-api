@@ -21,6 +21,7 @@ export class UsersService {
   private gameSavesCollection = admin.firestore().collection('game-saves');
   private vouchersCollection = admin.firestore().collection('vouchers');
   private leaderboardService = new LeaderboardService();
+  private tradesCollection = admin.firestore().collection('trades');
 
   public async getUserByLinkedWallet(address: string): Promise<User> {
     const wallet = await this.walletUsersCollection.doc(address).get();
@@ -142,6 +143,15 @@ export class UsersService {
           .where('userId', '==', userId).get();
 
         gameSavesDocs.docs.forEach(doc => {
+          transaction.delete(doc.ref);
+        });
+
+        // Get and delete all trades
+        const tradesDocs = await this.tradesCollection
+          .where('userId', '==', userId)
+          .orderBy('createdAt', 'desc')
+          .get();
+        tradesDocs.forEach(doc => {
           transaction.delete(doc.ref);
         });
 
