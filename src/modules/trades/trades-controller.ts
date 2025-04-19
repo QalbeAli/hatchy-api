@@ -58,6 +58,18 @@ export class TradesController extends Controller {
     if (body.offerVoucherIds.length !== body.offerAmounts.length) {
       throw new BadRequestError('Offer assets ids and amounts must have the same length');
     }
+    // validate that all the request assets ids are different
+
+    const requestAssetsIdsSet = new Set(body.requestAssetsIds);
+    if (requestAssetsIdsSet.size !== body.requestAssetsIds.length) {
+      throw new BadRequestError('Request assets ids must be unique');
+    }
+    // validate that all the offer assets ids are different
+    const offerAssetsIdsSet = new Set(body.offerVoucherIds);
+    if (offerAssetsIdsSet.size !== body.offerVoucherIds.length) {
+      throw new BadRequestError('Offer assets ids must be unique');
+    }
+
     const voucherService = new VouchersService();
     await voucherService.createTrade(
       request.user.uid,
@@ -95,6 +107,17 @@ export class TradesController extends Controller {
     }
     if (body.offerVoucherIds.length !== body.offerAmounts.length) {
       throw new BadRequestError('Offer assets ids and amounts must have the same length');
+    }
+    // validate that all the request assets ids are different
+
+    const requestAssetsIdsSet = new Set(body.requestAssetsIds);
+    if (requestAssetsIdsSet.size !== body.requestAssetsIds.length) {
+      throw new BadRequestError('Request assets ids must be unique');
+    }
+    // validate that all the offer assets ids are different
+    const offerAssetsIdsSet = new Set(body.offerVoucherIds);
+    if (offerAssetsIdsSet.size !== body.offerVoucherIds.length) {
+      throw new BadRequestError('Offer assets ids must be unique');
     }
     const tradesService = new TradesService();
     const currentTrade = await tradesService.getTrade(id);
