@@ -156,11 +156,61 @@ export class TradesController extends Controller {
   }
 
   @Security("jwt")
-  @Post("accept/{id}")
+  @Post("{id}/offer")
+  public async submitOffer(
+    id: string,
+    @Request() request: any,
+    @Body() body: {
+      offerVoucherIds: string[],
+      offerAmounts: number[]
+    }
+  ): Promise<MessageResponse> {
+    if (body.offerAmounts.some(amount => amount <= 0)) {
+      throw new BadRequestError("Invalid offer amounts");
+    }
+    if (body.offerVoucherIds.length !== body.offerAmounts.length) {
+      throw new BadRequestError("Offer voucher IDs and amounts must have the same length");
+    }
+    // validate that all the offer assets ids are different
+    const offerAssetsIdsSet = new Set(body.offerVoucherIds);
+    if (offerAssetsIdsSet.size !== body.offerVoucherIds.length) {
+      throw new BadRequestError('Offer assets ids must be unique');
+    }
+
+    const userId = request.user.uid;
+
+    await new TradesService().submitOffer(id, userId, body.offerVoucherIds, body.offerAmounts);
+
+    return {
+      message: "Offer submitted successfully",
+    };
+  }
+
+  @Security("jwt")
+  @Post("acceptOffer/{tradeId}")
+  public async acceptOffer(
+    @Request() request: any,
+    tradeId: string,
+    @Body() body: { offerUserId: string }
+  ): Promise<{ message: string }> {
+    if (!body.offerUserId) {
+      throw new BadRequestError("Offer user ID is required");
+    }
+
+    await new TradesService().acceptOffer(request.user.uid, tradeId, body.offerUserId);
+
+    return { message: "Offer accepted successfully" };
+  }
+
+  @Security("jwt")
+  @Post("{id}/accept")
   public async acceptTrade(
     @Request() request: any,
     id: string
-  ): Promise<void> {
+  ): Promise<MessageResponse> {
     await new TradesService().acceptTrade(request.user.uid, id);
+    return {
+      message: "Trade accepted successfully"
+    }
   }
 }

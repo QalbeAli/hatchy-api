@@ -1,4 +1,4 @@
-interface TradeAsset {
+export interface TradeAsset {
   amount: number;
   category: string;
   contract: string;
@@ -12,7 +12,10 @@ interface TradeAsset {
 export interface Trade {
   requestAssets: TradeAsset[];
   offerAssets: TradeAsset[];
-  usersOffers: TradeAsset[];
+  usersOffers: {
+    userId: string;
+    vouchers: TradeAsset[];
+  }[]
   createdAt: string;
   updatedAt: string;
   userId: string;

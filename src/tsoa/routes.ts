@@ -228,8 +228,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-04-13T00:49:53.737Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-04-13T00:49:53.738Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-04-23T03:53:40.357Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-04-23T03:53:40.357Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -581,7 +581,7 @@ const models: TsoaRoute.Models = {
         "properties": {
             "requestAssets": {"dataType":"array","array":{"dataType":"refObject","ref":"TradeAsset"},"required":true},
             "offerAssets": {"dataType":"array","array":{"dataType":"refObject","ref":"TradeAsset"},"required":true},
-            "usersOffers": {"dataType":"array","array":{"dataType":"refObject","ref":"TradeAsset"},"required":true},
+            "usersOffers": {"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"vouchers":{"dataType":"array","array":{"dataType":"refObject","ref":"TradeAsset"},"required":true},"userId":{"dataType":"string","required":true}}},"required":true},
             "createdAt": {"dataType":"string","required":true},
             "updatedAt": {"dataType":"string","required":true},
             "userId": {"dataType":"string","required":true},
@@ -3145,7 +3145,73 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/trades/accept/:id',
+        app.post('/trades/:id/offer',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(TradesController)),
+            ...(fetchMiddlewares<RequestHandler>(TradesController.prototype.submitOffer)),
+
+            async function TradesController_submitOffer(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    id: {"in":"path","name":"id","required":true,"dataType":"string"},
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"offerAmounts":{"dataType":"array","array":{"dataType":"double"},"required":true},"offerVoucherIds":{"dataType":"array","array":{"dataType":"string"},"required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new TradesController();
+
+              await templateService.apiHandler({
+                methodName: 'submitOffer',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/trades/acceptOffer/:tradeId',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(TradesController)),
+            ...(fetchMiddlewares<RequestHandler>(TradesController.prototype.acceptOffer)),
+
+            async function TradesController_acceptOffer(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    tradeId: {"in":"path","name":"tradeId","required":true,"dataType":"string"},
+                    body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"offerUserId":{"dataType":"string","required":true}}},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new TradesController();
+
+              await templateService.apiHandler({
+                methodName: 'acceptOffer',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/trades/:id/accept',
             authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(TradesController)),
             ...(fetchMiddlewares<RequestHandler>(TradesController.prototype.acceptTrade)),

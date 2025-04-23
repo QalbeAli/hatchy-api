@@ -1,6 +1,6 @@
 import { NotFoundError } from "@mikro-orm/core";
 import { admin } from "../../firebase/firebase";
-import { Trade } from "./trade";
+import { Trade, TradeAsset } from "./trade";
 import { Transaction } from "firebase-admin/firestore";
 import { VouchersService } from "../vouchers/vouchers-service";
 import { UsersService } from "../users/usersService";
@@ -77,6 +77,14 @@ export class TradesService {
     }
 
     const tradeRef = admin.firestore().collection('trades').doc(tradeId);
+    // validate that trade is not already completed
+    const tradeSnapshot = await tradeRef.get();
+    if (tradeSnapshot.exists) {
+      const trade = tradeSnapshot.data() as Trade;
+      if (trade.status === 'completed') {
+        throw new BadRequestError('Trade already completed');
+      }
+    }
     const trade = {
       uid: tradeRef.id,
       userId,
@@ -124,6 +132,10 @@ export class TradesService {
   public async acceptTrade(userId: string, tradeId: string): Promise<void> {
     const res = await admin.firestore().runTransaction(async (transaction) => {
       const trade = await this.getTrade(tradeId);
+      // validate that trade is not already completed
+      if (trade.status === 'completed') {
+        throw new BadRequestError('Trade already completed');
+      }
       const tradeUser = await this.usersService.get(trade.userId);
       const myUser = await this.usersService.get(userId);
 
@@ -144,21 +156,43 @@ export class TradesService {
       if (tradeUser.uid === myUser.uid) {
         throw new BadRequestError('You cannot trade with yourself');
       }
+      // Align amounts with tradeVouchers for tradeUser -> myUser
+      const tradeVouchersAmounts = tradeVouchers.map((voucher) => {
+        const matchingAsset = trade.offerAssets.find(
+          (asset) => asset.contract === voucher.contract && asset.tokenId === voucher.tokenId
+        );
+        if (!matchingAsset) {
+          throw new BadRequestError("Offer asset not found for trade voucher");
+        }
+        return matchingAsset.amount;
+      });
 
       const transferredVouchers1 = await this.transferVouchers(
         tradeUser.uid,
         myUser.uid,
         tradeVouchers,
         allMyUserVouchers,
-        trade.offerAssets.map(asset => asset.amount),
+        tradeVouchersAmounts,
         transaction
       );
+
+      // Align amounts with myVouchers for myUser -> tradeUser
+      const myVouchersAmounts = myVouchers.map((voucher) => {
+        const matchingAsset = trade.requestAssets.find(
+          (asset) => asset.contract === voucher.contract && asset.tokenId === voucher.tokenId
+        );
+        if (!matchingAsset) {
+          throw new BadRequestError("Requested asset not found for user's voucher");
+        }
+        return matchingAsset.amount;
+      });
+
       const transferredVouchers2 = await this.transferVouchers(
         myUser.uid,
         tradeUser.uid,
         myVouchers,
         allTradeUserVouchers,
-        trade.requestAssets.map(asset => asset.amount),
+        myVouchersAmounts,
         transaction
       );
       await this.completeTrade(tradeId, transaction);
@@ -188,6 +222,212 @@ export class TradesService {
       toUserEmail: res.tradeUser.email,
     })
   }
+
+
+  public async submitOffer(
+    tradeId: string,
+    userId: string,
+    offerVoucherIds: string[],
+    offerAmounts: number[]
+  ): Promise<void> {
+    // Fetch the trade document
+    const tradeSnapshot = await this.tradesCollection.doc(tradeId).get();
+    if (!tradeSnapshot.exists) {
+      throw new BadRequestError("Trade not found");
+    }
+
+    const trade = tradeSnapshot.data() as Trade;
+    // validate that trade is not already completed
+    if (trade.status === 'completed') {
+      throw new BadRequestError('Trade already completed');
+    }
+
+    // Validate that the user is not the owner of the trade
+    if (trade.userId === userId) {
+      throw new BadRequestError("You cannot submit an offer to your own trade");
+    }
+
+    // Validate ownership of vouchers
+    const offerVouchers = await this.vouchersService.getVouchersByIds(offerVoucherIds);
+    if (offerVouchers.length !== offerVoucherIds.length) {
+      throw new BadRequestError("Invalid offer vouchers");
+    }
+    if (offerVouchers.some(v => v.userId !== userId)) {
+      throw new BadRequestError("You do not own some of the offered vouchers");
+    }
+    if (offerVouchers.some(v => v.amount <= 0)) {
+      throw new BadRequestError("Offer amounts must be greater than 0");
+    }
+
+    // Prepare the offer
+    const offer = {
+      userId,
+      vouchers: offerVouchers.map((v, index) => ({
+        uid: v.uid,
+        amount: offerAmounts[index],
+        contract: v.contract,
+        contractType: v.contractType,
+        category: v.category,
+        name: v.name,
+        image: v.image,
+        tokenId: v.tokenId,
+        type: v.type,
+      })),
+    };
+
+    // Check if the user already has an offer
+    const existingOfferIndex = trade.usersOffers?.findIndex(offer => offer.userId === userId);
+
+    if (existingOfferIndex !== undefined && existingOfferIndex >= 0) {
+      // Update the existing offer
+      trade.usersOffers[existingOfferIndex] = offer;
+    } else {
+      // Add a new offer
+      trade.usersOffers = [...(trade.usersOffers || []), offer];
+    }
+
+
+    // Update the trade document with the new offer
+    await this.tradesCollection.doc(tradeId).update({
+      usersOffers: trade.usersOffers,
+    });
+  }
+
+  public async acceptOffer(
+    tradeCreatorId: string,
+    tradeId: string,
+    offerUserId: string
+  ): Promise<void> {
+    const res = await admin.firestore().runTransaction(async (transaction) => {
+      const tradeSnapshot = await transaction.get(this.tradesCollection.doc(tradeId));
+      if (!tradeSnapshot.exists) {
+        throw new BadRequestError("Trade not found");
+      }
+
+      const trade = tradeSnapshot.data() as Trade;
+      // validate that trade is not already completed
+      if (trade.status === 'completed') {
+        throw new BadRequestError('Trade already completed');
+      }
+
+      // Ensure the caller is the trade creator
+      if (trade.userId !== tradeCreatorId) {
+        throw new BadRequestError("You are not the creator of this trade");
+      }
+
+      // Find the offer
+      const offer = trade.usersOffers?.find((o) => o.userId === offerUserId);
+      if (!offer) {
+        throw new BadRequestError("Offer not found");
+      }
+
+      // Validate the assets in the offer
+      const allOfferUserVouchers = await this.vouchersService.getVouchersOfUser(offerUserId, transaction);
+      const offerVouchers = this.filterVouchers(allOfferUserVouchers, offer.vouchers);
+
+      if (offerVouchers.length !== offer.vouchers.length) {
+        throw new BadRequestError("Offer vouchers do not match the offer details");
+      }
+
+      // Validate the trade creator's assets
+      const allTradeCreatorVouchers = await this.vouchersService.getVouchersOfUser(trade.userId, transaction);
+      const tradeCreatorVouchers = this.filterVouchers(
+        allTradeCreatorVouchers,
+        trade.offerAssets
+      );
+
+      if (tradeCreatorVouchers.length !== trade.offerAssets.length) {
+        throw new BadRequestError("Trade creator's vouchers do not match requested assets");
+      }
+
+      const tradeCreatorAmounts = tradeCreatorVouchers.map((voucher) => {
+        const matchingAsset = trade.offerAssets.find(
+          (asset) => asset.contract === voucher.contract && asset.tokenId === voucher.tokenId
+        );
+        if (!matchingAsset) {
+          throw new BadRequestError("Requested asset not found for trade creator voucher");
+        }
+        return matchingAsset.amount;
+      });
+
+      // Perform the transfer for offer user -> trade creator
+      const offerUserAmounts = offerVouchers.map((voucher) => {
+        const matchingOffer = offer.vouchers.find(
+          (asset) => asset.contract === voucher.contract && asset.tokenId === voucher.tokenId
+        );
+        if (!matchingOffer) {
+          throw new BadRequestError("Offered asset not found for offer user voucher");
+        }
+        return matchingOffer.amount;
+      });
+
+      // transfer vouchers from trade creator to offer user
+      const transferredToOfferUser = await this.transferVouchers(
+        trade.userId,
+        offerUserId,
+        tradeCreatorVouchers,
+        allOfferUserVouchers,
+        tradeCreatorAmounts,
+        transaction
+      );
+
+      // transfer vouchers from offer user to trade creator
+      const transferredToTradeCreator = await this.transferVouchers(
+        offerUserId,
+        trade.userId,
+        offerVouchers,
+        allTradeCreatorVouchers,
+        offerUserAmounts,
+        transaction
+      );
+
+      // Mark the trade as completed
+      await this.completeTrade(tradeId, transaction);
+      return {
+        transferredToOfferUser,
+        transferredToTradeCreator,
+        tradeCreatorId,
+        offerUserId,
+      };
+    });
+
+    // Fetch vouchers after the transaction for logging
+    const tradeCreatorVouchers = await this.vouchersService.getVouchersByIds(
+      res.transferredToOfferUser.map((tv) => tv.voucher.uid)
+    );
+
+    const offerUserVouchers = await this.vouchersService.getVouchersByIds(
+      res.transferredToTradeCreator.map((tv) => tv.voucher.uid)
+    );
+    const offerUser = await this.usersService.get(res.offerUserId);
+    const myUser = await this.usersService.get(res.tradeCreatorId);
+
+    // Log the voucher transfers
+    await this.vouchersService.logVoucher({
+      action: "accept-offer",
+      vouchersData: tradeCreatorVouchers,
+      actionUserId: myUser.uid,
+      actionUserEmail: myUser.email,
+      toUserId: offerUser.uid,
+      toUserEmail: offerUser.email,
+    });
+
+    await this.vouchersService.logVoucher({
+      action: "accept-offer",
+      vouchersData: offerUserVouchers,
+      actionUserId: offerUser.uid,
+      actionUserEmail: offerUser.email,
+      toUserId: myUser.uid,
+      toUserEmail: myUser.email,
+    });
+  }
+
+  private filterVouchers(vouchers: Voucher[], assets: TradeAsset[]): Voucher[] {
+    return vouchers.filter((voucher) =>
+      assets.some((asset) => asset.contract === voucher.contract && asset.tokenId === voucher.tokenId)
+    );
+  }
+
 
   public async transferVouchers(
     userId: string,

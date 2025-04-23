@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "NODE_ENV=dev PORT=3001 nodemon",
     "nodemon:prod": "NODE_ENV=prod PORT=3002 nodemon",
+    "run:prod": "NODE_ENV=prod ts-node ./src/scripts/fetchStakers",
     "start:dev": "npm run build && NODE_ENV=dev PORT=3001 node dist/index.js",
     "start:prod": "npm run build && NODE_ENV=prod PORT=3002 node dist/index.js",
     "build": "yarn run tsoa spec-and-routes && tsc -p . && cp -r ./src/assets ./dist",
@@ -48,6 +49,8 @@
     "@types/merge-images": "^1.2.4",
     "@types/node": "^20.11.24",
     "aws-sdk": "^2.1343.0",
+    "csv-writer": "^1.6.0",
+    "fs": "^0.0.1-security",
     "openapi-typescript-codegen": "^0.23.0",
     "seedrandom": "^3.0.5",
     "ts-node": "^10.9.2",

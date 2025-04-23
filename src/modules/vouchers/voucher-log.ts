@@ -2,7 +2,7 @@ export interface VoucherLog {
   actionUserId?: string;
   actionUserEmail?: string;
   apiKey?: string;
-  action: 'transfer' | 'giveaway' | 'request-signature' | 'migrate' | 'delete' | 'sync-deposit' | 'trade';
+  action: 'transfer' | 'giveaway' | 'request-signature' | 'migrate' | 'delete' | 'sync-deposit' | 'trade' | 'accept-offer';
   toUserId: string
   toUserEmail: string
   vouchersData: {
