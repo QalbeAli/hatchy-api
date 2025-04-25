@@ -445,12 +445,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-04-23T03:53:40.357Z"
+						"default": "2025-04-25T00:39:39.110Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-04-23T03:53:40.357Z"
+						"default": "2025-04-25T00:39:39.111Z"
 					},
 					"name": {
 						"type": "string"
@@ -5461,7 +5461,7 @@
 				}
 			}
 		},
-		"/trades/acceptOffer/{tradeId}": {
+		"/trades/{id}/acceptOffer": {
 			"post": {
 				"operationId": "AcceptOffer",
 				"responses": {
@@ -5495,7 +5495,7 @@
 				"parameters": [
 					{
 						"in": "path",
-						"name": "tradeId",
+						"name": "id",
 						"required": true,
 						"schema": {
 							"type": "string"
@@ -5522,7 +5522,7 @@
 				}
 			}
 		},
-		"/trades/{id}/accept": {
+		"/trades/{id}/acceptTrade": {
 			"post": {
 				"operationId": "AcceptTrade",
 				"responses": {

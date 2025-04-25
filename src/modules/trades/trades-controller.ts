@@ -187,23 +187,23 @@ export class TradesController extends Controller {
   }
 
   @Security("jwt")
-  @Post("acceptOffer/{tradeId}")
+  @Post("{id}/acceptOffer")
   public async acceptOffer(
     @Request() request: any,
-    tradeId: string,
+    id: string,
     @Body() body: { offerUserId: string }
   ): Promise<{ message: string }> {
     if (!body.offerUserId) {
       throw new BadRequestError("Offer user ID is required");
     }
 
-    await new TradesService().acceptOffer(request.user.uid, tradeId, body.offerUserId);
+    await new TradesService().acceptOffer(request.user.uid, id, body.offerUserId);
 
     return { message: "Offer accepted successfully" };
   }
 
   @Security("jwt")
-  @Post("{id}/accept")
+  @Post("{id}/acceptTrade")
   public async acceptTrade(
     @Request() request: any,
     id: string

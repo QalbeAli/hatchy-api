@@ -228,8 +228,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-04-23T03:53:40.357Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-04-23T03:53:40.357Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-04-25T00:36:59.580Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-04-25T00:36:59.580Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -3178,7 +3178,7 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/trades/acceptOffer/:tradeId',
+        app.post('/trades/:id/acceptOffer',
             authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(TradesController)),
             ...(fetchMiddlewares<RequestHandler>(TradesController.prototype.acceptOffer)),
@@ -3186,7 +3186,7 @@ export function RegisterRoutes(app: Router) {
             async function TradesController_acceptOffer(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
-                    tradeId: {"in":"path","name":"tradeId","required":true,"dataType":"string"},
+                    id: {"in":"path","name":"id","required":true,"dataType":"string"},
                     body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"offerUserId":{"dataType":"string","required":true}}},
             };
 
@@ -3211,7 +3211,7 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        app.post('/trades/:id/accept',
+        app.post('/trades/:id/acceptTrade',
             authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(TradesController)),
             ...(fetchMiddlewares<RequestHandler>(TradesController.prototype.acceptTrade)),
