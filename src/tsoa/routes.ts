@@ -228,8 +228,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-04-25T00:36:59.580Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-04-25T00:36:59.580Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-04-26T03:45:50.277Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-04-26T03:45:50.277Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -582,12 +582,25 @@ const models: TsoaRoute.Models = {
             "requestAssets": {"dataType":"array","array":{"dataType":"refObject","ref":"TradeAsset"},"required":true},
             "offerAssets": {"dataType":"array","array":{"dataType":"refObject","ref":"TradeAsset"},"required":true},
             "usersOffers": {"dataType":"array","array":{"dataType":"nestedObjectLiteral","nestedProperties":{"vouchers":{"dataType":"array","array":{"dataType":"refObject","ref":"TradeAsset"},"required":true},"userId":{"dataType":"string","required":true}}},"required":true},
+            "usersOffersIds": {"dataType":"array","array":{"dataType":"string"},"required":true},
             "createdAt": {"dataType":"string","required":true},
             "updatedAt": {"dataType":"string","required":true},
             "userId": {"dataType":"string","required":true},
             "username": {"dataType":"string","required":true},
             "status": {"dataType":"string","required":true},
             "uid": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "TradeOffer": {
+        "dataType": "refObject",
+        "properties": {
+            "tradeId": {"dataType":"string","required":true},
+            "userId": {"dataType":"string","required":true},
+            "offer": {"dataType":"array","array":{"dataType":"refObject","ref":"TradeAsset"},"required":true},
+            "tradeAssets": {"dataType":"array","array":{"dataType":"refObject","ref":"TradeAsset"},"required":true},
+            "tradeStatus": {"dataType":"string","required":true},
         },
         "additionalProperties": false,
     },
@@ -3018,6 +3031,37 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/trades/offers',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(TradesController)),
+            ...(fetchMiddlewares<RequestHandler>(TradesController.prototype.getMyOffers)),
+
+            async function TradesController_getMyOffers(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new TradesController();
+
+              await templateService.apiHandler({
+                methodName: 'getMyOffers',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         app.post('/trades',
             authenticateMiddleware([{"jwt":[]}]),
             ...(fetchMiddlewares<RequestHandler>(TradesController)),
@@ -3232,6 +3276,38 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'acceptTrade',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/trades/:id/offer',
+            authenticateMiddleware([{"jwt":[]}]),
+            ...(fetchMiddlewares<RequestHandler>(TradesController)),
+            ...(fetchMiddlewares<RequestHandler>(TradesController.prototype.deleteOffer)),
+
+            async function TradesController_deleteOffer(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    request: {"in":"request","name":"request","required":true,"dataType":"object"},
+                    id: {"in":"path","name":"id","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new TradesController();
+
+              await templateService.apiHandler({
+                methodName: 'deleteOffer',
                 controller,
                 response,
                 next,

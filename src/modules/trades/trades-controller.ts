@@ -15,6 +15,7 @@ import { TradesService } from "./trades-service";
 import { MessageResponse } from "../../responses/message-response";
 import { BadRequestError } from "../../errors/bad-request-error";
 import { VouchersService } from "../vouchers/vouchers-service";
+import { TradeOffer } from "./trade-offer";
 
 @Route("trades")
 @Tags("Trades")
@@ -33,6 +34,15 @@ export class TradesController extends Controller {
     const assets = await new TradesService().getMyTrades(request.user.uid);
 
     return assets;
+  }
+
+  @Security("jwt")
+  @Get("offers")
+  public async getMyOffers(
+    @Request() request: any,
+  ): Promise<TradeOffer[]> {
+    const offers = await new TradesService().getMyOffers(request.user.uid);
+    return offers;
   }
 
   @Security("jwt")
@@ -213,4 +223,18 @@ export class TradesController extends Controller {
       message: "Trade accepted successfully"
     }
   }
+
+  @Security("jwt")
+  @Delete("{id}/offer")
+  public async deleteOffer(
+    @Request() request: any,
+    id: string
+  ): Promise<MessageResponse> {
+    await new TradesService().deleteMyOffer(request.user.uid, id);
+    return {
+      message: "Offer deleted successfully"
+    }
+  }
+
+
 }

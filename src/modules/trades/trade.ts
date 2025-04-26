@@ -16,6 +16,7 @@ export interface Trade {
     userId: string;
     vouchers: TradeAsset[];
   }[]
+  usersOffersIds: string[];
   createdAt: string;
   updatedAt: string;
   userId: string;

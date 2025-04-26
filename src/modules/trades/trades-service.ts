@@ -7,6 +7,7 @@ import { UsersService } from "../users/usersService";
 import { Voucher } from "../vouchers/voucher";
 import { BadRequestError } from "../../errors/bad-request-error";
 import { AssetsService } from "../assets/assets-service";
+import { TradeOffer } from "./trade-offer";
 
 export class TradesService {
   tradesCollection = admin.firestore().collection('trades');
@@ -42,6 +43,36 @@ export class TradesService {
       .get();
     return snapshot.docs.map(doc => doc.data() as Trade);
   }
+
+  public async getMyOffers(userId: string): Promise<TradeOffer[]> {
+    const snapshot = await this.tradesCollection
+      .where("usersOffersIds", "array-contains", userId)
+      .get();
+
+    const myOffers: TradeOffer[] = [];
+
+    snapshot.forEach((doc) => {
+      const trade = doc.data() as Trade;
+      const userOffer = trade.usersOffers?.find((offer) => offer.userId === userId);
+
+      if (userOffer) {
+        myOffers.push({
+          tradeId: doc.id,
+          userId: userOffer.userId,
+          offer: userOffer.vouchers,
+          tradeAssets: trade.offerAssets.map((asset) => ({
+            ...asset,
+            uid: asset.uid,
+            amount: asset.amount,
+          })),
+          tradeStatus: trade.status,
+        });
+      }
+    });
+
+    return myOffers;
+  }
+
 
   public async updateTrade(
     tradeId: string,
@@ -284,12 +315,50 @@ export class TradesService {
     } else {
       // Add a new offer
       trade.usersOffers = [...(trade.usersOffers || []), offer];
+      trade.usersOffersIds = [...(trade.usersOffersIds || []), userId];
     }
 
 
     // Update the trade document with the new offer
     await this.tradesCollection.doc(tradeId).update({
       usersOffers: trade.usersOffers,
+      usersOffersIds: trade.usersOffers.map(offer => offer.userId),
+    });
+  }
+
+  public async deleteMyOffer(
+    userId: string,
+    tradeId: string
+  ): Promise<void> {
+    await admin.firestore().runTransaction(async (transaction) => {
+      const tradeRef = this.tradesCollection.doc(tradeId);
+      const tradeSnapshot = await transaction.get(tradeRef);
+
+      if (!tradeSnapshot.exists) {
+        throw new BadRequestError("Trade not found");
+      }
+
+      const trade = tradeSnapshot.data() as Trade;
+
+      // Check if the user's offer exists in the trade
+      const offerIndex = trade.usersOffersIds?.findIndex((uid) => uid === userId);
+
+      if (offerIndex === -1 || offerIndex === undefined) {
+        throw new BadRequestError("Your offer does not exist on this trade");
+      }
+
+      // Remove the user's offer from the usersOffers array
+      trade.usersOffers.splice(offerIndex, 1);
+      // Also remove the userId from usersOffersIds array
+      if (trade.usersOffersIds?.includes(userId)) {
+        trade.usersOffersIds = trade.usersOffersIds.filter((id) => id !== userId);
+      }
+
+      // Update the trade document
+      transaction.update(tradeRef, {
+        usersOffers: trade.usersOffers,
+        usersOffersIds: trade.usersOffersIds,
+      });
     });
   }
 

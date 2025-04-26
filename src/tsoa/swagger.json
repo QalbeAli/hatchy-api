@@ -445,12 +445,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-04-25T00:39:39.110Z"
+						"default": "2025-04-26T03:45:50.277Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-04-25T00:39:39.111Z"
+						"default": "2025-04-26T03:45:50.277Z"
 					},
 					"name": {
 						"type": "string"
@@ -1646,6 +1646,12 @@
 						},
 						"type": "array"
 					},
+					"usersOffersIds": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
 					"createdAt": {
 						"type": "string"
 					},
@@ -1669,12 +1675,47 @@
 					"requestAssets",
 					"offerAssets",
 					"usersOffers",
+					"usersOffersIds",
 					"createdAt",
 					"updatedAt",
 					"userId",
 					"username",
 					"status",
 					"uid"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TradeOffer": {
+				"properties": {
+					"tradeId": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"offer": {
+						"items": {
+							"$ref": "#/components/schemas/TradeAsset"
+						},
+						"type": "array"
+					},
+					"tradeAssets": {
+						"items": {
+							"$ref": "#/components/schemas/TradeAsset"
+						},
+						"type": "array"
+					},
+					"tradeStatus": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"tradeId",
+					"userId",
+					"offer",
+					"tradeAssets",
+					"tradeStatus"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -5270,6 +5311,35 @@
 				"parameters": []
 			}
 		},
+		"/trades/offers": {
+			"get": {
+				"operationId": "GetMyOffers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/TradeOffer"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Trades"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
 		"/trades/{id}": {
 			"put": {
 				"operationId": "UpdateTrade",
@@ -5459,6 +5529,39 @@
 						}
 					}
 				}
+			},
+			"delete": {
+				"operationId": "DeleteOffer",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Trades"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/trades/{id}/acceptOffer": {
