@@ -414,6 +414,11 @@ export class UltigenService {
       const previousMonsters = await this.getUltigenMonstersAmounts(user.mainWallet);
 
       const ultigenEggs = getContract('ultigenEggs', this.chainId, true);
+      const balance = await ultigenEggs.balanceOf(user.mainWallet, eggType);
+      if (balance.toNumber() < amount) {
+        throw new BadRequestError('Not enough eggs to hatch');
+      }
+
       // generate random numbers selection in array [10000, 20000, 30000] for given amount
       const selectedMonsterIds = [];
       for (let i = 0; i < amount; i++) {
