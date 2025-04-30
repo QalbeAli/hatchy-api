@@ -130,9 +130,9 @@ export class UltigenService {
 
     const dataIndex = this.levelsData.findIndex((l) => l.level === monster.level);
     const currentLevelData = this.levelsData[dataIndex];
-    if (currentXp < currentLevelData.required_xp) {
-      throw new BadRequestError(`Monster has not enough xp to evolve`);
-    }
+    // if (currentXp < currentLevelData.required_xp) {
+    //   throw new BadRequestError(`Monster has not enough xp to evolve`);
+    // }
     // new level reached
     const nextLevelData = this.levelsData[dataIndex + 1];
     if (nextLevelData == null || nextLevelData.stage == currentLevelData.stage) {
