@@ -15,8 +15,9 @@ import { MessageResponse } from "../../responses/message-response";
 import { isEmail } from "../../utils";
 import { BadRequestError } from "../../errors/bad-request-error";
 import { UltigenMonster } from "./ultigen-monster";
+import { ultigenEggsIds } from "./ultigen-constants";
 
-const validEggTypes = [1];
+const validEggTypes = ultigenEggsIds;
 @Route("ultigen")
 @Tags("Ultigen")
 export class UltigenController extends Controller {

@@ -2,7 +2,7 @@ import _ultigenEggsData from "./ultigenEggsMetadata.json";
 
 export const ultigenEggPrice = 1000;
 export const ultigenEggsData: any = _ultigenEggsData;
-export const availableMonsterIds = [20000];
+export const availableMonsterIds = [10000, 20000, 30000];
 
 export const fireEggId = 1;
 export const waterEggId = 2;
