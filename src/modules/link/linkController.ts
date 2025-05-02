@@ -40,6 +40,7 @@ export class LinkController extends Controller {
     @Body() request: {
       address: string;
       signature: string;
+      isSafeMsig?: boolean;
     },
   ): Promise<AuthCustomToken> {
     if (!request.address || !isAddress(request.address) || !request.signature) {
@@ -47,7 +48,7 @@ export class LinkController extends Controller {
       return;
     }
     this.setStatus(201); // set return status 201
-    return new LinkService().postWalletLinkSignature(req.user.uid, request.address, request.signature);
+    return new LinkService().postWalletLinkSignature(req.user.uid, request.address, request.signature, request.isSafeMsig);
   }
 
   @Security("jwt")

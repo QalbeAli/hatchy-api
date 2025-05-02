@@ -228,8 +228,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-04-26T04:11:28.851Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-04-26T04:11:28.852Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-05-02T00:25:48.740Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-05-02T00:25:48.740Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},
@@ -1024,7 +1024,7 @@ export function RegisterRoutes(app: Router) {
             async function LinkController_postWalletLinkSignature(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     req: {"in":"request","name":"req","required":true,"dataType":"object"},
-                    request: {"in":"body","name":"request","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"signature":{"dataType":"string","required":true},"address":{"dataType":"string","required":true}}},
+                    request: {"in":"body","name":"request","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"isSafeMsig":{"dataType":"boolean"},"signature":{"dataType":"string","required":true},"address":{"dataType":"string","required":true}}},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

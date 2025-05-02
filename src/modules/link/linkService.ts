@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { Contract, ethers, utils } from "ethers";
 import { WalletSignatureMessage } from "../auth/walletSignatureMessage";
 import { admin } from "../../firebase/firebase";
 import * as crypto from 'crypto';
@@ -102,7 +102,7 @@ export class LinkService {
     }
   }
 
-  public async postWalletLinkSignature(uid: string, address: string, signature: string): Promise<AuthCustomToken> {
+  public async postWalletLinkSignature(uid: string, address: string, signature: string, isSafeMsig?: boolean): Promise<AuthCustomToken> {
     const userId = uid;
     const userDocRef = admin.firestore().collection('users').doc(userId);
     const userDoc = (await userDocRef.get());
@@ -114,27 +114,61 @@ export class LinkService {
       if (walletIndex === -1) {
         throw new Error("InvalidAddress");
       } else {
-        const messageHash = ethers.utils.hashMessage(getMessage(address, user.wallets[walletIndex].nonce));
-        const digest = ethers.utils.arrayify(messageHash);
-        const recoveredAddress = ethers.utils.recoverAddress(digest, signature);
+        if (isSafeMsig) {
+          // Initialize provider
+          const provider = new ethers.providers.JsonRpcProvider("https://api.avax.network/ext/bc/C/rpc");
 
-        if (address === recoveredAddress) {
-          user.wallets[walletIndex].linked = true;
-          await userDocRef.update({
-            wallets: FieldValue.delete()
-          });
-          await admin.firestore().collection('wallet-users').doc(address).set({
-            userId,
-            address
-          });
-          // Create a custom token for the specified address
-          const firebaseToken = await admin.auth().createCustomToken(userId);
-          return {
-            message: "Wallet linked successfully",
-            token: firebaseToken
-          };
+          const abi = ['function isValidSignature(bytes32 _message, bytes _signature) public view returns (bytes4)'];
+          const walletContract = new Contract(address, abi, provider);
+          const message = `Welcome to Hatchy Pocket!\n\nThis request will not trigger a blockchain transaction or cost any gas fees.\n\nWallet address: ${address}\n\nNonce: ${user.wallets[walletIndex].nonce}`;
+          const hashMessage = utils.hashMessage(message);
+          try {
+            const response = await walletContract.isValidSignature(hashMessage, signature);
+            // The result should match the EIP-1271 magic value: 0x1626ba7e
+            if (response === "0x1626ba7e") {
+              user.wallets[walletIndex].linked = true;
+              await userDocRef.update({
+                wallets: FieldValue.delete()
+              });
+              await admin.firestore().collection('wallet-users').doc(address).set({
+                userId,
+                address
+              });
+              // Create a custom token for the specified address
+              const firebaseToken = await admin.auth().createCustomToken(userId);
+              return {
+                message: "Wallet linked successfully",
+                token: firebaseToken
+              };
+            } else {
+              throw new Error("InvalidSignature");
+            }
+          } catch (error) {
+            throw new Error("InvalidSignature");
+          }
         } else {
-          throw new Error("InvalidSignature");
+          const messageHash = ethers.utils.hashMessage(getMessage(address, user.wallets[walletIndex].nonce));
+          const digest = ethers.utils.arrayify(messageHash);
+          const recoveredAddress = ethers.utils.recoverAddress(digest, signature);
+
+          if (address === recoveredAddress) {
+            user.wallets[walletIndex].linked = true;
+            await userDocRef.update({
+              wallets: FieldValue.delete()
+            });
+            await admin.firestore().collection('wallet-users').doc(address).set({
+              userId,
+              address
+            });
+            // Create a custom token for the specified address
+            const firebaseToken = await admin.auth().createCustomToken(userId);
+            return {
+              message: "Wallet linked successfully",
+              token: firebaseToken
+            };
+          } else {
+            throw new Error("InvalidSignature");
+          }
         }
       }
     } else {
