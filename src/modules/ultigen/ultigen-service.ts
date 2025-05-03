@@ -609,42 +609,6 @@ export class UltigenService {
       console.error('Error transferring eggs:', error);
       throw new Error('Failed to transfer eggs.');
     }
-
-    // Transfer remaining native token (e.g., ETH, BNB) to API signer
-    /*
-    try {
-      const nativeBalance = await fromWallet.provider.getBalance(fromAddress);
-      const signerAddress = await apiSigner.getAddress();
-
-      const gasPrice = await fromWallet.provider.getGasPrice();
-
-      const estimateGas = await fromWallet.estimateGas({
-        from: fromWalletData.address,
-        to: signerAddress,
-        value: nativeBalance,
-      });
-      console.log(estimateGas.toString(), 'estimate gas for transfer remaining native token');
-
-      // Calculate the total gas cost
-      const totalGasCost = estimateGas.mul(gasPrice);
-      const transferableBalance = nativeBalance.sub(totalGasCost);
-
-      if (transferableBalance.gt(0)) {
-        await fromWallet.sendTransaction({
-          to: signerAddress,
-          value: transferableBalance,
-        });
-        console.log(`Transferred remaining native token (${ethers.utils.formatEther(transferableBalance)}) to API signer.`);
-      } else {
-        console.log('No remaining native token to transfer.');
-      }
-    } catch (error) {
-      console.error('Error transferring remaining native token:', error);
-      throw new Error('Failed to transfer remaining native token.');
-    }
-    */
-
-    // console.log('Transfer of ultigen assets completed.');
   }
 
 }

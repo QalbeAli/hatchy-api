@@ -16,7 +16,7 @@ export class LeaderboardService {
   public async addScore(game: Game, user: User, score: number): Promise<ScoreItem> {
     await this.addScoreToContract(game, user, score);
 
-    const AddedScore = await admin.firestore().runTransaction(async (transaction) => {
+    const AddedScoreRef = await admin.firestore().runTransaction(async (transaction) => {
       const scoresRef = admin.firestore().collection('scores');
       const querySnapshot = await transaction.get(scoresRef
         .where('gameId', '==', game.uid)
@@ -34,14 +34,15 @@ export class LeaderboardService {
             updatedAt: now,
           });
         }
-        return {
-          gameId: scoreData.gameId,
-          userId: scoreData.userId,
-          username: scoreData.username,
-          score: score > existingScore ? score : existingScore,
-          createdAt: scoreData.createdAt,
-          updatedAt: score > existingScore ? now : scoreData.updatedAt,
-        };
+        // return {
+        //   gameId: scoreData.gameId,
+        //   userId: scoreData.userId,
+        //   username: scoreData.username,
+        //   score: score > existingScore ? score : existingScore,
+        //   createdAt: scoreData.createdAt,
+        //   updatedAt: score > existingScore ? now : scoreData.updatedAt,
+        // };
+        return existingScoreDoc.ref;
 
       } else {
         const newScoreRef = scoresRef.doc();
@@ -55,11 +56,12 @@ export class LeaderboardService {
         }
         transaction.set(newScoreRef, scoreData);
 
-        const doc = await newScoreRef.get();
-        return doc.data() as ScoreItem;
+
+        return newScoreRef;
       }
     });
-    return AddedScore;
+    const doc = await AddedScoreRef.get();
+    return doc.data() as ScoreItem;
   }
 
   public async addScoreToContract(game: Game, user: User, score: number): Promise<void> {
@@ -68,40 +70,50 @@ export class LeaderboardService {
     const userWallet = getSigner(this.chainId, internalWalletData.privateKey);
 
     const gameLeaderboardContract = getContract('gameLeaderboard', this.chainId, true, userWallet);
+    const nonce = BigNumber.from(ethers.utils.randomBytes(32));
 
-
-    const sign = await this.getSetScoreSignature(
-      user.mainWallet || ethers.constants.AddressZero,
+    const signature = await this.getSetScoreSignature(
+      internalWalletAddress,
       game.uid,
       BigNumber.from(score),
-      BigNumber.from(0),
+      nonce,
     );
+    const payload = [
+      internalWalletAddress,
+      game.uid,
+      BigNumber.from(score),
+      nonce,
+      signature
+    ]
 
-    // calculate gas limit
-    let totalGasLimit = await gameLeaderboardContract.estimateGas.setMyHighScore(sign);
-    // Add a buffer to the gas limit
-    totalGasLimit = totalGasLimit.mul(2.5); // Increase buffer multiplier for safety
-    // Fetch the current gas price from the provider
-    const gasPrice = await userWallet.provider.getGasPrice();
-    const totalCost = totalGasLimit.mul(gasPrice);
+    try {
+      // calculate gas limit
+      let totalGasLimit = await gameLeaderboardContract.estimateGas.setMyHighScore(payload);
 
-    // get balance of the wallet
-    const balance = await userWallet.getBalance();
-    if (balance.lt(totalCost)) {
-      // Transfer gas amount to fromAddress
-      const apiSigner = getSigner(this.chainId);
-      try {
+      // Add a buffer to the gas limit
+      totalGasLimit = totalGasLimit.mul(3);
+
+      // Fetch the current gas price from the provider
+      const gasPrice = await userWallet.provider.getGasPrice();
+      const totalCost = totalGasLimit.mul(gasPrice);
+
+      // get balance of the wallet
+      const balance = await userWallet.getBalance();
+      if (balance.lt(totalCost)) {
+        // Transfer gas amount to fromAddress
+        const apiSigner = getSigner(this.chainId);
         const tx = await apiSigner.sendTransaction({
           to: userWallet.address,
           value: totalCost,
         });
         await tx.wait();
-      } catch (error) {
-        throw new Error('Failed to transfer gas to address.');
       }
-    }
 
-    await gameLeaderboardContract.setMyHighScore(sign);
+      await gameLeaderboardContract.setMyHighScore(payload);
+    } catch (error) {
+      console.log('error', error);
+      throw new Error('Failed transaction');
+    }
   }
 
   async getSetScoreSignature(
@@ -113,7 +125,7 @@ export class LeaderboardService {
     const provider = new ethers.providers.JsonRpcProvider(config.JSON_RPC_URL);
     const signer = new Wallet(config.MASTERS_SIGNER_KEY, provider);
     const hash = ethers.utils.solidityKeccak256(
-      ['address', 'string', 'uint256', 'uint', 'bytes'],
+      ['address', 'string', 'uint256', 'uint'],
       [user, gameId, newScore, nonce]);
 
     const signature = await signer.signMessage(ethers.utils.arrayify(hash));
