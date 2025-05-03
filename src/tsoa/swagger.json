@@ -53,6 +53,9 @@
 					"mainWallet": {
 						"type": "string"
 					},
+					"internalWallet": {
+						"type": "string"
+					},
 					"vouchersMerged": {
 						"type": "boolean"
 					},
@@ -97,7 +100,8 @@
 					"uid",
 					"email",
 					"referralCode",
-					"referralCount"
+					"referralCount",
+					"internalWallet"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -445,12 +449,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-05-02T04:19:08.217Z"
+						"default": "2025-05-03T02:03:16.692Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-05-02T04:19:08.217Z"
+						"default": "2025-05-03T02:03:16.692Z"
 					},
 					"name": {
 						"type": "string"

@@ -100,6 +100,7 @@ export class AuthService {
       referralCode: request.user.uid,
       vouchersMerged: true,
       referrerId,
+      internalWallet: '',
       roles: ['user'],
     }
     const userRef = this.usersCollection.doc(userCreationParams.uid);
@@ -224,6 +225,7 @@ export class AuthService {
 
           // Create new user document
           userCreationParams.mainWallet = walletAddress;
+          userCreationParams.internalWallet = walletAddress;
           transaction.set(userRef, userCreationParams);
 
           // If there's a valid referrer, update their stats

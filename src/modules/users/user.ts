@@ -12,6 +12,7 @@ export interface User {
   bio?: string;
   xpPoints?: number;
   mainWallet?: string;
+  internalWallet: string;
   vouchersMerged?: boolean;
   discordConfirmed?: boolean;
   discordId?: string;

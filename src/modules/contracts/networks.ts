@@ -61,7 +61,7 @@ const prodNetworks: Map<number, NetworkData> = new Map([
         token: [],
       },
       addresses: {
-        gameLeaderboard: '0x4558C56B2D754aa12ED3e0b31D17cB4ED9A1e446',
+        gameLeaderboard: '0x42fA18C618f3B087fD3BA790ACF015C1fb6E3bfe',
         gameRanks: '0x7bE5826F9A072759477A663ace0e0959f5b15B36',
         wrappedHatchy: '0x3ee939b0EA957b1F8F931c506f7c4D2ab8147260',
         ultigenEggs: '0x304baa004e33087AC14cd270887cEfC01C45e1D6',

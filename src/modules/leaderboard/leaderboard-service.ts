@@ -4,15 +4,17 @@ import { Game } from "../games/game";
 import { User } from "../users/user";
 import { ScoreItem } from "./score";
 import { RankItem } from "./rank";
-import { getContract } from "../contracts/networks";
-import { ethers } from "ethers";
+import { getContract, getSigner } from "../contracts/networks";
+import { BigNumber, ethers, Wallet } from "ethers";
+import { Wallet as WalletUser } from "../users/wallet";
+import config from "../../config";
 
 export class LeaderboardService {
+  walletUsersCollection = admin.firestore().collection('wallet-users');
   chainId = 8198;
 
   public async addScore(game: Game, user: User, score: number): Promise<ScoreItem> {
-    const gameLeaderboardContract = getContract('gameLeaderboard', this.chainId, true);
-    const tx = await gameLeaderboardContract.setHighScore(game.uid, user.mainWallet || ethers.constants.AddressZero, score);
+    await this.addScoreToContract(game, user, score);
 
     const AddedScore = await admin.firestore().runTransaction(async (transaction) => {
       const scoresRef = admin.firestore().collection('scores');
@@ -58,6 +60,64 @@ export class LeaderboardService {
       }
     });
     return AddedScore;
+  }
+
+  public async addScoreToContract(game: Game, user: User, score: number): Promise<void> {
+    const internalWalletAddress = user.internalWallet || ethers.constants.AddressZero;
+    const internalWalletData = (await this.walletUsersCollection.doc(internalWalletAddress).get()).data() as WalletUser;
+    const userWallet = getSigner(this.chainId, internalWalletData.privateKey);
+
+    const gameLeaderboardContract = getContract('gameLeaderboard', this.chainId, true, userWallet);
+
+
+    const sign = await this.getSetScoreSignature(
+      user.mainWallet || ethers.constants.AddressZero,
+      game.uid,
+      BigNumber.from(score),
+      BigNumber.from(0),
+    );
+
+    // calculate gas limit
+    let totalGasLimit = await gameLeaderboardContract.estimateGas.setMyHighScore(sign);
+    // Add a buffer to the gas limit
+    totalGasLimit = totalGasLimit.mul(2.5); // Increase buffer multiplier for safety
+    // Fetch the current gas price from the provider
+    const gasPrice = await userWallet.provider.getGasPrice();
+    const totalCost = totalGasLimit.mul(gasPrice);
+
+    // get balance of the wallet
+    const balance = await userWallet.getBalance();
+    if (balance.lt(totalCost)) {
+      // Transfer gas amount to fromAddress
+      const apiSigner = getSigner(this.chainId);
+      try {
+        const tx = await apiSigner.sendTransaction({
+          to: userWallet.address,
+          value: totalCost,
+        });
+        await tx.wait();
+      } catch (error) {
+        throw new Error('Failed to transfer gas to address.');
+      }
+    }
+
+    await gameLeaderboardContract.setMyHighScore(sign);
+  }
+
+  async getSetScoreSignature(
+    user: string,
+    gameId: string,
+    newScore: BigNumber,
+    nonce: BigNumber,
+  ) {
+    const provider = new ethers.providers.JsonRpcProvider(config.JSON_RPC_URL);
+    const signer = new Wallet(config.MASTERS_SIGNER_KEY, provider);
+    const hash = ethers.utils.solidityKeccak256(
+      ['address', 'string', 'uint256', 'uint', 'bytes'],
+      [user, gameId, newScore, nonce]);
+
+    const signature = await signer.signMessage(ethers.utils.arrayify(hash));
+    return signature;
   }
 
   public async getScoreLeaderboard(gameId: string, limit?: number, transaction?: Transaction): Promise<ScoreItem[]> {

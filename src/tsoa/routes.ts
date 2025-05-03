@@ -71,6 +71,7 @@ const models: TsoaRoute.Models = {
             "bio": {"dataType":"string"},
             "xpPoints": {"dataType":"double"},
             "mainWallet": {"dataType":"string"},
+            "internalWallet": {"dataType":"string","required":true},
             "vouchersMerged": {"dataType":"boolean"},
             "discordConfirmed": {"dataType":"boolean"},
             "discordId": {"dataType":"string"},
@@ -228,8 +229,8 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"double","required":true},
-            "createdAt": {"dataType":"datetime","default":"2025-05-02T04:19:08.217Z"},
-            "updatedAt": {"dataType":"datetime","default":"2025-05-02T04:19:08.217Z"},
+            "createdAt": {"dataType":"datetime","default":"2025-05-03T02:03:16.692Z"},
+            "updatedAt": {"dataType":"datetime","default":"2025-05-03T02:03:16.692Z"},
             "name": {"dataType":"string","required":true},
             "image": {"dataType":"string","required":true},
             "frontImage": {"dataType":"string"},

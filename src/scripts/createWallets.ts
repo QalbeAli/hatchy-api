@@ -7,16 +7,34 @@ class WalletService {
   private walletUsersCollection = admin.firestore().collection("wallet-users");
   private usersCollection = admin.firestore().collection("users");
 
-  public async createWallet(uid: string): Promise<void> {
-    // Check if the user already has a linked wallet
+  public async setInternalWallet(uid: string): Promise<void> {
+    // Fetch user data
     const userSnapshot = await this.usersCollection.doc(uid).get();
     const userData = userSnapshot.data();
-    if (userData?.mainWallet) {
-      console.log(`User ${uid} already has a main wallet: ${userData.mainWallet}`);
+
+    if (!userData) {
+      console.warn(`User ${uid} does not exist.`);
       return;
     }
 
-    // Create a new Ethereum wallet
+    // Check if the user already has an internal wallet
+    const internalWalletSnapshot = await this.walletUsersCollection
+      .where("userId", "==", uid)
+      .where("isInternalWallet", "==", true)
+      .limit(1)
+      .get();
+
+    if (!internalWalletSnapshot.empty) {
+      // User already has an internal wallet
+      const internalWalletData = internalWalletSnapshot.docs[0].data();
+      await this.usersCollection.doc(uid).update({
+        internalWallet: internalWalletData.address,
+      });
+      console.log(`Set internal wallet for user ${uid}: ${internalWalletData.address}`);
+      return;
+    }
+
+    // Create a new internal wallet if none exists
     const newWallet = ethers.Wallet.createRandom();
     const walletAddress = newWallet.address;
     const walletPrivateKey = newWallet.privateKey;
@@ -29,17 +47,17 @@ class WalletService {
       publicKey: walletPublicKey,
       seedPhrase: walletSeedPhrase,
       userId: uid,
-      mainWallet: true,
+      mainWallet: false, // Assuming it's not the main wallet
       isInternalWallet: true,
     };
 
     // Save wallet data to Firestore
     await this.walletUsersCollection.doc(walletAddress).set(walletData);
     await this.usersCollection.doc(uid).update({
-      mainWallet: walletAddress,
+      internalWallet: walletAddress,
     });
 
-    console.log(`Created wallet for user ${uid}: ${walletAddress}`);
+    console.log(`Created and set internal wallet for user ${uid}: ${walletAddress}`);
   }
 
   public async processAllUsers(): Promise<void> {
@@ -52,7 +70,7 @@ class WalletService {
       for (const userRecord of listUsersResult.users) {
         const uid = userRecord.uid;
         try {
-          await this.createWallet(uid);
+          await this.setInternalWallet(uid);
         } catch (error) {
           console.error(`Error processing user ${uid}:`, error.message);
         }

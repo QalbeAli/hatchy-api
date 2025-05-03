@@ -183,8 +183,8 @@ export class LinkService {
 
     if (walletDoc.exists) {
       const walletData = walletDoc.data();
-      if (!!walletData.privateKey) {
-        throw new BadRequestError("You need to link another wallet before unlinking this one");
+      if (walletData.isInternalWallet) {
+        throw new BadRequestError("You cannot unlink your internal wallet");
       }
       if (walletData.userId === userId) {
         await walletDocRef.delete();
