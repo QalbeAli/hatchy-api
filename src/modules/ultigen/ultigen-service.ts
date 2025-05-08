@@ -1,4 +1,4 @@
-import { BigNumber, ethers } from "ethers";
+import { BigNumber, ethers, Wallet } from "ethers";
 import { getContract, getSigner } from "../contracts/networks";
 import { CoingeckoService } from "../../services/CoingeckoService";
 import { UsersService } from "../users/usersService";
@@ -14,7 +14,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import csvParser from "csv-parser";
 import { UltigenMonster } from "./ultigen-monster";
-import { Wallet } from "../users/wallet";
+import config from "../../config";
+import { Wallet as WalletUser } from "../users/wallet";
 
 const ultigenDataFilePath = path.join(__dirname, '../../assets/ultigen-data.csv');
 const levelDataFilePath = path.join(__dirname, '../../assets/ultigen-levels.csv');
@@ -91,6 +92,7 @@ export class UltigenService {
   gamesWalletsService = new GamesWalletsService();
   ultigenData = null;
   levelsData: LevelsData[] = null;
+  walletUsersCollection = admin.firestore().collection('wallet-users');
 
   constructor(chainId?: number) {
     this.chainId = chainId || 8198;
@@ -457,7 +459,7 @@ export class UltigenService {
       if (!vouchers || vouchers.length === 0) {
         throw new BadRequestError('No vouchers found');
       }
-      if (!user.mainWallet) {
+      if (!user.internalWallet) {
         throw new BadRequestError('No linked wallets found');
       }
       const hatchyVoucher = vouchers.find((v) => v.name === "Hatchy Token" && v.amount >= ultigenEggPrice * amount);
@@ -465,9 +467,10 @@ export class UltigenService {
         throw new BadRequestError('Insufficient voucher balance');
       }
       await voucherService.consumeVoucher(userId, hatchyVoucher.uid, ultigenEggPrice * amount, transaction);
-      await this.giveEggToUser(user.mainWallet, eggType, amount);
+      await this.giveEggToUser(user.internalWallet, eggType, amount);
     });
   }
+
 
   public async giveEggWithApiKey(
     apiKey: string, email: string, assetId: string, tokenId: number, amount: number,
@@ -476,6 +479,7 @@ export class UltigenService {
       const user = await this.userService.getUserByEmail(email);
       const apiKeyData = await this.apiKeyService.getApiKey(apiKey, transaction);
       const gameWallet = await this.gamesWalletsService.getGameWalletById(apiKeyData.appId, transaction);
+
       if (!gameWallet.balance || !gameWallet.balance[assetId] || gameWallet.balance[assetId] < amount) {
         throw new BadRequestError('Insufficient asset limit');
       }
@@ -483,7 +487,7 @@ export class UltigenService {
       if (!apiKeyData.permissions || !apiKeyData.permissions.includes('rewards')) {
         throw new BadRequestError('API Key does not have permissions');
       }
-      const res = await this.giveEggToUser(user.mainWallet, tokenId, amount);
+      const res = await this.giveEggToUser(user.internalWallet, tokenId, amount);
       // update the balance of the api key
       await this.gamesWalletsService.consumeBalance(gameWallet, assetId, amount, transaction);
 
@@ -501,15 +505,74 @@ export class UltigenService {
   }
 
   async giveEggToUser(userAddress: string, tokenId: number, amount: number) {
-    const ultigenEggs = getContract('ultigenEggs', this.chainId, true);
-    await ultigenEggs.mintEggToAddress(
-      userAddress,
+    const internalWalletAddress = userAddress || ethers.constants.AddressZero;
+    const internalWalletData = (await this.walletUsersCollection.doc(internalWalletAddress).get()).data() as WalletUser;
+    const userWallet = getSigner(this.chainId, internalWalletData.privateKey);
+
+    const ultigenEggsContract = getContract('ultigenEggs', this.chainId, true, userWallet);
+    const nonce = BigNumber.from(ethers.utils.randomBytes(32));
+
+    const signature = await this.getMintEggsSignature(
+      internalWalletAddress,
       tokenId,
-      amount
+      BigNumber.from(amount),
+      nonce,
     );
+    const payload = [
+      internalWalletAddress,
+      tokenId,
+      BigNumber.from(amount),
+      nonce,
+      signature
+    ]
+
+    try {
+      // calculate gas limit
+      let totalGasLimit = await ultigenEggsContract.estimateGas.mintEggWithSignature(payload);
+
+      // Add a buffer to the gas limit
+      totalGasLimit = totalGasLimit.mul(3);
+
+      // Fetch the current gas price from the provider
+      const gasPrice = await userWallet.provider.getGasPrice();
+      const totalCost = totalGasLimit.mul(gasPrice);
+
+      // get balance of the wallet
+      const balance = await userWallet.getBalance();
+      if (balance.lt(totalCost)) {
+        // Transfer gas amount to fromAddress
+        const apiSigner = getSigner(this.chainId);
+        const tx = await apiSigner.sendTransaction({
+          to: userWallet.address,
+          value: totalCost,
+        });
+        await tx.wait();
+      }
+
+      await ultigenEggsContract.mintEggWithSignature(payload);
+    } catch (error) {
+      console.log('error', error);
+      throw new Error('Failed transaction');
+    }
   }
 
-  async transferUltigenAssets(fromWalletData: Wallet, toAddress: string) {
+  async getMintEggsSignature(
+    address: string,
+    eggType: number,
+    amount: BigNumber,
+    nonce: BigNumber,
+  ) {
+    const provider = new ethers.providers.JsonRpcProvider(config.JSON_RPC_URL);
+    const signer = new Wallet(config.MASTERS_SIGNER_KEY, provider);
+    const hash = ethers.utils.solidityKeccak256(
+      ['address', 'uint256', 'uint256', 'uint'],
+      [address, eggType, amount, nonce]);
+
+    const signature = await signer.signMessage(ethers.utils.arrayify(hash));
+    return signature;
+  }
+
+  async transferUltigenAssets(fromWalletData: WalletUser, toAddress: string) {
     // create wallet with privateKey of fromAddress
     const chainId = 8198;
 

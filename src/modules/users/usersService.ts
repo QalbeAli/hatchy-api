@@ -4,7 +4,7 @@ import { NotFoundError } from "../../errors/not-found-error";
 import { admin } from "../../firebase/firebase";
 import { LeaderboardService } from "../leaderboard/leaderboard-service";
 import { User } from "./user";
-import { Wallet } from "./wallet";
+import { Wallet as UserWallet } from "./wallet";
 import { TradesService } from "../trades/trades-service";
 import { ethers } from "ethers";
 import { UltigenService } from "../ultigen/ultigen-service";
@@ -200,7 +200,7 @@ export class UsersService {
     }
   }
 
-  public async getLinkedWallets(uid: string): Promise<Wallet[]> {
+  public async getLinkedWallets(uid: string): Promise<UserWallet[]> {
     const wallets = await this.walletUsersCollection.where('userId', '==', uid).get();
     if (wallets.empty) {
       return [];
@@ -210,12 +210,12 @@ export class UsersService {
       address: doc.data().address,
       mainWallet: doc.data().mainWallet,
       isInternalWallet: doc.data().isInternalWallet,
-    } as Wallet));
+    } as UserWallet));
   }
 
   public async createWallet(
     uid: string,
-  ): Promise<Wallet> {
+  ): Promise<UserWallet> {
     // create a new ethereum wallet and save it to the database
     // save the address, private key, public key and seed phrase in the wallet-users collection
     // also set it as the main wallet for the user
@@ -230,7 +230,7 @@ export class UsersService {
     const walletPrivateKey = newWallet.privateKey;
     const walletPublicKey = newWallet.publicKey;
     const walletSeedPhrase = newWallet.mnemonic.phrase;
-    const walletData: Wallet = {
+    const walletData: UserWallet = {
       address: walletAddress,
       privateKey: walletPrivateKey,
       publicKey: walletPublicKey,
@@ -262,7 +262,7 @@ export class UsersService {
       const ultigenService = new UltigenService();
       const internalWallet = await this.walletUsersCollection.doc(currentMainWallet.address).get();
       await ultigenService.transferUltigenAssets(
-        internalWallet.data() as Wallet,
+        internalWallet.data() as UserWallet,
         mainWallet
       )
       await this.walletUsersCollection.doc(currentMainWallet.address).delete();
