@@ -1,6 +1,6 @@
 import _ultigenEggsData from "./ultigenEggsMetadata.json";
 
-export const ultigenEggPrice = 1000;
+export const ultigenEggPrice = 80;
 export const ultigenEggsData: any = _ultigenEggsData;
 export const availableMonsterIds = [10000, 20000, 30000];
 
