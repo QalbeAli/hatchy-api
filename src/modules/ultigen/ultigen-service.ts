@@ -188,6 +188,7 @@ export class UltigenService {
     await this.loadLevelsData();
     const ultigen = getContract('hatchyverseUltigen', this.chainId, true);
     const monster = await this.getMonsterData(uniqueId);
+    const monsterOwnerAddress = await ultigen.ownerOf(uniqueId);
     const currentXp = monster.xp;
     const newXp = currentXp + xp;
 
@@ -222,16 +223,99 @@ export class UltigenService {
     }
 
     // Update the monster with the new level, stage, and residual XP
-    const receipt = await ultigen.updateMonster(
+    await this.updateMonsterWithSignature(
+      monsterOwnerAddress,
       uniqueId,
       monster.monsterId,
       level,
       currentLevelData.stage,
       accXP // Residual XP after leveling up
-    );
-    await receipt.wait(1);
+    )
     const newMonsterData = await this.getMonsterData(uniqueId);
     return newMonsterData;
+  }
+
+  async updateMonsterWithSignature(
+    address: string,
+    tokenId: number,
+    newMonsterId: number,
+    level: number,
+    stage: number,
+    xp: number,
+  ) {
+    const internalWalletAddress = address || ethers.constants.AddressZero;
+    const internalWalletData = (await this.walletUsersCollection.doc(internalWalletAddress).get()).data() as WalletUser;
+    const userWallet = getSigner(this.chainId, internalWalletData.privateKey);
+
+    const ultigenContract = getContract('hatchyverseUltigen', this.chainId, true, userWallet);
+    const nonce = BigNumber.from(ethers.utils.randomBytes(32));
+
+    const signature = await this.getUpdateMonsterSignature(
+      internalWalletAddress,
+      tokenId,
+      newMonsterId,
+      level,
+      stage,
+      xp,
+      nonce,
+    );
+    const payload = [
+      internalWalletAddress,
+      tokenId,
+      newMonsterId,
+      level,
+      stage,
+      xp,
+      nonce,
+      signature
+    ]
+
+    try {
+      // calculate gas limit
+      let totalGasLimit = await ultigenContract.estimateGas.updateMonsterWithSignature(payload);
+
+      // Add a buffer to the gas limit
+      totalGasLimit = totalGasLimit.mul(3);
+
+      // Fetch the current gas price from the provider
+      const gasPrice = await userWallet.provider.getGasPrice();
+      const totalCost = totalGasLimit.mul(gasPrice);
+
+      // get balance of the wallet
+      const balance = await userWallet.getBalance();
+      if (balance.lt(totalCost)) {
+        // Transfer gas amount to fromAddress
+        const apiSigner = getSigner(this.chainId);
+        const tx = await apiSigner.sendTransaction({
+          to: userWallet.address,
+          value: totalCost,
+        });
+        await tx.wait();
+      }
+
+      await ultigenContract.updateMonsterWithSignature(payload);
+    } catch (error) {
+      console.log('error', error);
+      throw new Error('Failed transaction');
+    }
+  }
+
+  async getUpdateMonsterSignature(
+    address: string,
+    tokenId: number,
+    newMonsterId: number,
+    level: number,
+    stage: number,
+    xp: number,
+    nonce: BigNumber,
+  ) {
+    const provider = new ethers.providers.JsonRpcProvider(config.JSON_RPC_URL);
+    const signer = new Wallet(config.MASTERS_SIGNER_KEY, provider);
+    const hash = ethers.utils.solidityKeccak256(
+      ['address', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256', 'uint'],
+      [address, tokenId, newMonsterId, level, stage, xp, nonce]);
+    const signature = await signer.signMessage(ethers.utils.arrayify(hash));
+    return signature;
   }
 
   async getMonsterData(uniqueId: number): Promise<UltigenMonster> {
@@ -409,14 +493,14 @@ export class UltigenService {
   ) {
     const monsterData = await admin.firestore().runTransaction(async (transaction) => {
       const user = await this.userService.get(userId, transaction);
-      if (!user.mainWallet) {
+      if (!user.internalWallet) {
         throw new BadRequestError('No linked wallets found');
       }
       await this.loadUltigenData();
-      const previousMonsters = await this.getUltigenMonstersAmounts(user.mainWallet);
+      const previousMonsters = await this.getUltigenMonstersAmounts(user.internalWallet);
 
       const ultigenEggs = getContract('ultigenEggs', this.chainId, true);
-      const balance = await ultigenEggs.balanceOf(user.mainWallet, eggType);
+      const balance = await ultigenEggs.balanceOf(user.internalWallet, eggType);
       if (balance.toNumber() < amount) {
         throw new BadRequestError('Not enough eggs to hatch');
       }
@@ -428,8 +512,8 @@ export class UltigenService {
         selectedMonsterIds.push(availableMonsterIds[randomNumber]);
       }
 
-      await this.hatchEggsOfUser(user.mainWallet, eggType, amount);
-      const latestMonsters = await this.getUltigenMonstersAmounts(user.mainWallet);
+      await this.hatchEggsOfUser(user.internalWallet, eggType, amount);
+      const latestMonsters = await this.getUltigenMonstersAmounts(user.internalWallet);
       const newMonsters = latestMonsters.filter((monster) => {
         return !previousMonsters.some((prevMonster) => {
           return prevMonster.id === monster.id;
