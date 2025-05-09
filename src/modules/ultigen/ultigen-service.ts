@@ -428,13 +428,7 @@ export class UltigenService {
         selectedMonsterIds.push(availableMonsterIds[randomNumber]);
       }
 
-      const receipt = await ultigenEggs.hatchEggsToAddress(
-        user.mainWallet,
-        eggType,
-        amount,
-        selectedMonsterIds
-      );
-      await receipt.wait(1);
+      await this.hatchEggsOfUser(user.mainWallet, eggType, amount);
       const latestMonsters = await this.getUltigenMonstersAmounts(user.mainWallet);
       const newMonsters = latestMonsters.filter((monster) => {
         return !previousMonsters.some((prevMonster) => {
@@ -444,6 +438,73 @@ export class UltigenService {
       return newMonsters;
     });
     return monsterData
+  }
+
+  async hatchEggsOfUser(userAddress: string, eggType: number, amount: number) {
+    const internalWalletAddress = userAddress || ethers.constants.AddressZero;
+    const internalWalletData = (await this.walletUsersCollection.doc(internalWalletAddress).get()).data() as WalletUser;
+    const userWallet = getSigner(this.chainId, internalWalletData.privateKey);
+
+    const ultigenEggsContract = getContract('ultigenEggs', this.chainId, true, userWallet);
+    const nonce = BigNumber.from(ethers.utils.randomBytes(32));
+
+    const balance = await ultigenEggsContract.balanceOf(userAddress, eggType);
+    if (balance.toNumber() < amount) {
+      throw new BadRequestError('Not enough eggs to hatch');
+    }
+    // generate random numbers selection in array [10000, 20000, 30000] for given amount
+    const selectedMonsterIds = [];
+    for (let i = 0; i < amount; i++) {
+      const randomNumber = Math.floor(Math.random() * availableMonsterIds.length);
+      selectedMonsterIds.push(availableMonsterIds[randomNumber]);
+    }
+
+    const signature = await this.getHatchEggsSignature(
+      internalWalletAddress,
+      eggType,
+      BigNumber.from(amount),
+      selectedMonsterIds,
+      nonce,
+    );
+    const payload = [
+      internalWalletAddress,
+      eggType,
+      BigNumber.from(amount),
+      selectedMonsterIds,
+      nonce,
+      signature
+    ]
+
+    try {
+      // calculate gas limit
+      let totalGasLimit = await ultigenEggsContract.estimateGas.hatchEggsWithSignature(payload);
+
+      // Add a buffer to the gas limit
+      totalGasLimit = totalGasLimit.mul(3);
+
+      // Fetch the current gas price from the provider
+      const gasPrice = await userWallet.provider.getGasPrice();
+      const totalCost = totalGasLimit.mul(gasPrice);
+
+      // get balance of the wallet
+      const balance = await userWallet.getBalance();
+      if (balance.lt(totalCost)) {
+        // Transfer gas amount to fromAddress
+        const apiSigner = getSigner(this.chainId);
+        const tx = await apiSigner.sendTransaction({
+          to: userWallet.address,
+          value: totalCost,
+        });
+        await tx.wait();
+      }
+
+      const receipt = await ultigenEggsContract.hatchEggsWithSignature(payload);
+      await receipt.wait(1);
+
+    } catch (error) {
+      console.log('error', error);
+      throw new Error('Failed transaction');
+    }
   }
 
   // consume hatchy voucher from user account and give eggs to user
@@ -571,6 +632,24 @@ export class UltigenService {
     const signature = await signer.signMessage(ethers.utils.arrayify(hash));
     return signature;
   }
+
+  async getHatchEggsSignature(
+    address: string,
+    eggType: number,
+    amount: BigNumber,
+    monsterIds: number[],
+    nonce: BigNumber,
+  ) {
+    const provider = new ethers.providers.JsonRpcProvider(config.JSON_RPC_URL);
+    const signer = new Wallet(config.MASTERS_SIGNER_KEY, provider);
+    const hash = ethers.utils.solidityKeccak256(
+      ['address', 'uint256', 'uint256', 'uint256[]', 'uint256'],
+      [address, eggType, amount, monsterIds, nonce]);
+
+    const signature = await signer.signMessage(ethers.utils.arrayify(hash));
+    return signature;
+  }
+
 
   async transferUltigenAssets(fromWalletData: WalletUser, toAddress: string) {
     // create wallet with privateKey of fromAddress
