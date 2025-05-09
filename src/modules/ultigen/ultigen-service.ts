@@ -225,7 +225,7 @@ export class UltigenService {
     }
 
     // Update the monster with the new level, stage, and residual XP
-    await this.updateMonsterWithSignature(
+    const receipt = await this.updateMonsterWithSignature(
       monsterOwnerAddress,
       uniqueId,
       monster.monsterId,
@@ -233,6 +233,7 @@ export class UltigenService {
       currentLevelData.stage,
       accXP // Residual XP after leveling up
     )
+    await receipt.wait(1);
     const newMonsterData = await this.getMonsterData(uniqueId);
     return newMonsterData;
   }

@@ -449,12 +449,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-05-09T03:24:12.302Z"
+						"default": "2025-05-09T03:38:55.517Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"default": "2025-05-09T03:24:12.303Z"
+						"default": "2025-05-09T03:38:55.518Z"
 					},
 					"name": {
 						"type": "string"
