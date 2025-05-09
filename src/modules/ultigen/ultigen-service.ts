@@ -128,6 +128,7 @@ export class UltigenService {
     await this.loadLevelsData();
     const ultigen = getContract('hatchyverseUltigen', this.chainId, true);
     const monster = await this.getMonsterData(uniqueId);
+    const monsterOwnerAddress = await ultigen.ownerOf(uniqueId);
     const currentXp = monster.xp;
 
     const dataIndex = this.levelsData.findIndex((l) => l.level === monster.level);
@@ -169,7 +170,8 @@ export class UltigenService {
     }
 
     // Update the monster with the new level, stage, and residual XP
-    const receipt = await ultigen.updateMonster(
+    const receipt = await this.updateMonsterWithSignature(
+      monsterOwnerAddress,
       uniqueId,
       newMonsterId,
       level,
@@ -293,7 +295,8 @@ export class UltigenService {
         await tx.wait();
       }
 
-      await ultigenContract.updateMonsterWithSignature(payload);
+      const receipt = await ultigenContract.updateMonsterWithSignature(payload);
+      return receipt;
     } catch (error) {
       console.log('error', error);
       throw new Error('Failed transaction');
