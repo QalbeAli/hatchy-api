@@ -242,6 +242,7 @@ export class UsersService {
     await this.walletUsersCollection.doc(walletAddress).set(walletData);
     await this.usersCollection.doc(uid).update({
       mainWallet: walletAddress,
+      internalWallet: walletAddress,
     });
     return walletData;
   }
