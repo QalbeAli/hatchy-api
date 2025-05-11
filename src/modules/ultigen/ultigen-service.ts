@@ -188,7 +188,7 @@ export class UltigenService {
     xp: number,
   ) {
     await this.loadLevelsData();
-    const ultigen = getContract('hatchyverseUltigen', this.chainId, true);
+    const ultigen = getContract('hatchyverseUltigen', this.chainId);
     const monster = await this.getMonsterData(uniqueId);
     const monsterOwnerAddress = await ultigen.ownerOf(uniqueId);
     const currentXp = monster.xp;
