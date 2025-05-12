@@ -5,7 +5,6 @@ import { admin } from "../../firebase/firebase";
 import { LeaderboardService } from "../leaderboard/leaderboard-service";
 import { User } from "./user";
 import { Wallet as UserWallet } from "./wallet";
-import { TradesService } from "../trades/trades-service";
 import { ethers } from "ethers";
 import { UltigenService } from "../ultigen/ultigen-service";
 
@@ -76,8 +75,6 @@ export class UsersService {
     if (body.displayName) {
       // update display name in ranks
       await this.leaderboardService.updateUserRankDisplayName(uid, body.displayName);
-      const tradesService = new TradesService();
-      await tradesService.updateUsername(uid, body.displayName);
     }
     return await this.get(uid);
   }

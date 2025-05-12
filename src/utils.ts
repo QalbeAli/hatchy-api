@@ -2,7 +2,6 @@ import { CognitoIdentityServiceProvider } from 'aws-sdk';
 import { Response } from "express";
 import * as crypto from 'crypto';
 import { ethers } from 'ethers';
-import { ApiKeysService } from './services/ApiKeysService';
 import config from './config';
 import { User } from './modules/users/user';
 
@@ -17,24 +16,6 @@ export const setAvatarLayer = (
 
 export const generateSecureNonce = () => {
   return ethers.BigNumber.from(ethers.utils.randomBytes(32))
-}
-
-export const isValidAPIKey = async (apiKey: string, clientId: string, service: string) => {
-  const apiKeysService = new ApiKeysService();
-  const keyData = await apiKeysService.getApiKeyById(clientId);
-  const hashedKey = hashKey(apiKey);
-  console.log(keyData, hashedKey, service);
-  if (keyData && keyData.apiKey === hashedKey &&
-    keyData.service.split(',').includes(service)) {
-    return {
-      key: keyData,
-      valid: true
-    }
-  }
-  return {
-    key: null,
-    valid: false
-  }
 }
 
 export const getGen2ShinyIds = (firstGen2Id: number) => {

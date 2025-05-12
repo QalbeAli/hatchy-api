@@ -308,33 +308,6 @@ export class VouchersController extends Controller {
     };
   }
 
-  @Security("jwt")
-  @Post("deposit/sync")
-  public async syncDepositedAssets(
-    @Request() request: any,
-    @Body() body: {
-      receiver: string,
-      depositId: number
-    }
-  ) {
-    if (!isAddress(body.receiver)) {
-      throw new BadRequestError('Invalid address');
-    }
-    const voucherService = new VouchersService();
-    const vouchers = await voucherService.syncDepositedAssets(body.receiver, body.depositId);
-    await voucherService.logVoucher({
-      action: 'sync-deposit',
-      vouchersData: vouchers,
-      actionUserId: request.user.uid,
-      actionUserEmail: request.user.email,
-      toUserId: request.user.uid,
-      toUserEmail: request.user.email,
-    });
-    return {
-      message: 'Deposited assets synced',
-    }
-  }
-
   @Post("deposit/signature")
   public async getDepositSignature(
     @Body() body: {

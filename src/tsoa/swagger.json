@@ -7,1972 +7,6 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"User": {
-				"properties": {
-					"uid": {
-						"type": "string"
-					},
-					"email": {
-						"type": "string"
-					},
-					"referralCode": {
-						"type": "string"
-					},
-					"referralCount": {
-						"type": "number",
-						"format": "double"
-					},
-					"referrerId": {
-						"type": "string"
-					},
-					"displayName": {
-						"type": "string"
-					},
-					"picture": {
-						"type": "string"
-					},
-					"photoUrl": {
-						"type": "string"
-					},
-					"disabled": {
-						"type": "boolean"
-					},
-					"roles": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					},
-					"bio": {
-						"type": "string"
-					},
-					"xpPoints": {
-						"type": "number",
-						"format": "double"
-					},
-					"mainWallet": {
-						"type": "string"
-					},
-					"internalWallet": {
-						"type": "string"
-					},
-					"vouchersMerged": {
-						"type": "boolean"
-					},
-					"discordConfirmed": {
-						"type": "boolean"
-					},
-					"discordId": {
-						"type": "string"
-					},
-					"discordUsername": {
-						"type": "string"
-					},
-					"wallets": {
-						"items": {
-							"properties": {
-								"createdAt": {
-									"type": "number",
-									"format": "double"
-								},
-								"linked": {
-									"type": "boolean"
-								},
-								"nonce": {
-									"type": "string"
-								},
-								"address": {
-									"type": "string"
-								}
-							},
-							"required": [
-								"createdAt",
-								"linked",
-								"nonce",
-								"address"
-							],
-							"type": "object"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"uid",
-					"email",
-					"referralCode",
-					"referralCount",
-					"internalWallet"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"MessageResponse": {
-				"properties": {
-					"message": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"message"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Wallet": {
-				"properties": {
-					"userId": {
-						"type": "string"
-					},
-					"address": {
-						"type": "string"
-					},
-					"mainWallet": {
-						"type": "boolean"
-					},
-					"privateKey": {
-						"type": "string"
-					},
-					"publicKey": {
-						"type": "string"
-					},
-					"seedPhrase": {
-						"type": "string"
-					},
-					"isInternalWallet": {
-						"type": "boolean"
-					}
-				},
-				"required": [
-					"userId",
-					"address"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"WalletSignatureMessage": {
-				"properties": {
-					"message": {
-						"type": "string"
-					},
-					"nonce": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"message",
-					"nonce"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"AuthCustomToken": {
-				"properties": {
-					"message": {
-						"type": "string"
-					},
-					"token": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"message",
-					"token"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"GameSave": {
-				"properties": {
-					"uid": {
-						"type": "string"
-					},
-					"gameId": {
-						"type": "string"
-					},
-					"saveName": {
-						"type": "string"
-					},
-					"userId": {
-						"type": "string"
-					},
-					"createdAt": {
-						"type": "string"
-					},
-					"updatedAt": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"uid",
-					"gameId",
-					"saveName",
-					"userId",
-					"createdAt",
-					"updatedAt"
-				],
-				"type": "object",
-				"additionalProperties": {}
-			},
-			"Game": {
-				"properties": {
-					"uid": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"description": {
-						"type": "string"
-					},
-					"itchioEmbedLink": {
-						"type": "string"
-					},
-					"itchioLink": {
-						"type": "string"
-					},
-					"status": {
-						"type": "string"
-					},
-					"requirement": {
-						"type": "string"
-					},
-					"views": {
-						"type": "number",
-						"format": "double"
-					},
-					"slug": {
-						"type": "string"
-					},
-					"deeplink": {
-						"type": "string"
-					},
-					"previewImage": {
-						"type": "string"
-					},
-					"images": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					},
-					"downloadLink": {
-						"type": "string"
-					},
-					"androidLink": {
-						"type": "string"
-					},
-					"iosLink": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"uid",
-					"name",
-					"description"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"ScoreItem": {
-				"properties": {
-					"gameId": {
-						"type": "string"
-					},
-					"score": {
-						"type": "number",
-						"format": "double"
-					},
-					"userId": {
-						"type": "string"
-					},
-					"username": {
-						"type": "string"
-					},
-					"createdAt": {
-						"type": "string"
-					},
-					"updatedAt": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"gameId",
-					"score",
-					"userId",
-					"username",
-					"createdAt",
-					"updatedAt"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"RankItem": {
-				"properties": {
-					"gameId": {
-						"type": "string"
-					},
-					"userId": {
-						"type": "string"
-					},
-					"rank": {
-						"type": "number",
-						"format": "double"
-					},
-					"username": {
-						"type": "string"
-					},
-					"createdAt": {
-						"type": "string"
-					},
-					"updatedAt": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"gameId",
-					"userId",
-					"rank",
-					"username",
-					"createdAt",
-					"updatedAt"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"MastersTraitType": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"order": {
-						"type": "number",
-						"format": "double"
-					},
-					"layers": {
-						"items": {
-							"$ref": "#/components/schemas/TraitLayer"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"id",
-					"name",
-					"order",
-					"layers"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"TraitLayer": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"order": {
-						"type": "number",
-						"format": "double"
-					},
-					"layer": {
-						"type": "string"
-					},
-					"type": {
-						"$ref": "#/components/schemas/MastersTraitType"
-					}
-				},
-				"required": [
-					"id",
-					"name",
-					"order",
-					"layer"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"TraitGender": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"id",
-					"name"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"MastersColor": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"color": {
-						"type": "string"
-					},
-					"typeId": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"id",
-					"color",
-					"typeId",
-					"name"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"MastersTrait": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"createdAt": {
-						"type": "string",
-						"format": "date-time",
-						"default": "2025-05-11T01:53:55.371Z"
-					},
-					"updatedAt": {
-						"type": "string",
-						"format": "date-time",
-						"default": "2025-05-11T01:53:55.372Z"
-					},
-					"name": {
-						"type": "string"
-					},
-					"image": {
-						"type": "string"
-					},
-					"frontImage": {
-						"type": "string"
-					},
-					"backImage": {
-						"type": "string"
-					},
-					"type": {
-						"$ref": "#/components/schemas/MastersTraitType"
-					},
-					"gender": {
-						"$ref": "#/components/schemas/TraitGender"
-					},
-					"color": {
-						"$ref": "#/components/schemas/MastersColor"
-					},
-					"hide": {
-						"type": "boolean"
-					}
-				},
-				"required": [
-					"id",
-					"name",
-					"image",
-					"type",
-					"gender",
-					"color",
-					"hide"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"BigNumber": {},
-			"MastersMintTrait": {
-				"properties": {
-					"colors": {
-						"items": {
-							"$ref": "#/components/schemas/MastersColor"
-						},
-						"type": "array"
-					},
-					"traits": {
-						"items": {
-							"$ref": "#/components/schemas/MastersTrait"
-						},
-						"type": "array"
-					},
-					"type": {
-						"$ref": "#/components/schemas/MastersTraitType"
-					}
-				},
-				"required": [
-					"colors",
-					"traits",
-					"type"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"ItemLayer": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"order": {
-						"type": "number",
-						"format": "double"
-					},
-					"layer": {
-						"type": "string"
-					},
-					"type": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"id",
-					"name",
-					"order",
-					"layer",
-					"type"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"ItemCategory": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"type": {
-						"$ref": "#/components/schemas/ItemType"
-					}
-				},
-				"required": [
-					"id",
-					"name",
-					"type"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"ItemType": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"layers": {
-						"items": {
-							"$ref": "#/components/schemas/ItemLayer"
-						},
-						"type": "array"
-					},
-					"categories": {
-						"items": {
-							"$ref": "#/components/schemas/ItemCategory"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"id",
-					"name",
-					"layers"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"MastersItem": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"createdAt": {
-						"type": "string"
-					},
-					"updatedAt": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"category": {
-						"$ref": "#/components/schemas/ItemCategory"
-					},
-					"gender": {
-						"allOf": [
-							{
-								"$ref": "#/components/schemas/TraitGender"
-							}
-						],
-						"nullable": true
-					},
-					"description": {
-						"type": "string",
-						"nullable": true
-					},
-					"image": {
-						"type": "string"
-					},
-					"frontImage": {
-						"type": "string",
-						"nullable": true
-					},
-					"backImage": {
-						"type": "string",
-						"nullable": true
-					},
-					"maskImage": {
-						"type": "string",
-						"nullable": true
-					},
-					"rarity": {
-						"type": "string",
-						"nullable": true
-					},
-					"effects": {
-						"type": "string",
-						"nullable": true
-					},
-					"storyNotes": {
-						"type": "string",
-						"nullable": true
-					}
-				},
-				"required": [
-					"id",
-					"createdAt",
-					"updatedAt",
-					"name",
-					"category",
-					"image"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"MastersLootboxJoepegsSignature": {
-				"properties": {
-					"receiver": {
-						"type": "string"
-					},
-					"tokenIds": {
-						"items": {
-							"type": "number",
-							"format": "double"
-						},
-						"type": "array"
-					},
-					"amounts": {
-						"items": {
-							"type": "number",
-							"format": "double"
-						},
-						"type": "array"
-					},
-					"items": {
-						"items": {
-							"$ref": "#/components/schemas/MastersItem"
-						},
-						"type": "array"
-					},
-					"nonce": {
-						"properties": {
-							"type": {
-								"type": "string"
-							},
-							"hex": {
-								"type": "string"
-							}
-						},
-						"required": [
-							"type",
-							"hex"
-						],
-						"type": "object"
-					},
-					"signature": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"receiver",
-					"tokenIds",
-					"amounts",
-					"items",
-					"nonce",
-					"signature"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"MastersLootboxItem": {
-				"properties": {
-					"weight": {
-						"type": "number",
-						"format": "double"
-					},
-					"lootbox": {
-						"type": "number",
-						"format": "double"
-					},
-					"item": {
-						"$ref": "#/components/schemas/MastersItem"
-					}
-				},
-				"required": [
-					"weight",
-					"lootbox",
-					"item"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"LootboxPrice": {
-				"properties": {
-					"lootbox": {
-						"type": "number",
-						"format": "double"
-					},
-					"currency": {
-						"type": "string"
-					},
-					"price": {
-						"type": "string"
-					},
-					"decimals": {
-						"type": "number",
-						"format": "double",
-						"nullable": true
-					},
-					"address": {
-						"type": "string",
-						"nullable": true
-					},
-					"image": {
-						"type": "string",
-						"nullable": true
-					}
-				},
-				"required": [
-					"currency",
-					"price"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"MastersLootbox": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"active": {
-						"type": "boolean"
-					},
-					"image": {
-						"type": "string"
-					},
-					"order": {
-						"type": "number",
-						"format": "double"
-					},
-					"chainId": {
-						"type": "number",
-						"format": "double",
-						"nullable": true
-					},
-					"gameId": {
-						"type": "string",
-						"nullable": true
-					},
-					"genderId": {
-						"type": "number",
-						"format": "double"
-					},
-					"ticketId": {
-						"type": "number",
-						"format": "double",
-						"nullable": true
-					},
-					"itemWeights": {
-						"items": {
-							"$ref": "#/components/schemas/MastersLootboxItem"
-						},
-						"type": "array"
-					},
-					"prices": {
-						"items": {
-							"$ref": "#/components/schemas/LootboxPrice"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"id",
-					"name",
-					"active",
-					"image",
-					"order",
-					"chainId",
-					"gameId",
-					"genderId",
-					"ticketId",
-					"itemWeights",
-					"prices"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"MastersLootboxSignature": {
-				"properties": {
-					"receiver": {
-						"type": "string"
-					},
-					"tokenIds": {
-						"items": {
-							"type": "number",
-							"format": "double"
-						},
-						"type": "array"
-					},
-					"amounts": {
-						"items": {
-							"type": "number",
-							"format": "double"
-						},
-						"type": "array"
-					},
-					"items": {
-						"items": {
-							"$ref": "#/components/schemas/MastersItem"
-						},
-						"type": "array"
-					},
-					"nonce": {
-						"properties": {
-							"type": {
-								"type": "string"
-							},
-							"hex": {
-								"type": "string"
-							}
-						},
-						"required": [
-							"type",
-							"hex"
-						],
-						"type": "object"
-					},
-					"claimableUntil": {
-						"type": "number",
-						"format": "double"
-					},
-					"currency": {
-						"type": "string"
-					},
-					"price": {
-						"type": "string"
-					},
-					"decimals": {
-						"type": "number",
-						"format": "double"
-					},
-					"payWithTicket": {
-						"type": "boolean"
-					},
-					"ticketId": {
-						"type": "number",
-						"format": "double"
-					},
-					"signature": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"receiver",
-					"tokenIds",
-					"amounts",
-					"items",
-					"nonce",
-					"claimableUntil",
-					"currency",
-					"price",
-					"decimals",
-					"payWithTicket",
-					"ticketId",
-					"signature"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"MastersItemBalance": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"createdAt": {
-						"type": "string"
-					},
-					"updatedAt": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"category": {
-						"$ref": "#/components/schemas/ItemCategory"
-					},
-					"gender": {
-						"allOf": [
-							{
-								"$ref": "#/components/schemas/TraitGender"
-							}
-						],
-						"nullable": true
-					},
-					"description": {
-						"type": "string",
-						"nullable": true
-					},
-					"image": {
-						"type": "string"
-					},
-					"frontImage": {
-						"type": "string",
-						"nullable": true
-					},
-					"backImage": {
-						"type": "string",
-						"nullable": true
-					},
-					"maskImage": {
-						"type": "string",
-						"nullable": true
-					},
-					"rarity": {
-						"type": "string",
-						"nullable": true
-					},
-					"effects": {
-						"type": "string",
-						"nullable": true
-					},
-					"storyNotes": {
-						"type": "string",
-						"nullable": true
-					},
-					"balance": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"id",
-					"createdAt",
-					"updatedAt",
-					"name",
-					"category",
-					"image",
-					"balance"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"MastersAvatar": {
-				"properties": {
-					"tokenId": {
-						"type": "number",
-						"format": "double"
-					},
-					"image": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"attributes": {
-						"items": {
-							"properties": {
-								"value": {
-									"type": "string"
-								},
-								"trait_type": {
-									"type": "string"
-								}
-							},
-							"required": [
-								"value",
-								"trait_type"
-							],
-							"type": "object"
-						},
-						"type": "array"
-					},
-					"equippedItems": {
-						"items": {
-							"$ref": "#/components/schemas/MastersItem"
-						},
-						"type": "array"
-					},
-					"traits": {
-						"items": {
-							"$ref": "#/components/schemas/MastersTrait"
-						},
-						"type": "array"
-					},
-					"layers": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"tokenId",
-					"image",
-					"name",
-					"attributes",
-					"equippedItems",
-					"traits",
-					"layers"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"AssetAgreement": {
-				"properties": {
-					"uid": {
-						"type": "string"
-					},
-					"date": {
-						"type": "string"
-					},
-					"role": {
-						"type": "string"
-					},
-					"accepted": {
-						"type": "boolean"
-					}
-				},
-				"required": [
-					"uid",
-					"date",
-					"role",
-					"accepted"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Asset": {
-				"properties": {
-					"uid": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"category": {
-						"type": "string"
-					},
-					"description": {
-						"type": "string"
-					},
-					"contract": {
-						"type": "string"
-					},
-					"holder": {
-						"type": "string"
-					},
-					"contractType": {
-						"type": "string",
-						"enum": [
-							"ERC721",
-							"ERC1155",
-							"ERC20"
-						]
-					},
-					"tokenId": {
-						"type": "string"
-					},
-					"type": {
-						"type": "string",
-						"enum": [
-							"blockchain",
-							"game"
-						]
-					},
-					"property": {
-						"type": "string"
-					},
-					"image": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"uid",
-					"name",
-					"category",
-					"image"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Pick_Asset.Exclude_keyofAsset.uid__": {
-				"properties": {
-					"name": {
-						"type": "string"
-					},
-					"category": {
-						"type": "string"
-					},
-					"description": {
-						"type": "string"
-					},
-					"contract": {
-						"type": "string"
-					},
-					"holder": {
-						"type": "string"
-					},
-					"contractType": {
-						"type": "string",
-						"enum": [
-							"ERC721",
-							"ERC1155",
-							"ERC20"
-						]
-					},
-					"tokenId": {
-						"type": "string"
-					},
-					"type": {
-						"type": "string",
-						"enum": [
-							"blockchain",
-							"game"
-						]
-					},
-					"property": {
-						"type": "string"
-					},
-					"image": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"name",
-					"category",
-					"image"
-				],
-				"type": "object",
-				"description": "From T, pick a set of properties whose keys are in the union K"
-			},
-			"Omit_Asset.uid_": {
-				"$ref": "#/components/schemas/Pick_Asset.Exclude_keyofAsset.uid__",
-				"description": "Construct a type with the properties of T except for those in type K."
-			},
-			"CreateAssetParams": {
-				"$ref": "#/components/schemas/Omit_Asset.uid_"
-			},
-			"TicketPrice": {
-				"properties": {
-					"ticket": {
-						"$ref": "#/components/schemas/Ticket"
-					},
-					"currency": {
-						"type": "string"
-					},
-					"price": {
-						"type": "string"
-					},
-					"decimals": {
-						"type": "number",
-						"format": "double"
-					},
-					"address": {
-						"type": "string"
-					},
-					"image": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"currency",
-					"price",
-					"decimals",
-					"address",
-					"image"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Ticket": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"image": {
-						"type": "string"
-					},
-					"prices": {
-						"items": {
-							"$ref": "#/components/schemas/TicketPrice"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"id",
-					"name",
-					"image"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"TicketBalance": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"image": {
-						"type": "string"
-					},
-					"price": {
-						"items": {
-							"$ref": "#/components/schemas/TicketPrice"
-						},
-						"type": "array"
-					},
-					"balance": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"id",
-					"name",
-					"image",
-					"price",
-					"balance"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"ApiKey": {
-				"properties": {
-					"uid": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"apiKey": {
-						"type": "string"
-					},
-					"createdAt": {
-						"type": "string"
-					},
-					"updatedAt": {
-						"type": "string"
-					},
-					"permissions": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					},
-					"appId": {
-						"type": "string"
-					},
-					"balance": {
-						"properties": {},
-						"additionalProperties": {
-							"type": "number",
-							"format": "double"
-						},
-						"type": "object"
-					}
-				},
-				"required": [
-					"uid",
-					"name",
-					"apiKey",
-					"createdAt",
-					"updatedAt",
-					"permissions",
-					"balance"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Pick_ApiKey.Exclude_keyofApiKey.uid-or-createdAt-or-updatedAt-or-apiKey__": {
-				"properties": {
-					"name": {
-						"type": "string"
-					},
-					"permissions": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					},
-					"appId": {
-						"type": "string"
-					},
-					"balance": {
-						"properties": {},
-						"additionalProperties": {
-							"type": "number",
-							"format": "double"
-						},
-						"type": "object"
-					}
-				},
-				"required": [
-					"name",
-					"permissions",
-					"balance"
-				],
-				"type": "object",
-				"description": "From T, pick a set of properties whose keys are in the union K"
-			},
-			"Omit_ApiKey.uid-or-createdAt-or-updatedAt-or-apiKey_": {
-				"$ref": "#/components/schemas/Pick_ApiKey.Exclude_keyofApiKey.uid-or-createdAt-or-updatedAt-or-apiKey__",
-				"description": "Construct a type with the properties of T except for those in type K."
-			},
-			"CreateApiKeyParams": {
-				"$ref": "#/components/schemas/Omit_ApiKey.uid-or-createdAt-or-updatedAt-or-apiKey_"
-			},
-			"Event": {
-				"properties": {
-					"uid": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"description": {
-						"type": "string"
-					},
-					"gameId": {
-						"type": "string"
-					},
-					"image": {
-						"type": "string"
-					},
-					"rewards": {
-						"items": {
-							"properties": {
-								"assets": {
-									"items": {
-										"properties": {
-											"property": {
-												"type": "string"
-											},
-											"type": {
-												"type": "string",
-												"enum": [
-													"blockchain",
-													"game"
-												]
-											},
-											"amount": {
-												"type": "number",
-												"format": "double"
-											},
-											"name": {
-												"type": "string"
-											},
-											"image": {
-												"type": "string"
-											},
-											"uid": {
-												"type": "string"
-											}
-										},
-										"required": [
-											"amount",
-											"name",
-											"image",
-											"uid"
-										],
-										"type": "object"
-									},
-									"type": "array"
-								},
-								"toRank": {
-									"type": "number",
-									"format": "double"
-								},
-								"fromRank": {
-									"type": "number",
-									"format": "double"
-								}
-							},
-							"required": [
-								"assets",
-								"toRank",
-								"fromRank"
-							],
-							"type": "object"
-						},
-						"type": "array"
-					},
-					"rewardsGiven": {
-						"type": "boolean"
-					},
-					"startDate": {
-						"type": "string"
-					},
-					"endDate": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"uid",
-					"name",
-					"rewards",
-					"rewardsGiven",
-					"startDate",
-					"endDate"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Pick_Event.Exclude_keyofEvent.uid__": {
-				"properties": {
-					"name": {
-						"type": "string"
-					},
-					"description": {
-						"type": "string"
-					},
-					"image": {
-						"type": "string"
-					},
-					"gameId": {
-						"type": "string"
-					},
-					"rewards": {
-						"items": {
-							"properties": {
-								"assets": {
-									"items": {
-										"properties": {
-											"property": {
-												"type": "string"
-											},
-											"type": {
-												"type": "string",
-												"enum": [
-													"blockchain",
-													"game"
-												]
-											},
-											"amount": {
-												"type": "number",
-												"format": "double"
-											},
-											"name": {
-												"type": "string"
-											},
-											"image": {
-												"type": "string"
-											},
-											"uid": {
-												"type": "string"
-											}
-										},
-										"required": [
-											"amount",
-											"name",
-											"image",
-											"uid"
-										],
-										"type": "object"
-									},
-									"type": "array"
-								},
-								"toRank": {
-									"type": "number",
-									"format": "double"
-								},
-								"fromRank": {
-									"type": "number",
-									"format": "double"
-								}
-							},
-							"required": [
-								"assets",
-								"toRank",
-								"fromRank"
-							],
-							"type": "object"
-						},
-						"type": "array"
-					},
-					"rewardsGiven": {
-						"type": "boolean"
-					},
-					"startDate": {
-						"type": "string"
-					},
-					"endDate": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"name",
-					"rewards",
-					"rewardsGiven",
-					"startDate",
-					"endDate"
-				],
-				"type": "object",
-				"description": "From T, pick a set of properties whose keys are in the union K"
-			},
-			"Omit_Event.uid_": {
-				"$ref": "#/components/schemas/Pick_Event.Exclude_keyofEvent.uid__",
-				"description": "Construct a type with the properties of T except for those in type K."
-			},
-			"CreateEventParams": {
-				"$ref": "#/components/schemas/Omit_Event.uid_"
-			},
-			"TradeAsset": {
-				"properties": {
-					"amount": {
-						"type": "number",
-						"format": "double"
-					},
-					"category": {
-						"type": "string"
-					},
-					"contract": {
-						"type": "string"
-					},
-					"contractType": {
-						"type": "string",
-						"enum": [
-							"ERC20",
-							"ERC721",
-							"ERC1155"
-						]
-					},
-					"image": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"tokenId": {
-						"type": "string"
-					},
-					"uid": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"amount",
-					"category",
-					"contract",
-					"contractType",
-					"name",
-					"uid"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Trade": {
-				"properties": {
-					"requestAssets": {
-						"items": {
-							"$ref": "#/components/schemas/TradeAsset"
-						},
-						"type": "array"
-					},
-					"offerAssets": {
-						"items": {
-							"$ref": "#/components/schemas/TradeAsset"
-						},
-						"type": "array"
-					},
-					"usersOffers": {
-						"items": {
-							"properties": {
-								"vouchers": {
-									"items": {
-										"$ref": "#/components/schemas/TradeAsset"
-									},
-									"type": "array"
-								},
-								"userId": {
-									"type": "string"
-								}
-							},
-							"required": [
-								"vouchers",
-								"userId"
-							],
-							"type": "object"
-						},
-						"type": "array"
-					},
-					"usersOffersIds": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
-					},
-					"createdAt": {
-						"type": "string"
-					},
-					"updatedAt": {
-						"type": "string"
-					},
-					"userId": {
-						"type": "string"
-					},
-					"username": {
-						"type": "string"
-					},
-					"status": {
-						"type": "string"
-					},
-					"uid": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"requestAssets",
-					"offerAssets",
-					"usersOffers",
-					"usersOffersIds",
-					"createdAt",
-					"updatedAt",
-					"userId",
-					"username",
-					"status",
-					"uid"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"TradeOffer": {
-				"properties": {
-					"tradeId": {
-						"type": "string"
-					},
-					"userId": {
-						"type": "string"
-					},
-					"offer": {
-						"items": {
-							"$ref": "#/components/schemas/TradeAsset"
-						},
-						"type": "array"
-					},
-					"tradeAssets": {
-						"items": {
-							"$ref": "#/components/schemas/TradeAsset"
-						},
-						"type": "array"
-					},
-					"tradeStatus": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"tradeId",
-					"userId",
-					"offer",
-					"tradeAssets",
-					"tradeStatus"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"HatchyBalance": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"element": {
-						"type": "string"
-					},
-					"image": {
-						"type": "string"
-					},
-					"commonAmount": {
-						"type": "number",
-						"format": "double"
-					},
-					"shinyAmount": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"id",
-					"name",
-					"element",
-					"image",
-					"commonAmount",
-					"shinyAmount"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Contract": {
-				"properties": {
-					"uid": {
-						"type": "string"
-					},
-					"name": {
-						"type": "string"
-					},
-					"description": {
-						"type": "string"
-					},
-					"address": {
-						"type": "string"
-					},
-					"chainId": {
-						"type": "number",
-						"format": "double"
-					},
-					"link": {
-						"type": "string"
-					},
-					"contractType": {
-						"type": "string",
-						"enum": [
-							"ERC721",
-							"ERC1155",
-							"ERC20",
-							"Other"
-						]
-					},
-					"deployDate": {
-						"type": "string"
-					},
-					"owner": {
-						"type": "string"
-					},
-					"verified": {
-						"type": "boolean"
-					}
-				},
-				"required": [
-					"uid",
-					"name",
-					"address",
-					"chainId",
-					"link",
-					"deployDate",
-					"owner",
-					"verified"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Pick_Contract.Exclude_keyofContract.uid-or-owner__": {
-				"properties": {
-					"name": {
-						"type": "string"
-					},
-					"description": {
-						"type": "string"
-					},
-					"contractType": {
-						"type": "string",
-						"enum": [
-							"ERC721",
-							"ERC1155",
-							"ERC20",
-							"Other"
-						]
-					},
-					"address": {
-						"type": "string"
-					},
-					"chainId": {
-						"type": "number",
-						"format": "double"
-					},
-					"link": {
-						"type": "string"
-					},
-					"deployDate": {
-						"type": "string"
-					},
-					"verified": {
-						"type": "boolean"
-					}
-				},
-				"required": [
-					"name",
-					"address",
-					"chainId",
-					"link",
-					"deployDate",
-					"verified"
-				],
-				"type": "object",
-				"description": "From T, pick a set of properties whose keys are in the union K"
-			},
-			"Omit_Contract.uid-or-owner_": {
-				"$ref": "#/components/schemas/Pick_Contract.Exclude_keyofContract.uid-or-owner__",
-				"description": "Construct a type with the properties of T except for those in type K."
-			},
-			"CreateContractParams": {
-				"$ref": "#/components/schemas/Omit_Contract.uid-or-owner_"
-			},
-			"UltigenMonster": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"element": {
-						"type": "string"
-					},
-					"image": {
-						"type": "string"
-					},
-					"monsterId": {
-						"type": "number",
-						"format": "double"
-					},
-					"level": {
-						"type": "number",
-						"format": "double"
-					},
-					"stage": {
-						"type": "number",
-						"format": "double"
-					},
-					"xp": {
-						"type": "number",
-						"format": "double"
-					},
-					"skills": {
-						"items": {},
-						"type": "array"
-					},
-					"walkSpeed": {
-						"type": "number",
-						"format": "double"
-					},
-					"attackDamage": {
-						"type": "number",
-						"format": "double"
-					},
-					"aspd": {
-						"type": "number",
-						"format": "double"
-					},
-					"health": {
-						"type": "number",
-						"format": "double"
-					},
-					"behavior": {
-						"type": "string"
-					},
-					"dps": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"id",
-					"name",
-					"element",
-					"image",
-					"monsterId",
-					"level",
-					"stage",
-					"xp",
-					"skills",
-					"walkSpeed",
-					"attackDamage",
-					"aspd",
-					"health",
-					"behavior",
-					"dps"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"UltigenEggsBalance": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"element": {
-						"type": "string"
-					},
-					"image": {
-						"type": "string"
-					},
-					"amount": {
-						"type": "number",
-						"format": "double"
-					}
-				},
-				"required": [
-					"id",
-					"name",
-					"element",
-					"image",
-					"amount"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
 			"Voucher": {
 				"properties": {
 					"blockchainId": {
@@ -2048,6 +82,19 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"MessageResponse": {
+				"properties": {
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"BigNumber": {},
 			"VoucherClaimSignature": {
 				"properties": {
 					"rewardContractType": {
@@ -2176,6 +223,795 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"User": {
+				"properties": {
+					"uid": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"referralCode": {
+						"type": "string"
+					},
+					"referralCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"referrerId": {
+						"type": "string"
+					},
+					"displayName": {
+						"type": "string"
+					},
+					"picture": {
+						"type": "string"
+					},
+					"photoUrl": {
+						"type": "string"
+					},
+					"disabled": {
+						"type": "boolean"
+					},
+					"roles": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"bio": {
+						"type": "string"
+					},
+					"xpPoints": {
+						"type": "number",
+						"format": "double"
+					},
+					"mainWallet": {
+						"type": "string"
+					},
+					"internalWallet": {
+						"type": "string"
+					},
+					"vouchersMerged": {
+						"type": "boolean"
+					},
+					"discordConfirmed": {
+						"type": "boolean"
+					},
+					"discordId": {
+						"type": "string"
+					},
+					"discordUsername": {
+						"type": "string"
+					},
+					"wallets": {
+						"items": {
+							"properties": {
+								"createdAt": {
+									"type": "number",
+									"format": "double"
+								},
+								"linked": {
+									"type": "boolean"
+								},
+								"nonce": {
+									"type": "string"
+								},
+								"address": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"createdAt",
+								"linked",
+								"nonce",
+								"address"
+							],
+							"type": "object"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"uid",
+					"email",
+					"referralCode",
+					"referralCount",
+					"internalWallet"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Wallet": {
+				"properties": {
+					"userId": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"mainWallet": {
+						"type": "boolean"
+					},
+					"privateKey": {
+						"type": "string"
+					},
+					"publicKey": {
+						"type": "string"
+					},
+					"seedPhrase": {
+						"type": "string"
+					},
+					"isInternalWallet": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"userId",
+					"address"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UltigenMonster": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"element": {
+						"type": "string"
+					},
+					"image": {
+						"type": "string"
+					},
+					"monsterId": {
+						"type": "number",
+						"format": "double"
+					},
+					"level": {
+						"type": "number",
+						"format": "double"
+					},
+					"stage": {
+						"type": "number",
+						"format": "double"
+					},
+					"xp": {
+						"type": "number",
+						"format": "double"
+					},
+					"skills": {
+						"items": {},
+						"type": "array"
+					},
+					"walkSpeed": {
+						"type": "number",
+						"format": "double"
+					},
+					"attackDamage": {
+						"type": "number",
+						"format": "double"
+					},
+					"aspd": {
+						"type": "number",
+						"format": "double"
+					},
+					"health": {
+						"type": "number",
+						"format": "double"
+					},
+					"behavior": {
+						"type": "string"
+					},
+					"dps": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"element",
+					"image",
+					"monsterId",
+					"level",
+					"stage",
+					"xp",
+					"skills",
+					"walkSpeed",
+					"attackDamage",
+					"aspd",
+					"health",
+					"behavior",
+					"dps"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UltigenEggsBalance": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"element": {
+						"type": "string"
+					},
+					"image": {
+						"type": "string"
+					},
+					"amount": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"element",
+					"image",
+					"amount"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ScoreItem": {
+				"properties": {
+					"gameId": {
+						"type": "string"
+					},
+					"score": {
+						"type": "number",
+						"format": "double"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"username": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"gameId",
+					"score",
+					"userId",
+					"username",
+					"createdAt",
+					"updatedAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RankItem": {
+				"properties": {
+					"gameId": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"rank": {
+						"type": "number",
+						"format": "double"
+					},
+					"username": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"gameId",
+					"userId",
+					"rank",
+					"username",
+					"createdAt",
+					"updatedAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"HatchyBalance": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"element": {
+						"type": "string"
+					},
+					"image": {
+						"type": "string"
+					},
+					"commonAmount": {
+						"type": "number",
+						"format": "double"
+					},
+					"shinyAmount": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"element",
+					"image",
+					"commonAmount",
+					"shinyAmount"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"GameSave": {
+				"properties": {
+					"uid": {
+						"type": "string"
+					},
+					"gameId": {
+						"type": "string"
+					},
+					"saveName": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"uid",
+					"gameId",
+					"saveName",
+					"userId",
+					"createdAt",
+					"updatedAt"
+				],
+				"type": "object",
+				"additionalProperties": {}
+			},
+			"Game": {
+				"properties": {
+					"uid": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"itchioEmbedLink": {
+						"type": "string"
+					},
+					"itchioLink": {
+						"type": "string"
+					},
+					"status": {
+						"type": "string"
+					},
+					"requirement": {
+						"type": "string"
+					},
+					"views": {
+						"type": "number",
+						"format": "double"
+					},
+					"slug": {
+						"type": "string"
+					},
+					"deeplink": {
+						"type": "string"
+					},
+					"previewImage": {
+						"type": "string"
+					},
+					"images": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"downloadLink": {
+						"type": "string"
+					},
+					"androidLink": {
+						"type": "string"
+					},
+					"iosLink": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"uid",
+					"name",
+					"description"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Contract": {
+				"properties": {
+					"uid": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"chainId": {
+						"type": "number",
+						"format": "double"
+					},
+					"link": {
+						"type": "string"
+					},
+					"contractType": {
+						"type": "string",
+						"enum": [
+							"ERC721",
+							"ERC1155",
+							"ERC20",
+							"Other"
+						]
+					},
+					"deployDate": {
+						"type": "string"
+					},
+					"owner": {
+						"type": "string"
+					},
+					"verified": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"uid",
+					"name",
+					"address",
+					"chainId",
+					"link",
+					"deployDate",
+					"owner",
+					"verified"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_Contract.Exclude_keyofContract.uid-or-owner__": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"chainId": {
+						"type": "number",
+						"format": "double"
+					},
+					"link": {
+						"type": "string"
+					},
+					"contractType": {
+						"type": "string",
+						"enum": [
+							"ERC721",
+							"ERC1155",
+							"ERC20",
+							"Other"
+						]
+					},
+					"deployDate": {
+						"type": "string"
+					},
+					"verified": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"name",
+					"address",
+					"chainId",
+					"link",
+					"deployDate",
+					"verified"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_Contract.uid-or-owner_": {
+				"$ref": "#/components/schemas/Pick_Contract.Exclude_keyofContract.uid-or-owner__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"CreateContractParams": {
+				"$ref": "#/components/schemas/Omit_Contract.uid-or-owner_"
+			},
+			"WalletSignatureMessage": {
+				"properties": {
+					"message": {
+						"type": "string"
+					},
+					"nonce": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message",
+					"nonce"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"AuthCustomToken": {
+				"properties": {
+					"message": {
+						"type": "string"
+					},
+					"token": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message",
+					"token"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"AssetAgreement": {
+				"properties": {
+					"uid": {
+						"type": "string"
+					},
+					"date": {
+						"type": "string"
+					},
+					"role": {
+						"type": "string"
+					},
+					"accepted": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"uid",
+					"date",
+					"role",
+					"accepted"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Asset": {
+				"properties": {
+					"uid": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"category": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"contract": {
+						"type": "string"
+					},
+					"holder": {
+						"type": "string"
+					},
+					"contractType": {
+						"type": "string",
+						"enum": [
+							"ERC721",
+							"ERC1155",
+							"ERC20"
+						]
+					},
+					"tokenId": {
+						"type": "string"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"blockchain",
+							"game"
+						]
+					},
+					"property": {
+						"type": "string"
+					},
+					"image": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"uid",
+					"name",
+					"category",
+					"image"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_Asset.Exclude_keyofAsset.uid__": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"contractType": {
+						"type": "string",
+						"enum": [
+							"ERC721",
+							"ERC1155",
+							"ERC20"
+						]
+					},
+					"category": {
+						"type": "string"
+					},
+					"contract": {
+						"type": "string"
+					},
+					"holder": {
+						"type": "string"
+					},
+					"tokenId": {
+						"type": "string"
+					},
+					"type": {
+						"type": "string",
+						"enum": [
+							"blockchain",
+							"game"
+						]
+					},
+					"property": {
+						"type": "string"
+					},
+					"image": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"category",
+					"image"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_Asset.uid_": {
+				"$ref": "#/components/schemas/Pick_Asset.Exclude_keyofAsset.uid__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"CreateAssetParams": {
+				"$ref": "#/components/schemas/Omit_Asset.uid_"
+			},
+			"ApiKey": {
+				"properties": {
+					"uid": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"apiKey": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					},
+					"permissions": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"appId": {
+						"type": "string"
+					},
+					"balance": {
+						"properties": {},
+						"additionalProperties": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "object"
+					}
+				},
+				"required": [
+					"uid",
+					"name",
+					"apiKey",
+					"createdAt",
+					"updatedAt",
+					"permissions",
+					"balance"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_ApiKey.Exclude_keyofApiKey.uid-or-createdAt-or-updatedAt-or-apiKey__": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"permissions": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					},
+					"appId": {
+						"type": "string"
+					},
+					"balance": {
+						"properties": {},
+						"additionalProperties": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "object"
+					}
+				},
+				"required": [
+					"name",
+					"permissions",
+					"balance"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit_ApiKey.uid-or-createdAt-or-updatedAt-or-apiKey_": {
+				"$ref": "#/components/schemas/Pick_ApiKey.Exclude_keyofApiKey.uid-or-createdAt-or-updatedAt-or-apiKey__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"CreateApiKeyParams": {
+				"$ref": "#/components/schemas/Omit_ApiKey.uid-or-createdAt-or-updatedAt-or-apiKey_"
 			}
 		},
 		"securitySchemes": {
@@ -2207,4097 +1043,6 @@
 		"contact": {}
 	},
 	"paths": {
-		"/users": {
-			"get": {
-				"operationId": "GetUser",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/User"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Users"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			},
-			"put": {
-				"operationId": "UpdateUser",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/User"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Users"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"referralCode": {
-										"type": "string"
-									},
-									"bio": {
-										"type": "string"
-									},
-									"displayName": {
-										"type": "string"
-									}
-								},
-								"type": "object"
-							}
-						}
-					}
-				}
-			},
-			"delete": {
-				"operationId": "DeleteAccount",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/MessageResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Users"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/users/wallets": {
-			"get": {
-				"operationId": "GetLinkedWallets",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Wallet"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Users"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/users/main-wallet": {
-			"post": {
-				"operationId": "SetMainWallet",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/User"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Users"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"mainWallet": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"mainWallet"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/users/wallets/create": {
-			"post": {
-				"operationId": "CreateWallet",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"address": {
-											"type": "string"
-										},
-										"message": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"address",
-										"message"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Users"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/users/search": {
-			"get": {
-				"operationId": "SearchUsers",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/User"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Users"
-				],
-				"security": [
-					{
-						"jwt": [
-							"admin"
-						]
-					}
-				],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "query",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/link/wallet": {
-			"get": {
-				"operationId": "GetWalletLinkMessage",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/WalletSignatureMessage"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Link"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "address",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			},
-			"post": {
-				"operationId": "PostWalletLinkSignature",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/AuthCustomToken"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Link"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"isSafeMsig": {
-										"type": "boolean"
-									},
-									"signature": {
-										"type": "string"
-									},
-									"address": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"signature",
-									"address"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			},
-			"delete": {
-				"operationId": "UnlinkWallet",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/MessageResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Link"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"address": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"address"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/link/discord": {
-			"post": {
-				"operationId": "GetDiscordLink",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"url": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"url"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Link"
-				],
-				"security": [
-					{
-						"api_key": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"email": {
-										"type": "string"
-									},
-									"discordUsername": {
-										"type": "string"
-									},
-									"discordId": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"email",
-									"discordUsername",
-									"discordId"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			},
-			"delete": {
-				"operationId": "UnlinkDiscord",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/MessageResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Link"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/link/discord/verify": {
-			"post": {
-				"operationId": "VerifyDiscordConnect",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/MessageResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Link"
-				],
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"code": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"code"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/games/saves/{saveId}": {
-			"delete": {
-				"operationId": "DeleteGameSave",
-				"responses": {
-					"204": {
-						"description": "No content"
-					}
-				},
-				"tags": [
-					"Game"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "saveId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			},
-			"put": {
-				"operationId": "UpdateGameSave",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/GameSave"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Game"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "saveId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"data": {
-										"properties": {},
-										"additionalProperties": {},
-										"type": "object"
-									}
-								},
-								"required": [
-									"data"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			},
-			"get": {
-				"operationId": "GetGameSave",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/GameSave"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Game"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "saveId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/games/saves": {
-			"post": {
-				"operationId": "CreateGameSave",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/GameSave"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Game"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"saveName": {
-										"type": "string"
-									},
-									"data": {
-										"properties": {},
-										"additionalProperties": {},
-										"type": "object"
-									},
-									"gameId": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"data",
-									"gameId"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			},
-			"get": {
-				"operationId": "GetAllGameSaves",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/GameSave"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Game"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "gameId",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/games": {
-			"get": {
-				"operationId": "GetGame",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Game"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Game"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/games/list": {
-			"get": {
-				"operationId": "GetGames",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Game"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Game"
-				],
-				"security": [],
-				"parameters": []
-			}
-		},
-		"/leaderboard/scores": {
-			"post": {
-				"operationId": "AddScore",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/ScoreItem"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Leaderboard"
-				],
-				"security": [
-					{
-						"api_key_scores": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"email": {
-										"type": "string"
-									},
-									"score": {
-										"type": "number",
-										"format": "double"
-									},
-									"appId": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"email",
-									"score",
-									"appId"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/leaderboard/scores/{gameId}": {
-			"get": {
-				"operationId": "GetScoreLeaderboard",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/ScoreItem"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Leaderboard"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "gameId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "limit",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/leaderboard/scores/{gameId}/me": {
-			"get": {
-				"operationId": "GetUserScore",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/ScoreItem"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Leaderboard"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "gameId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/leaderboard/rank": {
-			"post": {
-				"operationId": "UpdateRank",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/RankItem"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Leaderboard"
-				],
-				"security": [
-					{
-						"api_key_rank": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"userId": {
-										"type": "string"
-									},
-									"rank": {
-										"type": "number",
-										"format": "double"
-									},
-									"appId": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"userId",
-									"rank",
-									"appId"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/leaderboard/rank/{appId}": {
-			"get": {
-				"operationId": "GetRankLeaderboard",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/RankItem"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Leaderboard"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "appId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "limit",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/leaderboard/rank/{gameId}/me": {
-			"get": {
-				"operationId": "GetUserRank",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/RankItem"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Leaderboard"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "gameId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/auth/wallet": {
-			"get": {
-				"operationId": "GetWalletAuthMessage",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/WalletSignatureMessage"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Auth"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "address",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			},
-			"post": {
-				"operationId": "PostWalletAuthSignature",
-				"responses": {
-					"201": {
-						"description": "Created",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/AuthCustomToken"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Auth"
-				],
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"signature": {
-										"type": "string"
-									},
-									"address": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"signature",
-									"address"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/auth/users": {
-			"post": {
-				"operationId": "CreateUser",
-				"responses": {
-					"201": {
-						"description": "Created",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/User"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Auth"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"referralCode": {
-										"type": "string"
-									}
-								},
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/masters/traits": {
-			"get": {
-				"operationId": "GetMastersTraits",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/MastersTrait"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/masters/traits/types": {
-			"get": {
-				"operationId": "GetMastersTraitTypes",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/MastersTraitType"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/masters/colors": {
-			"get": {
-				"operationId": "GetMastersColors",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/MastersColor"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "query",
-						"name": "typeId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/masters/genders": {
-			"get": {
-				"operationId": "GetMastersGenders",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/TraitGender"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/masters/equip/signature": {
-			"post": {
-				"operationId": "GetMastersEquipSignature",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"signature": {
-											"type": "string"
-										},
-										"nonce": {
-											"$ref": "#/components/schemas/BigNumber"
-										},
-										"tokenId": {
-											"type": "number",
-											"format": "double"
-										},
-										"itemIds": {
-											"items": {
-												"type": "number",
-												"format": "double"
-											},
-											"type": "array"
-										},
-										"owner": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"signature",
-										"nonce",
-										"tokenId",
-										"itemIds",
-										"owner"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"tokenId": {
-										"type": "number",
-										"format": "double"
-									},
-									"owner": {
-										"type": "string"
-									},
-									"itemIds": {
-										"items": {
-											"type": "number",
-											"format": "double"
-										},
-										"type": "array"
-									}
-								},
-								"required": [
-									"tokenId",
-									"owner",
-									"itemIds"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/masters/mint/traits": {
-			"post": {
-				"operationId": "GetMintTraits",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/MastersMintTrait"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/masters/lootbox/buy": {
-			"post": {
-				"operationId": "BuyLootbox",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/MastersItem"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"saveId": {
-										"type": "string"
-									},
-									"currency": {
-										"type": "string"
-									},
-									"amount": {
-										"type": "number",
-										"format": "double"
-									},
-									"lootboxId": {
-										"type": "number",
-										"format": "double"
-									}
-								},
-								"required": [
-									"saveId",
-									"currency",
-									"amount",
-									"lootboxId"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/masters/lootbox/joepegs": {
-			"post": {
-				"operationId": "GetMastersLootboxJPSignature",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/MastersLootboxJoepegsSignature"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"receiver": {
-										"type": "string"
-									},
-									"amount": {
-										"type": "number",
-										"format": "double"
-									},
-									"lootboxId": {
-										"type": "number",
-										"format": "double"
-									}
-								},
-								"required": [
-									"receiver",
-									"amount",
-									"lootboxId"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/masters/lootbox": {
-			"get": {
-				"operationId": "GetMastersLootboxes",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/MastersLootbox"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "query",
-						"name": "gameId",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			},
-			"post": {
-				"operationId": "GetMastersLootboxSignature",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/MastersLootboxSignature"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"payWithTicket": {
-										"type": "boolean"
-									},
-									"currency": {
-										"type": "string"
-									},
-									"amount": {
-										"type": "number",
-										"format": "double"
-									},
-									"receiver": {
-										"type": "string"
-									},
-									"lootboxId": {
-										"type": "number",
-										"format": "double"
-									}
-								},
-								"required": [
-									"currency",
-									"amount",
-									"receiver",
-									"lootboxId"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/masters/items/mint": {
-			"post": {
-				"operationId": "MintMastersItem",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"message": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"message"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"amount": {
-										"type": "number",
-										"format": "double"
-									},
-									"receiver": {
-										"type": "string"
-									},
-									"itemId": {
-										"type": "number",
-										"format": "double"
-									},
-									"clientId": {
-										"type": "string"
-									},
-									"apiKey": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"amount",
-									"receiver",
-									"itemId",
-									"clientId",
-									"apiKey"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/masters/items/categories": {
-			"get": {
-				"operationId": "GetMastersItemCategories",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/ItemCategory"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/masters/items/balance/{address}": {
-			"get": {
-				"operationId": "GetMastersItemsBalance",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/MastersItemBalance"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "address",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "query",
-						"name": "includeSubnet",
-						"required": false,
-						"schema": {
-							"type": "boolean"
-						}
-					}
-				]
-			}
-		},
-		"/masters/items/balance": {
-			"get": {
-				"operationId": "GetAccountMastersItemsBalance",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/MastersItemBalance"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "query",
-						"name": "includeSubnet",
-						"required": false,
-						"schema": {
-							"type": "boolean"
-						}
-					},
-					{
-						"in": "query",
-						"name": "includeVouchers",
-						"required": false,
-						"schema": {
-							"type": "boolean"
-						}
-					}
-				]
-			}
-		},
-		"/masters/items/{tokenId}": {
-			"get": {
-				"operationId": "GetMastersItem",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/MastersItem"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "tokenId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/masters/items": {
-			"get": {
-				"operationId": "GetMastersItems",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/MastersItem"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/masters/avatars/image/{tokenId}": {
-			"post": {
-				"operationId": "UpdateImage",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"message": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"message"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "tokenId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "query",
-						"name": "extension",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/masters/avatars/image-upload-url/{tokenId}": {
-			"get": {
-				"operationId": "GetMastersPFPImageUploadURL",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"tokenId": {
-											"type": "number",
-											"format": "double"
-										},
-										"layers": {
-											"items": {},
-											"type": "array"
-										},
-										"uploadUrl": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"tokenId",
-										"layers",
-										"uploadUrl"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "tokenId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "query",
-						"name": "extension",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "header",
-						"name": "Authorization",
-						"required": false,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/masters/avatars/images/{address}": {
-			"get": {
-				"operationId": "GetMastersAvatarImage",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"profilePictures": {
-											"items": {
-												"type": "string"
-											},
-											"type": "array"
-										},
-										"name": {
-											"type": "string"
-										},
-										"type": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"profilePictures",
-										"name",
-										"type"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "address",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/masters/avatars/balance/{address}": {
-			"get": {
-				"operationId": "GetMastersAvatarBalance",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "address",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/masters/avatars/balance": {
-			"get": {
-				"operationId": "GetAccountMastersAvatarBalance",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/masters/avatars/prices": {
-			"get": {
-				"operationId": "GetMastersAvatarPrices",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/masters/avatars/free": {
-			"post": {
-				"operationId": "GetMastersFreePFPSignature",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"signature": {
-											"type": "string"
-										},
-										"nonce": {
-											"$ref": "#/components/schemas/BigNumber"
-										},
-										"traits": {
-											"items": {
-												"type": "number",
-												"format": "double"
-											},
-											"type": "array"
-										},
-										"receiver": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"signature",
-										"nonce",
-										"traits",
-										"receiver"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"traits": {
-										"items": {
-											"type": "number",
-											"format": "double"
-										},
-										"type": "array"
-									},
-									"receiver": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"traits"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/masters/avatars/{tokenId}": {
-			"get": {
-				"operationId": "GetMastersAvatar",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/MastersAvatar"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "tokenId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/masters/avatars": {
-			"post": {
-				"operationId": "GetMastersPFPSignature",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Masters"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"payWithTicket": {
-										"type": "boolean"
-									},
-									"currency": {
-										"type": "string"
-									},
-									"traits": {
-										"items": {
-											"type": "number",
-											"format": "double"
-										},
-										"type": "array"
-									},
-									"receiver": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"payWithTicket",
-									"currency",
-									"traits"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/referrals/referrer": {
-			"get": {
-				"operationId": "GetReferrer",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"allOf": [
-										{
-											"$ref": "#/components/schemas/User"
-										}
-									],
-									"nullable": true
-								}
-							}
-						}
-					}
-				},
-				"description": "Get the referrer of the authenticated user",
-				"tags": [
-					"Referrals"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/referrals/referred-users": {
-			"get": {
-				"operationId": "GetReferredUsers",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/User"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"description": "Get all users referred by the authenticated user",
-				"tags": [
-					"Referrals"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/assets/agreement": {
-			"get": {
-				"operationId": "GetAssetsAgreement",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"allOf": [
-										{
-											"$ref": "#/components/schemas/AssetAgreement"
-										}
-									],
-									"nullable": true
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Assets"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			},
-			"post": {
-				"operationId": "PostAssetsAgreement",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/AssetAgreement"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Assets"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"role": {
-										"type": "string"
-									},
-									"accepted": {
-										"type": "boolean"
-									}
-								},
-								"required": [
-									"role",
-									"accepted"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/assets": {
-			"get": {
-				"operationId": "GetAssets",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Asset"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Assets"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			},
-			"post": {
-				"operationId": "CreateAsset",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Asset"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Assets"
-				],
-				"security": [
-					{
-						"jwt": [
-							"admin"
-						]
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/CreateAssetParams"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/assets/{uid}": {
-			"delete": {
-				"operationId": "DeleteAsset",
-				"responses": {
-					"204": {
-						"description": "No content"
-					}
-				},
-				"tags": [
-					"Assets"
-				],
-				"security": [
-					{
-						"jwt": [
-							"admin"
-						]
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "uid",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/tickets/metadata": {
-			"get": {
-				"operationId": "GetTicketsMetadata",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"name": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"name"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Tickets"
-				],
-				"security": [],
-				"parameters": []
-			}
-		},
-		"/tickets/balance/{address}": {
-			"get": {
-				"operationId": "GetTicketsBalance",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/TicketBalance"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Tickets"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "address",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/tickets": {
-			"get": {
-				"operationId": "GetTickets",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Ticket"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Tickets"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/tickets/{id}": {
-			"get": {
-				"operationId": "GetTicket",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Ticket"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Tickets"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "query",
-						"name": "chainId",
-						"required": false,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/api-keys": {
-			"get": {
-				"operationId": "GetApiKeys",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/ApiKey"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"ApiKeys"
-				],
-				"security": [
-					{
-						"jwt": [
-							"admin"
-						]
-					}
-				],
-				"parameters": []
-			},
-			"post": {
-				"operationId": "CreateApiKey",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/ApiKey"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"ApiKeys"
-				],
-				"security": [
-					{
-						"jwt": [
-							"admin"
-						]
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/CreateApiKeyParams"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/api-keys/{uid}": {
-			"delete": {
-				"operationId": "DeleteApiKey",
-				"responses": {
-					"204": {
-						"description": "No content"
-					}
-				},
-				"tags": [
-					"ApiKeys"
-				],
-				"security": [
-					{
-						"jwt": [
-							"admin"
-						]
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "uid",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/events": {
-			"get": {
-				"operationId": "GetEvents",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Event"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Events"
-				],
-				"security": [
-					{
-						"jwt": [
-							"admin"
-						]
-					}
-				],
-				"parameters": []
-			},
-			"post": {
-				"operationId": "CreateEvent",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Event"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Events"
-				],
-				"security": [
-					{
-						"jwt": [
-							"admin"
-						]
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/CreateEventParams"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/events/{uid}": {
-			"delete": {
-				"operationId": "DeleteEvent",
-				"responses": {
-					"204": {
-						"description": "No content"
-					}
-				},
-				"tags": [
-					"Events"
-				],
-				"security": [
-					{
-						"jwt": [
-							"admin"
-						]
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "uid",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/trades": {
-			"get": {
-				"operationId": "GetTrades",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Trade"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Trades"
-				],
-				"security": [],
-				"parameters": []
-			},
-			"post": {
-				"operationId": "CreateTrade",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/MessageResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Trades"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"offerAmounts": {
-										"items": {
-											"type": "number",
-											"format": "double"
-										},
-										"type": "array"
-									},
-									"offerVoucherIds": {
-										"items": {
-											"type": "string"
-										},
-										"type": "array"
-									},
-									"requestAmounts": {
-										"items": {
-											"type": "number",
-											"format": "double"
-										},
-										"type": "array"
-									},
-									"requestAssetsIds": {
-										"items": {
-											"type": "string"
-										},
-										"type": "array"
-									}
-								},
-								"required": [
-									"offerAmounts",
-									"offerVoucherIds",
-									"requestAmounts",
-									"requestAssetsIds"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/trades/me": {
-			"get": {
-				"operationId": "GetMyTrades",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Trade"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Trades"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/trades/offers": {
-			"get": {
-				"operationId": "GetMyOffers",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/TradeOffer"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Trades"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/trades/{id}": {
-			"put": {
-				"operationId": "UpdateTrade",
-				"responses": {
-					"204": {
-						"description": "No content"
-					}
-				},
-				"tags": [
-					"Trades"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"offerAmounts": {
-										"items": {
-											"type": "number",
-											"format": "double"
-										},
-										"type": "array"
-									},
-									"offerVoucherIds": {
-										"items": {
-											"type": "string"
-										},
-										"type": "array"
-									},
-									"requestAmounts": {
-										"items": {
-											"type": "number",
-											"format": "double"
-										},
-										"type": "array"
-									},
-									"requestAssetsIds": {
-										"items": {
-											"type": "string"
-										},
-										"type": "array"
-									}
-								},
-								"required": [
-									"offerAmounts",
-									"offerVoucherIds",
-									"requestAmounts",
-									"requestAssetsIds"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			},
-			"get": {
-				"operationId": "GetTrade",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Trade"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Trades"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			},
-			"delete": {
-				"operationId": "DeleteTrade",
-				"responses": {
-					"204": {
-						"description": "No content"
-					}
-				},
-				"tags": [
-					"Trades"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/trades/{id}/offer": {
-			"post": {
-				"operationId": "SubmitOffer",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/MessageResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Trades"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"offerAmounts": {
-										"items": {
-											"type": "number",
-											"format": "double"
-										},
-										"type": "array"
-									},
-									"offerVoucherIds": {
-										"items": {
-											"type": "string"
-										},
-										"type": "array"
-									}
-								},
-								"required": [
-									"offerAmounts",
-									"offerVoucherIds"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			},
-			"delete": {
-				"operationId": "DeleteOffer",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/MessageResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Trades"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/trades/{id}/acceptOffer": {
-			"post": {
-				"operationId": "AcceptOffer",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"message": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"message"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Trades"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"offerUserId": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"offerUserId"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/trades/{id}/acceptTrade": {
-			"post": {
-				"operationId": "AcceptTrade",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/MessageResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Trades"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/gen2/sale-signature": {
-			"post": {
-				"operationId": "GetGen2SaleSignature",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"signature": {
-											"type": "string"
-										},
-										"nonce": {
-											"$ref": "#/components/schemas/BigNumber"
-										},
-										"price": {
-											"type": "string"
-										},
-										"referral": {
-											"type": "string"
-										},
-										"amount": {
-											"type": "number",
-											"format": "double"
-										},
-										"eggType": {
-											"type": "number",
-											"format": "double"
-										},
-										"receiver": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"signature",
-										"nonce",
-										"price",
-										"referral",
-										"amount",
-										"eggType",
-										"receiver"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Gen2"
-				],
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"referral": {
-										"type": "string"
-									},
-									"amount": {
-										"type": "number",
-										"format": "double"
-									},
-									"eggType": {
-										"type": "number",
-										"format": "double"
-									},
-									"receiver": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"referral",
-									"amount",
-									"eggType",
-									"receiver"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/gen2/price": {
-			"get": {
-				"operationId": "GetGen2SalePrice",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"price": {
-											"type": "number",
-											"format": "double"
-										}
-									},
-									"required": [
-										"price"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Gen2"
-				],
-				"security": [],
-				"parameters": []
-			}
-		},
-		"/gen2/balance": {
-			"get": {
-				"operationId": "GetGen2Balance",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/HatchyBalance"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Gen2"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/contracts": {
-			"get": {
-				"operationId": "GetContracts",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Contract"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Contracts"
-				],
-				"security": [],
-				"parameters": []
-			},
-			"post": {
-				"operationId": "CreateContract",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Contract"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Contracts"
-				],
-				"security": [
-					{
-						"jwt": [
-							"admin"
-						]
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/CreateContractParams"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/contracts/{uid}": {
-			"put": {
-				"operationId": "UpdateContract",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Contract"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Contracts"
-				],
-				"security": [
-					{
-						"jwt": [
-							"admin"
-						]
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "uid",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/CreateContractParams"
-							}
-						}
-					}
-				}
-			},
-			"delete": {
-				"operationId": "DeleteContract",
-				"responses": {
-					"204": {
-						"description": "No content"
-					}
-				},
-				"tags": [
-					"Contracts"
-				],
-				"security": [
-					{
-						"jwt": [
-							"admin"
-						]
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "uid",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/ultigen/monsters/balance": {
-			"get": {
-				"operationId": "GetUltigenMonstersBalance",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/UltigenMonster"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Ultigen"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/ultigen/eggs/balance": {
-			"get": {
-				"operationId": "GetUltigenEggsBalance",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/UltigenEggsBalance"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Ultigen"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/ultigen/eggs/hatch": {
-			"post": {
-				"operationId": "HatchEggs",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/UltigenMonster"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Ultigen"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"amount": {
-										"type": "number",
-										"format": "double"
-									},
-									"eggType": {
-										"type": "number",
-										"format": "double"
-									}
-								},
-								"required": [
-									"amount",
-									"eggType"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/ultigen/eggs/buy": {
-			"post": {
-				"operationId": "BuyEggs",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/MessageResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Ultigen"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"amount": {
-										"type": "number",
-										"format": "double"
-									},
-									"eggType": {
-										"type": "number",
-										"format": "double"
-									}
-								},
-								"required": [
-									"amount",
-									"eggType"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/ultigen/eggs/give": {
-			"post": {
-				"operationId": "GiveEggWithApiKey",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/MessageResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Ultigen"
-				],
-				"security": [
-					{
-						"api_key_rewards": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"amount": {
-										"type": "number",
-										"format": "double"
-									},
-									"eggType": {
-										"type": "number",
-										"format": "double"
-									},
-									"email": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"amount",
-									"eggType",
-									"email"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/ultigen/monsters/evolve": {
-			"post": {
-				"operationId": "EvolveMonster",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/UltigenMonster"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Ultigen"
-				],
-				"security": [
-					{
-						"api_key_ultigen_xp": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"newMonsterId": {
-										"type": "number",
-										"format": "double"
-									},
-									"id": {
-										"type": "number",
-										"format": "double"
-									}
-								},
-								"required": [
-									"newMonsterId",
-									"id"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/ultigen/monsters/xp": {
-			"post": {
-				"operationId": "GiveXPToMonster",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/UltigenMonster"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Ultigen"
-				],
-				"security": [
-					{
-						"api_key_ultigen_xp": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"xp": {
-										"type": "number",
-										"format": "double"
-									},
-									"id": {
-										"type": "number",
-										"format": "double"
-									}
-								},
-								"required": [
-									"xp",
-									"id"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/ultigen/monsters/{id}": {
-			"get": {
-				"operationId": "GetMonsterData",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/UltigenMonster"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Ultigen"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
 		"/vouchers": {
 			"get": {
 				"operationId": "GetVouchers",
@@ -6665,63 +1410,6 @@
 				}
 			}
 		},
-		"/vouchers/deposit/sync": {
-			"post": {
-				"operationId": "SyncDepositedAssets",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"message": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"message"
-									],
-									"type": "object"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Vouchers"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"properties": {
-									"depositId": {
-										"type": "number",
-										"format": "double"
-									},
-									"receiver": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"depositId",
-									"receiver"
-								],
-								"type": "object"
-							}
-						}
-					}
-				}
-			}
-		},
 		"/vouchers/deposit/signature": {
 			"post": {
 				"operationId": "GetDepositSignature",
@@ -6791,6 +1479,1784 @@
 						}
 					}
 				}
+			}
+		},
+		"/users": {
+			"get": {
+				"operationId": "GetUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			},
+			"put": {
+				"operationId": "UpdateUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"referralCode": {
+										"type": "string"
+									},
+									"bio": {
+										"type": "string"
+									},
+									"displayName": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteAccount",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/users/wallets": {
+			"get": {
+				"operationId": "GetLinkedWallets",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Wallet"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/users/main-wallet": {
+			"post": {
+				"operationId": "SetMainWallet",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"mainWallet": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"mainWallet"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/wallets/create": {
+			"post": {
+				"operationId": "CreateWallet",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"address": {
+											"type": "string"
+										},
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"address",
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/users/search": {
+			"get": {
+				"operationId": "SearchUsers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "query",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/ultigen/monsters/balance": {
+			"get": {
+				"operationId": "GetUltigenMonstersBalance",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/UltigenMonster"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Ultigen"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/ultigen/eggs/balance": {
+			"get": {
+				"operationId": "GetUltigenEggsBalance",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/UltigenEggsBalance"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Ultigen"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/ultigen/eggs/hatch": {
+			"post": {
+				"operationId": "HatchEggs",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/UltigenMonster"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Ultigen"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"amount": {
+										"type": "number",
+										"format": "double"
+									},
+									"eggType": {
+										"type": "number",
+										"format": "double"
+									}
+								},
+								"required": [
+									"amount",
+									"eggType"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/ultigen/eggs/buy": {
+			"post": {
+				"operationId": "BuyEggs",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Ultigen"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"amount": {
+										"type": "number",
+										"format": "double"
+									},
+									"eggType": {
+										"type": "number",
+										"format": "double"
+									}
+								},
+								"required": [
+									"amount",
+									"eggType"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/ultigen/eggs/give": {
+			"post": {
+				"operationId": "GiveEggWithApiKey",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Ultigen"
+				],
+				"security": [
+					{
+						"api_key_rewards": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"amount": {
+										"type": "number",
+										"format": "double"
+									},
+									"eggType": {
+										"type": "number",
+										"format": "double"
+									},
+									"email": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"amount",
+									"eggType",
+									"email"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/ultigen/monsters/evolve": {
+			"post": {
+				"operationId": "EvolveMonster",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UltigenMonster"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Ultigen"
+				],
+				"security": [
+					{
+						"api_key_ultigen_xp": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"newMonsterId": {
+										"type": "number",
+										"format": "double"
+									},
+									"id": {
+										"type": "number",
+										"format": "double"
+									}
+								},
+								"required": [
+									"newMonsterId",
+									"id"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/ultigen/monsters/xp": {
+			"post": {
+				"operationId": "GiveXPToMonster",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UltigenMonster"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Ultigen"
+				],
+				"security": [
+					{
+						"api_key_ultigen_xp": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"xp": {
+										"type": "number",
+										"format": "double"
+									},
+									"id": {
+										"type": "number",
+										"format": "double"
+									}
+								},
+								"required": [
+									"xp",
+									"id"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/ultigen/monsters/{id}": {
+			"get": {
+				"operationId": "GetMonsterData",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UltigenMonster"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Ultigen"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/leaderboard/scores": {
+			"post": {
+				"operationId": "AddScore",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ScoreItem"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leaderboard"
+				],
+				"security": [
+					{
+						"api_key_scores": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"email": {
+										"type": "string"
+									},
+									"score": {
+										"type": "number",
+										"format": "double"
+									},
+									"appId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"email",
+									"score",
+									"appId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/leaderboard/scores/{gameId}": {
+			"get": {
+				"operationId": "GetScoreLeaderboard",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ScoreItem"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leaderboard"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "gameId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/leaderboard/scores/{gameId}/me": {
+			"get": {
+				"operationId": "GetUserScore",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ScoreItem"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leaderboard"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "gameId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/leaderboard/rank": {
+			"post": {
+				"operationId": "UpdateRank",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RankItem"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leaderboard"
+				],
+				"security": [
+					{
+						"api_key_rank": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"userId": {
+										"type": "string"
+									},
+									"rank": {
+										"type": "number",
+										"format": "double"
+									},
+									"appId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"userId",
+									"rank",
+									"appId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/leaderboard/rank/{appId}": {
+			"get": {
+				"operationId": "GetRankLeaderboard",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/RankItem"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leaderboard"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "appId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/leaderboard/rank/{gameId}/me": {
+			"get": {
+				"operationId": "GetUserRank",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RankItem"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Leaderboard"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "gameId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/gen2/sale-signature": {
+			"post": {
+				"operationId": "GetGen2SaleSignature",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"signature": {
+											"type": "string"
+										},
+										"nonce": {
+											"$ref": "#/components/schemas/BigNumber"
+										},
+										"price": {
+											"type": "string"
+										},
+										"referral": {
+											"type": "string"
+										},
+										"amount": {
+											"type": "number",
+											"format": "double"
+										},
+										"eggType": {
+											"type": "number",
+											"format": "double"
+										},
+										"receiver": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"signature",
+										"nonce",
+										"price",
+										"referral",
+										"amount",
+										"eggType",
+										"receiver"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Gen2"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"referral": {
+										"type": "string"
+									},
+									"amount": {
+										"type": "number",
+										"format": "double"
+									},
+									"eggType": {
+										"type": "number",
+										"format": "double"
+									},
+									"receiver": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"referral",
+									"amount",
+									"eggType",
+									"receiver"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/gen2/price": {
+			"get": {
+				"operationId": "GetGen2SalePrice",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"price": {
+											"type": "number",
+											"format": "double"
+										}
+									},
+									"required": [
+										"price"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Gen2"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/gen2/balance": {
+			"get": {
+				"operationId": "GetGen2Balance",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/HatchyBalance"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Gen2"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/games/saves/{saveId}": {
+			"delete": {
+				"operationId": "DeleteGameSave",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "saveId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateGameSave",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GameSave"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "saveId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"data": {
+										"properties": {},
+										"additionalProperties": {},
+										"type": "object"
+									}
+								},
+								"required": [
+									"data"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "GetGameSave",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GameSave"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "saveId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/games/saves": {
+			"post": {
+				"operationId": "CreateGameSave",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/GameSave"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"saveName": {
+										"type": "string"
+									},
+									"data": {
+										"properties": {},
+										"additionalProperties": {},
+										"type": "object"
+									},
+									"gameId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"data",
+									"gameId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "GetAllGameSaves",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/GameSave"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "gameId",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/games": {
+			"get": {
+				"operationId": "GetGame",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Game"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/games/list": {
+			"get": {
+				"operationId": "GetGames",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Game"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Game"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/contracts": {
+			"get": {
+				"operationId": "GetContracts",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Contract"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Contracts"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateContract",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Contract"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Contracts"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateContractParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/contracts/{uid}": {
+			"put": {
+				"operationId": "UpdateContract",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Contract"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Contracts"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "uid",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateContractParams"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteContract",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Contracts"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "uid",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/auth/wallet": {
+			"get": {
+				"operationId": "GetWalletAuthMessage",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/WalletSignatureMessage"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "address",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "PostWalletAuthSignature",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AuthCustomToken"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"signature": {
+										"type": "string"
+									},
+									"address": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"signature",
+									"address"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/users": {
+			"post": {
+				"operationId": "CreateUser",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"referralCode": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/assets/agreement": {
+			"get": {
+				"operationId": "GetAssetsAgreement",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/AssetAgreement"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Assets"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "PostAssetsAgreement",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AssetAgreement"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Assets"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"role": {
+										"type": "string"
+									},
+									"accepted": {
+										"type": "boolean"
+									}
+								},
+								"required": [
+									"role",
+									"accepted"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/assets": {
+			"get": {
+				"operationId": "GetAssets",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/Asset"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Assets"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateAsset",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Asset"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Assets"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateAssetParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/assets/{uid}": {
+			"delete": {
+				"operationId": "DeleteAsset",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"Assets"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "uid",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/api-keys": {
+			"get": {
+				"operationId": "GetApiKeys",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ApiKey"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"ApiKeys"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateApiKey",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ApiKey"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"ApiKeys"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateApiKeyParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api-keys/{uid}": {
+			"delete": {
+				"operationId": "DeleteApiKey",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"ApiKeys"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "uid",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		}
 	},

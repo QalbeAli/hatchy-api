@@ -5,7 +5,6 @@ import { WalletSignatureMessage } from "./walletSignatureMessage";
 import { AuthCustomToken } from "./authCustomToken";
 import { ethers } from "ethers";
 import { FieldValue } from "firebase-admin/firestore";
-import { ReferralsService } from "../referrals/referrals-service";
 import { Wallet } from "../users/wallet";
 
 export type UserCreationParams = Pick<
@@ -32,9 +31,7 @@ export class AuthService {
   usersCollection = admin.firestore().collection('users');
   walletUsersCollection = admin.firestore().collection('wallet-users');
   referralsCollection = admin.firestore().collection('referral-relationships');
-  private referralsService: ReferralsService;
   constructor() {
-    this.referralsService = new ReferralsService();
   }
 
   public async getWalletAuthMessage(address: string): Promise<WalletSignatureMessage> {
@@ -86,9 +83,6 @@ export class AuthService {
 
   public async createUser(request: any, referralCode?: string): Promise<User> {
     let referrerId = null;
-    if (referralCode) {
-      referrerId = await this.referralsService.validateReferralCode(referralCode);
-    }
 
     const userCreationParams: User = {
       uid: request.user.uid,

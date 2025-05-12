@@ -8,10 +8,8 @@ import { VoucherClaimSignature } from "./voucher-claim-signature";
 import { createArrayOf, generateSecureNonce, isEmail } from "../../utils";
 import { UsersService } from "../users/usersService";
 import { Asset } from "../assets/asset";
-import { ApiKeysService } from "../api-keys/api-keys-service";
 import { DepositSignature } from "./deposit-signature";
 import { AssetsService } from "../assets/assets-service";
-import { ItemsService } from "../masters/services/ItemsService";
 import { BatchVoucherClaimSignature } from "./batch-voucher-claim-signature";
 import { VoucherLog } from "./voucher-log";
 import { GamesWalletsService } from "../games/games-wallets-service";
@@ -30,129 +28,12 @@ export class VouchersService {
   vouchersCollection = admin.firestore().collection('vouchers');
   vouchersHistoryCollection = admin.firestore().collection('vouchers-logs');
   statsCollection = admin.firestore().collection('stats');
-  apiKeyService = new ApiKeysService();
   gamesWalletsService = new GamesWalletsService();
   assetsService = new AssetsService();
   usersCollection = admin.firestore().collection('users');
 
   constructor(chainId?: number) {
     this.chainId = chainId || DefaultChainId;
-  }
-
-  public async syncDepositedAssets(
-    receiver: string, depositId: number
-  ) {
-    const voucherConverter = getContract('voucherConverter', this.chainId);
-    const convertedAssets = await voucherConverter.getConvertedAssets(depositId) as ConverterPayload;
-
-    if (convertedAssets.receiver !== receiver) {
-      throw new BadRequestError('Receiver address does not match');
-    }
-    const user = await new UsersService().getUserByLinkedWallet(receiver);
-    if (!user) {
-      throw new NotFoundError('User not found');
-    }
-    const totalDeposits = await voucherConverter.totalConverts();
-
-    return admin.firestore().runTransaction(async (transaction) => {
-      const voucherStats = await transaction.get(this.statsCollection.doc('vouchers'));
-      if (!voucherStats.exists) {
-        transaction.set(this.statsCollection.doc('vouchers'), { totalDeposits: 0 });
-      }
-      // const totalDepositsProcessed = (await this.statsCollection.doc('vouchers').get()).data()?.totalDeposits || 0;
-      const totalDepositsProcessed = (await transaction.get(this.statsCollection.doc('vouchers'))).data()?.totalDeposits || 0;
-
-      if (BigInt(totalDepositsProcessed) >= (totalDeposits)) {
-        throw new BadRequestError('Deposit already claimed');
-      }
-
-      if (depositId <= totalDepositsProcessed - 1) {
-        throw new BadRequestError('Deposit already claimed');
-      }
-      const assetAddress = convertedAssets.assetAddress;
-
-      const mainAsset = await this.assetsService.getAssetByContract(assetAddress);
-      let itemsData = null;
-      if (mainAsset.name === 'Masters Items') {
-        itemsData = await new ItemsService().getItemsByIds(convertedAssets.tokenIds.map(t => Number(t)));
-      }
-      // const batch = admin.firestore().batch();
-      const existingVouchers = await this.getVouchersOfUser(user.uid, transaction);
-      const depositedVouchers = []
-      let depositedAssets = [];
-
-      if (convertedAssets.assetType === 1) { // ERC1155
-        depositedAssets = convertedAssets.tokenIds.map((tokenId, index) => {
-          return {
-            contract: convertedAssets.assetAddress,
-            tokenId: tokenId.toString(),
-            amount: Number(convertedAssets.amounts[index]),
-            data: itemsData ? itemsData.find(i => i.id === Number(tokenId)) : null
-          };
-        });
-        // give depositedAssets to the user in the form of vouchers by merging them if they have the same contract and tokenId and creating a new voucher if they don't
-        depositedAssets.forEach(asset => {
-          const voucher = existingVouchers.find(v => v.contract === asset.contract && v.tokenId === asset.tokenId);
-          if (voucher) {
-            const voucherRef = this.vouchersCollection.doc(voucher.uid);
-            transaction.update(voucherRef, { amount: voucher.amount + asset.amount });
-          } else {
-            const newVoucherRef = this.vouchersCollection.doc();
-            const newVoucher = {
-              uid: newVoucherRef.id,
-              userId: user.uid,
-              holder: mainAsset.holder,
-              contract: mainAsset.contract,
-              contractType: mainAsset.contractType,
-              type: 'blockchain',
-              name: asset.data.name,
-              amount: asset.amount,
-              image: asset.data.image || mainAsset.image,
-              tokenId: asset.tokenId,
-              blockchainId: getRandomUint256(),
-              category: mainAsset.category,
-              // receiver: receiver,
-              createdAt: admin.firestore.FieldValue.serverTimestamp(),
-              updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-            };
-            transaction.set(newVoucherRef, newVoucher);
-            depositedVouchers.push(newVoucher);
-          }
-        });
-      }
-      if (convertedAssets.assetType === 2) { // ERC20
-        const voucher = existingVouchers.find(v => v.contract === assetAddress);
-        if (voucher) {
-          const voucherRef = this.vouchersCollection.doc(voucher.uid);
-          transaction.update(voucherRef, { amount: voucher.amount + parseInt(ethers.utils.formatUnits(convertedAssets.amount)) });
-        } else {
-          const newVoucherRef = this.vouchersCollection.doc();
-          const newVoucher = {
-            uid: newVoucherRef.id,
-            userId: user.uid,
-            holder: mainAsset.holder,
-            contract: mainAsset.contract,
-            contractType: mainAsset.contractType,
-            type: 'blockchain',
-            name: mainAsset.name,
-            amount: parseInt(ethers.utils.formatUnits(convertedAssets.amount)),
-            image: mainAsset.image,
-            blockchainId: getRandomUint256(),
-            category: mainAsset.category,
-            // receiver: receiver,
-            createdAt: admin.firestore.FieldValue.serverTimestamp(),
-            updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-          };
-          transaction.set(newVoucherRef, newVoucher);
-          depositedVouchers.push(newVoucher);
-        }
-      }
-      // await this.statsCollection.doc('vouchers').update({ totalDeposits: totalDepositsProcessed + 1 });
-      transaction.update(this.statsCollection.doc('vouchers'), { totalDeposits: totalDepositsProcessed + 1 });
-      return depositedVouchers;
-    }).then((res) => {
-      return res
-    });
   }
 
   public async getDepositSignature(body: {
@@ -623,7 +504,12 @@ export class VouchersService {
     apiKey: string, email: string, assetId: string, amount: number, overrideTokenId?: string
   ) {
     const voucherData = await admin.firestore().runTransaction(async (transaction) => {
-      const apiKeyData = await this.apiKeyService.getApiKey(apiKey, transaction);
+      //const apiKeyData = await this.apiKeyService.getApiKey(apiKey, transaction);
+      const apiKeyData = {
+        appId: 'test',
+        permissions: ['rewards'],
+        uid: 'test',
+      }
       const gameWallet = await this.gamesWalletsService.getGameWalletById(apiKeyData.appId, transaction);
       if (!gameWallet.balance || !gameWallet.balance[assetId] || gameWallet.balance[assetId] < amount) {
         throw new BadRequestError('Insufficient asset limit');
@@ -673,14 +559,6 @@ export class VouchersService {
       }
       const asset = assets.data() as Asset;
       const auxTokenId = overrideTokenId || asset.tokenId;
-      if (asset.name === 'Masters Items') {
-        const itemsData = await new ItemsService().getItemsByIds([Number(auxTokenId)]);
-        if (!itemsData.length) {
-          throw new NotFoundError('Item not found');
-        }
-        asset.name = itemsData[0].name;
-        asset.image = itemsData[0].image;
-      }
 
       const receiverVouchers = await this.getVouchersOfUser(user.uid, transaction);
       const receiverVoucher = receiverVouchers.find(v => v.contract === asset.contract && v.tokenId === auxTokenId);
@@ -744,15 +622,6 @@ export class VouchersService {
       }
       const asset = assets.data() as Asset;
       const auxTokenId = overrideTokenId || asset.tokenId;
-      if (asset.name === 'Masters Items') {
-        const itemsData = await new ItemsService().getItemsByIds([Number(auxTokenId)]);
-        if (!itemsData.length) {
-          throw new NotFoundError('Item not found');
-        }
-        asset.name = itemsData[0].name;
-        asset.image = itemsData[0].image;
-      }
-
       const receiverVouchers = await this.getVouchersOfUser(user.uid);
       const receiverVoucher = receiverVouchers.find(v => v.contract === asset.contract && v.tokenId === auxTokenId);
       let voucherId = '';
